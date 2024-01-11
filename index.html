@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width"/>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://kit.fontawesome.com/8fb755cfee.js" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+        <title>to-do list</title>
+        <script src="app.js" defer></script>
+
+    </head>
+
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="background-container">
+
+            <!-- Left Section Container-->
+            <div class="leftside-container">
+                <div class="app-title">Menu</div>
+                <div class="task menu-section">
+                    <h3>Tasks</h3>
+                    <p class="menu-options top-margin-menu"><i class="fa-solid fa-angles-right"></i>Upcoming</p> 
+                    <p class="menu-options"><i class="fa-solid fa-list"></i>Today</p>
+                </div>
+
+                <div class="events menu-section">
+                    <h3>Events</h3>
+                    <p class="menu-options top-margin-menu"><i class="fa-solid fa-angles-right"></i>Upcoming</p>
+                    <p class="menu-options"><i class="fa-solid fa-list"></i>Today</p>
+                </div>
+
+                <div class="categories menu-section">
+                    <h3>Categories</h3>
+                    <p class="menu-options top-margin-menu new-category">Work <i class="fa-solid fa-xmark"></i></p>
+                    <p class="menu-options">Personal</p>
+
+                    <button class="add-category-btn">
+                        <i class="fa-solid fa-circle-plus"></i>
+                        <input type="text" placeholder="Add New Category" id="input-add-category">
+                    </button>
+                </div>
+            </div>
+
+            <!--Main middle section-->
+            <div class="middle-container">
+                <div class="top-container">
+                    <div class="arrow-icon"><i class="fa-solid fa-chevron-left"></i></div>
+                    <div id="date">
+                        <div id="currentDay"></div>
+                        <div id="month-numberDate"></div>
+                    </div>
+                    <div class="arrow-icon"><i class="fa-solid fa-chevron-right"></i></div>
+                </div>
+                <div class="mid-container">
+                    <ul id="list"></ul>
+                </div>
+                <div class="bottom-container">
+                    <div id="tasks"> <span id="count">0</span> Tasks</div>
+                    <div id="add-item">Add New<i class="fa-solid fa-plus"></i></div>
+                </div>
+                
+                <div class="form-popup" id="myForm">
+                    <i class="fa-solid fa-xmark"></i>
+                    <input type="text" placeholder="Task Name" id="input-el"><i class="fa-solid fa-angles-right"></i>
+                </div>
+
+            
+              
+            </div>
+
+
+            <!--Right Section Container-->
+            <div class="rightside-container">
+                <div class="todo-header">
+                    <div class="type">Task</div>
+                    <button class="edit-btn">Edit</button>
+                </div>
+                <div class="todo-title">
+                   <h2>Clean Kitchen</h2> 
+                </div>
+                <div class="todo-description">
+                    <p>I will buy some cleaning products first and then start 
+                        cleaning my room first.
+                    </p>
+                </div>
+                <div class="todo-info">
+                    <div class="todo-info-inner-Container">
+                        <p class="due-date">02/12/24</p>
+                        <p class="type">Task</p>
+                        <p class="category">Work</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--Add New Task or Event-->
+            <div class="new-todo-item-container">
+                <div id="new-task-event-form">
+                    <input type="text" placeholder="Add title" id="input-title">
+                    <br>
+                    <button class="event-btn">Event</button>
+                    <button class="task-btn">Task</button>
+
+                    <div class="due-date-container">
+                        <p class="menu-options due-date"><i class="fa-regular fa-clock"></i>Due Date</p>
+                        <!--I need a calendar popup-->
+                    </div>
+
+                    <input type="text" placeholder="Description" id="input-description">
+                </div>
+                <div class="select-category-container">
+                     <p class="menu-options"><i class="fa-solid fa-layer-group"></i>Category</p> 
+                    <!--drop down selection-->
+                </div>
+                <div class="add-location-container">
+                    <p class="menu-options"><i class="fa-solid fa-location-dot"></i>Location</p>
+                </div>
+                <div class="add-attachment-container">
+                    <p class="menu-options"><i class="fa-solid fa-paperclip"></i>Add attachment</p>
+                    <!--maybe google as an api or extension to do this-->
+                </div>
+                <div class="add-image-container">
+                    <p class="menu-options"><i class="fa-solid fa-camera"></i>Capture Image</p>
+                </div>
+
+                <div class="delete-save-btn-container">
+                    <button class="delete-btn">Delete</button>
+                    <button class="save-btn">Save</button>
+                </div>
+            </div>
+
+            <div class="todo-edit-container">
+
+            </div>
+
+            
+        </div>
+        
+
+    </body>
+
+</html>
