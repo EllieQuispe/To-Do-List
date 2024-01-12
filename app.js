@@ -249,7 +249,54 @@ function closeForm(){
 
 
 /*****Left side container*******/
+let categories = [];
+const addNewCategory = ( ) => {
+    let category = {
+        id: Date.now(),
+        name: document.getElementById('input-category').value
+    }
+    //I need to do an if statement if they leave the form empty
+    
+    //push new category name to an array
+    categories.push(category);  
 
+
+     //reset the value box to blank                                           
+    document.getElementById('input-category').value = "Add New Category"  
+ 
+    //Saving to localStorage
+    localStorage.setItem('MyCategoryList', JSON.stringify(categories))
+
+     //Call the function that will display the categories
+     displayCategory()
+
+    
+}
+
+const categoryUlTag = document.querySelector('.new-category')
+let categoryList = ""
+
+function displayCategory(){
+
+        const savedCategories = localStorage.getItem('MyCategoryList')
+      
+        if (savedCategories){
+            const parsedArray = JSON.parse(savedCategories)
+            const lastItem = parsedArray[parsedArray.length - 1]
+            const nameValue = lastItem.name
+
+            categoryList += `<p class="menu-options top-margin-menu new-category">${nameValue}<i class="fa-solid fa-xmark"></i></p>`
+            
+            categoryUlTag.innerHTML = categoryList
+           
+        }
+}
+
+
+
+document.addEventListener('DOMContentLoaded', () =>{
+    document.querySelector('.fa-circle-plus').addEventListener('click', addNewCategory)
+})
 
 
 
