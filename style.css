@@ -101,7 +101,11 @@ i.fa-solid{
     display: flex;
     align-self: center;
 }
-#input-add-category{
+
+#add-category-container{
+    display: flex;
+}
+#input-category{
     width: 100%;
     height: 45px;
     box-sizing: border-box;
