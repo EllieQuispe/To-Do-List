@@ -59,12 +59,14 @@ function ordinalNumbers(d){
 
 
 /**********RENDER*************/
+/*
 if (tasksfromLocalStorage){
     myTasks = tasksfromLocalStorage
     render(myTasks)
 
     
 } 
+
 
 
 inputBtn.addEventListener("click", function(){ //clicking enter button to add item to list
@@ -97,6 +99,8 @@ inputEl.onkeydown = function(event){ //pressing enter key instead of clicking bu
         closeForm()
     }
 }
+*/
+
 
 
 function render(tasks){
@@ -109,8 +113,8 @@ function render(tasks){
            
             
            /*It clears the listItem and then shows you the different changes to what
-           listItems is*/ 
-    }
+           listItems is*/  
+    } 
    
     /*when you console log listItem here, now you get what listItem is with the
     step by step changes*/
