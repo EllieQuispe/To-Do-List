@@ -276,46 +276,25 @@ const addNewCategory = ( ) => {
     
 }
 
-const categoryUlTag = document.querySelector('.new-category')
+const categoryUlTag = document.querySelector('.category-list-container')
 const categorySection = document.querySelector('.categories')
 //const afterH3Tag = document.getElementById("add-category-container")
 let categoryList = ""
 
 function displayCategory(){
 
-    /*
-        const savedCategories = localStorage.getItem('MyCategoryList')
-      
-        if (savedCategories){
-            const parsedArray = JSON.parse(savedCategories)
-            const lastItem = parsedArray[parsedArray.length - 1]
-            const nameValue = lastItem.name
-
-            categoryList += `<p class="menu-options top-margin-menu new-category">${nameValue}<i class="fa-solid fa-xmark"></i></p>`
-            
-          
-           
-            //categorySection.insertBefore(categoryList, afterH3Tag )
-            categoryUlTag.innerHTML = categoryList
-           
-        } else{
-            console.log('No data found in localStorage')
-        } */
-
      const savedCategories = localStorage.getItem('MyCategoryList')
          if(savedCategories){
         categories = JSON.parse(savedCategories) //Turns the array into the saved categories
         categoryUlTag.innerHTML = ""
 
+        
         categories.forEach((item, i) => {
-            categoryUlTag.innerHTML +=  `<p class="menu-options top-margin-menu new-category">${item.name}<i class="fa-solid fa-xmark"></i></p>`
+            categoryUlTag.innerHTML +=  `<p class="top-margin-menu new-category">${item.name}<i class="fa-solid fa-xmark"></i></p>`
         }) 
 
     }
 }
-
-
-
 
 
 document.addEventListener('DOMContentLoaded', () =>{

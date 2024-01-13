@@ -23,8 +23,7 @@ body{
     position: relative;
     background-color: #f4f4f4;
     border-radius: 15px;
-    width: 20%;
-    min-width: 200px;
+    min-width: 235px;
     height: 95%;
     margin-left: 20px;
     align-self: center;
@@ -60,17 +59,29 @@ body{
     color: white;
     border-radius: 10px;
 }
-.categories p.new-category i.fa-solid.fa-xmark{
+.new-category{
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 4px 4px;
+    position: relative;
+}
+.categories i.fa-solid.fa-xmark{  /*I might have to turn the p tag into a ul tag*/
     position: absolute;
-    left: 44px;
+    left: 167px;
     top: 4px;
     font-size: 17px;
 }
+.categories i.fa-solid.fa-xmark:hover{
+    cursor: pointer;
+}
+
 
 
 h3{
     color:#676b6f;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
 }
 .task{
     margin-top: 45px;
@@ -101,15 +112,32 @@ i.fa-solid{
     display: flex;
     align-self: center;
 }
-
-#add-category-container{
-    display: flex;
-}
-#input-category{
+.category-list-container{
+    max-height: 150px;
     width: 100%;
-    height: 45px;
+    overflow: auto;
+    margin-right: -13px;
+}
+
+#category-input-container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    width: 95%;
+}
+#category-input-container i.fa-solid.fa-circle-plus:hover{
+    color: rgb(102, 90, 145);
+    cursor: pointer;
+}
+
+#input-category{
+    height: 35px;
     box-sizing: border-box;
-    border-radius: 5px
+    border-radius: 5px;
+    width: 100%
+}
+#category-input-container input[type=text]{
+    border-bottom: none;
 }
 
 
