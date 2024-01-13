@@ -255,7 +255,8 @@ const addNewCategory = ( ) => {
         id: Date.now(),
         name: document.getElementById('input-category').value
     }
-    //I need to do an if statement if they leave the form empty
+
+    //If statement if users leave the form empty
     if (category.name.trim() === ""){
         alert("Please enter a category name");
         return;
@@ -265,7 +266,8 @@ const addNewCategory = ( ) => {
 
 
      //reset the value box to blank                                           
-    document.getElementById('input-category').value = "Add New Category"  
+    document.getElementById('input-category').value = " "  
+   
  
     //Saving to localStorage
     localStorage.setItem('MyCategoryList', JSON.stringify(categories))
@@ -276,24 +278,23 @@ const addNewCategory = ( ) => {
     
 }
 
-const categoryUlTag = document.querySelector('.category-list-container')
+const paragraphContainer = document.querySelector('.category-list-container')
 const categorySection = document.querySelector('.categories')
-//const afterH3Tag = document.getElementById("add-category-container")
-let categoryList = ""
+
 
 function displayCategory(){
 
      const savedCategories = localStorage.getItem('MyCategoryList')
-         if(savedCategories){
-        categories = JSON.parse(savedCategories) //Turns the array into the saved categories
-        categoryUlTag.innerHTML = ""
+        if(savedCategories){
+            categories = JSON.parse(savedCategories) //Turns the array into the previous saved categories 
+            paragraphContainer.innerHTML = ""
 
         
-        categories.forEach((item, i) => {
-            categoryUlTag.innerHTML +=  `<p class="top-margin-menu new-category">${item.name}<i class="fa-solid fa-xmark"></i></p>`
-        }) 
+            categories.forEach((item, i) => {
+                paragraphContainer.innerHTML +=  `<p class="top-margin-menu new-category">${item.name}<i class="fa-solid fa-xmark"></i></p>`
+            }) 
 
-    }
+        }
 }
 
 

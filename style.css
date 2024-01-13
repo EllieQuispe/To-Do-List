@@ -69,7 +69,7 @@ body{
 }
 .categories i.fa-solid.fa-xmark{  /*I might have to turn the p tag into a ul tag*/
     position: absolute;
-    left: 167px;
+    left: 158px;
     top: 4px;
     font-size: 17px;
 }
@@ -113,9 +113,10 @@ i.fa-solid{
     align-self: center;
 }
 .category-list-container{
-    max-height: 150px;
+    max-height: 135px;
     width: 100%;
     overflow: auto;
+    overflow-x: hidden;
     margin-right: -13px;
 }
 
