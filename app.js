@@ -250,17 +250,22 @@ function closeForm(){
 
 /*****Left side container*******/
 let categories = [];
+
 const addNewCategory = ( ) => {
+    //I need to capitalize the first letter of each value entered and give it a word limit
+
     let category = {
         id: Date.now(),
         name: document.getElementById('input-category').value
     }
 
-    //If statement if users leave the form empty
+    //If statement if users leave the form empty - It need to make the UI better
+    //Maybe this comment should be placed above the inptu box
     if (category.name.trim() === ""){
         alert("Please enter a category name");
         return;
     }
+
     //push new category name to an array
     categories.push(category);  
 
@@ -271,38 +276,61 @@ const addNewCategory = ( ) => {
  
     //Saving to localStorage
     localStorage.setItem('MyCategoryList', JSON.stringify(categories))
+ 
 
      //Call the function that will display the categories
-     displayCategory()
+     displayCategories()
 
     
 }
 
+
 const paragraphContainer = document.querySelector('.category-list-container')
 const categorySection = document.querySelector('.categories')
 
-
-function displayCategory(){
+function displayCategories(){
 
      const savedCategories = localStorage.getItem('MyCategoryList')
+     
         if(savedCategories){
-            categories = JSON.parse(savedCategories) //Turns the array into the previous saved categories 
-            paragraphContainer.innerHTML = ""
-
+            categories = JSON.parse(savedCategories) //Turns it into an array of objects
+            paragraphContainer.innerHTML = ""       //Remove anything that was previously there
         
-            categories.forEach((item, i) => {
-                paragraphContainer.innerHTML +=  `<p class="top-margin-menu new-category">${item.name}<i class="fa-solid fa-xmark"></i></p>`
-            }) 
+            categories.forEach((item) => {
+                paragraphContainer.innerHTML +=  `<p class="top-margin-menu new-category">${item.name}<i class="fa-solid fa-xmark categories-xmark-icon"></i></p>`
+            })
+            
+          
 
+            //Pass the xmark-icons to the deleteCategories function
+            const categoriesCloseIcon = document.querySelectorAll('.categories-xmark-icon');
+            deleteCategories(categoriesCloseIcon)
         }
 }
 
+function deleteCategories(closeIcons){
+    const savedCategories = localStorage.getItem('MyCategoryList')
+    let categories = JSON.parse(savedCategories)
+    let iconArr = Array.from(closeIcons)
+    
+    //Use the index of iconArr array to find the index of the categories array 
+    iconArr.forEach((item, i)=>{ 
+        item.addEventListener('click', function(){
+          
+            //Remove selected i from the categories array when x-mark icon clicked, update localStorage, and update the UI
+            categories.splice(i, 1)
+            localStorage.setItem('MyCategoryList', JSON.stringify(categories))
+            displayCategories()
+            
+        })
+    })
+}
 
 document.addEventListener('DOMContentLoaded', () =>{
-    document.querySelector('.fa-circle-plus').addEventListener('click', addNewCategory)
+    document.querySelector('.fa-circle-plus').addEventListener('click', addNewCategory)    
 
     //Call the function to display categories when the page loads
-    displayCategory();
+    displayCategories();
 })
 
 
