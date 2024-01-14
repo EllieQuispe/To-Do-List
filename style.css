@@ -173,7 +173,7 @@ i.fa-solid{
 }
 #input-title{
     width: 100%;
-    height: 45px;
+    height: 35px;
     box-sizing: border-box; /* Ensure padding and border are included in the width */
     margin-bottom: 18px;
     border-radius: 5px;
@@ -184,6 +184,9 @@ i.fa-solid{
     height: 200px;
     border-radius: 5px;
 }
+#new-task-event-form input[type=text]{
+    border-bottom: none;
+}
 
 .event-btn, .task-btn, .delete-btn, .save-btn{
     font-family: 'Inter', sans-serif;
@@ -192,11 +195,34 @@ i.fa-solid{
 }
 .event-btn{
     padding: 4px 8px;
+    background-color: transparent;
+    color: rgb(102, 90, 145);
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid rgb(102, 90, 145);
 }
 .task-btn{
     margin-left: 5px;
     padding: 4px 12px;
+    background-color: transparent;
+    color: rgb(102, 90, 145);
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid rgb(102, 90, 145);
 }
+.task-btn:hover, .event-btn:hover{
+    background-color:#bababa;
+    color: white;
+    border: 1px solid #bababa;
+}
+ 
+.clicked.task-btn, .clicked.event-btn{   /*You will need this for the javaScript section to change the color of the selected icon*/
+    background-color: rgb(102, 90, 145);
+    color: white;
+    border: 1px solid rgb(102, 90, 145);
+
+}
+
 .due-date-container{
     margin: 18px 0px;
 }

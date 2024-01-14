@@ -301,12 +301,12 @@ function displayCategories(){
             })
             
           
-
             //Pass the xmark-icons to the deleteCategories function
             const categoriesCloseIcon = document.querySelectorAll('.categories-xmark-icon');
             deleteCategories(categoriesCloseIcon)
         }
 }
+
 
 function deleteCategories(closeIcons){
     const savedCategories = localStorage.getItem('MyCategoryList')
