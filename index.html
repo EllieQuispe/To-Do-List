@@ -5,7 +5,6 @@
         <link rel="stylesheet" href="style.css">
         <script src="https://kit.fontawesome.com/8fb755cfee.js" crossorigin="anonymous"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
-
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -108,7 +107,8 @@
                         <p id="task-option">Task</p>
 
                         <div class="due-date-container">
-                            <p class="menu-options due-date"><i class="fa-regular fa-clock"></i>Due Date: <span id="form-Due-date"></span></p>
+                            <!--<p class="menu-options due-date"><i class="fa-regular fa-clock"></i>Due Date: <span id="form-Due-date"></span></p> -->
+                            <p class="menu-options due-date"><i class="fa-regular fa-clock"></i>Due Date: <input id="form-Due-date" type="date" required pattern="\d{4}-\d{2}-\d{2}" ></p>
                             <p id="submit-date">Add Time</p>
                             <!--I need a calendar popup-->
                         </div>
@@ -145,6 +145,8 @@
 
             
         </div>
+        
+        
         
 
     </body>

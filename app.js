@@ -450,16 +450,17 @@ toggleTaskEventHighlight()
 function formCurrentDate(){
     const formDate = document.getElementById('form-Due-date')
     let today = new Date()
-    let month = monthName[today.getMonth()]  
+    let monthNum = today.getMonth() + 1 //zero 
+    let month = monthNum < 10 ? `0${monthNum}` : `${monthNum}`;
     let date = today.getDate() 
     let year = today.getFullYear()
 
-    let fullDate = `${month} ${date}, ${year}`
-    formDate.innerHTML = fullDate
-
-
+    let fullDate = `${year}-${month}-${date}`
+    formDate.value = fullDate
+   
 }
 formCurrentDate()
+setInterval(formCurrentDate, 24 * 60 * 60 * 1000)
 
 
 
