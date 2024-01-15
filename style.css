@@ -180,7 +180,7 @@ i.fa-solid{
     margin-bottom: 18px;
     border-radius: 5px;
 }
-#input-description{
+#input-dedscription{
     width: 100%;
     box-sizing: border-box;
     height: 200px;
@@ -188,6 +188,7 @@ i.fa-solid{
     border: none;
     font-family: 'Inter', sans-serif;
     font-size: 15px;
+    
 }
 #top-section input[type=text]{
     border-bottom: none;
