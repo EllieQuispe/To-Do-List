@@ -225,8 +225,6 @@ function taskCounter(tasks){
 
 
 
-
-
 /***************PopUp box************/
 newTask.addEventListener('click', openForm)
 closeTask.addEventListener('click', closeForm)
@@ -248,10 +246,25 @@ function closeForm(){
 
 
 
+
+
+
 /*****Left side container*******/
+document.addEventListener('DOMContentLoaded', () =>{
+    document.querySelector('.fa-circle-plus').addEventListener('click', addNewCategory)    
+
+    //Call the function to display categories when the page loads
+    displayCategories();
+
+    //Form submission when adding a new event or task
+    document.getElementById('add-to-calender-form').addEventListener('submit', submitForm )
+})
+
+
+
 let categories = [];
 
-const addNewCategory = ( ) => {
+function addNewCategory() {
     //I need to capitalize the first letter of each value entered and give it a word limit
 
     let category = {
@@ -266,15 +279,15 @@ const addNewCategory = ( ) => {
         return;
     }
 
-    //push new category name to an array
+    //push object to the categories array
     categories.push(category);  
 
 
      //reset the value box to blank                                           
-    document.getElementById('input-category').value = " "  
+    document.getElementById('input-category').value = "Add a Category"  
    
  
-    //Saving to localStorage
+    //Saving array to localStorage
     localStorage.setItem('MyCategoryList', JSON.stringify(categories))
  
 
@@ -296,8 +309,8 @@ function displayCategories(){
             categories = JSON.parse(savedCategories) //Turns it into an array of objects
             paragraphContainer.innerHTML = ""       //Remove anything that was previously there
         
-            categories.forEach((item) => {
-                paragraphContainer.innerHTML +=  `<p class="top-margin-menu new-category">${item.name}<i class="fa-solid fa-xmark categories-xmark-icon"></i></p>`
+            categories.forEach((category) => {
+                paragraphContainer.innerHTML +=  `<p class="top-margin-menu new-category">${category.name}<i class="fa-solid fa-xmark categories-xmark-icon"></i></p>`
             })
             
           
@@ -326,12 +339,136 @@ function deleteCategories(closeIcons){
     })
 }
 
-document.addEventListener('DOMContentLoaded', () =>{
-    document.querySelector('.fa-circle-plus').addEventListener('click', addNewCategory)    
 
-    //Call the function to display categories when the page loads
-    displayCategories();
-})
+
+
+
+// FORM SUBMISSION FOR NEW EVENT OR TASK //
+let formDataArr = [];
+
+function submitForm(ev){
+    ev.preventDefault(); //to stop the form from submitting
+
+    //Title 
+    const title = getTitle()    
+
+    //Due Date
+
+    //Description
+
+    //Category
+
+    //Location
+
+    //Attachments
+
+    //Images
+
+    //Create an object that inputs all the information that will be transferrable to other areas of my code
+    //Make sure it give it an ID 
+    //It need to meet certain requirements or else an error message should be used.
+    const formData = {
+        id: Date.now(),
+        title: title,
+        type: typeOfTodo,
+
+    }
+
+     //If the title field is empty, a message will appear and nothing will be inserted in localStorage
+     //This might go into its own function
+     //The button has to stay disabled if something is missing but some of the options are not require
+    if(formData.title.trim() === ""){
+        alert("Please enter a title");
+        return;
+    }
+    if (!typeOfTodo){
+        alert('Please select Event or Task');
+        return;
+    }
+   
+     //reset the value box to blank                                           
+     //document.getElementById('title-input').value = "Add Title"
+     typeOfTodo = "";  
+
+     //Insert object to array
+     formDataArr.push(formData)
+ 
+     //Saving object to localStorage
+     localStorage.setItem('FormData', JSON.stringify(formDataArr))
+  
+ 
+      //Call the function that will display the categories
+      //It should display in the middle container
+    // console.log(formData.title)
+}
+
+function getTitle(){
+        const titleInput = document.getElementById("title-input")
+        const titleValue = titleInput.value.trim()  
+
+        //reset the value box to blank
+        document.getElementById('title-input').value = "Add Title" 
+
+        return titleValue
+}
+
+let typeOfTodo = '';
+function toggleTaskEventHighlight(){
+    const eventOption = document.getElementById('event-option')
+    const taskOption = document.getElementById('task-option')
+    const parentDiv = document.getElementById('top-section')
+
+    parentDiv.addEventListener('click', function(e){
+        let target = e.target
+
+        if(target.id === 'event-option'){
+
+            //Change color of the button
+            eventOption.classList.add('clicked')
+            taskOption.classList.remove('clicked')
+
+            //Obtain the value
+            const value = target.textContent.trim()
+            typeOfTodo = value
+            
+        } else if (target.id === 'task-option'){
+
+            //Change color of the button
+            taskOption.classList.add('clicked')
+            eventOption.classList.remove('clicked')
+
+            //Obtain the value
+            const value = target.textContent.trim()
+            typeOfTodo = value
+            
+        }
+    }) 
+}
+toggleTaskEventHighlight()
+
+
+function formCurrentDate(){
+    const formDate = document.getElementById('form-Due-date')
+    let today = new Date()
+    let month = monthName[today.getMonth()]  
+    let date = today.getDate() 
+    let year = today.getFullYear()
+
+    let fullDate = `${month} ${date}, ${year}`
+    formDate.innerHTML = fullDate
+
+
+}
+formCurrentDate()
+
+
+
+
+
+
+
+
+
 
 
 

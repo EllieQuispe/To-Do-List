@@ -43,7 +43,7 @@
 
                     <div id="category-input-container">
                        <i class="fa-solid fa-circle-plus"></i>
-                        <input type="text" placeholder="Add a Category" id="input-category">
+                        <input type="text" onfocus="this.value=''" value="Add a Category" id="input-category">
                     </div>
                     
                 </div>
@@ -100,38 +100,43 @@
 
             <!--Add New Task or Event-->
             <div class="new-todo-item-container">
-                <div id="new-task-event-form">
-                    <input type="text" placeholder="Add title" id="input-title">
-                    <br>
-                    <button class="event-btn">Event</button>
-                    <button class="task-btn">Task</button>
+                <form id="add-to-calender-form">
+                    <div id="top-section">
+                        <input type="text" onfocus="this.value=''" value="Add Title" maxlength="27" id="title-input">
+                        <br>
+                        <p id="event-option" >Event</p>
+                        <p id="task-option">Task</p>
 
-                    <div class="due-date-container">
-                        <p class="menu-options due-date"><i class="fa-regular fa-clock"></i>Due Date</p>
-                        <!--I need a calendar popup-->
+                        <div class="due-date-container">
+                            <p class="menu-options due-date"><i class="fa-regular fa-clock"></i>Due Date: <span id="form-Due-date"></span></p>
+                            <p id="submit-date">Add Time</p>
+                            <!--I need a calendar popup-->
+                        </div>
+
+                        <input type="text" placeholder="Description" id="input-description">
                     </div>
 
-                    <input type="text" placeholder="Description" id="input-description">
-                </div>
-                <div class="select-category-container">
-                     <p class="menu-options"><i class="fa-solid fa-layer-group"></i>Category</p> 
-                    <!--drop down selection-->
-                </div>
-                <div class="add-location-container">
-                    <p class="menu-options"><i class="fa-solid fa-location-dot"></i>Location</p>
-                </div>
-                <div class="add-attachment-container">
-                    <p class="menu-options"><i class="fa-solid fa-paperclip"></i>Add attachment</p>
-                    <!--maybe google as an api or extension to do this-->
-                </div>
-                <div class="add-image-container">
-                    <p class="menu-options"><i class="fa-solid fa-camera"></i>Capture Image</p>
-                </div>
+                    <div class="select-category-container">
+                        <p class="menu-options"><i class="fa-solid fa-layer-group"></i>Category</p> 
+                        <!--drop down selection-->
+                    </div>
+                    <div class="add-location-container">
+                        <p class="menu-options"><i class="fa-solid fa-location-dot"></i>Location</p>
+                    </div>
+                    <div class="add-attachment-container">
+                        <p class="menu-options"><i class="fa-solid fa-paperclip"></i>Add attachment</p>
+                        <!--maybe google as an api or extension to do this-->
+                    </div>
+                    <div class="add-image-container">
+                        <p class="menu-options"><i class="fa-solid fa-camera"></i>Capture Image</p>
+                    </div>
 
-                <div class="delete-save-btn-container">
-                    <button class="delete-btn">Delete</button>
-                    <button class="save-btn">Save</button>
-                </div>
+                    <div class="delete-save-btn-container">
+                        
+                        <button type="button" class="delete-btn">Delete</button>
+                        <button type="submit" class="save-btn">Save</button>
+                    </div>
+                </form>
             </div>
 
             <div class="todo-edit-container">
