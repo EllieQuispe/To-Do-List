@@ -353,6 +353,7 @@ function submitForm(ev){
     const title = getTitle()    
 
     //Due Date
+    const date = handleAddTimeClick()
 
     //Description
 
@@ -371,6 +372,7 @@ function submitForm(ev){
         id: Date.now(),
         title: title,
         type: typeOfTodo,
+        date: date,
 
     }
 
@@ -383,6 +385,10 @@ function submitForm(ev){
     }
     if (!typeOfTodo){
         alert('Please select Event or Task');
+        return;
+    }
+    if(!date){
+        alert('Please submit a due date')
         return;
     }
    
@@ -448,6 +454,7 @@ toggleTaskEventHighlight()
 
 
 function formCurrentDate(){
+    //Input the current month, date, and year 
     const formDate = document.getElementById('form-Due-date')
     let today = new Date()
     let monthNum = today.getMonth() + 1 //zero 
@@ -459,8 +466,28 @@ function formCurrentDate(){
     formDate.value = fullDate
    
 }
-formCurrentDate()
-setInterval(formCurrentDate, 24 * 60 * 60 * 1000)
+formCurrentDate();
+setInterval(formCurrentDate, 24 * 60 * 60 * 1000);
+
+function handleAddTimeClick(){
+    const formDate = document.getElementById('form-Due-date').value;
+    
+    //Convert thed ate to a Date object
+    const dateObject = new Date(`${formDate}T00:00:00`);
+
+    //Extract individual date components
+    const month = (dateObject.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 to make it 1-indexed
+    const day = dateObject.getDate().toString().padStart(2, '0');
+    const year = dateObject.getFullYear();
+
+    //Format the date as mm-dd-yyyy
+    const formattedDate = `${month}-${day}-${year}`;
+
+    return formattedDate
+
+}
+const addTimeBtn = document.getElementById('submit-date')
+addTimeBtn.addEventListener('click', handleAddTimeClick)
 
 
 
