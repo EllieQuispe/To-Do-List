@@ -353,7 +353,7 @@ function submitForm(ev){
     const title = getTitle()    
 
     //Due Date
-    const date = handleAddTimeClick()
+    const date = getSelectedDate()
 
     //Description
 
@@ -365,9 +365,8 @@ function submitForm(ev){
 
     //Images
 
-    //Create an object that inputs all the information that will be transferrable to other areas of my code
-    //Make sure it give it an ID 
-    //It need to meet certain requirements or else an error message should be used.
+    
+    //Object
     const formData = {
         id: Date.now(),
         title: title,
@@ -469,10 +468,11 @@ function formCurrentDate(){
 formCurrentDate();
 setInterval(formCurrentDate, 24 * 60 * 60 * 1000);
 
-function handleAddTimeClick(){
+
+function getSelectedDate(){
     const formDate = document.getElementById('form-Due-date').value;
     
-    //Convert thed ate to a Date object
+    //Convert the date to a Date object
     const dateObject = new Date(`${formDate}T00:00:00`);
 
     //Extract individual date components
@@ -484,10 +484,8 @@ function handleAddTimeClick(){
     const formattedDate = `${month}-${day}-${year}`;
 
     return formattedDate
-
 }
-const addTimeBtn = document.getElementById('submit-date')
-addTimeBtn.addEventListener('click', handleAddTimeClick)
+
 
 
 
