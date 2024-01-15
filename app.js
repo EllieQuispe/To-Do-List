@@ -487,6 +487,11 @@ function getSelectedDate(){
 }
 
 
+//Obtain the value entered in the textarea element
+function textareaValue(){
+    
+}
+
 
 
 
