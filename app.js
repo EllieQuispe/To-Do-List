@@ -356,7 +356,7 @@ function submitForm(ev){
     const date = getSelectedDate()
 
     //Description
-
+    const description = textareaValue()
     //Category
 
     //Location
@@ -372,6 +372,7 @@ function submitForm(ev){
         title: title,
         type: typeOfTodo,
         date: date,
+        description: description,
 
     }
 
@@ -489,8 +490,12 @@ function getSelectedDate(){
 
 //Obtain the value entered in the textarea element
 function textareaValue(){
-    
+    const textareaId = document.getElementById('input-dedscription')
+    const textValue = textareaId.value.trim()
+   
+    return textValue
 }
+
 
 
 
