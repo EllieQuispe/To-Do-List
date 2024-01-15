@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     document.querySelector('.fa-circle-plus').addEventListener('click', addNewCategory)    
 
     //Call the function to display categories when the page loads
-    displayCategories();
+    displayCreatedCategories();
 
     //Form submission when adding a new event or task
     document.getElementById('add-to-calender-form').addEventListener('submit', submitForm )
@@ -292,7 +292,7 @@ function addNewCategory() {
  
 
      //Call the function that will display the categories
-     displayCategories()
+     displayCreatedCategories()
 
     
 }
@@ -301,23 +301,33 @@ function addNewCategory() {
 const paragraphContainer = document.querySelector('.category-list-container')
 const categorySection = document.querySelector('.categories')
 
-function displayCategories(){
-
+function displayCreatedCategories(){
      const savedCategories = localStorage.getItem('MyCategoryList')
+     let categoriesArr = [];
+
+     //Remove anything that was previously there
+     paragraphContainer.innerHTML = ""       
      
         if(savedCategories){
             categories = JSON.parse(savedCategories) //Turns it into an array of objects
-            paragraphContainer.innerHTML = ""       //Remove anything that was previously there
-        
+
             categories.forEach((category) => {
                 paragraphContainer.innerHTML +=  `<p class="top-margin-menu new-category">${category.name}<i class="fa-solid fa-xmark categories-xmark-icon"></i></p>`
+                
+                categoriesArr.push(category.name)
+                
             })
             
+            displayCategoryOptions(categoriesArr)
           
             //Pass the xmark-icons to the deleteCategories function
             const categoriesCloseIcon = document.querySelectorAll('.categories-xmark-icon');
             deleteCategories(categoriesCloseIcon)
+
+        } else {
+            displayCategoryOptions(categoriesArr)
         }
+
 }
 
 
@@ -327,13 +337,13 @@ function deleteCategories(closeIcons){
     let iconArr = Array.from(closeIcons)
     
     //Use the index of iconArr array to find the index of the categories array 
-    iconArr.forEach((item, i)=>{ 
-        item.addEventListener('click', function(){
+    iconArr.forEach((icon, i)=>{ 
+        icon.addEventListener('click', function(){
           
             //Remove selected i from the categories array when x-mark icon clicked, update localStorage, and update the UI
             categories.splice(i, 1)
             localStorage.setItem('MyCategoryList', JSON.stringify(categories))
-            displayCategories()
+            displayCreatedCategories()
             
         })
     })
@@ -496,7 +506,18 @@ function textareaValue(){
     return textValue
 }
 
+function displayCategoryOptions(catArr){
+    const categoryOption = document.getElementById('categories-option')
+  
+    categoryOption.innerHTML = ""
+    
 
+    catArr.forEach((category)=>{
+        categoryOption.innerHTML += `<option class="category-option">${category}</option>`
+
+    })
+    
+}
 
 
 

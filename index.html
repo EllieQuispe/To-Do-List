@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="categories menu-section">
-                    <h3>Categories</h3>
+                    <h3>Your Categories</h3>
 
                     <div class="category-list-container">
                         <!-- <p class="menu-options top-margin-menu new-category"></p> -->
@@ -115,8 +115,14 @@
                     </div>
 
                     <div class="select-category-container">
-                        <p class="menu-options"><i class="fa-solid fa-layer-group"></i>Category</p> 
+                        <!--<p class="menu-options"><i class="fa-solid fa-layer-group"></i>Category</p> -->
+
                         <!--drop down selection-->
+                        <label for="categories-option"><i class="fa-solid fa-layer-group"></i>Categories:</label>
+                        <select name="categories-options" id="categories-option">
+                           <!--  <option class="category-option" disabled>Select Your Category</option>--> 
+                        </select>
+
                     </div>
                     <div class="add-location-container">
                         <p class="menu-options"><i class="fa-solid fa-location-dot"></i>Location</p>
@@ -130,7 +136,6 @@
                     </div>
 
                     <div class="delete-save-btn-container">
-                        
                         <button type="button" class="delete-btn">Delete</button>
                         <button type="submit" class="save-btn">Save</button>
                     </div>
