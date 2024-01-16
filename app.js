@@ -304,29 +304,32 @@ const categorySection = document.querySelector('.categories')
 function displayCreatedCategories(){
      const savedCategories = localStorage.getItem('MyCategoryList')
      let categoriesArr = [];
+     paragraphContainer.innerHTML = ""  
 
-     //Remove anything that was previously there
-     paragraphContainer.innerHTML = ""       
-     
-        if(savedCategories && savedCategories !== " "){
-            categories = JSON.parse(savedCategories) //Turns it into an array of objects
-            console.log('its here')
+    
+   if(!savedCategories || savedCategories === '[]'){  //false true
+        categories = JSON.parse(savedCategories) //Turns it into an object
+
+        if(!categories){ //null is falsy (When localStorage key is deleted manually)
+            categories = [ ]
+        }
+
+   } else{ //false false
+         categories = JSON.parse(savedCategories) //Turns it into an array of objects
+
             categories.forEach((category) => {
                 paragraphContainer.innerHTML +=  `<p class="top-margin-menu new-category">${category.name}<i class="fa-solid fa-xmark categories-xmark-icon"></i></p>`
                 categoriesArr.push(category.name)
             })
-            displayCategoryOptions(categoriesArr)
-          
-            //Pass the xmark-icons to the "deleteCategories" function so that selected category can be deleted
+           
+            //Pass the xmark-icons to the deleteCategories function
             const categoriesCloseIcon = document.querySelectorAll('.categories-xmark-icon');
             deleteCategories(categoriesCloseIcon)
 
-        } else {
-            categories = JSON.parse(savedCategories) //Turns it into an array of objects
-            console.log(categories)
-            displayCategoryOptions(categoriesArr)  
-            deleteCategoryPickerContainer(categories) //Remove the categories option when no category created
-        }
+   }
+
+   displayCategoryOptions(categoriesArr)
+   deleteCategoryPickerContainer(categories) //Remove the categories option when no category created
 }
 
 
@@ -519,7 +522,7 @@ function displayCategoryOptions(catArr){
 
 function deleteCategoryPickerContainer(catg){
     const categoryContainer = document.querySelector('.select-category-container')
-    if(catg == ''){  //if empty
+    if(catg == ''){  //if
        categoryContainer.classList.add('hideCategoryBox')
     } else{
         categoryContainer.classList.remove('hideCategoryBox')
