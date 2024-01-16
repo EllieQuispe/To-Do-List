@@ -137,7 +137,7 @@ i.fa-solid{
     box-sizing: border-box;
     border-radius: 5px;
     width: 100%;
-    text-transform: capitalize;
+   /* text-transform: capitalize;*/
 }
 #category-input-container input[type=text]{
     border-bottom: none;

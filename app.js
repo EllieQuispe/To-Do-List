@@ -249,7 +249,7 @@ function closeForm(){
 
 
 
-/***********NEW FEATURES*******/
+/*********************** NEW FEATURES *************************/
 document.addEventListener('DOMContentLoaded', () =>{
     document.querySelector('.fa-circle-plus').addEventListener('click', addNewCategory)    
 
@@ -308,25 +308,25 @@ function displayCreatedCategories(){
      //Remove anything that was previously there
      paragraphContainer.innerHTML = ""       
      
-        if(savedCategories){
+        if(savedCategories && savedCategories !== " "){
             categories = JSON.parse(savedCategories) //Turns it into an array of objects
-            deleteCategoryOptionContainer(categories) //Remove the categories option when no category created
-
+            console.log('its here')
             categories.forEach((category) => {
                 paragraphContainer.innerHTML +=  `<p class="top-margin-menu new-category">${category.name}<i class="fa-solid fa-xmark categories-xmark-icon"></i></p>`
                 categoriesArr.push(category.name)
             })
             displayCategoryOptions(categoriesArr)
           
-            //Pass the xmark-icons to the deleteCategories function
+            //Pass the xmark-icons to the "deleteCategories" function so that selected category can be deleted
             const categoriesCloseIcon = document.querySelectorAll('.categories-xmark-icon');
             deleteCategories(categoriesCloseIcon)
 
         } else {
-            displayCategoryOptions(categoriesArr)
-            
+            categories = JSON.parse(savedCategories) //Turns it into an array of objects
+            console.log(categories)
+            displayCategoryOptions(categoriesArr)  
+            deleteCategoryPickerContainer(categories) //Remove the categories option when no category created
         }
-
 }
 
 
@@ -343,7 +343,6 @@ function deleteCategories(closeIcons){
             categories.splice(i, 1)
             localStorage.setItem('MyCategoryList', JSON.stringify(categories))
             displayCreatedCategories()
-            
         })
     })
 }
@@ -352,7 +351,7 @@ function deleteCategories(closeIcons){
 
 
 
-// FORM SUBMISSION FOR NEW EVENT OR TASK //
+//******************* FORM SUBMISSION FOR NEW EVENT OR TASK ************************//
 let formDataArr = [];
 
 function submitForm(ev){
@@ -428,7 +427,9 @@ function getTitle(){
         return titleValue
 }
 
+
 let typeOfTodo = '';
+
 function toggleTaskEventHighlight(){
     const eventOption = document.getElementById('event-option')
     const taskOption = document.getElementById('task-option')
@@ -510,14 +511,15 @@ function displayCategoryOptions(catArr){
     categoryOption.innerHTML = ""
     
     catArr.forEach((category)=>{
-        categoryOption.innerHTML += `<option class="category-option">${category}</option>`
+        categoryOption.innerHTML += `<option class="category-option" value=${category}>${category}</option>`
     }) 
+    categorySelected()
 }
 
 
-function deleteCategoryOptionContainer(catg){
-const categoryContainer = document.querySelector('.select-category-container')
-    if(catg == ''){  
+function deleteCategoryPickerContainer(catg){
+    const categoryContainer = document.querySelector('.select-category-container')
+    if(catg == ''){  //if empty
        categoryContainer.classList.add('hideCategoryBox')
     } else{
         categoryContainer.classList.remove('hideCategoryBox')
@@ -525,8 +527,16 @@ const categoryContainer = document.querySelector('.select-category-container')
 }
 
 
-
-
+//Add event listner to the select element
+const categoriesOption = document.getElementById('categories-option')
+categoriesOption.addEventListener('change', categorySelected)
+function categorySelected(){
+    const categoryName =document.getElementById('categories-option').value
+    
+    //console.log(categoryName)
+    return categoryName
+//have not yet stored it in localStorage
+}
 
 
 
