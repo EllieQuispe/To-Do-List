@@ -1,3 +1,4 @@
+//const { c } = require("tar")
 
 const currentDate = document.getElementById('date')
 const day = document.getElementById('currentDay')
@@ -370,6 +371,8 @@ function submitForm(ev){
     const description = textareaValue()
     //Category
     const category = categorySelected()
+    //Color
+    const color =colorPickerValue()
     //Location
 
     //Attachments
@@ -385,6 +388,7 @@ function submitForm(ev){
         date: date,
         description: description,
         category: category,
+        color: color,
 
     }
 
@@ -539,6 +543,29 @@ function categorySelected(){
     
     return categoryName
 }
+
+
+//Obtain the color picker value
+const colorPicked = document.getElementById('style')
+colorPicked.addEventListener('change', watchColorPicker, false)
+let newColorValue =''
+
+function watchColorPicker(event){
+    newColorValue = event.target.value
+    return newColorValue
+}
+function colorPickerValue(){
+    if (colorPicked.value == '#7d5e8f'){
+        console.log(colorPicked.value)
+        return colorPicked.value
+    } else{
+        return newColorValue
+    }  
+}
+
+
+
+
 
 
 
