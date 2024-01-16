@@ -307,7 +307,7 @@ function displayCreatedCategories(){
      paragraphContainer.innerHTML = ""  
 
     
-   if(!savedCategories || savedCategories === '[]'){  //false true
+   if(!savedCategories || savedCategories === '[]'){  //false('[]')  true
         categories = JSON.parse(savedCategories) //Turns it into an object
 
         if(!categories){ //null is falsy (When localStorage key is deleted manually)
@@ -322,20 +322,21 @@ function displayCreatedCategories(){
                 categoriesArr.push(category.name)
             })
            
-            //Pass the xmark-icons to the deleteCategories function
-            const categoriesCloseIcon = document.querySelectorAll('.categories-xmark-icon');
-            deleteCategories(categoriesCloseIcon)
+            //Option to delete created category is now available
+            deleteCategories()
 
    }
 
-   displayCategoryOptions(categoriesArr)
+   displayCategoryOptions(categoriesArr) //categories created should be in sync with category options in the new entry form
    deleteCategoryPickerContainer(categories) //Remove the categories option when no category created
 }
 
 
-function deleteCategories(closeIcons){
+function deleteCategories(){
     const savedCategories = localStorage.getItem('MyCategoryList')
     let categories = JSON.parse(savedCategories)
+
+    const closeIcons = document.querySelectorAll('.categories-xmark-icon');
     let iconArr = Array.from(closeIcons)
     
     //Use the index of iconArr array to find the index of the categories array 
