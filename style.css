@@ -264,7 +264,36 @@ p.menu-options.due-date{
     cursor: pointer;
 }
 
+.color-picker-container{
+    margin: 17px 20px 12px 20px;
+}
 
+.color-picker-container p{
+    display: inline;
+    position: relative;
+    padding-right: 5px;
+}
+input#style{
+    -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 5px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: -8px;
+}
+input#style::-webkit-color-swatch {
+    border-radius: 15px;
+    border: none;
+  }
+input#style::-moz-color-swatch {
+    border-radius: 15px;
+    border: none;
+  }
 
 .select-category-container, 
 .add-location-container, 
@@ -273,7 +302,14 @@ p.menu-options.due-date{
     margin: 0px 20px 0px 20px;
 }
 i.fa-solid.fa-layer-group{
-    padding-right: 10px;
+    padding: 0 9px 0 3px;
+}
+.hideCategoryBox{
+    display: none;
+}
+
+i.fa-solid.fa-paintbrush{
+    padding-left: 3px;
 }
 i.fa-solid.fa-location-dot{
     padding-left: 3px;

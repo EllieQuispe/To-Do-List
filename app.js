@@ -417,6 +417,7 @@ function submitForm(ev){
     // console.log(formData.title)
 }
 
+
 function getTitle(){
         const titleInput = document.getElementById("title-input")
         const titleValue = titleInput.value.trim()  
@@ -455,7 +456,6 @@ function toggleTaskEventHighlight(){
             //Obtain the value
             const value = target.textContent.trim()
             typeOfTodo = value
-            
         }
     }) 
 }
@@ -507,16 +507,13 @@ function textareaValue(){
 
 function displayCategoryOptions(catArr){
     const categoryOption = document.getElementById('categories-option')
-  
     categoryOption.innerHTML = ""
     
-
     catArr.forEach((category)=>{
         categoryOption.innerHTML += `<option class="category-option">${category}</option>`
-
-    })
-    
+    }) 
 }
+
 
 function deleteCategoryOptionContainer(catg){
 const categoryContainer = document.querySelector('.select-category-container')
