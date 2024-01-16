@@ -366,11 +366,10 @@ function submitForm(ev){
 
     //Due Date
     const date = getSelectedDate()
-
     //Description
     const description = textareaValue()
     //Category
-
+    const category = categorySelected()
     //Location
 
     //Attachments
@@ -385,6 +384,7 @@ function submitForm(ev){
         type: typeOfTodo,
         date: date,
         description: description,
+        category: category,
 
     }
 
@@ -404,7 +404,7 @@ function submitForm(ev){
         return;
     }
    
-     //reset the value box to blank                                           
+     //reset the value box to blank (everything needs to reset)                                          
      //document.getElementById('title-input').value = "Add Title"
      typeOfTodo = "";  
 
@@ -537,9 +537,7 @@ categoriesOption.addEventListener('change', categorySelected)
 function categorySelected(){
     const categoryName =document.getElementById('categories-option').value
     
-    //console.log(categoryName)
     return categoryName
-//have not yet stored it in localStorage
 }
 
 
