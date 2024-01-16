@@ -249,7 +249,7 @@ function closeForm(){
 
 
 
-/*****Left side container*******/
+/***********NEW FEATURES*******/
 document.addEventListener('DOMContentLoaded', () =>{
     document.querySelector('.fa-circle-plus').addEventListener('click', addNewCategory)    
 
@@ -310,14 +310,12 @@ function displayCreatedCategories(){
      
         if(savedCategories){
             categories = JSON.parse(savedCategories) //Turns it into an array of objects
+            deleteCategoryOptionContainer(categories) //Remove the categories option when no category created
 
             categories.forEach((category) => {
                 paragraphContainer.innerHTML +=  `<p class="top-margin-menu new-category">${category.name}<i class="fa-solid fa-xmark categories-xmark-icon"></i></p>`
-                
                 categoriesArr.push(category.name)
-                
             })
-            
             displayCategoryOptions(categoriesArr)
           
             //Pass the xmark-icons to the deleteCategories function
@@ -326,6 +324,7 @@ function displayCreatedCategories(){
 
         } else {
             displayCategoryOptions(categoriesArr)
+            
         }
 
 }
@@ -519,7 +518,14 @@ function displayCategoryOptions(catArr){
     
 }
 
-
+function deleteCategoryOptionContainer(catg){
+const categoryContainer = document.querySelector('.select-category-container')
+    if(catg == ''){  
+       categoryContainer.classList.add('hideCategoryBox')
+    } else{
+        categoryContainer.classList.remove('hideCategoryBox')
+    }
+}
 
 
 
