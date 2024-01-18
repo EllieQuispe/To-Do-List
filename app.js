@@ -1,4 +1,4 @@
-//const { c } = require("tar")
+
 
 const currentDate = document.getElementById('date')
 const day = document.getElementById('currentDay')
@@ -561,6 +561,35 @@ function colorPickerValue(){
         return newColorValue
     }  
 }
+
+
+///Location feature 
+const mapBtn = document.querySelector('.map-btn')
+mapBtn.addEventListener('click', findAddress)
+
+function findAddress(){
+        const addressInput = document.getElementById('addressInput').value
+        console.log(addressInput)
+        
+        //Use Mapbox Geocoding API to convert address to coordinates
+        const geocodingEndpoint = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(addressInput)}.json?access_token=YOUR_MAPBOX_ACCESS_TOKEN`;
+
+        fetch(geocodingEndpoint)
+            .then(response => response.json())
+            .then(data => {
+                if(data.features.length > 0){
+                    const location = data.features[0].categoryContainer
+
+                    //Log coordinates to the console
+                    console.log('Coordinates:', location)
+
+                } else{
+                    alert('location not found')
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
 
 
 
