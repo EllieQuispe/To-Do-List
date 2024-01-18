@@ -546,8 +546,8 @@ function categorySelected(){
 
 
 //Obtain the color picker value
-const colorPicked = document.getElementById('style')
-colorPicked.addEventListener('change', watchColorPicker, false)
+const defaultColor = document.getElementById('style')
+defaultColor.addEventListener('change', watchColorPicker, false)
 let newColorValue =''
 
 function watchColorPicker(event){
@@ -555,9 +555,8 @@ function watchColorPicker(event){
     return newColorValue
 }
 function colorPickerValue(){
-    if (colorPicked.value == '#7d5e8f'){
-        console.log(colorPicked.value)
-        return colorPicked.value
+    if (defaultColor.value == '#7d5e8f'){
+        return defaultColor.value
     } else{
         return newColorValue
     }  

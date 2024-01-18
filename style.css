@@ -329,6 +329,13 @@ i.fa-regular.fa-clock{
 }
 
 /**BUTTONS**/
+.location{
+    display: flex;
+    flex-direction: row;
+}
+.map-btn{
+    margin-left: 3px;
+}
 .delete-save-btn-container{
     width: calc(100% - 40px); /* Adjust for margins */
     left: 20px;

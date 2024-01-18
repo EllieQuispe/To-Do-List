@@ -107,7 +107,7 @@
                         <p id="task-option">Task</p>
 
                         <div class="due-date-container">
-                            <p class="menu-options due-date"><i class="fa-regular fa-clock"></i>Due Date: <input id="form-Due-date" type="date" required pattern="\d{4}-\d{2}-\d{2}" ></p>
+                            <p class="menu-options due-date"><i class="fa-regular fa-clock"></i><input id="form-Due-date" type="date" required pattern="\d{4}-\d{2}-\d{2}" ></p>
                         </div>
 
                        <!-- <input type="textarea" placeholder="Description" id="input-description">  --> 
@@ -116,7 +116,7 @@
 
                     <div class="select-category-container">
                         <!--drop down selection-->
-                        <label for="categories-option"><i class="fa-solid fa-layer-group"></i>Categories:</label>
+                        <label for="categories-option"><i class="fa-solid fa-layer-group"></i></label>
                         <select name="categories-options" id="categories-option">
                            <!-- Category options will auto-populate here when the user creates one --> 
                         </select>
@@ -125,15 +125,15 @@
                         <p><i class="fa-solid fa-paintbrush"></i>Color Picker: <input type="color" value="#7d5e8f" id="style" /></p>
                     </div>
                     <div class="add-location-container">
-                        <p class="menu-options"><i class="fa-solid fa-location-dot"></i>Location</p>
+                        <p class="menu-options location">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <input type="text" id="addressInput" placeholder="Enter Location">
+                        <i class="fa-solid fa-map-location map-btn"></i>
+                        </p>
+
+                       
                     </div>
-                    <div class="add-attachment-container">
-                        <p class="menu-options"><i class="fa-solid fa-paperclip"></i>Add attachment</p>
-                        <!--maybe google as an api or extension to do this-->
-                    </div>
-                    <div class="add-image-container">
-                        <p class="menu-options"><i class="fa-solid fa-camera"></i>Capture Image</p>
-                    </div>
+                   
 
                     <div class="delete-save-btn-container">
                         <button type="button" class="delete-btn">Delete</button>
