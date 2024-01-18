@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://kit.fontawesome.com/8fb755cfee.js" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+        <!--Mapbox-->
+        <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js'></script>
+        <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet' />
+
+        <title>to-do list</title>
+        <script src="app.js" defer></script>
+
+    </head>
+
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="background-container">
+
+            <!-- Left Section Container-->
+            <div class="leftside-container">
+                <div class="app-title">Menu</div>
+                <div class="task menu-section">
+                    <h3>Tasks</h3>
+                    <p class="menu-options top-margin-menu"><i class="fa-solid fa-angles-right"></i>Upcoming</p> 
+                    <p class="menu-options"><i class="fa-solid fa-list"></i>Today</p>
+                </div>
+
+                <div class="events menu-section">
+                    <h3>Events</h3>
+                    <p class="menu-options top-margin-menu"><i class="fa-solid fa-angles-right"></i>Upcoming</p>
+                    <p class="menu-options"><i class="fa-solid fa-list"></i>Today</p>
+                </div>
+
+                <div class="categories menu-section">
+                    <h3>Your Categories</h3>
+
+                    <div class="category-list-container">
+                        <!-- <p class="menu-options top-margin-menu new-category"></p> -->
+                    </div> 
+
+                    <div id="category-input-container">
+                       <i class="fa-solid fa-circle-plus"></i>
+                        <input type="text" onfocus="this.value=''" value="Add a Category" id="input-category">
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!--Main middle section-->
+            <div class="middle-container">
+                <div class="top-container">
+                    <div class="arrow-icon"><i class="fa-solid fa-chevron-left"></i></div>
+                    <div id="date">
+                        <div id="currentDay"></div>
+                        <div id="month-numberDate"></div>
+                    </div>
+                    <div class="arrow-icon"><i class="fa-solid fa-chevron-right"></i></div>
+                </div>
+                <div class="mid-container">
+                    <ul id="list"></ul>
+                </div>
+                <div class="bottom-container">
+                    <div id="tasks"> <span id="count">0</span> Tasks</div>
+                    <div id="add-item">Add New<i class="fa-solid fa-plus"></i></div>
+                </div>
+                
+                <div class="form-popup" id="myForm">
+                    <i class="fa-solid fa-xmark"></i>
+                    <input type="text" placeholder="Task Name" id="input-el"><i class="fa-solid fa-angles-right"></i>
+                </div>
+            </div>
+
+
+            <!--Right Section Container-->
+            <div class="rightside-container">
+                <div class="todo-header">
+                    <div class="type">Task</div>
+                    <button class="edit-btn">Edit</button>
+                </div>
+                <div class="todo-title">
+                   <h2>Clean Kitchen</h2> 
+                </div>
+                <div class="todo-description">
+                    <p>I will buy some cleaning products first and then start 
+                        cleaning my room first.
+                    </p>
+                </div>
+                <div class="todo-info">
+                    <div class="todo-info-inner-Container">
+                        <p class="due-date">02/12/24</p>
+                        <p class="type">Task</p>
+                        <p class="category">Work</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--Add New Task or Event-->
+            <div class="new-todo-item-container">
+                <form id="add-to-calender-form">
+                    <div id="top-section">
+                        <input type="text" onfocus="this.value=''" value="Add Title" maxlength="27" id="title-input">
+                        <br>
+                        <p id="event-option" >Event</p>
+                        <p id="task-option">Task</p>
+
+                        <div class="due-date-container">
+                            <p class="menu-options due-date"><i class="fa-regular fa-clock"></i><input id="form-Due-date" type="date" required pattern="\d{4}-\d{2}-\d{2}" ></p>
+                        </div>
+
+                       <!-- <input type="textarea" placeholder="Description" id="input-description">  --> 
+                       <textarea id="input-dedscription" rows="4" cols="30" onfocus="this.value=''" placeholder="Add Description" autocomplete="off" spellcheck="true"></textarea>
+                    </div>
+
+                    <div class="select-category-container">
+                        <!--drop down selection-->
+                        <label for="categories-option"><i class="fa-solid fa-layer-group"></i></label>
+                        <select name="categories-options" id="categories-option">
+                           <!-- Category options will auto-populate here when the user creates one --> 
+                        </select>
+                    </div>
+                    <div class="color-picker-container">
+                        <p><i class="fa-solid fa-paintbrush"></i>Color Picker: <input type="color" value="#7d5e8f" id="style" /></p>
+                    </div>
+                    <div class="add-location-container">
+                        <p class="menu-options location">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <input type="text" id="addressInput" placeholder="Enter Location">
+                        <i class="fa-solid fa-map-location map-btn"></i>
+                        </p>
+                        <div id='map' style='width: 100%; height: 170px; z-index: 5'></div>
+                       
+                    </div>
+                   
+
+                    <div class="delete-save-btn-container">
+                        <button type="button" class="delete-btn">Delete</button>
+                        <button type="submit" class="save-btn">Save</button>
+                    </div>
+                </form>
+            </div>
+
+            
+            
+           
+
+            
+        </div>
+        
+        
+        
+
+    </body>
+
+</html>
