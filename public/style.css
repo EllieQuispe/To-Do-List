@@ -335,6 +335,11 @@ i.fa-regular.fa-clock{
 .map-btn{
     margin-left: 3px;
 }
+#map{
+    display: none;
+}
+
+
 .delete-save-btn-container{
     width: calc(100% - 40px); /* Adjust for margins */
     left: 20px;

@@ -357,8 +357,9 @@ function deleteCategories(){
 
 
 //******************* FORM SUBMISSION FOR NEW EVENT OR TASK ************************//
+//Remove display block for the map once the user clicks btn
+const mapID = document.getElementById('map')
 let formDataArr = [];
-
 function submitForm(ev){
     ev.preventDefault(); //to stop the form from submitting
 
@@ -372,9 +373,9 @@ function submitForm(ev){
     //Category
     const category = categorySelected()
     //Color
-    const color =colorPickerValue()
+    const color = colorPickerValue()
     //Location
-
+    const location = clientAddress()
     //Attachments
 
     //Images
@@ -389,6 +390,7 @@ function submitForm(ev){
         description: description,
         category: category,
         color: color,
+        location: location,
 
     }
 
@@ -411,6 +413,7 @@ function submitForm(ev){
      //reset the value box to blank (everything needs to reset)                                          
      //document.getElementById('title-input').value = "Add Title"
      typeOfTodo = "";  
+     mapID.style.display = 'none'
 
      //Insert object to array
      formDataArr.push(formData)
@@ -563,60 +566,78 @@ function colorPickerValue(){
 }
 
 
-//Location feature using Mapbox to display a map
-const mapBtn = document.querySelector('.map-btn')
-mapBtn.addEventListener('click', findAddress)
-   
-function findAddress(){
+//Address of user
+function clientAddress(){
+    const addressInput = document.getElementById('addressInput').value
+    return addressInput
+}
+//Map that will display the location
+function initializeMap(){
+    //Fetch the Mapbox API Token from server
+    fetch('/getMapboxToken')
+        .then(response=> response.json())
+        .then(data => {
+            if(data.success){
+                mapboxgl.accessToken = data.token;
+                const map = new mapboxgl.Map({
+                    container: 'map', // container ID
+                    style: 'mapbox://styles/mapbox/streets-v12', // style URL
+                    center: [-74.5, 40], // starting position [lng, lat]
+                    zoom: 9, // starting zoom
+                });
 
-        //Map Initialization
-    mapboxgl.accessToken = 'Token Key Here';
-        const map = new mapboxgl.Map({
-            container: 'map', // container ID
-            style: 'mapbox://styles/mapbox/streets-v12', // style URL
-            center: [-74.5, 40], // starting position [lng, lat]
-            zoom: 9, // starting zoom
-    });
+                 //Add a marker
+                const marker = new mapboxgl.Marker()
+                .setLngLat([0, 0]) // Set initial marker position (it will be updated later)
+                .addTo(map);
 
 
+                //Even Listener to call the function findAddress()
+                const mapBtn = document.querySelector('.map-btn')
+                mapBtn.addEventListener('click', ()=> findAddress(map, marker));
 
+            } else{
+                console.log(data.error || 'Failed to fetch Mapbox token');
+            }
+        })
+        .catch(error => console.error('Error:', error));     
+}
+
+
+function findAddress(map, marker){
     const addressInput = document.getElementById('addressInput').value  //You will need the value to store it in localStorage      
-    //Use Mapbox Geocoding API to convert address to coordinates
-    const geocodingEndpoint = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(addressInput)}.json?proximity=ip&access_token=TOKENKEYHERE&autocomplete=false`;
 
-    //Add a marker
-    const marker = new mapboxgl.Marker()
-        .setLngLat([0, 0]) // Set initial marker position (it will be updated later)
-        .addTo(map);
+   //Display the map
+    mapID.style.display = 'block'
+ 
+    fetch('/geocode', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Mapbox-Token': mapboxgl.accessToken,
+        },
+        body: JSON.stringify({addressInput}),
+    })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success){
+                const location = data.location
 
-        fetch(geocodingEndpoint)
-            .then(response => response.json())
-            .then(data => {
-                
-                if(data.features.length > 0){
-                    const location = data.features[0].center
-                   
-                    //Update the marker position
-                    marker.setLngLat(location);
-
-                    //Update the map's center to the searched location
-                    map.flyTo({
-                        center: location,
-                        zoom: 15,
-                        speed: 1,
-                        essential: true
-                    });
-
-                } else{
-                    alert('location not found')
-                } 
-            })
-            .catch(error => console.error('Error:', error));
-        }
-
-
-
-
+                //Update the marker position and map's center
+                marker.setLngLat(location);
+                map.flyTo({
+                  center: location,
+                  zoom: 15,
+                  speed: 1,
+                  essential: true,
+                });
+            } else{
+                alert(data.error || 'Location not found');
+            }
+        })
+        .catch(error => console.error('Error:', error))
+}
+initializeMap()
 
 
 
