@@ -46,7 +46,7 @@
 
                     <div id="category-input-container">
                        <i class="fa-solid fa-circle-plus"></i>
-                        <input type="text" onfocus="this.value=''" value="Add a Category" id="input-category">
+                        <input type="text" id="input-category" onfocus="this.value=''" placeholder="Add a Category">
                     </div>
                     
                 </div>
@@ -70,10 +70,14 @@
                     <div id="add-item">Add New<i class="fa-solid fa-plus"></i></div>
                 </div>
                 
+                <!--
                 <div class="form-popup" id="myForm">
                     <i class="fa-solid fa-xmark"></i>
                     <input type="text" placeholder="Task Name" id="input-el"><i class="fa-solid fa-angles-right"></i>
                 </div>
+                -->
+               
+                
             </div>
 
 
@@ -103,9 +107,12 @@
 
             <!--Add New Task or Event-->
             <div class="new-todo-item-container">
-                <form id="add-to-calender-form">
+                <form id="todo-form">
+                    <div>
+
+                   
                     <div id="top-section">
-                        <input type="text" onfocus="this.value=''" value="Add Title" maxlength="27" id="title-input">
+                        <input type="text" onfocus="this.value=''" placeholder="Add Description" maxlength="27" id="title-input">
                         <br>
                         <p id="event-option" >Event</p>
                         <p id="task-option">Task</p>
@@ -114,8 +121,7 @@
                             <p class="menu-options due-date"><i class="fa-regular fa-clock"></i><input id="form-Due-date" type="date" required pattern="\d{4}-\d{2}-\d{2}" ></p>
                         </div>
 
-                       <!-- <input type="textarea" placeholder="Description" id="input-description">  --> 
-                       <textarea id="input-dedscription" rows="4" cols="30" onfocus="this.value=''" placeholder="Add Description" autocomplete="off" spellcheck="true"></textarea>
+                       <textarea id="input-dedscription" rows="6" cols="30" onfocus="this.value=''" placeholder="Add Description" autocomplete="off" spellcheck="true"></textarea>
                     </div>
 
                     <div class="select-category-container">
@@ -126,7 +132,7 @@
                         </select>
                     </div>
                     <div class="color-picker-container">
-                        <p><i class="fa-solid fa-paintbrush"></i>Color Picker: <input type="color" value="#7d5e8f" id="style" /></p>
+                        <p><i class="fa-solid fa-paintbrush"></i>Color: <input type="color" value="#7d5e8f" id="color-options" /></p>
                     </div>
                     <div class="add-location-container">
                         <p class="menu-options location">
@@ -137,7 +143,7 @@
                         <div id='map' style='width: 100%; height: 170px; z-index: 5'></div>
                        
                     </div>
-                   
+                   </div>
 
                     <div class="delete-save-btn-container">
                         <button type="button" class="delete-btn">Delete</button>

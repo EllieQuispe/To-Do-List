@@ -227,10 +227,10 @@ function taskCounter(tasks){
 
 
 /***************PopUp box************/
-newTask.addEventListener('click', openForm)
-closeTask.addEventListener('click', closeForm)
+//newTask.addEventListener('click', openForm)
+//closeTask.addEventListener('click', closeForm)
 
-
+/*
 function openForm(){
     document.getElementById('myForm').style.display = "block"
     inputEl.placeholder == "Task Name"
@@ -244,6 +244,7 @@ function closeForm(){
         inputEl.placeholder = "Task Name"
        
 } 
+*/
 
 
 
@@ -258,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     displayCreatedCategories();
 
     //Form submission when adding a new event or task
-    document.getElementById('add-to-calender-form').addEventListener('submit', submitForm )
+    document.getElementById('todo-form').addEventListener('submit', submitForm )
 })
 
 
@@ -413,7 +414,7 @@ function submitForm(ev){
      //reset the value box to blank (everything needs to reset)                                          
      //document.getElementById('title-input').value = "Add Title"
      typeOfTodo = "";  
-     mapID.style.display = 'none'
+     //mapID.style.display = 'none' I will active this code later
 
      //Insert object to array
      formDataArr.push(formData)
@@ -549,7 +550,7 @@ function categorySelected(){
 
 
 //Obtain the color picker value
-const defaultColor = document.getElementById('style')
+const defaultColor = document.getElementById('color-options')
 defaultColor.addEventListener('change', watchColorPicker, false)
 let newColorValue =''
 
@@ -571,6 +572,8 @@ function clientAddress(){
     const addressInput = document.getElementById('addressInput').value
     return addressInput
 }
+
+/* The code below works but to not go past my request rate
 //Map that will display the location
 function initializeMap(){
     //Fetch the Mapbox API Token from server
@@ -639,7 +642,7 @@ function findAddress(map, marker){
 }
 initializeMap()
 
-
+*/
 
 
 

@@ -55,15 +55,17 @@ body{
     cursor: pointer;
     position: relative;
 }
+/*
 .menu-options:hover{
     background-color:rgb(102, 90, 145) ;
     color: white;
     border-radius: 10px;
 }
+*/
 .new-category{
     font-family: 'Inter', sans-serif;
     font-size: 15px;
-    margin-top: 10px;
+    margin-top: 2px;
     margin-bottom: 10px;
     padding: 4px 4px;
     position: relative;
@@ -82,21 +84,23 @@ body{
 
 h3{
     color:#676b6f;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
 }
 .task{
     margin-top: 45px;
 }
-.top-margin-menu{
-    margin-top: 10px;
-}
 
 i.fa-solid.fa-angles-right{
     padding-left: 0;
+    margin-right:5px;
 }
+i.fa-solid.fa-list{
+    margin-right: 5px;
+}
+/*
 i.fa-solid{
     padding-right: 10px;
-}
+} */
 .events, .categories{
     margin-top: 50px;
 }
@@ -112,6 +116,8 @@ i.fa-solid{
     font-size: 25px;
     display: flex;
     align-self: center;
+    box-shadow: 0px 0px 3px 1px rgba(172,172,172);
+    border-radius: 50%;
 }
 .category-list-container{
     max-height: 135px;
@@ -124,7 +130,7 @@ i.fa-solid{
 #category-input-container{
     display: flex;
     justify-content: space-between;
-    margin-top: 6px;
+    margin-top: 5px;
     width: 95%;
 }
 #category-input-container i.fa-solid.fa-circle-plus:hover{
@@ -141,6 +147,7 @@ i.fa-solid{
 }
 #category-input-container input[type=text]{
     border-bottom: none;
+    margin-left: 8px;
 }
 
 
@@ -167,7 +174,14 @@ i.fa-solid{
     height: 95%;
     margin-right: 20px;
     align-self: center;
+
     
+}
+#todo-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
 #top-section{
@@ -176,7 +190,7 @@ i.fa-solid{
 #title-input{
     width: 100%;
     height: 35px;
-    box-sizing: border-box; /* Ensure padding and border are included in the width */
+    /*box-sizing: border-box; /* Ensure padding and border are included in the width */
     margin-bottom: 18px;
     border-radius: 5px;
 }
@@ -201,6 +215,7 @@ i.fa-solid{
 #event-option{
     display: inline;
     padding: 4px 8px;
+    margin: 0;
     background-color: transparent;
     color: rgb(102, 90, 145);
     text-align: center;
@@ -209,8 +224,8 @@ i.fa-solid{
 }
 #task-option{
     display: inline;
-    margin-left: 5px;
     padding: 4px 12px;
+    margin: 0px 0px 0px px;
     background-color: transparent;
     color: rgb(102, 90, 145);
     text-align: center;
@@ -222,12 +237,14 @@ i.fa-solid{
     color: white;
     border: 1px solid #bababa;
     cursor: pointer;
+    box-shadow: 0px 1px 20px -7px rgba(0,0,0,0.56);
 }
  
 p#task-option.clicked, p#event-option.clicked{   /*You will need this for the javaScript section to change the color of the selected icon*/
     background-color: rgb(102, 90, 145);
     color: white;
     border: 1px solid rgb(102, 90, 145);
+   
 
 }
 
@@ -235,32 +252,23 @@ p#task-option.clicked, p#event-option.clicked{   /*You will need this for the ja
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    font-size: 16px;
-    margin: 18px 0px;
+    margin: 18px 0px 14px 0px;
 }
 p.menu-options.due-date{
-    margin: 0px;
     align-self: center;
 }
 
-#form-Due-date:hover{
-    text-decoration: underline;
+
+input[type=date]{
+    font-family:'Inter', sans-serif;
+    font-size: 15;
+    padding: 4px 3px;
 }
 
-#submit-date{
-    padding: 4px 8px;
-    background-color: transparent;
-    color: rgb(102, 90, 145);
-    text-align: center;
-    text-decoration: none;
-    border: 1px solid rgb(102, 90, 145);
-    border-radius: 5px;
-}
-#submit-date:hover{
-    background-color: rgb(102, 90, 145);
-    color: white;
-    border: 1px solid rgb(102, 90, 145);
-    cursor: pointer;
+#categories-option{
+    font-family:'Inter', sans-serif;
+    font-size: 15px;
+    padding: 4px 3px;
 }
 
 .color-picker-container{
@@ -271,8 +279,10 @@ p.menu-options.due-date{
     display: inline;
     position: relative;
     padding-right: 5px;
+    margin: 0px;
+    font-size: 15px;
 }
-input#style{
+input#color-options{
     -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -284,18 +294,20 @@ input#style{
   cursor: pointer;
   position: absolute;
   bottom: -8px;
+  right: -34px;
+  box-shadow: 0px 1px 13px -7px rgba(0,0,0,0.56);
+  border-radius: 50%;
 }
-input#style::-webkit-color-swatch {
+input#color-options::-webkit-color-swatch {
     border-radius: 15px;
     border: none;
   }
-input#style::-moz-color-swatch {
+input#color-options::-moz-color-swatch {
     border-radius: 15px;
     border: none;
   }
 
 .select-category-container, 
-.add-location-container, 
 .add-attachment-container, 
 .add-image-container {
     margin: 0px 20px 0px 20px;
@@ -309,10 +321,12 @@ i.fa-solid.fa-layer-group{
 
 i.fa-solid.fa-paintbrush{
     padding-left: 3px;
+    margin-right: 13px;
 }
 i.fa-solid.fa-location-dot{
     padding-left: 3px;
     padding-right: 14px;
+    align-self: center;
 }
 i.fa-solid.fa-paperclip{
     padding-left: 3px;
@@ -327,10 +341,23 @@ i.fa-regular.fa-clock{
     padding-right: 10px;
 }
 
+.add-location-container{
+    margin: 17px 20px 0px 20px;
+ }
+ #addressInput{
+    padding: 6px 3px;
+    border-radius: 5px;
+    width: 60%;
+    margin-right: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+ }
+
 /**BUTTONS**/
 .location{
     display: flex;
     flex-direction: row;
+    margin: 0px
 }
 .map-btn{
     margin-left: 3px;
@@ -338,30 +365,47 @@ i.fa-regular.fa-clock{
 #map{
     display: none;
 }
-
-
-.delete-save-btn-container{
-    width: calc(100% - 40px); /* Adjust for margins */
-    left: 20px;
-    right: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    bottom: 0;
-    
-    bottom: 0;
+i.fa-solid.fa-map-location{
+    align-self: center;
 }
-.delete-btn{
-    margin-bottom: 20px;
-    padding: 8px 30px;
-   /* margin-left: 20px; */
 
+/*Save and Delete button*/
+.delete-save-btn-container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+    
+}
+
+.delete-btn{
+    padding: 10px 20px;
+    width: 45%;
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    margin-right: 5px;
+    border: 1px solid rgb(102, 90, 145);
+    color: rgb(102, 90, 145);
+    cursor: pointer;
+ 
 }
 .save-btn{
-    padding: 8px 36px;
-    margin-bottom: 20px;
-   /* margin-right: 20px; */
+    padding: 10px 27px;
+    width: 45%;
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    margin-left: 5px;
+    border: 1px solid rgb(102, 90, 145);
+    color: rgb(102, 90, 145);
+    cursor: pointer;
+}
+
+.delete-btn:hover, .save-btn:hover{
+    background-color: rgb(102, 90, 145);
+    color: white;
+    border: 1px solid rgb(102, 90, 145);
+   /* box-shadow: 0px 2px 16px -6px rgba(0,0,0,0.75); */
+   box-shadow: 0px 1px 23px -7px rgba(0,0,0,0.67);
+
 }
 
 
@@ -504,6 +548,7 @@ i.fa-regular.fa-clock{
 
 
 /**** FORM ****/
+/*
 .form-popup{
     border: 1px solid rgba(140, 127, 181, 0.497);
     text-align: center;
@@ -521,35 +566,22 @@ i.fa-regular.fa-clock{
     display: none; 
     z-index: 9;
 }
-
-
-input #input-el{
-    width: 80%;
-    padding: 5px 5px;
-    box-sizing: border-box;
-    margin: 2px 20px;
-    
-    
-} 
-
-input:focus{
-    color:rgb(155, 143, 202);
-    font-size: 14.5px;
-}
+*/
 
 
 input[type=text]{
     border: none;
-    border-bottom: 1px solid rgb(102, 90, 145);
+    /*border-bottom: 1px solid rgb(102, 90, 145);*/
+    color: rgb(155, 143, 202);
     outline: none;
     width: 75%;
     height: 20px;
+    font-size: 15px;
     
 }
-
 ::placeholder{
-    color: var(--c, rgb(155, 143, 202));
-    font-size: 14px;
+    color: rgb(155, 143, 202);
+    
 }
 
 
