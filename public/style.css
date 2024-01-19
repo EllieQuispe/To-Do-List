@@ -233,19 +233,17 @@ i.fa-solid{
     border: 1px solid rgb(102, 90, 145);
 }
 #task-option:hover, #event-option:hover{
-    background-color:#bababa;
+    background-color: rgb(102, 90, 145);
     color: white;
-    border: 1px solid #bababa;
-    cursor: pointer;
+    border: 1px solid rgb(102, 90, 145);
     box-shadow: 0px 1px 20px -7px rgba(0,0,0,0.56);
+    cursor: pointer;
 }
  
 p#task-option.clicked, p#event-option.clicked{   /*You will need this for the javaScript section to change the color of the selected icon*/
     background-color: rgb(102, 90, 145);
     color: white;
     border: 1px solid rgb(102, 90, 145);
-   
-
 }
 
 .due-date-container{
@@ -548,31 +546,14 @@ i.fa-solid.fa-map-location{
 
 
 /**** FORM ****/
-/*
-.form-popup{
-    border: 1px solid rgba(140, 127, 181, 0.497);
-    text-align: center;
-    padding: 15px 5px 15px 5px;
-    margin: 0 auto;
-    border-radius: 25px;
-    width: 80%;
-    box-shadow: 0 0 10px rgb(227, 224, 224);
-    background-color: white;
-    overflow: scroll;
 
-    position: absolute;
-    bottom: 90px;
-    left: 33px;
-    display: none; 
-    z-index: 9;
+textarea {
+    color: rgb(155, 143, 202);
 }
-*/
-
-
 input[type=text]{
     border: none;
     /*border-bottom: 1px solid rgb(102, 90, 145);*/
-    color: rgb(155, 143, 202);
+    color: rgb(155, 143, 202); */
     outline: none;
     width: 75%;
     height: 20px;

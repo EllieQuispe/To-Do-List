@@ -253,13 +253,15 @@ function closeForm(){
 
 /*********************** NEW FEATURES *************************/
 document.addEventListener('DOMContentLoaded', () =>{
+    //New category submission
     document.querySelector('.fa-circle-plus').addEventListener('click', addNewCategory)    
-
     //Call the function to display categories when the page loads
     displayCreatedCategories();
 
     //Form submission when adding a new event or task
     document.getElementById('todo-form').addEventListener('submit', submitForm )
+    //Call the function to display the data from the form when the page loads
+    displayFormData();
 })
 
 
@@ -276,7 +278,7 @@ function addNewCategory() {
 
     //If statement if users leave the form empty - It need to make the UI better
     //Maybe this comment should be placed above the inptu box
-    if (category.name.trim() === ""){
+    if (category.name.trim() === "" || category.name.trim() == "Add a Category"){
         alert("Please enter a category name");
         return;
     }
@@ -326,7 +328,6 @@ function displayCreatedCategories(){
            
             //Option to delete created category is now available
             deleteCategories()
-
    }
 
    displayCategoryOptions(categoriesArr) //categories created should be in sync with category options in the new entry form
@@ -336,7 +337,7 @@ function displayCreatedCategories(){
 
 function deleteCategories(){
     const savedCategories = localStorage.getItem('MyCategoryList')
-    let categories = JSON.parse(savedCategories)
+    categories = JSON.parse(savedCategories)
 
     const closeIcons = document.querySelectorAll('.categories-xmark-icon');
     let iconArr = Array.from(closeIcons)
@@ -361,6 +362,7 @@ function deleteCategories(){
 //Remove display block for the map once the user clicks btn
 const mapID = document.getElementById('map')
 let formDataArr = [];
+
 function submitForm(ev){
     ev.preventDefault(); //to stop the form from submitting
 
@@ -395,25 +397,35 @@ function submitForm(ev){
 
     }
 
-     //If the title field is empty, a message will appear and nothing will be inserted in localStorage
-     //This might go into its own function
-     //The button has to stay disabled if something is missing but some of the options are not require
-    if(formData.title.trim() === ""){
-        alert("Please enter a title");
-        return;
-    }
-    if (!typeOfTodo){
-        alert('Please select Event or Task');
-        return;
-    }
-    if(!date){
-        alert('Please submit a due date')
-        return;
-    }
-   
-     //reset the value box to blank (everything needs to reset)                                          
-     //document.getElementById('title-input').value = "Add Title"
-     typeOfTodo = "";  
+     
+    //Missing items before submission//
+        //Add title input field
+        if(formData.title.trim() === "" || formData.title.trim() == "Add Title"){
+            alert("Please enter a title");
+            return;
+        }
+
+        //Btn for event and task
+        if (!typeOfTodo){
+            alert('Please select Event or Task');
+            return;
+        }
+        resetBtn()
+
+        //Date submission
+        if(!date){
+            alert('Please submit a due date')
+            return;
+        }
+
+    //Reset Values//                                         
+     typeOfTodo = ""; //Event or task
+     formCurrentDate() //Date
+                                              
+     
+     
+     
+
      //mapID.style.display = 'none' I will active this code later
 
      //Insert object to array
@@ -426,6 +438,21 @@ function submitForm(ev){
       //Call the function that will display the categories
       //It should display in the middle container
     // console.log(formData.title)
+    displayFormData()
+}
+
+function displayFormData(){
+    const savedFormItems = localStorage.getItem('FormData')
+    formDataArr = JSON.parse(savedFormItems)
+
+    if(!formDataArr){ //null is falsy (When localStorage key is deleted manually)
+        formDataArr = []
+    }
+    
+}
+
+function resetForm(){
+
 }
 
 
@@ -474,6 +501,14 @@ function toggleTaskEventHighlight(){
 }
 toggleTaskEventHighlight()
 
+function resetBtn(){
+    const eventOption = document.getElementById('event-option')
+    const taskOption = document.getElementById('task-option')
+
+    taskOption.classList.remove('clicked')
+    eventOption.classList.remove('clicked')
+}
+
 
 function formCurrentDate(){
     //Input the current month, date, and year 
@@ -509,13 +544,23 @@ function getSelectedDate(){
     return formattedDate
 }
 
+function clientAddress(){
+    const addressInput = document.getElementById('addressInput')
+    const address = addressInput.value.trim()
 
+    //Reset
+    addressInput.value = "Add Location"
+
+    return address
+}
 //Obtain the value entered in the textarea element
 function textareaValue(){
     const textareaId = document.getElementById('input-dedscription')
-    const textValue = textareaId.value.trim()
-   
-    return textValue
+    const description = textareaId.value.trim()
+
+    //Reset
+    textareaId.value = "Add Description"
+    return description
 }
 
 function displayCategoryOptions(catArr){
@@ -539,7 +584,7 @@ function deleteCategoryPickerContainer(catg){
 }
 
 
-//Add event listner to the select element
+//Obtain the category value that user selects from drop-down list
 const categoriesOption = document.getElementById('categories-option')
 categoriesOption.addEventListener('change', categorySelected)
 function categorySelected(){
@@ -569,8 +614,13 @@ function colorPickerValue(){
 
 //Address of user
 function clientAddress(){
-    const addressInput = document.getElementById('addressInput').value
-    return addressInput
+    const addressInput = document.getElementById('addressInput')
+    const address = addressInput.value.trim()
+
+    //reset
+    addressInput.value = "Add Location"
+
+    return address
 }
 
 /* The code below works but to not go past my request rate
