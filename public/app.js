@@ -14,221 +14,12 @@ let myTasks = []
 let trashCan =''
 
 
-
-
-
-/*****************GET DATE*************/
-/*
-const monthName = ["Jan.", "February", "March", "April", "May", "June", "July", "Aug.", 
-"Sept.", "Oct.", "Nov.", "Dec."]
-
-const dayName = ["Sunday,", "Monday,", "Tuesday,", "Wednesday,", "Thursday, ", "Friday,", "Saturday,"]
-
-
-function getDate(){
-    let today = new Date() /*this gives me all the information, but too much information*/
-/*    let month = monthName[today.getMonth()]  /*Feb*/
-/*    let date = today.getDate() /*18*/
-/*    date = ordinalNumbers(date)
-
-    let currentDay = dayName[today.getDay()]  /*sat.*/
-/*    let todayDate = `${currentDay}`
-    let monthNum = `${month} ${date}`
-
-    day.innerHTML = todayDate
-    monthAndNum.innerHTML = monthNum
-
-    setTimeout(function(){
-        getDate() */
- /*   }, 3000) 
-} */
-//getDate() 
-/*
-function ordinalNumbers(d){
-    if (d === 1 || d === 21 || d === 31){
-        return d + "st"
-    }else if (d === 2 || d === 22){
-        return d + "nd"
-    } else if (d === 3 || d === 23){
-        return d + "rd"
-    } else {
-        return d + "th"
-    }
-}
-*/
-
-
-
-
-
-//Render Tasks and Event 
-
-
-/**********RENDER*************/
-/*
-if (tasksfromLocalStorage){
-    myTasks = tasksfromLocalStorage
-    render(myTasks)
-
-} 
-//I dont' need the addEventListener for this btn
-inputBtn.addEventListener("click", function(){ //clicking enter button to add item to list
-
-    if (inputEl.value == '' ){
-        inputEl.placeholder = "Text Required"
-        document.querySelector('input[type=text]').style.setProperty("--c", "#ff6666")
-        
-    } else{
-        myTasks.push(inputEl.value)
-        inputEl.value = '';
-        localStorage.setItem("myTasks", JSON.stringify(myTasks))
-        render(myTasks)
-        closeForm()
-    }
-      
-}) //Delete
-
-
-inputEl.onkeydown = function(event){ //pressing enter key instead of clicking button
-    if(inputEl.value == '' && event.which == 13){ //the number 13 means you pressed the enter key
-        inputEl.placeholder = "Text Required"
-        document.querySelector('input[type=text]').style.setProperty("--c", "#ff6666")
-
-    } else if (event.which == 13){
-        myTasks.push(inputEl.value)
-        inputEl.value = '';
-        localStorage.setItem("myTasks", JSON.stringify(myTasks))
-        render(myTasks)
-        closeForm()
-    }
-} Delete
-*/ 
-
-
-/*
-function render(tasks){
-    let listItems = "";
-    checkboxCount = 1;
-    for (let i = 0; i < tasks.length; i++){
-        trashCan = `<i class="fa-regular fa-trash-can"></i>`
-        listItems += 
-            `<li class="items"><input type="checkbox" class="regular-checkbox" name="checkbox"> <label><span id="text"> ${tasks[i]}</span></label>${trashCan}</li>`
-           
-            
-           /*It clears the listItem and then shows you the different changes to what
-           listItems is*/  
- /*   } 
-   
-    /*when you console log listItem here, now you get what listItem is with the
-    step by step changes*/
-/*
-    ulEl.innerHTML = listItems
-    taskCounter(tasks)
-    setID(checkboxCount)
-    deleteItem()
-   
-} 
-*/
-
-//Display Months
-
-/**************Add ID attribute to List ***********/
-
-function setID(count){
-    let inputCheckbox = document.querySelectorAll('input[type=checkbox]') //NodeList of checkboxes
-    let checkboxArr = Array.from(inputCheckbox) //convert it to an array
-    checkboxArr.forEach(function(checkboxx){ //each input list item has an id number
-        let checkNum = count++ 
-        checkboxx.setAttribute("id", checkNum) 
-        
-        checkbox()
-    })
-
-    inputCheckbox.forEach(function(checkbox){
-        let checkboxId = checkbox.id
-        localStorage.setItem(checkboxId, checkbox.checked) //It must have a key-value pair..
-        //for the second item, I get a boolean value of whether or not the checkbox is checked
-        //it will storge the id number and a boolean value
-    })
-   
-}
-
-
-/******************CHECKBOX ****************/
-function checkbox(){ //checks for updates to the checkbox and stores the changes in localStorage
-    let inputCheckbox = document.querySelectorAll('input[type=checkbox]')
-
-    inputCheckbox.forEach(function(checkbox){
-        checkbox.addEventListener('click', function(){
-            let checkboxId = checkbox.id
-            localStorage.setItem(checkboxId, checkbox.checked)
-        })
-    })
-    
-/*checked attribute is a boolean attribute
-The below code is checking the checked status of all the
-checkboxes. If there was no clicks, their state is set to false for all
-permantantly until a click is made. Then, it will update the state.*/
-
- 
-    inputCheckbox.forEach(function(checkbox){
-        let checkboxId = checkbox.id;
-        let checkboxState = localStorage.getItem(checkboxId)
-        if (checkboxState === 'true'){
-            checkbox.checked = true;
-        } else{
-            checkbox.checked = false;
-        }
-    })
-}
-
-
-/*************DELETE*****************/
-function deleteItem(){
-    let inputCheckbox = document.querySelectorAll('input[type=checkbox]')
-    const trashIcons = document.querySelectorAll('.fa-trash-can')
-    let trashArr = Array.from(trashIcons)
-    
-
-    for (let i = 0; i < trashArr.length; i++){
-        trashArr[i].addEventListener('click', ()=>{
-         myTasks.splice(i, 1)
-
-         let checkboxState = localStorage.getItem(inputCheckbox[i].id)
-         let checkboxState2 = localStorage.getItem(inputCheckbox[i + 1]?.id) /*I used optional chaining operator (?)
-         this is what fixed the undefined error*/
-            
-         
-         if(checkboxState === 'true'){
-            inputCheckbox[i].checked = false
-            localStorage.setItem(inputCheckbox[i].id, inputCheckbox[i].checked)
-            
-         } else if (checkboxState === 'false' && checkboxState2 === 'true'){
-            inputCheckbox[i].checked = true
-            inputCheckbox[i + 1].checked = false
-            localStorage.setItem(inputCheckbox[i].id, inputCheckbox[i].checked)
-            localStorage.setItem(inputCheckbox[i + 1].id, inputCheckbox[i + 1].checked)
-           
-         } 
-
-        render(myTasks)
-        localStorage.setItem("myTasks", JSON.stringify(myTasks))
-             
-        })
-    }
-
-}
 /************TASK COUNT************/
 function taskCounter(tasks){
     const textHolder = document.getElementById('count')
     let length = tasks.length
     textHolder.innerHTML = length
 }
-
-
-
-
-
 
 
 
@@ -246,6 +37,16 @@ document.addEventListener('DOMContentLoaded', () =>{
 
     //Date feature initilization
     initializeDateFeature();
+
+    //Open form for new list entry
+    document.querySelector('.add-new-item').addEventListener('click', openNewForm )
+    //Close to-do list form
+    document.querySelector('.exit-form').addEventListener('click', closeForm)
+
+     
+    //Close full view container
+    document.querySelector('.exit-full-view').addEventListener('click', closeFullViewContainer)
+    
 })
 
 
@@ -372,8 +173,16 @@ function deleteCategories(){
 
 
 
-
-
+const todoNewEntryForm = document.querySelector('.new-todo-item-container')
+const todoListDisplay = document.querySelector('.middle-container')
+function openNewForm(){
+    todoListDisplay.classList.add('screen-size-40')
+    todoNewEntryForm.classList.add('display')
+}
+function closeForm(){
+    todoListDisplay.classList.remove('screen-size-40')
+    todoNewEntryForm.classList.remove('display')
+}
 
 //******************* FORM SUBMISSION FOR NEW EVENT OR TASK ************************//
 //Remove display block for the map once the user clicks btn
@@ -446,6 +255,8 @@ function submitForm(ev){
  
     //Call the function that will display the categories
       compareDates()
+      closeForm()
+  
 }
 
 //Used when localStorage key is deleted manually
@@ -469,7 +280,8 @@ function deleteEntry(currentListID){
                 console.log('it matches', i)
                 formDataArr.splice(i, 1)
                 localStorage.setItem('FormData', JSON.stringify(formDataArr))
-                
+
+                closeFullViewContainer()
                 compareDates()
 
                 /*
@@ -505,7 +317,6 @@ function compareDates(){
     })
 }
 
-
 function displayPreviewOfTodoList(id, title, type, date, category, color){
     todoList.innerHTML += `<li class="list-item" id="${id}"> <input type="checkbox" id="${id}" class="checkbox"> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i></li><p class="list-details">${date} | ${type} | ${category} <span class="color-box" style="background-color:${color};"></span></p>` 
     getList()
@@ -513,23 +324,35 @@ function displayPreviewOfTodoList(id, title, type, date, category, color){
 }  
 
 
-//Obtain new version of UL element
+const listDetailContainer = document.querySelector('.list-detail-container')
+function openFullViewContainer(){
+    listDetailContainer.classList.add('display-list-detail-container')
+    todoListDisplay.classList.add('screen-size-40') //not remove a window, just making it smaller
+
+}
+function closeFullViewContainer(){
+    todoListDisplay.classList.remove('screen-size-40')
+    listDetailContainer.classList.remove('display-list-detail-container')
+}
+
 let fullListView = document.getElementById('full-list-view')
 const getList = () =>{
     todoList = document.getElementById('todo-List') //list of item(s) displayed for selected date
     let arrowIcon = document.querySelectorAll('.list-arrow')
     let list = document.querySelectorAll('.list-item')
 
+
     arrowIcon.forEach((arrow, j)=>{
         arrow.addEventListener('click', function(){
            let currentListID = Number(list[j].id)
-           
-            fullListView.innerHTML= ""
+
+           fullListView.innerHTML= ""
             formDataArr.forEach((dataEntry)=>{
                 if(dataEntry.id == currentListID ){
 
                     /////VIEW FULL DETAILS OF TODO LIST/////
-                    viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.type, dataEntry.description, dataEntry.category, dataEntry.color, dataEntry.location )  
+                    viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.type, dataEntry.description, dataEntry.category, dataEntry.color, dataEntry.location ) 
+                    openFullViewContainer()
                 }  
             })
 

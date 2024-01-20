@@ -153,8 +153,10 @@ i.fa-solid.fa-list{
     height: 95%;
     margin-right: 20px;
     align-self: center;
-    display: none; 
-   
+    display: none;
+}
+.display-list-detail-container{
+    display: inline-block;
 }
 
 .list-container{
@@ -260,7 +262,10 @@ p#entry-location{
     height: 95%;
     margin-right: 20px;
     align-self: center;
-    
+    display:none;
+}
+.display{
+    display:inline-block;
 }
 
 #exit-form{
@@ -523,14 +528,16 @@ i.fa-solid.fa-map-location{
 .middle-container{
     position: relative;
     background-color: white;
-    width: 40%; /*Its not reponsive but it works for this one*/
+    width: 77%; /*Its not reponsive but it works for this one*/
     margin: 0 auto; /*centers div*/
-    /*height: 600px; */
     height: 95%;
     align-self: center;
-    /*box-shadow: 0 3px 10px rgb(0 0 0 /0.3); /* offset-x | offset-y | blur-radius | color */
  
 }
+.middle-container.screen-size-40{
+    width: 40%
+}
+
 
 .top-container{
     position: relative;
