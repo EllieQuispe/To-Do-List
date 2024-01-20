@@ -55,13 +55,7 @@ body{
     cursor: pointer;
     position: relative;
 }
-/*
-.menu-options:hover{
-    background-color:rgb(102, 90, 145) ;
-    color: white;
-    border-radius: 10px;
-}
-*/
+
 .new-category{
     font-family: 'Inter', sans-serif;
     font-size: 15px;
@@ -97,10 +91,7 @@ i.fa-solid.fa-angles-right{
 i.fa-solid.fa-list{
     margin-right: 5px;
 }
-/*
-i.fa-solid{
-    padding-right: 10px;
-} */
+
 .events, .categories{
     margin-top: 50px;
 }
@@ -152,7 +143,7 @@ i.fa-solid{
 
 
 /************* RIGHTSIDE CONTAINER **********/
-.rightside-container{
+.list-detail-container{
     position: relative;
     background-color: #f4f4f4;
     border-radius: 15px;
@@ -160,9 +151,92 @@ i.fa-solid{
     height: 95%;
     margin-right: 20px;
     align-self: center;
-    display: none;
+   
+   
 }
 
+/*
+
+.top-section p.disabled{
+    display: inline;
+    border: 1px solid #b9b9b9;
+    color: #b9b9b9;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: transparent;
+    text-align: center;
+
+}
+.top-section p.delete-btn{
+    padding: 4px 8px;
+    margin: 0;
+    text-align: center;
+    text-decoration: none;
+}
+.top-section p.edit-btn{
+    padding: 4px 12px;
+    margin: 0px 0px 0px px;
+    text-align: center;
+    text-decoration: none;
+}
+
+/*I will add the below button code with JavaScript*/
+/*
+.event-active{
+    display: inline;
+    padding: 4px 8px;
+    margin: 0;
+    background-color: transparent;
+    color: rgb(102, 90, 145);
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid rgb(102, 90, 145);
+}
+.task-active{
+    display: inline;
+    padding: 4px 12px;
+    margin: 0px 0px 0px px;
+    background-color: transparent;
+    color: rgb(102, 90, 145);
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid rgb(102, 90, 145);
+}
+.event-active:hover, .task-active:hover{
+    background-color: rgb(102, 90, 145);
+    color: white;
+    border: 1px solid rgb(102, 90, 145);
+    box-shadow: 0px 1px 20px -7px rgba(0,0,0,0.56);
+    cursor: pointer;
+}
+p.event-active.clicked, p.task-active.clicked{
+    background-color: rgb(102, 90, 145);
+    color: white;
+    border: 1px solid rgb(102, 90, 145);
+}
+
+input.disabled{  Date
+    color:#b9b9b9;   
+    cursor: default; 
+}
+
+input#color-options.disabled{
+    box-shadow: none;
+    cursor:default;
+}
+
+i.disabled{
+    color: #b9b9b9;
+    cursor: default;
+}
+
+.color-picker-container p.disabled{
+    color: #b9b9b9;
+}
+
+
+*/
 
 /******** NEW TASK/EVENT CONTAINER ***********/
 .new-todo-item-container{
@@ -173,9 +247,18 @@ i.fa-solid{
     min-width: 150px;
     height: 95%;
     margin-right: 20px;
-    align-self: center;
-
+    align-self: center; 
     
+}
+
+#exit-form{
+    height: 20px;
+    position: absolute;
+    right: 50px;
+    
+}
+i#exit-icon{
+    font-size:32px;
 }
 #todo-form{
     display: flex;
@@ -184,8 +267,8 @@ i.fa-solid{
     height: 100%;
 }
 
-#top-section{
-    margin: 20px;
+.top-section{
+    margin: 53px 20px 20px 20px;
 }
 #title-input{
     width: 100%;
@@ -203,11 +286,11 @@ i.fa-solid{
     font-size: 15px;
     
 }
-#top-section input[type=text]{
+.top-section input[type=text]{
     border-bottom: none;
 }
 
-#event-option, #task-option, .delete-btn, .save-btn{
+#event-option, #task-option, .clear-btn, .save-btn{
     font-family: 'Inter', sans-serif;
     font-size: 16px;
     border-radius: 5px;
@@ -375,7 +458,7 @@ i.fa-solid.fa-map-location{
     
 }
 
-.delete-btn{
+.clear-btn{
     padding: 10px 20px;
     width: 45%;
     font-family: 'Inter', sans-serif;
@@ -397,7 +480,7 @@ i.fa-solid.fa-map-location{
     cursor: pointer;
 }
 
-.delete-btn:hover, .save-btn:hover{
+.clear-btn:hover, .save-btn:hover{
     background-color: rgb(102, 90, 145);
     color: white;
     border: 1px solid rgb(102, 90, 145);
@@ -453,16 +536,21 @@ i.fa-solid.fa-map-location{
     flex-grow: 2;
     text-align: center;
     height: 50px;
-
-   
+    cursor: pointer;
 }
 
-.fa-chevron-left,
-.fa-chevron-right{
+
+.date-arrow{
     color: rgb(102, 90, 145); 
     position: absolute;
     top: 53%; /*I can change the vertical alignment later*/
     transform: translateY(-53%);
+}
+.date-arrow:hover{
+    color: rgb(102, 90, 145); 
+    box-shadow: 0px 0px 3px 1px rgba(172,172,172);
+    border-radius: 50%;
+    padding: 4px 7px;
 }
 
 .fa-chevron-left{
@@ -472,47 +560,136 @@ i.fa-solid.fa-map-location{
     right: 55%;
 }
    
-
-
 /****Date********/
-#date{
-    flex-grow: 4;
+
+#date-container{
+    width: 300px;
     text-align: center;
-
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    
 }
-
-#currentDay{
+#day-of-the-week{
     color:rgb(102, 90, 145);
-    font-size: 19px;
+    font-size: 24px;
     font-family: 'Inter', sans-serif;
     text-transform: uppercase;
     font-weight: 900;
     font-weight: bolder;
     letter-spacing: 1px;
-    margin-right: 9px;
-    
+    margin-right: 5px;
 }
-
-
-#month-numberDate{
+#currentDate{
     color:rgb(155, 143, 202);
-    font-size: 16px;
+    font-size: 17px;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-    
-   
-    
+    margin-top: 4px;
 }
 
 /******MIDDLE INNER CONTAINER******/
 .mid-container{
     position: relative;
-    height: 434px;
+    height: 100%;
+    overflow: hidden;
+    margin-left: 25px;
+    margin-right: 25px;
 }
+
+/*********LIST**********/
+
+ul {
+    position: relative;
+    list-style: none;
+    margin-top: 25px;
+}
+
+ul#todo-List{
+    padding: 0px;
+}
+li.list-item{
+    margin-bottom: 10px;;
+}
+
+ul li{
+    display: flex;
+    color: rgb(155, 143, 202);
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    margin-bottom: 25px;
+    width: 100%;  
+    align-items: center; 
+    position: relative;  
+   
+}
+
+
+.checkbox{
+    margin-left: 9px;
+    margin-right: 13px;
+    height: 15px;
+    width: 21px;
+    align-self: center;
+    cursor: pointer;
+}
+i.list-arrow{
+    position: absolute;
+    right: 14px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+p.list-details{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding-left: 45px;
+    font-size: 12px;
+}
+.color-box{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 3px;
+    border-radius: 50%;
+}
+ 
+
+ /*********CHECKBOX*********/
+
+ .regular-checkbox{
+    -webkit-appearance: none; 
+    /*used in css syntax for rendering content in Safari and Chrome browsers
+    firefox is gecko
+    safari is webkit 
+    chrome is blink (a fork of webkit) */
+    border: 1px solid rgb(102, 90, 145);
+    width: 13px;
+    height:13px;
+    border-radius: 2px;
+    box-shadow:0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    margin-right: 5px;
+    
+    
+ }
+ .regular-checkbox:active, .regular-checkbox:checked:active {
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(140, 127, 181, 0.497);
+}
+.regular-checkbox:checked {
+	background-color: #e9ecee;
+	border: 1px solid #c5c8ca;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+	color: #99a1a7;
+}
+.regular-checkbox:checked:after {
+	content: '\2714';
+	font-size: 15px;
+	position: relative;
+	top: -4px;
+	color: rgb(102, 90, 145);
+}
+
+
+
 
 
 /******lower container******/
@@ -564,7 +741,6 @@ input[type=text]{
     color: rgb(155, 143, 202);
     
 }
-
 
 
 
@@ -623,77 +799,3 @@ input[type=text]{
 
 } */
 
-/*********LIST**********/
-
-ul {
-    position: relative;
-    list-style: none;
-    margin-top: 25px;
-}
-
-ul#list{
-    padding-left: 23px;
- 
-  
-}
-
-ul li{
-    color: rgb(155, 143, 202);
-    font-size: 16px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    display: flex;
-    margin-bottom: 25px;
-
-  /* border: 1px solid red; */
-   width: 310px;      
-}
-
-
- .fa-trash-can{ 
-   /* border: 1px solid yellowgreen;*/
-    position: absolute;
-    right: 25px;
-    line-height: 40px;
-    margin-top: 3px;
-    color:rgb(218, 215, 215)
- }
-
-
- .fa-trash-can:hover{
-    color:rgb(102, 90, 145);
- }
-
- /*********CHECKBOX*********/
-
- .regular-checkbox{
-    -webkit-appearance: none;
-    /*used in css syntax for rendering content in Safari and Chrome browsers
-    firefox is gecko
-    safari is webkit 
-    chrome is blink (a fork of webkit) */
-    border: 1px solid rgb(102, 90, 145);
-    width: 13px;
-    height:13px;
-    border-radius: 2px;
-    box-shadow:0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);;
-    margin-right: 5px;
-    
-    
- }
- .regular-checkbox:active, .regular-checkbox:checked:active {
-	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(140, 127, 181, 0.497);
-}
-.regular-checkbox:checked {
-	background-color: #e9ecee;
-	border: 1px solid #c5c8ca;
-	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
-	color: #99a1a7;
-}
-.regular-checkbox:checked:after {
-	content: '\2714';
-	font-size: 15px;
-	position: relative;
-	top: -4px;
-	color: rgb(102, 90, 145);
-}
