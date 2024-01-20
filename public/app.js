@@ -530,11 +530,17 @@ const getList = () =>{
 /////VIEW FULL DETAILS OF TODO LIST/////
 function viewFullDetailsOfTodoItem(title, date, type, description, category, color, location){
     fullListView.innerHTML = `<li id='todo-entry'>
-                                <div><p>${type}</p></div>
-                                <p class="list-details">${date} | ${category} <span class="color-box" style="background-color:${color};"></span></p>
-                                <h2>${title}</h2>
-                                <p>${description}</p>
-                                <p>Location: ${location}</p>
+                                <div>
+                                <p id="type-of-List">${type}</p>
+                                <p class="entry-date-category-color">${date} | ${category} <span class="color-box" style="background-color:${color};"></span></p>
+                                <h2 id="entry-title">${title}</h2>
+                                <p id="entry-description">${description}</p>
+                                <p id="entry-location">Location: ${location}</p>
+                                </div>
+                                <div class="delete-edit-btn-container">
+                                    <button type="button" class="delete-btn">Delete</button>
+                                    <button type="button" class="edit-btn">Edit</button>
+                                </div>
                             </li>`
 }
 
