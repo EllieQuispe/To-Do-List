@@ -153,7 +153,7 @@ i.fa-solid.fa-list{
     height: 95%;
     margin-right: 20px;
     align-self: center;
-   /* display: none; */
+    display: none; 
    
 }
 
@@ -259,8 +259,7 @@ p#entry-location{
     min-width: 150px;
     height: 95%;
     margin-right: 20px;
-    align-self: center; 
-    display: none; 
+    align-self: center;
     
 }
 

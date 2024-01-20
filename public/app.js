@@ -492,7 +492,7 @@ function compareDates(){
 
 
 function displayPreviewOfTodoList(id, title, type, date, category, color){
-    todoList.innerHTML += `<li class="list-item" id="${id}"> <input type="checkbox" class="checkbox"> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i></li><p class="list-details">${date} | ${type} | ${category} <span class="color-box" style="background-color:${color};"></span></p>` 
+    todoList.innerHTML += `<li class="list-item" id="${id}"> <input type="checkbox" id="${id}" class="checkbox"> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i></li><p class="list-details">${date} | ${type} | ${category} <span class="color-box" style="background-color:${color};"></span></p>` 
     getList()
    // console.log(todoList)
    
