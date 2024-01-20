@@ -1,6 +1,6 @@
 
 
-const currentDate = document.getElementById('date')
+//const currentDate = document.getElementById('date')
 const day = document.getElementById('currentDay')
 const monthAndNum = document.getElementById('month-numberDate')
 const newTask = document.querySelector('.fa-plus')
@@ -18,6 +18,7 @@ let trashCan =''
 
 
 /*****************GET DATE*************/
+/*
 const monthName = ["Jan.", "February", "March", "April", "May", "June", "July", "Aug.", 
 "Sept.", "Oct.", "Nov.", "Dec."]
 
@@ -26,23 +27,23 @@ const dayName = ["Sunday,", "Monday,", "Tuesday,", "Wednesday,", "Thursday, ", "
 
 function getDate(){
     let today = new Date() /*this gives me all the information, but too much information*/
-    let month = monthName[today.getMonth()]  /*Feb*/
-    let date = today.getDate() /*18*/
-    date = ordinalNumbers(date)
+/*    let month = monthName[today.getMonth()]  /*Feb*/
+/*    let date = today.getDate() /*18*/
+/*    date = ordinalNumbers(date)
 
     let currentDay = dayName[today.getDay()]  /*sat.*/
-    let todayDate = `${currentDay}`
+/*    let todayDate = `${currentDay}`
     let monthNum = `${month} ${date}`
 
     day.innerHTML = todayDate
     monthAndNum.innerHTML = monthNum
 
     setTimeout(function(){
-        getDate()
-    }, 3000)
-}
-getDate()
-
+        getDate() */
+ /*   }, 3000) 
+} */
+//getDate() 
+/*
 function ordinalNumbers(d){
     if (d === 1 || d === 21 || d === 31){
         return d + "st"
@@ -54,9 +55,13 @@ function ordinalNumbers(d){
         return d + "th"
     }
 }
+*/
 
 
 
+
+
+//Render Tasks and Event 
 
 
 /**********RENDER*************/
@@ -65,11 +70,8 @@ if (tasksfromLocalStorage){
     myTasks = tasksfromLocalStorage
     render(myTasks)
 
-    
 } 
-
-
-
+//I dont' need the addEventListener for this btn
 inputBtn.addEventListener("click", function(){ //clicking enter button to add item to list
 
     if (inputEl.value == '' ){
@@ -84,7 +86,7 @@ inputBtn.addEventListener("click", function(){ //clicking enter button to add it
         closeForm()
     }
       
-})
+}) //Delete
 
 
 inputEl.onkeydown = function(event){ //pressing enter key instead of clicking button
@@ -99,11 +101,11 @@ inputEl.onkeydown = function(event){ //pressing enter key instead of clicking bu
         render(myTasks)
         closeForm()
     }
-}
-*/
+} Delete
+*/ 
 
 
-
+/*
 function render(tasks){
     let listItems = "";
     checkboxCount = 1;
@@ -115,17 +117,24 @@ function render(tasks){
             
            /*It clears the listItem and then shows you the different changes to what
            listItems is*/  
-    } 
+ /*   } 
    
     /*when you console log listItem here, now you get what listItem is with the
     step by step changes*/
-
+/*
     ulEl.innerHTML = listItems
     taskCounter(tasks)
     setID(checkboxCount)
     deleteItem()
    
-}
+} 
+*/
+
+//Display Months
+
+
+
+
 
 
 /**************Add ID attribute to List ***********/
@@ -226,26 +235,6 @@ function taskCounter(tasks){
 
 
 
-/***************PopUp box************/
-//newTask.addEventListener('click', openForm)
-//closeTask.addEventListener('click', closeForm)
-
-/*
-function openForm(){
-    document.getElementById('myForm').style.display = "block"
-    inputEl.placeholder == "Task Name"
-    document.querySelector('input[type=text]').style.setProperty("--c", "#9b8fca")
-
-}
-
-
-function closeForm(){
-        document.getElementById('myForm').style.display = "none"
-        inputEl.placeholder = "Task Name"
-       
-} 
-*/
-
 
 
 
@@ -261,8 +250,49 @@ document.addEventListener('DOMContentLoaded', () =>{
     //Form submission when adding a new event or task
     document.getElementById('todo-form').addEventListener('submit', submitForm )
     //Call the function to display the data from the form when the page loads
-    displayFormData();
+    savingDataInArr()
+
+    //Date feature initilization
+    initializeDateFeature();
 })
+
+
+
+let currentDate = new Date()
+function initializeDateFeature(){
+
+
+    function updateDateDisplay(){
+        const options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+        };
+        //Display to the UI
+        document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
+
+       // console.log(getSelectedDate()) 
+        compareDates()
+    }
+    updateDateDisplay()
+
+
+    //Arrow buttons to change dates
+    function previousDate(){
+        currentDate.setDate(currentDate.getDate() - 1)
+        updateDateDisplay()
+    }
+
+    function nextDate(){
+        currentDate.setDate(currentDate.getDate() + 1)
+        updateDateDisplay()
+    }
+
+//Listenting for a click on the arrow buttons
+document.getElementById('previousBtn').addEventListener('click', previousDate)
+document.getElementById('nextBtn').addEventListener('click', nextDate)
+}
 
 
 
@@ -286,14 +316,11 @@ function addNewCategory() {
     //push object to the categories array
     categories.push(category);  
 
-
      //reset the value box to blank                                           
     document.getElementById('input-category').value = "Add a Category"  
    
- 
     //Saving array to localStorage
     localStorage.setItem('MyCategoryList', JSON.stringify(categories))
- 
 
      //Call the function that will display the categories
      displayCreatedCategories()
@@ -356,8 +383,6 @@ function deleteCategories(){
 
 
 
-
-
 //******************* FORM SUBMISSION FOR NEW EVENT OR TASK ************************//
 //Remove display block for the map once the user clicks btn
 const mapID = document.getElementById('map')
@@ -379,9 +404,6 @@ function submitForm(ev){
     const color = colorPickerValue()
     //Location
     const location = clientAddress()
-    //Attachments
-
-    //Images
 
     
     //Object
@@ -397,7 +419,6 @@ function submitForm(ev){
 
     }
 
-     
     //Missing items before submission//
         //Add title input field
         if(formData.title.trim() === "" || formData.title.trim() == "Add Title"){
@@ -419,14 +440,10 @@ function submitForm(ev){
         }
 
     //Reset Values//                                         
-     typeOfTodo = ""; //Event or task
-     formCurrentDate() //Date
-                                              
-     
-     
-     
+        typeOfTodo = ""; //Event or task
+        formCurrentDate() //Date
+        //mapID.style.display = 'none' I will active this code later
 
-     //mapID.style.display = 'none' I will active this code later
 
      //Insert object to array
      formDataArr.push(formData)
@@ -438,24 +455,66 @@ function submitForm(ev){
       //Call the function that will display the categories
       //It should display in the middle container
     // console.log(formData.title)
-    displayFormData()
+    compareDates()
 }
 
-function displayFormData(){
+function savingDataInArr(){
     const savedFormItems = localStorage.getItem('FormData')
     formDataArr = JSON.parse(savedFormItems)
-
+    //console.log(formDataArr)
     if(!formDataArr){ //null is falsy (When localStorage key is deleted manually)
         formDataArr = []
     }
+}
+
+//function for deleting forms will go here
+function deleteEntry(){
+    //call localStorage and remove with the help of the X icon
+    //reset localStorage
+    //call compareDates
+
+}
     
+
+
+function compareDates(){
+   // console.log(currentDate)
+    const options={
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    }
+
+    let dateFormat = currentDate.toLocaleDateString('en-US', options) //##/##/####
+    console.log(dateFormat)
+    //console.log(dateFormat) //The date changes with the arrow and the format is now the same as how it's save but it's a string
+
+  
+   // formDataArr is the current localStorage Array
+   //console.log(formDataArr)
+   const todoList = document.getElementById('todo-List') //UL
+   todoList.innerHTML =""
+  
+    formDataArr.forEach((dataEntry, i)=>{
+        if(dataEntry.date == dateFormat){
+            displayEntryForCurrentDay(dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.description, dataEntry.category, dataEntry.color, dataEntry.location)
+        } 
+    })
 }
 
-function resetForm(){
 
-}
+const todoList = document.getElementById('todo-List') //UL
 
 
+function displayEntryForCurrentDay(title, type, date, description, category, color, location){ 
+   
+    todoList.innerHTML += `<li>${title}</li><br><p>${date} | ${type} | ${category}</p>` 
+
+}  
+
+
+
+//Form submission input fields//
 function getTitle(){
         const titleInput = document.getElementById("title-input")
         const titleValue = titleInput.value.trim()  
@@ -539,7 +598,7 @@ function getSelectedDate(){
     const year = dateObject.getFullYear();
 
     //Format the date as mm-dd-yyyy
-    const formattedDate = `${month}-${day}-${year}`;
+    const formattedDate = `${month}/${day}/${year}`;
 
     return formattedDate
 }
