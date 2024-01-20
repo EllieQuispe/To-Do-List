@@ -437,17 +437,15 @@ function submitForm(ev){
         //mapID.style.display = 'none' I will active this code later
 
 
-     //Insert object to array
+    //Insert object to array
      formDataArr.push(formData)
  
-     //Saving object to localStorage
+    //Saving object to localStorage
      localStorage.setItem('FormData', JSON.stringify(formDataArr))
   
  
-      //Call the function that will display the categories
-      //It should display in the middle container
-    // console.log(formData.title)
-    compareDates()
+    //Call the function that will display the categories
+      compareDates()
 }
 
 //Used when localStorage key is deleted manually
@@ -461,14 +459,32 @@ function savingDataInArr(){
 }
 
 //function for deleting forms will go here
-function deleteEntry(){
-    //call localStorage and remove with the help of the X icon
-    //reset localStorage
-    //call compareDates
+function deleteEntry(currentListID){
+    const deleteBtn = document.querySelector('.delete-btn')
+    deleteBtn.addEventListener('click', function(){
 
+        formDataArr.forEach((dataEntry, i)=>{
+            if(dataEntry.id == currentListID ){
+                //delete
+                console.log('it matches', i)
+                formDataArr.splice(i, 1)
+                localStorage.setItem('FormData', JSON.stringify(formDataArr))
+                
+                compareDates()
+
+                /*
+                categories.splice(i, 1)
+                localStorage.setItem('MyCategoryList', JSON.stringify(categories))
+                displayCreatedCategories()
+                */
+                
+            } 
+          })
+    })
 }
 
- //HTML element where list will be inserted (UL)
+
+//HTML element where list will be inserted (UL)
 let todoList = document.getElementById('todo-List')
 
 function compareDates(){
@@ -490,11 +506,9 @@ function compareDates(){
 }
 
 
-
 function displayPreviewOfTodoList(id, title, type, date, category, color){
     todoList.innerHTML += `<li class="list-item" id="${id}"> <input type="checkbox" id="${id}" class="checkbox"> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i></li><p class="list-details">${date} | ${type} | ${category} <span class="color-box" style="background-color:${color};"></span></p>` 
     getList()
-   // console.log(todoList)
    
 }  
 
@@ -502,29 +516,27 @@ function displayPreviewOfTodoList(id, title, type, date, category, color){
 //Obtain new version of UL element
 let fullListView = document.getElementById('full-list-view')
 const getList = () =>{
-    todoList = document.getElementById('todo-List')
+    todoList = document.getElementById('todo-List') //list of item(s) displayed for selected date
     let arrowIcon = document.querySelectorAll('.list-arrow')
     let list = document.querySelectorAll('.list-item')
-    
-    
-    //console.log(arrowIcon)
 
     arrowIcon.forEach((arrow, j)=>{
         arrow.addEventListener('click', function(){
            let currentListID = Number(list[j].id)
            
             fullListView.innerHTML= ""
-            formDataArr.forEach((dataEntry,i)=>{
+            formDataArr.forEach((dataEntry)=>{
                 if(dataEntry.id == currentListID ){
 
                     /////VIEW FULL DETAILS OF TODO LIST/////
-                    viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.type, dataEntry.description, dataEntry.category, dataEntry.color, dataEntry.location )
+                    viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.type, dataEntry.description, dataEntry.category, dataEntry.color, dataEntry.location )  
                 }  
-            }) 
+            })
+
+            deleteEntry(currentListID)
         })
     })    
 }
-
 
 
 /////VIEW FULL DETAILS OF TODO LIST/////
