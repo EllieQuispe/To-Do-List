@@ -259,17 +259,17 @@ document.addEventListener('DOMContentLoaded', () =>{
 
 
 let currentDate = new Date()
-function initializeDateFeature(){
 
+function initializeDateFeature(){
 
     function updateDateDisplay(){
         const options = {
-            weekday: 'long',
             year: 'numeric',
             month: 'short',
             day: 'numeric',
         };
         //Display to the UI
+        document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
         document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
 
        // console.log(getSelectedDate()) 
@@ -323,9 +323,7 @@ function addNewCategory() {
     localStorage.setItem('MyCategoryList', JSON.stringify(categories))
 
      //Call the function that will display the categories
-     displayCreatedCategories()
-
-    
+     displayCreatedCategories()    
 }
 
 
@@ -380,6 +378,9 @@ function deleteCategories(){
         })
     })
 }
+
+
+
 
 
 
@@ -478,7 +479,6 @@ function deleteEntry(){
 
 
 function compareDates(){
-   // console.log(currentDate)
     const options={
         year: 'numeric',
         month: '2-digit',
@@ -486,12 +486,8 @@ function compareDates(){
     }
 
     let dateFormat = currentDate.toLocaleDateString('en-US', options) //##/##/####
-    console.log(dateFormat)
     //console.log(dateFormat) //The date changes with the arrow and the format is now the same as how it's save but it's a string
 
-  
-   // formDataArr is the current localStorage Array
-   //console.log(formDataArr)
    const todoList = document.getElementById('todo-List') //UL
    todoList.innerHTML =""
   
@@ -505,12 +501,10 @@ function compareDates(){
 
 const todoList = document.getElementById('todo-List') //UL
 
-
 function displayEntryForCurrentDay(title, type, date, description, category, color, location){ 
-   
-    todoList.innerHTML += `<li>${title}</li><br><p>${date} | ${type} | ${category}</p>` 
-
+    todoList.innerHTML += `<li class="list-item"> <input type="checkbox" class="checkbox"> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i> </li><p class="list-details">${date} | ${type} | ${category} <span class="color-box" style="background-color:${color};"></span></p>` 
 }  
+
 
 
 
@@ -531,10 +525,11 @@ let typeOfTodo = '';
 function toggleTaskEventHighlight(){
     const eventOption = document.getElementById('event-option')
     const taskOption = document.getElementById('task-option')
-    const parentDiv = document.getElementById('top-section')
+    const parentDiv = document.querySelector('.top-section')
 
     parentDiv.addEventListener('click', function(e){
         let target = e.target
+        console.log(target)
 
         if(target.id === 'event-option'){
 
