@@ -132,11 +132,6 @@ function render(tasks){
 
 //Display Months
 
-
-
-
-
-
 /**************Add ID attribute to List ***********/
 
 function setID(count){
@@ -216,7 +211,6 @@ function deleteItem(){
            
          } 
 
-        
         render(myTasks)
         localStorage.setItem("myTasks", JSON.stringify(myTasks))
              
@@ -224,8 +218,6 @@ function deleteItem(){
     }
 
 }
-
-
 /************TASK COUNT************/
 function taskCounter(tasks){
     const textHolder = document.getElementById('count')
@@ -240,7 +232,7 @@ function taskCounter(tasks){
 
 
 
-/*********************** NEW FEATURES *************************/
+/*********************************** NEW FEATURES *******************************/
 document.addEventListener('DOMContentLoaded', () =>{
     //New category submission
     document.querySelector('.fa-circle-plus').addEventListener('click', addNewCategory)    
@@ -271,8 +263,7 @@ function initializeDateFeature(){
         //Display to the UI
         document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
         document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
-
-       // console.log(getSelectedDate()) 
+ 
         compareDates()
     }
     updateDateDisplay()
@@ -459,11 +450,12 @@ function submitForm(ev){
     compareDates()
 }
 
+//Used when localStorage key is deleted manually
 function savingDataInArr(){
     const savedFormItems = localStorage.getItem('FormData')
     formDataArr = JSON.parse(savedFormItems)
-    //console.log(formDataArr)
-    if(!formDataArr){ //null is falsy (When localStorage key is deleted manually)
+
+    if(!formDataArr){ //null is falsy
         formDataArr = []
     }
 }
@@ -475,8 +467,9 @@ function deleteEntry(){
     //call compareDates
 
 }
-    
 
+ //HTML element where list will be inserted (UL)
+let todoList = document.getElementById('todo-List')
 
 function compareDates(){
     const options={
@@ -484,31 +477,69 @@ function compareDates(){
         month: '2-digit',
         day: '2-digit',
     }
-
-    let dateFormat = currentDate.toLocaleDateString('en-US', options) //##/##/####
-    //console.log(dateFormat) //The date changes with the arrow and the format is now the same as how it's save but it's a string
-
-   const todoList = document.getElementById('todo-List') //UL
-   todoList.innerHTML =""
+   //Changed date format to ##/##/####, so that it matches the list item date format
+   let dateFormat = currentDate.toLocaleDateString('en-US', options) 
+   
   
-    formDataArr.forEach((dataEntry, i)=>{
+   todoList.innerHTML =""
+   formDataArr.forEach((dataEntry, i)=>{
         if(dataEntry.date == dateFormat){
-            displayEntryForCurrentDay(dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.description, dataEntry.category, dataEntry.color, dataEntry.location)
+            displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.category, dataEntry.color)
         } 
     })
 }
 
 
-const todoList = document.getElementById('todo-List') //UL
 
-function displayEntryForCurrentDay(title, type, date, description, category, color, location){ 
-    todoList.innerHTML += `<li class="list-item"> <input type="checkbox" class="checkbox"> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i> </li><p class="list-details">${date} | ${type} | ${category} <span class="color-box" style="background-color:${color};"></span></p>` 
+function displayPreviewOfTodoList(id, title, type, date, category, color){
+    todoList.innerHTML += `<li class="list-item" id="${id}"> <input type="checkbox" class="checkbox"> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i></li><p class="list-details">${date} | ${type} | ${category} <span class="color-box" style="background-color:${color};"></span></p>` 
+    getList()
+   // console.log(todoList)
+   
 }  
 
 
+//Obtain new version of UL element
+let fullListView = document.getElementById('full-list-view')
+const getList = () =>{
+    todoList = document.getElementById('todo-List')
+    let arrowIcon = document.querySelectorAll('.list-arrow')
+    let list = document.querySelectorAll('.list-item')
+    
+    
+    //console.log(arrowIcon)
+
+    arrowIcon.forEach((arrow, j)=>{
+        arrow.addEventListener('click', function(){
+           let currentListID = Number(list[j].id)
+           
+            fullListView.innerHTML= ""
+            formDataArr.forEach((dataEntry,i)=>{
+                if(dataEntry.id == currentListID ){
+
+                    /////VIEW FULL DETAILS OF TODO LIST/////
+                    viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.type, dataEntry.description, dataEntry.category, dataEntry.color, dataEntry.location )
+                }  
+            }) 
+        })
+    })    
+}
 
 
-//Form submission input fields//
+
+/////VIEW FULL DETAILS OF TODO LIST/////
+function viewFullDetailsOfTodoItem(title, date, type, description, category, color, location){
+    fullListView.innerHTML = `<li id='todo-entry'>
+                                <div><p>${type}</p></div>
+                                <p class="list-details">${date} | ${category} <span class="color-box" style="background-color:${color};"></span></p>
+                                <h2>${title}</h2>
+                                <p>${description}</p>
+                                <p>Location: ${location}</p>
+                            </li>`
+}
+
+
+////////////////INFORMATION NEEDED FOR TODO LIST FORM SUBMISSION/////////////////////
 function getTitle(){
         const titleInput = document.getElementById("title-input")
         const titleValue = titleInput.value.trim()  
@@ -529,7 +560,7 @@ function toggleTaskEventHighlight(){
 
     parentDiv.addEventListener('click', function(e){
         let target = e.target
-        console.log(target)
+        
 
         if(target.id === 'event-option'){
 
