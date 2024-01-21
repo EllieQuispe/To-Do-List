@@ -85,18 +85,31 @@ h3{
 .task{
     margin-top: 45px;
 }
-
-i.fa-solid.fa-angles-right{
-    padding-left: 0;
-    margin-right:5px;
+.events{
+    margin-top: 20px;
 }
-i.fa-solid.fa-list{
-    margin-right: 5px;
-}
-
-.events, .categories{
+.categories{
     margin-top: 50px;
 }
+
+/*Counter*/
+.taskCount{
+    margin-left: 3px;
+    padding: 3px 7px;
+    color: rgb(102, 90, 145);
+    font-size: 15px;
+    border: 1px solid rgb(155, 143, 202);
+    border-radius: 45px;
+}
+.eventCount{
+    margin-left: 3px;
+    padding: 3px 7px;
+    color: rgb(102, 90, 145);
+    font-size: 15px;
+    border: 1px solid rgb(155, 143, 202);
+    border-radius: 45px;
+}
+
 .add-category-btn{
     font-family: 'Inter', sans-serif;
     padding: 8px 8px;
@@ -218,13 +231,13 @@ p#entry-location{
 
 .delete-edit-btn-container{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     margin-bottom: 20px;
 }
 
 .delete-btn{
     padding: 10px 20px;
-    width: 45%;
+    width: 35%;
     font-family: 'Inter', sans-serif;
     font-size: 17px;
     margin-right: 7px;
@@ -233,19 +246,9 @@ p#entry-location{
     color: rgb(102, 90, 145);
     cursor: pointer;
 }
-.edit-btn{
-    padding: 10px 27px;
-    width: 45%;
-    font-family: 'Inter', sans-serif;
-    font-size: 17px;
-    margin-left: 7px;
-    border: 1px solid rgb(102, 90, 145);
-    border-radius: 5px;
-    color: rgb(102, 90, 145);
-    cursor: pointer;
-}
 
-.delete-btn:hover, .edit-btn:hover{
+
+.delete-btn:hover{
     background-color: rgb(102, 90, 145);
     color:white;
 }
@@ -762,7 +765,7 @@ p.list-details{
     bottom: 0;
     height: 80px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     text-transform: uppercase;
     align-items: center;
     font-family: 'Inter', sans-serif;
