@@ -32,6 +32,8 @@ document.addEventListener('DOMContentLoaded', () =>{
 
     //Form submission when adding a new event or task
     document.getElementById('todo-form').addEventListener('submit', submitForm )
+    //Clear form
+    document.querySelector('.clear-btn').addEventListener('click', clearForm)
     //Call the function to display the data from the form when the page loads
     savingDataInArr()
 
@@ -324,6 +326,10 @@ function clearForm(typeOfTodo){
 
     //Remove Map - Remove display block for the map once the user clicks the save btn
     //mapID.style.display = 'none' I will active this code later - this is the map
+
+    //Clear location
+    document.getElementById('addressInput').value = ""
+    document.getElementById('addressInput').placeholder = "Add Location"
 }
 
 /*
@@ -407,7 +413,7 @@ function compareDates(){
 }
 
 function displayPreviewOfTodoList(id, title, type, date, category, color){
-    todoList.innerHTML += `<li class="list-item" id="${id}"><label class="container"> <input type="checkbox" id="${id}" class="checkbox"><span class="checkmark"></span></label> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i></li><p class="list-details">${date} | ${type} | ${category} <span class="color-box" style="background-color:${color};"></span></p>`
+    todoList.innerHTML += `<li class="list-item" id="${id}"><label class="container"> <input type="checkbox" id="${id}" class="checkbox"><span class="checkmark"></span></label> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i></li><p class="list-details">${date} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>`
     
     //To add an eventlistener to arrow icons next to list item incase user wants to a full view
     getList()
@@ -560,7 +566,6 @@ setInterval(formCurrentDate, 24 * 60 * 60 * 1000);
 
 function getSelectedDate(){
     const formDate = document.getElementById('form-Due-date').value;
-    console.log(formDate)
     
     //Convert the date to a Date object
     const dateObject = new Date(`${formDate}T00:00:00`);
@@ -620,7 +625,9 @@ function deleteCategoryPickerContainer(catg){
 const categoriesOption = document.getElementById('categories-option')
 categoriesOption.addEventListener('change', categorySelected)
 function categorySelected(){
-    const categoryName =document.getElementById('categories-option').value
+   const selectedOption = categoriesOption.options[categoriesOption.selectedIndex];
+   const categoryName = selectedOption.textContent;
+    console.log(categoryName)
     
     return categoryName
 }

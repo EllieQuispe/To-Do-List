@@ -29,7 +29,7 @@ body{
     margin-left: 20px;
     align-self: center;
     font-family: 'Inter', sans-serif;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 /*User Profile*/
@@ -500,6 +500,7 @@ input#color-options::-moz-color-swatch {
 }
 i.fa-solid.fa-layer-group{
     padding: 0 9px 0 3px;
+    color: #676b6f;
 }
 .hideCategoryBox{
     display: none;
@@ -508,6 +509,7 @@ i.fa-solid.fa-layer-group{
 i.fa-solid.fa-paintbrush{
     padding-left: 3px;
     margin-right: 13px;
+    color: #676b6f;
 }
 i.fa-solid.fa-location-dot{
     padding-left: 3px;
@@ -547,6 +549,13 @@ i.fa-regular.fa-clock{
 }
 .map-btn{
     margin-left: 3px;
+    border: 1px solid rgb(155, 143, 202);
+    padding: 5px 5px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 23px -7px rgba(145, 144, 144, 0.67);
+}
+.map-btn:hover{
+    box-shadow: 0px 1px 19px -5px rgba(145, 144, 144);
 }
 #map{
     display: none;
