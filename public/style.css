@@ -639,16 +639,58 @@ ul li{
     position: relative;  
    
 }
-
-
-.checkbox{
-    margin-left: 9px;
-    margin-right: 13px;
-    height: 15px;
-    width: 21px;
-    align-self: center;
+/*Style checkbox*/
+.container{
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12;
     cursor: pointer;
+    user-select: none;
 }
+.container input{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.checkmark{
+    position: absolute;
+    top: -9px;
+    left: 0;
+    height: 16px;
+    width: 17px;
+    background-color: transparent;
+    border: 1px solid rgb(102, 90, 145);
+    border-radius: 5px;
+}
+.container:hover input ~ .checkmark{
+    background-color: rgb(155, 143, 202);
+}
+.container input:checked ~ .checkmark{
+    background-color: rgb(102, 90, 145);
+}
+.checkmark:after{
+    content: "";
+    position: absolute;
+    display: none;
+}
+.container input:checked ~
+.checkmark:after{
+    display: block;
+}
+.container .checkmark:after{
+    left: 5px;
+    top: 0px;
+    width: 4px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+
 i.list-arrow{
     position: absolute;
     right: 14px;
@@ -662,7 +704,7 @@ p.list-details{
     margin-top: 10px;
     margin-bottom: 20px;
     padding-left: 45px;
-    font-size: 12px;
+    font-size: 15px;
     color:#676b6f;
 }
 .color-box{
