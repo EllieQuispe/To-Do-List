@@ -54,16 +54,17 @@ document.addEventListener('DOMContentLoaded', () =>{
 let currentDate = new Date()
 
 function initializeDateFeature(){
-
     function updateDateDisplay(){
         const options = {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
         };
-        //Display to the UI
-        document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
+        //Display full day to the UI
         document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
+        //Display week day to UI
+        document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
+        
  
         compareDates()
     }
@@ -81,9 +82,9 @@ function initializeDateFeature(){
         updateDateDisplay()
     }
 
-//Listenting for a click on the arrow buttons
-document.getElementById('previousBtn').addEventListener('click', previousDate)
-document.getElementById('nextBtn').addEventListener('click', nextDate)
+    //Listenting for a click on the arrow buttons
+    document.getElementById('previousBtn').addEventListener('click', previousDate)
+    document.getElementById('nextBtn').addEventListener('click', nextDate)
 }
 
 
@@ -171,19 +172,23 @@ function deleteCategories(){
     })
 }
 
-
-const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container
+/*********************OPENING AND CLOSING FORM FOR NEW ENTRY *********************/
+/*const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container */
 const todoNewEntryForm = document.querySelector('.new-todo-item-container')
 const todoListDisplay = document.querySelector('.middle-container')
 function openNewForm(){
     todoListDisplay.classList.add('screen-size-40')
     todoNewEntryForm.classList.add('display')
+
+    //If list detail container is open
+    listDetailContainer.classList.remove('display-list-detail-container')
 }
+/*
 function reOpenFormToEdit(){
     listDetailContainer.classList.remove('display-list-detail-container')
     todoListDisplay.classList.add('screen-size-40')
     todoNewEntryForm.classList.add('display')
-}
+} */
 function closeForm(){
     todoListDisplay.classList.remove('screen-size-40')
     todoNewEntryForm.classList.remove('display')
@@ -191,7 +196,6 @@ function closeForm(){
 }
 
 //******************* FORM SUBMISSION FOR NEW EVENT OR TASK ************************//
-//Remove display block for the map once the user clicks btn
 const mapID = document.getElementById('map')
 let formDataArr = [];
 
@@ -237,7 +241,7 @@ function submitForm(ev){
             alert('Please select Event or Task');
             return;
         }
-        resetBtn()
+     
 
         //Date submission
         if(!date){
@@ -245,20 +249,21 @@ function submitForm(ev){
             return;
         }
 
+    //resetBtn() I don't think I need the resetBtn() since clearForm could replace it
+
     //Reset Values//
     clearForm(typeOfTodo)        
-
 
     //Insert object to array
      formDataArr.push(formData)
  
     //Saving object to localStorage
      localStorage.setItem('FormData', JSON.stringify(formDataArr))
-  
  
     //Call the function that will display the categories
       compareDates()
       closeForm()
+      eventsTasksCounter()
   
 }
 
@@ -267,32 +272,64 @@ function savingDataInArr(){
     const savedFormItems = localStorage.getItem('FormData')
     formDataArr = JSON.parse(savedFormItems)
 
+    eventsTasksCounter()
+
     if(!formDataArr){ //null is falsy
         formDataArr = []
     }
 }
 
+const taskCountContainer=document.querySelector('.taskCount')
+const eventCountContainer=document.querySelector('.eventCount')
+function eventsTasksCounter(){
+    let taskCount = ""
+    let eventCount = ""
+    formDataArr.forEach((dataEntry, i)=>{
+        if(dataEntry.type == "Task"){
+            taskCount++
+            taskCountContainer.innerHTML = taskCount
+
+        } else if (dataEntry.type == "Event"){
+            eventCount++
+            eventCountContainer.innerHTML = eventCount
+        }
+    })
+}
 
 function clearForm(typeOfTodo){
-    
-    //title
+    //clear title
     document.getElementById('title-input').value = ""
     document.getElementById('title-input').placeholder = "Add Title"
 
+    //clear type
+    const eventOption = document.getElementById('event-option')
+    const taskOption = document.getElementById('task-option')
+
+    eventOption.classList.remove('clicked')
+    taskOption.classList.remove('clicked')
     typeOfTodo = ""; //Event or task
 
-    //description
+    //clear description
     document.getElementById('input-dedscription').value = ""
     document.getElementById('input-dedscription').placeholder = "Add Description"
 
+    //reset date
     formCurrentDate() //Date
 
-    //Map
+    //Remove Map - Remove display block for the map once the user clicks the save btn
     //mapID.style.display = 'none' I will active this code later - this is the map
 }
 
+/*
+function resetBtn(){
+    const eventOption = document.getElementById('event-option')
+    const taskOption = document.getElementById('task-option')
 
-//Manually enter information in form
+    eventOption.classList.remove('clicked')
+    taskOption.classList.remove('clicked')
+} */
+
+/*
 function reEnterForm(id, title, type, date, description, category, color){
     reOpenFormToEdit()//reopen form container
 
@@ -315,24 +352,26 @@ function resetEntry(listId){
 
     })
 }
+*/
 
-//function for deleting forms will go here
+//DELETY ENTRY, REMOVE CHECKBOX FROM LOCALSTORAGE, RESET FORMDATA, AND RESERT COUNTER
 function deleteEntry(currentListID){
     const deleteBtn = document.querySelector('.delete-btn')
     deleteBtn.addEventListener('click', function(){
 
         formDataArr.forEach((dataEntry, i)=>{
             if(dataEntry.id == currentListID){
-                //delete
-                console.log('it matches', i)
+                //delete 
                 formDataArr.splice(i, 1)
                 localStorage.setItem('FormData', JSON.stringify(formDataArr))
+                
 
                 closeFullViewContainer()
                 compareDates()
 
                 //Remove selected checkbox 
-                localStorage.removeItem(currentListID)   
+                localStorage.removeItem(currentListID) 
+                eventsTasksCounter()  
                 
             } 
           })
@@ -386,10 +425,15 @@ function trackCheckboxStatus(){
 }
 
 
-
+const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container
 function openFullViewContainer(){
     listDetailContainer.classList.add('display-list-detail-container')
     todoListDisplay.classList.add('screen-size-40') //not remove a window, just making it smaller
+
+    //If form is open, we do the below code
+    todoNewEntryForm.classList.remove('display')
+    clearForm()
+
 }
 function closeFullViewContainer(){
     todoListDisplay.classList.remove('screen-size-40')
@@ -417,7 +461,7 @@ function getList(){
             })
 
             deleteEntry(currentListID) //The delete btn is now able to listen to clicks
-            resetEntry(currentListID) //The option to reset entry is now available
+            //resetEntry(currentListID) //The option to reset entry is now available
         })
     })    
 }
@@ -435,11 +479,11 @@ function viewFullDetailsOfTodoItem(title, date, type, description, category, col
                                 </div>
                                 <div class="delete-edit-btn-container">
                                     <button type="button" class="delete-btn">Delete</button>
-                                    <button type="button" class="edit-btn">Edit</button>
+                                   
                                 </div>
                             </li>`
 }
-
+// <button type="button" class="edit-btn">Edit</button> (might add it back to the above function)
 
 ////////////////INFORMATION NEEDED FOR TODO LIST FORM SUBMISSION/////////////////////
 function getTitle(){
@@ -488,13 +532,7 @@ function toggleTaskEventHighlight(){
 }
 toggleTaskEventHighlight()
 
-function resetBtn(){
-    const eventOption = document.getElementById('event-option')
-    const taskOption = document.getElementById('task-option')
 
-    taskOption.classList.remove('clicked')
-    eventOption.classList.remove('clicked')
-}
 
 
 function formCurrentDate(){
@@ -516,6 +554,7 @@ setInterval(formCurrentDate, 24 * 60 * 60 * 1000);
 
 function getSelectedDate(){
     const formDate = document.getElementById('form-Due-date').value;
+    console.log(formDate)
     
     //Convert the date to a Date object
     const dateObject = new Date(`${formDate}T00:00:00`);
@@ -525,7 +564,7 @@ function getSelectedDate(){
     const day = dateObject.getDate().toString().padStart(2, '0');
     const year = dateObject.getFullYear();
 
-    //Format the date as mm-dd-yyyy
+    //Format the date as mm/dd/yyyy
     const formattedDate = `${month}/${day}/${year}`;
 
     return formattedDate
