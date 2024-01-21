@@ -32,13 +32,97 @@ body{
     font-size: 16px;
 }
 
-.app-title{
+/*User Profile*/
+div#user-img{
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
     margin-top: 20px;
     margin-left: 20px;
+}
+
+div#user-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-info{
+    display: flex;
+    margin-top: 0px;
+}
+.name-setting-container{
+    position: relative;
+    display: flex;
+}
+.username{
     font-family: 'Inter', sans-serif;
-    font-size: 30px;
-    font-weight: bold;
-    color: rgb(102, 90, 145);
+    font-size: 15px;
+    color:rgb(155, 143, 202);
+    align-self: center;
+    margin-top: 34px;
+    margin-left: 5px;
+    margin-bottom: 3px;
+}
+
+i.fa-solid.fa-angle-down.drop-down-menu-icon{
+    align-self: center;
+    padding: 34px 5px 0px 5px;
+    color:#676b6f;
+    cursor: pointer;
+}
+i.fa-solid.fa-angle-down.drop-down-menu-icon:hover{
+    color:rgb(102, 90, 145);
+}
+
+.drop-down-container{
+    position: absolute;
+    background-color: white;
+    border:1px solid rgb(155, 143, 202);
+    border-radius: 12px;
+    width: 153px;
+    left: 4px;
+    top: 54px;
+    box-shadow: 0px 0px 7px -2px rgba(172,172,172);
+    display: none;
+    
+}
+.drop-down-container ul{
+    padding: 0px;
+    margin: 16px 16px 16px 10px;
+}
+
+ul li.menu-settings{
+    font-size: 13px;
+    color: #676b6f;
+    margin-bottom: 16px;
+    cursor: pointer;
+    padding: 4px 3px;
+}
+ul li.menu-settings:hover{
+    background-color: rgba(155, 144, 197, 0.453);
+    border-radius: 3px;
+}
+i.fa-gear, i.fa-circle-question, i.fa-comment-dots, i.fa-arrow-right-from-bracket{
+    padding-right: 7px;
+}
+
+
+
+.socials-icons{
+    padding-left:6px;
+}
+
+i.fa-envelope, i.fa-square-twitter, i.fa-facebook{
+    color:#676b6f;
+    padding-right: 2px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+i.fa-envelope:hover, i.fa-square-twitter:hover, i.fa-facebook:hover{
+    color:rgb(102, 90, 145);
 }
 
 .menu-section{
@@ -122,6 +206,7 @@ h3{
     font-size: 25px;
     display: flex;
     align-self: center;
+    color: rgba(102, 90, 145, 0.727);
     box-shadow: 0px 0px 3px 1px rgba(172,172,172);
     border-radius: 50%;
 }

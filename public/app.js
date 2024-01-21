@@ -46,10 +46,16 @@ document.addEventListener('DOMContentLoaded', () =>{
      
     //Close full view container
     document.querySelector('.exit-full-view').addEventListener('click', closeFullViewContainer)
+
+    //drop-down for settings
+    document.querySelector('.drop-down-menu-icon').addEventListener('click', openSettings)
     
 })
 
-
+function openSettings(){
+    const dropDownContainer = document.querySelector('.drop-down-container')
+    dropDownContainer.classList.toggle('display')
+}
 
 let currentDate = new Date()
 
