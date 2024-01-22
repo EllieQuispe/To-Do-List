@@ -1,29 +1,4 @@
 
-
-//const currentDate = document.getElementById('date')
-const day = document.getElementById('currentDay')
-const monthAndNum = document.getElementById('month-numberDate')
-const newTask = document.querySelector('.fa-plus')
-const closeTask = document.querySelector('.fa-xmark')
-const inputEl = document.getElementById('input-el')
-const ulEl = document.getElementById('list')
-const inputBtn = document.querySelector('.fa-angles-right')
-
-let tasksfromLocalStorage = JSON.parse(localStorage.getItem("myTasks")) //converts it to a javascript object
-let myTasks = []
-let trashCan =''
-
-
-/************TASK COUNT************/
-function taskCounter(list){
-    const textHolder = document.getElementById('count')
-    let length = list.length
-    textHolder.innerHTML = length
-}
-
-
-
-/*********************************** NEW FEATURES *******************************/
 document.addEventListener('DOMContentLoaded', () =>{
     //New category submission
     document.querySelector('.fa-circle-plus').addEventListener('click', addNewCategory)    
@@ -60,7 +35,6 @@ function openSettings(){
 }
 
 let currentDate = new Date()
-
 function initializeDateFeature(){
     function updateDateDisplay(){
         const options = {
@@ -73,7 +47,6 @@ function initializeDateFeature(){
         //Display week day to UI
         document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
         
- 
         compareDates()
     }
     updateDateDisplay()
@@ -98,7 +71,6 @@ function initializeDateFeature(){
 
 
 let categories = [];
-
 function addNewCategory() {
     //I need to capitalize the first letter of each value entered and give it a word limit
 
@@ -135,7 +107,6 @@ function displayCreatedCategories(){
      const savedCategories = localStorage.getItem('MyCategoryList')
      let categoriesArr = [];
      paragraphContainer.innerHTML = ""  
-
     
    if(!savedCategories || savedCategories === '[]'){  //false('[]')  true
         categories = JSON.parse(savedCategories) //Turns it into an object
@@ -250,7 +221,6 @@ function submitForm(ev){
             return;
         }
      
-
         //Date submission
         if(!date){
             alert('Please submit a due date')
@@ -366,7 +336,7 @@ function resetEntry(listId){
 }
 */
 
-//DELETY ENTRY, REMOVE CHECKBOX FROM LOCALSTORAGE, RESET FORMDATA, AND RESERT COUNTER
+/*********** DELETY ENTRY, REMOVE CHECKBOX FROM LOCALSTORAGE, RESET FORMDATA, AND RESERT COUNTER *************/
 function deleteEntry(currentListID){
     const deleteBtn = document.querySelector('.delete-btn')
     deleteBtn.addEventListener('click', function(){
@@ -377,23 +347,20 @@ function deleteEntry(currentListID){
                 formDataArr.splice(i, 1)
                 localStorage.setItem('FormData', JSON.stringify(formDataArr))
                 
-
                 closeFullViewContainer()
                 compareDates()
 
                 //Remove selected checkbox 
                 localStorage.removeItem(currentListID) 
                 eventsTasksCounter()  
-                
             } 
-          })
+        })
     })
 }
 
 
 //HTML element where list will be inserted (UL)
 let todoList = document.getElementById('todo-List')
-
 function compareDates(){
     const options={
         year: 'numeric',
@@ -403,7 +370,6 @@ function compareDates(){
    //Changed date format to ##/##/####, so that it matches the list item date format
    let dateFormat = currentDate.toLocaleDateString('en-US', options) 
    
-  
    todoList.innerHTML =""
    formDataArr.forEach((dataEntry, i)=>{
         if(dataEntry.date == dateFormat){
@@ -423,7 +389,7 @@ function displayPreviewOfTodoList(id, title, type, date, category, color){
 
 function trackCheckboxStatus(){
     todoList = document.getElementById('todo-List') //updated UL element
-    // Add an event listener to the checkboxes
+    //Add an event listener to the checkboxes
     document.querySelectorAll('.container input').forEach(checkbox => {
         checkbox.addEventListener('change', function () {
             localStorage.setItem(this.id, this.checked);
@@ -433,7 +399,6 @@ function trackCheckboxStatus(){
     const isChecked = localStorage.getItem(checkbox.id) === 'true';
     checkbox.checked = isChecked;
     });
-
 }
 
 
@@ -445,12 +410,12 @@ function openFullViewContainer(){
     //If form is open, we do the below code
     todoNewEntryForm.classList.remove('display')
     clearForm()
-
 }
 function closeFullViewContainer(){
     todoListDisplay.classList.remove('screen-size-40')
     listDetailContainer.classList.remove('display-list-detail-container')
 }
+
 
 let fullListView = document.getElementById('full-list-view')
 function getList(){
@@ -479,7 +444,7 @@ function getList(){
 }
 
 
-/////FULL VIEW OF TODO LIST/////
+/**********************************FULL VIEW OF TODO LIST*****************************/
 function viewFullDetailsOfTodoItem(title, date, type, description, category, color, location){
     fullListView.innerHTML = `<li id='todo-entry'>
                                 <div>
@@ -497,7 +462,7 @@ function viewFullDetailsOfTodoItem(title, date, type, description, category, col
 }
 // <button type="button" class="edit-btn">Edit</button> (might add it back to the above function)
 
-////////////////INFORMATION NEEDED FOR TODO LIST FORM SUBMISSION/////////////////////
+/****************************INFORMATION NEEDED FOR TODO LIST FORM SUBMISSION************************/
 function getTitle(){
         const titleInput = document.getElementById("title-input")
         const titleValue = titleInput.value.trim()  
@@ -510,7 +475,6 @@ function getTitle(){
 
 
 let typeOfTodo = '';
-
 function toggleTaskEventHighlight(){
     const eventOption = document.getElementById('event-option')
     const taskOption = document.getElementById('task-option')
@@ -519,7 +483,6 @@ function toggleTaskEventHighlight(){
     parentDiv.addEventListener('click', function(e){
         let target = e.target
         
-
         if(target.id === 'event-option'){
 
             //Change color of the button
@@ -545,8 +508,6 @@ function toggleTaskEventHighlight(){
 toggleTaskEventHighlight()
 
 
-
-
 function formCurrentDate(){
     //Input the current month, date, and year 
     const formDate = document.getElementById('form-Due-date')
@@ -558,7 +519,6 @@ function formCurrentDate(){
 
     let fullDate = `${year}-${month}-${date}`
     formDate.value = fullDate
-   
 }
 formCurrentDate();
 setInterval(formCurrentDate, 24 * 60 * 60 * 1000);
@@ -590,6 +550,7 @@ function clientAddress(){
 
     return address
 }
+
 //Obtain the value entered in the textarea element
 function textareaValue(){
     const textareaId = document.getElementById('input-dedscription')
@@ -651,7 +612,7 @@ function colorPickerValue(){
 }
 
 
-//Address of user
+/********************FINDING LOCATION VIA MAPBOX**********************/
 function clientAddress(){
     const addressInput = document.getElementById('addressInput')
     const address = addressInput.value.trim()
