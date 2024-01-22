@@ -24,7 +24,6 @@
 
             <!-- Left Section Container-->
             <div class="leftside-container">
-
                <div class="user-profile-container">
                     <div class="user-info">
                         <div id="user-img">
@@ -49,36 +48,32 @@
                                 <i class="fa-brands fa-facebook"></i>
                               </div>
                         </div>
-                        
-                    </div>
-                    
+                    </div> 
                 </div>
                 
-               
                 <div class="task menu-section">
                     <h3>Tasks <span class="taskCount">0</span></h3>
                 </div>
-
                 <div class="events menu-section">
                     <h3>Events <span class="eventCount">0</span></h3>
                 </div>
 
                 <div class="categories menu-section">
                     <h3>Your Categories</h3>
-
                     <div class="category-list-container">
-                        <!-- <p class="menu-options top-margin-menu new-category"></p> -->
+                        <!-- List of categories using JS -->
                     </div> 
-
                     <div id="category-input-container">
-                       <i class="fa-solid fa-circle-plus add-category-icon"></i>
+                        <i class="fa-solid fa-circle-plus add-category-icon"></i>
                         <input type="text" id="input-category" placeholder="Add a Category">
                     </div>
-                    
                 </div>
             </div>
 
-            <!--Main middle section-->
+
+
+
+            <!-- Main Section - Displays a preview To-do List -->
             <div class="middle-container">
                 <!--Update Date-->
                 <div class="top-container">
@@ -90,36 +85,35 @@
                     <div class="arrow-icon" id="nextBtn"><i class="fa-solid fa-chevron-right date-arrow"></i></div>
                 </div>
 
-
+                <!--Displays List-->
                 <div class="mid-container">
                     <ul id="todo-List"></ul>
                 </div>
 
-
-                <div class="bottom-container">
-                    <!-- <div id="tasks"> <span id="count">0</span> Tasks</div> -->
+                <div class="bottom-container">  
                     <div id="add-item">Add New<i class="fa-solid fa-plus add-new-item"></i></div>
                 </div>
-                
             </div>
 
 
-            <!--Right Section Container - Full View of selected item from list-->
+
+
+            <!--Right Section -Full View of selected item from list-->
             <div class="list-detail-container">
-                <div id="exit-form">
-                    <i class="fa-solid fa-xmark exit-full-view" id="exit-icon"></i>
+                <div id="exit-detail-page">
+                    <i class="fa-solid fa-xmark exit-full-view"></i>
                 </div>
                 <div class="list-container">
                     <ul id="full-list-view">
-
+                        <!--Diplays the details of each to-do item-->
                     </ul>
                 </div>
             </div>
 
 
-            <!--Add New Task or Event-->
+            <!--Right Section - Add New Task or Event-->
             <div class="new-todo-item-container">
-                <div id="exit-form">
+                <div id="exit-new-entry-form">
                     <i class="fa-solid fa-xmark exit-form" id="exit-icon"></i>
                 </div>
                 
@@ -165,11 +159,7 @@
                     </div>
                 </form>
             </div>
-            
         </div>
-        
-        
-        
 
     </body>
 

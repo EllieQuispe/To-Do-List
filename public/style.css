@@ -14,7 +14,6 @@ body{
     width: 90%;
     height: 90vh;
     margin: 0 auto;
-
     display: flex;
 }
 
@@ -41,13 +40,11 @@ div#user-img{
     margin-top: 20px;
     margin-left: 20px;
 }
-
 div#user-img img{
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-
 .user-info{
     display: flex;
     margin-top: 0px;
@@ -65,7 +62,6 @@ div#user-img img{
     margin-left: 5px;
     margin-bottom: 3px;
 }
-
 i.fa-solid.fa-angle-down.drop-down-menu-icon{
     align-self: center;
     padding: 34px 5px 0px 5px;
@@ -75,7 +71,6 @@ i.fa-solid.fa-angle-down.drop-down-menu-icon{
 i.fa-solid.fa-angle-down.drop-down-menu-icon:hover{
     color:rgb(102, 90, 145);
 }
-
 .drop-down-container{
     position: absolute;
     background-color: white;
@@ -85,14 +80,12 @@ i.fa-solid.fa-angle-down.drop-down-menu-icon:hover{
     left: 4px;
     top: 54px;
     box-shadow: 0px 0px 7px -2px rgba(172,172,172);
-    display: none;
-    
+    display: none; 
 }
 .drop-down-container ul{
     padding: 0px;
     margin: 16px 16px 16px 10px;
 }
-
 ul li.menu-settings{
     font-size: 13px;
     color: #676b6f;
@@ -108,60 +101,27 @@ i.fa-gear, i.fa-circle-question, i.fa-comment-dots, i.fa-arrow-right-from-bracke
     padding-right: 7px;
 }
 
-
-
+/*** Socials of user profile*/
 .socials-icons{
     padding-left:6px;
 }
-
 i.fa-envelope, i.fa-square-twitter, i.fa-facebook{
     color:#676b6f;
     padding-right: 2px;
     cursor: pointer;
     font-size: 14px;
 }
-
 i.fa-envelope:hover, i.fa-square-twitter:hover, i.fa-facebook:hover{
     color:rgb(102, 90, 145);
 }
 
+
+/****** Type of To-do List Item ******/
 .menu-section{
     margin-left: 20px;
     margin-top: 20px;
     margin-right: 20px;
 }
-.menu-options{
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    color:#676b6f;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 4px 4px;
-    cursor: pointer;
-    position: relative;
-}
-
-.new-category{
-    font-family: 'Inter', sans-serif;
-    color:#676b6f;
-    font-size: 15px;
-    margin-top: 2px;
-    margin-bottom: 10px;
-    padding: 4px 4px;
-    position: relative;
-}
-.categories i.fa-solid.fa-xmark{  /*I might have to turn the p tag into a ul tag*/
-    position: absolute;
-    left: 158px;
-    top: 4px;
-    font-size: 17px;
-}
-.categories i.fa-solid.fa-xmark:hover{
-    cursor: pointer;
-}
-
-
-
 h3{
     color:#676b6f;
     margin-bottom: 6px;
@@ -176,7 +136,7 @@ h3{
     margin-top: 50px;
 }
 
-/*Counter*/
+/********** Counter ***********/
 .taskCount{
     margin-left: 3px;
     padding: 3px 7px;
@@ -194,22 +154,7 @@ h3{
     border-radius: 45px;
 }
 
-.add-category-btn{
-    font-family: 'Inter', sans-serif;
-    padding: 8px 8px;
-    border-radius: 15px;
-    margin-top: 10px;
-    display: flex;
-    align-self: center;
-}
-.fa-circle-plus{
-    font-size: 25px;
-    display: flex;
-    align-self: center;
-    color: rgba(102, 90, 145, 0.727);
-    box-shadow: 0px 0px 3px 1px rgba(172,172,172);
-    border-radius: 50%;
-}
+/**** Category inputbox with icon ****/
 .category-list-container{
     max-height: 135px;
     width: 100%;
@@ -217,18 +162,12 @@ h3{
     overflow-x: hidden;
     margin-right: -13px;
 }
-
 #category-input-container{
     display: flex;
     justify-content: space-between;
     margin-top: 5px;
     width: 95%;
 }
-#category-input-container i.fa-solid.fa-circle-plus:hover{
-    color: rgb(102, 90, 145);
-    cursor: pointer;
-}
-
 #input-category{
     height: 35px;
     box-sizing: border-box;
@@ -240,388 +179,41 @@ h3{
     border-bottom: none;
     margin-left: 8px;
 }
-
-
-/************* FULL VIEW OF LIST ITEM **********/
-.list-detail-container{
-    position: relative;
-    background-color: #f4f4f4;
-    border-radius: 15px;
-    width: 40%;
-    height: 95%;
-    margin-right: 20px;
+.fa-circle-plus{
+    font-size: 25px;
+    display: flex;
     align-self: center;
-    display: none;
+    color: rgba(102, 90, 145, 0.727);
+    box-shadow: 0px 0px 3px 1px rgba(172,172,172);
+    border-radius: 50%;
 }
-.display-list-detail-container{
-    display: inline-block;
-}
-
-.list-container{
-    height: 100%;
-}
-
-ul#full-list-view{
-    padding: 0;
-    margin: 30px 25px 0px 25px;
-    height: 95%;
-}
-ul li#todo-entry{
-    display: flex;
-    flex-direction: column;
-    align-items: unset;
-    justify-content: space-between;
-    height: 100%;
-}
-p#type-of-List{
-    display: inline;
-    padding: 4px 12px;
-    background-color: rgb(102, 90, 145);
-    color: white;
-    border-radius: 5px;
-    text-align: center;
-    text-decoration: none;
-}
-
-p.entry-date-category-color{
-    margin-top: 30px;
-    font-size: 15px;
-    font-family: 'Inter', sans-serif;
-    color:#676b6f;
-}
-
-h2#entry-title{
-    margin-bottom: 0px;
-    font-family: 'Inter', sans-serif;
-    color:rgb(102, 90, 145);
-    font-weight: bold;
-}
-
-p#entry-description{
-    font-size: 17px;
-    color:#676b6f;
-    border:1px solid rgba(140, 127, 181, 0.497);
-    border-radius: 5px;
-    width: 100%;
-    min-height: 200px;
-    padding: 5px;
-    box-sizing: border-box;
-    
-}
-
-p#entry-location{
-    font-size: 17px;
-    color:#676b6f;
-}
-
-.delete-edit-btn-container{
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 20px;
-}
-
-.delete-btn{
-    padding: 10px 20px;
-    width: 35%;
-    font-family: 'Inter', sans-serif;
-    font-size: 17px;
-    margin-right: 7px;
-    border: 1px solid rgb(102, 90, 145);
-    border-radius: 5px;
+#category-input-container i.fa-solid.fa-circle-plus:hover{
     color: rgb(102, 90, 145);
     cursor: pointer;
 }
-
-
-.delete-btn:hover{
-    background-color: rgb(102, 90, 145);
-    color:white;
-}
-
-
-
-/******** NEW TASK/EVENT CONTAINER ***********/
-.new-todo-item-container{
+/*** Template literal - In JS file ***/
+.new-category{
+    font-family: 'Inter', sans-serif;
+    color:#676b6f;
+    font-size: 15px;
+    margin-top: 2px;
+    margin-bottom: 10px;
+    padding: 4px 4px;
     position: relative;
-    background-color: #f4f4f4;
-    border-radius: 15px;
-    width: 40%;
-    min-width: 150px;
-    height: 95%;
-    margin-right: 20px;
-    align-self: center;
-    display:none;
 }
-.display{
-    display:inline-block;
-}
-
-#exit-form{
-    height: 20px;
+.categories i.fa-solid.fa-xmark{ 
     position: absolute;
-    right: 50px;
-    
-}
-i#exit-icon{
-    font-size:32px;
-}
-#todo-form{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-}
-
-.top-section{
-    margin: 53px 20px 20px 20px;
-}
-#title-input{
-    width: 100%;
-    height: 35px;
-    /*box-sizing: border-box; /* Ensure padding and border are included in the width */
-    margin-bottom: 18px;
-    border-radius: 5px;
-}
-#input-dedscription{
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 5px;
-    border: none;
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    
-}
-.top-section input[type=text]{
-    border-bottom: none;
-}
-
-#event-option, #task-option, .clear-btn, .save-btn{
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    border-radius: 5px;
-}
-#event-option{
-    display: inline;
-    padding: 4px 8px;
-    margin: 0;
-    background-color: transparent;
-    color: rgb(102, 90, 145);
-    text-align: center;
-    text-decoration: none;
-    border: 1px solid rgb(102, 90, 145);
-}
-#task-option{
-    display: inline;
-    padding: 4px 12px;
-    margin: 0px 0px 0px px;
-    background-color: transparent;
-    color: rgb(102, 90, 145);
-    text-align: center;
-    text-decoration: none;
-    border: 1px solid rgb(102, 90, 145);
-}
-#task-option:hover, #event-option:hover{
-    background-color: rgb(102, 90, 145);
-    color: white;
-    border: 1px solid rgb(102, 90, 145);
-    box-shadow: 0px 1px 20px -7px rgba(0,0,0,0.56);
-    cursor: pointer;
-}
- 
-p#task-option.clicked, p#event-option.clicked{   /*You will need this for the javaScript section to change the color of the selected icon*/
-    background-color: rgb(102, 90, 145);
-    color: white;
-    border: 1px solid rgb(102, 90, 145);
-}
-
-.due-date-container{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 18px 0px 14px 0px;
-}
-p.menu-options.due-date{
-    align-self: center;
-}
-
-
-input[type=date]{
-    font-family:'Inter', sans-serif;
-    font-size: 15;
-    padding: 4px 3px;
-}
-
-#categories-option{
-    font-family:'Inter', sans-serif;
-    font-size: 15px;
-    padding: 4px 3px;
-}
-
-.color-picker-container{
-    margin: 17px 20px 12px 20px;
-}
-
-.color-picker-container p{
-    display: inline;
-    position: relative;
-    padding-right: 5px;
-    margin: 0px;
-    font-size: 15px;
-}
-input#color-options{
-    -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 35px;
-  height: 35px;
-  border-radius: 5px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  position: absolute;
-  bottom: -8px;
-  right: -34px;
-  box-shadow: 0px 1px 13px -7px rgba(0,0,0,0.56);
-  border-radius: 50%;
-}
-input#color-options::-webkit-color-swatch {
-    border-radius: 15px;
-    border: none;
-  }
-input#color-options::-moz-color-swatch {
-    border-radius: 15px;
-    border: none;
-  }
-
-.select-category-container, 
-.add-attachment-container, 
-.add-image-container {
-    margin: 0px 20px 0px 20px;
-}
-i.fa-solid.fa-layer-group{
-    padding: 0 9px 0 3px;
-    color: #676b6f;
-}
-.hideCategoryBox{
-    display: none;
-}
-
-i.fa-solid.fa-paintbrush{
-    padding-left: 3px;
-    margin-right: 13px;
-    color: #676b6f;
-}
-i.fa-solid.fa-location-dot{
-    padding-left: 3px;
-    padding-right: 14px;
-    align-self: center;
-}
-i.fa-solid.fa-paperclip{
-    padding-left: 3px;
-    padding-right: 11px;
-}
-i.fa-solid.fa-camera{
-    padding-left: 2px;
-    padding-right: 10px;
-}
-i.fa-regular.fa-clock{
-    padding-left: 2px;
-    padding-right: 10px;
-}
-
-.add-location-container{
-    margin: 17px 20px 0px 20px;
- }
- #addressInput{
-    padding: 6px 3px;
-    border-radius: 5px;
-    width: 60%;
-    margin-right: 10px;
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
- }
-
-/**BUTTONS**/
-.location{
-    display: flex;
-    flex-direction: row;
-    margin: 0px
-}
-.map-btn{
-    margin-left: 3px;
-    border: 1px solid rgb(155, 143, 202);
-    padding: 5px 5px;
-    border-radius: 5px;
-    box-shadow: 0px 1px 23px -7px rgba(145, 144, 144, 0.67);
-}
-.map-btn:hover{
-    box-shadow: 0px 1px 19px -5px rgba(145, 144, 144);
-}
-#map{
-    display: none;
-}
-i.fa-solid.fa-map-location{
-    align-self: center;
-}
-
-/*Save and Delete button*/
-.delete-save-btn-container{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 25px;
-    
-}
-
-.clear-btn{
-    padding: 10px 20px;
-    width: 45%;
-    font-family: 'Inter', sans-serif;
+    left: 158px;
+    top: 4px;
     font-size: 17px;
-    margin-right: 5px;
-    border: 1px solid rgb(102, 90, 145);
-    color: rgb(102, 90, 145);
-    cursor: pointer;
- 
 }
-.save-btn{
-    padding: 10px 27px;
-    width: 45%;
-    font-family: 'Inter', sans-serif;
-    font-size: 17px;
-    margin-left: 5px;
-    border: 1px solid rgb(102, 90, 145);
-    color: rgb(102, 90, 145);
+.categories i.fa-solid.fa-xmark:hover{
     cursor: pointer;
 }
 
-.clear-btn:hover, .save-btn:hover{
-    background-color: rgb(102, 90, 145);
-    color: white;
-    border: 1px solid rgb(102, 90, 145);
-   /* box-shadow: 0px 2px 16px -6px rgba(0,0,0,0.75); */
-   box-shadow: 0px 1px 23px -7px rgba(0,0,0,0.67);
-
-}
 
 
-
-/********* EDIT TASK/EVENT CONTAINER *********/
-.todo-edit-container{
-    position: relative;
-    background-color: #f4f4f4;
-    border-radius: 15px;
-    width: 40%;
-    height: 95%;
-    margin-right: 20px;
-    align-self: center;
-    display: none;
-}
-
-
-
-
-
-/*********** MIDDLE CONTAINER *********/
+/************************** MIDDLE CONTAINER *********************/
 .middle-container{
     position: relative;
     background-color: white;
@@ -631,11 +223,9 @@ i.fa-solid.fa-map-location{
     align-self: center;
  
 }
-.middle-container.screen-size-40{
+.middle-container.screen-size-40{ /*works with JS*/
     width: 40%
 }
-
-
 .top-container{
     position: relative;
     height: 80px;
@@ -654,8 +244,6 @@ i.fa-solid.fa-map-location{
     height: 50px;
     cursor: pointer;
 }
-
-
 .date-arrow{
     color: rgb(102, 90, 145); 
     position: absolute;
@@ -668,16 +256,14 @@ i.fa-solid.fa-map-location{
     border-radius: 50%;
     padding: 4px 7px;
 }
-
 .fa-chevron-left{
     left: 55%;
 }
 .fa-chevron-right{
     right: 55%;
 }
-   
-/****Date********/
 
+/****Current date above to-do list****/
 #date-container{
     width: 300px;
     text-align: center;
@@ -700,7 +286,7 @@ i.fa-solid.fa-map-location{
     margin-top: 4px;
 }
 
-/******MIDDLE INNER CONTAINER******/
+/****Preview of to-do list****/
 .mid-container{
     position: relative;
     height: 100%;
@@ -708,23 +294,17 @@ i.fa-solid.fa-map-location{
     margin-left: 25px;
     margin-right: 25px;
 }
-
-/*********LIST**********/
-
 ul {
     position: relative;
     list-style: none;
     margin-top: 25px;
 }
-
 ul#todo-List{
     padding: 0px;
 }
-li.list-item{
-    margin-bottom: 10px;;
-}
 
-ul li{
+/***Template Literal in JS***/
+ul li{ 
     display: flex;
     color: rgb(155, 143, 202);
     font-size: 20px;
@@ -734,9 +314,12 @@ ul li{
     width: 100%;  
     align-items: center; 
     position: relative;  
-   
 }
-/*Style checkbox*/
+li.list-item{
+    margin-bottom: 10px;;
+}
+
+/*checkbox next to list*/
 .container{
     display: block;
     position: relative;
@@ -787,14 +370,13 @@ ul li{
     transform: rotate(45deg);
 }
 
-
+/*Arrow next to each to-do list*/
 i.list-arrow{
     position: absolute;
     right: 14px;
     font-size: 17px;
     cursor: pointer;
 }
-
 p.list-details{
     display: flex;
     align-items: center;
@@ -812,46 +394,7 @@ p.list-details{
     border-radius: 50%;
 }
  
-
- /*********CHECKBOX*********/
-
- .regular-checkbox{
-    -webkit-appearance: none; 
-    /*used in css syntax for rendering content in Safari and Chrome browsers
-    firefox is gecko
-    safari is webkit 
-    chrome is blink (a fork of webkit) */
-    border: 1px solid rgb(102, 90, 145);
-    width: 13px;
-    height:13px;
-    border-radius: 2px;
-    box-shadow:0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
-    margin-right: 5px;
-    
-    
- }
- .regular-checkbox:active, .regular-checkbox:checked:active {
-	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(140, 127, 181, 0.497);
-}
-.regular-checkbox:checked {
-	background-color: #e9ecee;
-	border: 1px solid #c5c8ca;
-	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
-	color: #99a1a7;
-}
-.regular-checkbox:checked:after {
-	content: '\2714';
-	font-size: 15px;
-	position: relative;
-	top: -4px;
-	color: rgb(102, 90, 145);
-}
-
-
-
-
-
-/******lower container******/
+/*********Bottom of main container**********/
 .bottom-container{
     border-top: 1px solid rgb(227, 224, 224);
     position: absolute;
@@ -867,22 +410,238 @@ p.list-details{
     background-color: white;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-
 }
-
-#tasks{
-    color:rgb(155, 143, 202);
-    margin-left: 30px;
-}
-
 #add-item{
     color:rgb(102, 90, 145);
     margin-right: 25px;
 }
 
 
-/**** FORM ****/
 
+
+/************************* FULL VIEW OF LIST ITEM **********************/
+.list-detail-container{
+    position: relative;
+    background-color: #f4f4f4;
+    border-radius: 15px;
+    width: 40%;
+    height: 95%;
+    margin-right: 20px;
+    align-self: center;
+    display: none;
+}
+.display-list-detail-container{  /*Works with javaScript*/
+    display: inline-block;
+}
+
+#exit-detail-page{
+    height: 20px;
+    position: absolute;
+    right: 50px;
+}
+i.exit-full-view{
+    font-size:32px;
+}
+
+.list-container{
+    height: 100%;
+}
+
+ul#full-list-view{
+    padding: 0;
+    margin: 30px 25px 0px 25px;
+    height: 95%;
+}
+ul li#todo-entry{
+    display: flex;
+    flex-direction: column;
+    align-items: unset;
+    justify-content: space-between;
+    height: 100%;
+}
+p#type-of-List{
+    display: inline;
+    padding: 4px 12px;
+    background-color: rgb(102, 90, 145);
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+}
+
+p.entry-date-category-color{
+    margin-top: 30px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    color:#676b6f;
+}
+
+h2#entry-title{
+    margin-bottom: 0px;
+    font-family: 'Inter', sans-serif;
+    color:rgb(102, 90, 145);
+    font-weight: bold;
+}
+p#entry-description{
+    font-size: 17px;
+    color:#676b6f;
+    border:1px solid rgba(140, 127, 181, 0.497);
+    border-radius: 5px;
+    width: 100%;
+    min-height: 200px;
+    padding: 5px;
+    box-sizing: border-box;  
+}
+p#entry-location{
+    font-size: 17px;
+    color:#676b6f;
+}
+.delete-edit-btn-container{
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+.delete-btn{
+    padding: 10px 20px;
+    width: 35%;
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    margin-right: 7px;
+    border: 1px solid rgb(102, 90, 145);
+    border-radius: 5px;
+    color: rgb(102, 90, 145);
+    cursor: pointer;
+}
+.delete-btn:hover{
+    background-color: rgb(102, 90, 145);
+    color:white;
+}
+
+
+
+/******************** NEW TASK/EVENT FORM CONTAINER ******************/
+.new-todo-item-container{
+    position: relative;
+    background-color: #f4f4f4;
+    border-radius: 15px;
+    width: 40%;
+    min-width: 150px;
+    height: 95%;
+    margin-right: 20px;
+    align-self: center;
+    display:none;
+}
+.display{ /*Works with JS*/
+    display:inline-block;
+}
+
+#exit-new-entry-form{
+    height: 20px;
+    position: absolute;
+    right: 50px;
+}
+i#exit-icon{
+    font-size:32px;
+}
+
+#todo-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+.top-section{
+    margin: 53px 20px 20px 20px;
+}
+.top-section input[type=text]{
+    border-bottom: none;
+}
+#title-input{
+    width: 100%;
+    height: 35px;
+    /*box-sizing: border-box; /* Ensure padding and border are included in the width */
+    margin-bottom: 18px;
+    border-radius: 5px;
+}
+
+/*Task and Event button*/
+#event-option, #task-option, .clear-btn, .save-btn{
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    border-radius: 5px;
+}
+#event-option{
+    display: inline;
+    padding: 4px 8px;
+    margin: 0;
+    background-color: transparent;
+    color: rgb(102, 90, 145);
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid rgb(102, 90, 145);
+}
+#task-option{
+    display: inline;
+    padding: 4px 12px;
+    margin: 0px 0px 0px px;
+    background-color: transparent;
+    color: rgb(102, 90, 145);
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid rgb(102, 90, 145);
+}
+#task-option:hover, #event-option:hover{
+    background-color: rgb(102, 90, 145);
+    color: white;
+    border: 1px solid rgb(102, 90, 145);
+    box-shadow: 0px 1px 20px -7px rgba(0,0,0,0.56);
+    cursor: pointer;
+}
+p#task-option.clicked, p#event-option.clicked{   /*You will need this for the javaScript section to change the color of the selected icon*/
+    background-color: rgb(102, 90, 145);
+    color: white;
+    border: 1px solid rgb(102, 90, 145);
+}
+
+/*Date picker*/
+.due-date-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 18px 0px 14px 0px;
+}
+.menu-options{
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color:#676b6f;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 4px 4px;
+    cursor: pointer;
+    position: relative;
+}
+p.menu-options.due-date{
+    align-self: center;
+}
+input[type=date]{
+    font-family:'Inter', sans-serif;
+    font-size: 15;
+    padding: 4px 3px;
+}
+i.fa-regular.fa-clock{
+    padding-left: 2px;
+    padding-right: 10px;
+}
+
+/*Text area box*/
+#input-dedscription{
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+}
 textarea {
     color: rgb(155, 143, 202);
 }
@@ -894,33 +653,158 @@ input[type=text]{
     width: 75%;
     height: 20px;
     font-size: 15px;
-    
 }
 ::placeholder{
-    color: rgb(155, 143, 202);
-    
+    color: rgb(155, 143, 202); 
 }
 
+/*Category picker*/
+.select-category-container{
+    margin: 0px 20px 0px 20px;
+}
+i.fa-solid.fa-layer-group{
+    padding: 0 9px 0 3px;
+    color: #676b6f;
+}
+#categories-option{
+    font-family:'Inter', sans-serif;
+    font-size: 15px;
+    padding: 4px 3px;
+}
+.hideCategoryBox{ /*this works with JS*/
+    display: none;
+}
 
+/**Color picker*/
+.color-picker-container{
+    margin: 17px 20px 12px 20px;
+}
+.color-picker-container p{
+    display: inline;
+    position: relative;
+    padding-right: 5px;
+    margin: 0px;
+    font-size: 15px;
+}
+i.fa-solid.fa-paintbrush{
+    padding-left: 3px;
+    margin-right: 13px;
+    color: #676b6f;
+}
+input#color-options{
+    -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 5px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: -8px;
+  right: -34px;
+  box-shadow: 0px 1px 13px -7px rgba(0,0,0,0.56);
+  border-radius: 50%;
+}
+input#color-options::-webkit-color-swatch {
+    border-radius: 15px;
+    border: none;
+  }
+input#color-options::-moz-color-swatch {
+    border-radius: 15px;
+    border: none;
+  }
 
-/*********Open Form************/
+/*Location*/
+i.fa-solid.fa-location-dot{
+    padding-left: 3px;
+    padding-right: 14px;
+    align-self: center;
+}
+.add-location-container{
+    margin: 17px 20px 0px 20px;
+ }
+ #addressInput{
+    padding: 6px 3px;
+    border-radius: 5px;
+    width: 60%;
+    margin-right: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+ }
+ .location{
+    display: flex;
+    flex-direction: row;
+    margin: 0px
+}
+#map{
+    display: none;
+}
+
+/**location buttons**/
+.map-btn{
+    margin-left: 3px;
+    border: 1px solid rgb(155, 143, 202);
+    padding: 5px 5px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 23px -7px rgba(145, 144, 144, 0.67);
+}
+.map-btn:hover{
+    box-shadow: 0px 1px 19px -5px rgba(145, 144, 144);
+}
+i.fa-solid.fa-map-location{
+    align-self: center;
+}
+
+/*Save and Delete button*/
+.delete-save-btn-container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px; 
+}
+.clear-btn{
+    padding: 10px 20px;
+    width: 45%;
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    margin-right: 5px;
+    border: 1px solid rgb(102, 90, 145);
+    color: rgb(102, 90, 145);
+    cursor: pointer;
+}
+.save-btn{
+    padding: 10px 27px;
+    width: 45%;
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    margin-left: 5px;
+    border: 1px solid rgb(102, 90, 145);
+    color: rgb(102, 90, 145);
+    cursor: pointer;
+}
+.clear-btn:hover, .save-btn:hover{
+    background-color: rgb(102, 90, 145);
+    color: white;
+    border: 1px solid rgb(102, 90, 145);
+   /* box-shadow: 0px 2px 16px -6px rgba(0,0,0,0.75); */
+   box-shadow: 0px 1px 23px -7px rgba(0,0,0,0.67);
+}
+
+/****Open Form****/
 .fa-plus{
     margin-left: 10px;
     padding: 5px;
-    
-
 }
-
 .fa-plus:hover{
     padding: 4px;
     border-radius: 50%;
     border: 1px solid rgb(102, 90, 145);
     background-color:rgb(102, 90, 145);
-    color: white;
-    
+    color: white; 
 }
 
-/****close form button*****/
+/***close form button***/
 .fa-xmark{
     position: absolute;
     top: 6px;
@@ -929,7 +813,6 @@ input[type=text]{
     padding: 2px 4px;
     color:rgba(140, 127, 181, 0.497);
 }
-
 .fa-xmark:hover{
     padding: 2px 4px;
     border-radius: 50%;
@@ -937,6 +820,22 @@ input[type=text]{
     color: white;
     
 }
+
+
+/********* EDIT TASK/EVENT CONTAINER 
+.todo-edit-container{
+    position: relative;
+    background-color: #f4f4f4;
+    border-radius: 15px;
+    width: 40%;
+    height: 95%;
+    margin-right: 20px;
+    align-self: center;
+    display: none;
+}
+*/
+
+
 
 /****Send button****/
 
