@@ -1,20 +1,19 @@
 body{
     margin: 0;
-    margin-top: 50px;
     padding: 0;
     box-sizing: border-box;
-    background-color: peachpuff; 
     font-family: 'Inter', sans-serif;
+    
 }
 
 /*********** BACKGROUND CONTAINER **********/
+
 #background-container{
     background-color: white;
-    border-radius: 15px;
-    width: 90%;
-    height: 90vh;
-    margin: 0 auto;
+    width: 100%;
+    height: 100vh;
     display: flex;
+    justify-content: space-between;
 }
 
 
@@ -51,12 +50,13 @@ div#user-img img{
 }
 .name-setting-container{
     position: relative;
+    padding-left: 7px;
     display: flex;
 }
 .username{
     font-family: 'Inter', sans-serif;
     font-size: 15px;
-    color:rgb(155, 143, 202);
+    color:#202020;
     align-self: center;
     margin-top: 34px;
     margin-left: 5px;
@@ -74,7 +74,6 @@ i.fa-solid.fa-angle-down.drop-down-menu-icon:hover{
 .drop-down-container{
     position: absolute;
     background-color: white;
-    border:1px solid rgb(155, 143, 202);
     border-radius: 12px;
     width: 153px;
     left: 4px;
@@ -88,13 +87,16 @@ i.fa-solid.fa-angle-down.drop-down-menu-icon:hover{
 }
 ul li.menu-settings{
     font-size: 13px;
-    color: #676b6f;
+    color: #2C2C2C;
     margin-bottom: 16px;
     cursor: pointer;
     padding: 4px 3px;
 }
+ul li.sign-out{
+    color:#BA5E32;
+}
 ul li.menu-settings:hover{
-    background-color: rgba(155, 144, 197, 0.453);
+    background-color: rgba(229, 229, 229, 0.397);
     border-radius: 3px;
 }
 i.fa-gear, i.fa-circle-question, i.fa-comment-dots, i.fa-arrow-right-from-bracket{
@@ -102,18 +104,20 @@ i.fa-gear, i.fa-circle-question, i.fa-comment-dots, i.fa-arrow-right-from-bracke
 }
 
 /*** Socials of user profile*/
+/*
 .socials-icons{
-    padding-left:6px;
+    padding-left:16px;
 }
+
+
 i.fa-envelope, i.fa-square-twitter, i.fa-facebook{
-    color:#676b6f;
     padding-right: 2px;
     cursor: pointer;
     font-size: 14px;
 }
 i.fa-envelope:hover, i.fa-square-twitter:hover, i.fa-facebook:hover{
     color:rgb(102, 90, 145);
-}
+} */
 
 
 /****** Type of To-do List Item ******/
@@ -122,8 +126,8 @@ i.fa-envelope:hover, i.fa-square-twitter:hover, i.fa-facebook:hover{
     margin-top: 20px;
     margin-right: 20px;
 }
-h3{
-    color:#676b6f;
+p.taskCount, p.eventCount{
+    color:#2C2C2C;
     margin-bottom: 6px;
 }
 .task{
@@ -140,17 +144,17 @@ h3{
 .taskCount{
     margin-left: 3px;
     padding: 3px 7px;
-    color: rgb(102, 90, 145);
+    color: #2C2C2C;
     font-size: 15px;
-    border: 1px solid rgb(155, 143, 202);
+    border: 1px solid #BA5E32;
     border-radius: 45px;
 }
 .eventCount{
     margin-left: 3px;
     padding: 3px 7px;
-    color: rgb(102, 90, 145);
+    color: #2C2C2C;
     font-size: 15px;
-    border: 1px solid rgb(155, 143, 202);
+    border: 1px solid #BA5E32;
     border-radius: 45px;
 }
 
@@ -183,23 +187,24 @@ h3{
     font-size: 25px;
     display: flex;
     align-self: center;
-    color: rgba(102, 90, 145, 0.727);
-    box-shadow: 0px 0px 3px 1px rgba(172,172,172);
+    color: #BA5E32;
+    box-shadow: 0px 0px 3px 1px rgb(215, 215, 215);
     border-radius: 50%;
 }
 #category-input-container i.fa-solid.fa-circle-plus:hover{
-    color: rgb(102, 90, 145);
+    color: #F6C15C;
     cursor: pointer;
 }
 /*** Template literal - In JS file ***/
 .new-category{
     font-family: 'Inter', sans-serif;
-    color:#676b6f;
+    color:#2C2C2C;
     font-size: 15px;
     margin-top: 2px;
     margin-bottom: 10px;
     padding: 4px 4px;
     position: relative;
+
 }
 .categories i.fa-solid.fa-xmark{ 
     position: absolute;
@@ -210,6 +215,13 @@ h3{
 .categories i.fa-solid.fa-xmark:hover{
     cursor: pointer;
 }
+.fa-solid.fa-xmark.categories-xmark-icon{
+    color: transparent;
+}
+.fa-solid.fa-xmark.shadow{
+    color: #999999;
+}
+
 
 
 
@@ -217,8 +229,7 @@ h3{
 .middle-container{
     position: relative;
     background-color: white;
-    width: 77%; /*Its not reponsive but it works for this one*/
-    margin: 0 auto; /*centers div*/
+    width: 100%;
     height: 95%;
     align-self: center;
  
@@ -245,13 +256,13 @@ h3{
     cursor: pointer;
 }
 .date-arrow{
-    color: rgb(102, 90, 145); 
+    color: #202020;
     position: absolute;
     top: 53%; /*I can change the vertical alignment later*/
     transform: translateY(-53%);
 }
 .date-arrow:hover{
-    color: rgb(102, 90, 145); 
+    color: #999999; 
     box-shadow: 0px 0px 3px 1px rgba(172,172,172);
     border-radius: 50%;
     padding: 4px 7px;
@@ -269,7 +280,7 @@ h3{
     text-align: center;
 }
 #day-of-the-week{
-    color:rgb(102, 90, 145);
+    color:#202020;
     font-size: 24px;
     font-family: 'Inter', sans-serif;
     text-transform: uppercase;
@@ -279,7 +290,7 @@ h3{
     margin-right: 5px;
 }
 #currentDate{
-    color:rgb(155, 143, 202);
+    color:#666666;
     font-size: 17px;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
@@ -289,15 +300,15 @@ h3{
 /****Preview of to-do list****/
 .mid-container{
     position: relative;
-    height: 100%;
     overflow: hidden;
-    margin-left: 25px;
-    margin-right: 25px;
+    margin-left: 10%;
+    margin-right: 10%;
 }
+
 ul {
     position: relative;
     list-style: none;
-    margin-top: 25px;
+    margin-top: 40px;
 }
 ul#todo-List{
     padding: 0px;
@@ -306,8 +317,8 @@ ul#todo-List{
 /***Template Literal in JS***/
 ul li{ 
     display: flex;
-    color: rgb(155, 143, 202);
-    font-size: 20px;
+    color: #2C2C2C;
+    font-size: 18px;
     font-family: 'Inter', sans-serif;
     font-weight: 300;
     margin-bottom: 25px;
@@ -342,14 +353,14 @@ li.list-item{
     height: 16px;
     width: 17px;
     background-color: transparent;
-    border: 1px solid rgb(102, 90, 145);
-    border-radius: 5px;
+    border: 1px solid #666666;
+    border-radius: 50%;
 }
 .container:hover input ~ .checkmark{
-    background-color: rgb(155, 143, 202);
+    background-color: rgb(227, 224, 224);
 }
 .container input:checked ~ .checkmark{
-    background-color: rgb(102, 90, 145);
+    background-color: #BA5E32;
 }
 .checkmark:after{
     content: "";
@@ -381,10 +392,10 @@ p.list-details{
     display: flex;
     align-items: center;
     margin-top: 10px;
-    margin-bottom: 20px;
-    padding-left: 45px;
-    font-size: 15px;
-    color:#676b6f;
+    margin-bottom: 40px;
+    padding-left: 36px;
+    font-size: 14px;
+    color:#666666;
 }
 .color-box{
     display: inline-block;
@@ -412,7 +423,7 @@ p.list-details{
     border-bottom-right-radius: 15px;
 }
 #add-item{
-    color:rgb(102, 90, 145);
+    color:#BA5E32;
     margin-right: 25px;
 }
 
@@ -441,6 +452,7 @@ p.list-details{
 }
 i.exit-full-view{
     font-size:32px;
+    cursor: pointer;
 }
 
 .list-container{
@@ -462,8 +474,9 @@ ul li#todo-entry{
 p#type-of-List{
     display: inline;
     padding: 4px 12px;
-    background-color: rgb(102, 90, 145);
-    color: white;
+    border: 1px solid #BA5E32;
+    background-color: transparent;
+    color: #2C2C2C;
     border-radius: 5px;
     text-align: center;
     text-decoration: none;
@@ -473,29 +486,41 @@ p.entry-date-category-color{
     margin-top: 30px;
     font-size: 15px;
     font-family: 'Inter', sans-serif;
-    color:#676b6f;
+    color:#2C2C2C;
 }
 
 h2#entry-title{
     margin-bottom: 0px;
     font-family: 'Inter', sans-serif;
-    color:rgb(102, 90, 145);
-    font-weight: bold;
+    color:#202020;
+    
 }
 p#entry-description{
-    font-size: 17px;
-    color:#676b6f;
-    border:1px solid rgba(140, 127, 181, 0.497);
+    font-size: 15px;
+    color:#2C2C2C;
+    border:1px solid rgb(227, 224, 224);
     border-radius: 5px;
     width: 100%;
     min-height: 200px;
     padding: 5px;
-    box-sizing: border-box;  
+    box-sizing: border-box; 
+    margin-top: 6px; 
 }
 p#entry-location{
-    font-size: 17px;
-    color:#676b6f;
+    font-size: 15px;
+    color:#2C2C2C;
 }
+span.location{
+    border:1px solid rgb(227, 224, 224);
+    font-size: 15px;
+    color:#2C2C2C;
+    border-radius: 5px;
+    min-height: 30px;
+    width: 100%;
+    align-items: center;
+
+}
+
 .delete-edit-btn-container{
     display: flex;
     justify-content: flex-start;
@@ -507,13 +532,15 @@ p#entry-location{
     font-family: 'Inter', sans-serif;
     font-size: 17px;
     margin-right: 7px;
-    border: 1px solid rgb(102, 90, 145);
+    border: 1px solid #BA5E32;
+    background-color:#BA5E32;
     border-radius: 5px;
-    color: rgb(102, 90, 145);
+    color: white;
     cursor: pointer;
 }
 .delete-btn:hover{
-    background-color: rgb(102, 90, 145);
+    background-color: #F6C15C;
+    border: 1px solid #F6C15C;
     color:white;
 }
 
@@ -542,6 +569,7 @@ p#entry-location{
 }
 i#exit-icon{
     font-size:32px;
+    cursor: pointer;
 }
 
 #todo-form{
@@ -574,33 +602,33 @@ i#exit-icon{
     display: inline;
     padding: 4px 8px;
     margin: 0;
-    background-color: transparent;
-    color: rgb(102, 90, 145);
+    background-color: #BA5E32;;
+    color: white;
     text-align: center;
     text-decoration: none;
-    border: 1px solid rgb(102, 90, 145);
+    border: 1px solid #BA5E32;
 }
 #task-option{
     display: inline;
     padding: 4px 12px;
     margin: 0px 0px 0px px;
-    background-color: transparent;
-    color: rgb(102, 90, 145);
+    background-color: #BA5E32;;
+    color: white;
     text-align: center;
     text-decoration: none;
-    border: 1px solid rgb(102, 90, 145);
+    border: 1px solid #BA5E32;
 }
 #task-option:hover, #event-option:hover{
-    background-color: rgb(102, 90, 145);
+    background-color: #F6C15C;
     color: white;
-    border: 1px solid rgb(102, 90, 145);
+    border: 1px solid #F6C15C;
     box-shadow: 0px 1px 20px -7px rgba(0,0,0,0.56);
     cursor: pointer;
 }
 p#task-option.clicked, p#event-option.clicked{   /*You will need this for the javaScript section to change the color of the selected icon*/
-    background-color: rgb(102, 90, 145);
+    background-color: #F6C15C;
     color: white;
-    border: 1px solid rgb(102, 90, 145);
+    border: 1px solid #F6C15C;
 }
 
 /*Date picker*/
@@ -613,7 +641,7 @@ p#task-option.clicked, p#event-option.clicked{   /*You will need this for the ja
 .menu-options{
     font-family: 'Inter', sans-serif;
     font-size: 15px;
-    color:#676b6f;
+    color:#666666;
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 4px 4px;
@@ -643,20 +671,21 @@ i.fa-regular.fa-clock{
     font-size: 15px;
 }
 textarea {
-    color: rgb(155, 143, 202);
+    color: #2C2C2C;
 }
 input[type=text]{
     border: none;
     /*border-bottom: 1px solid rgb(102, 90, 145);*/
-    color: rgb(155, 143, 202); */
+    color: #2C2C2C; 
     outline: none;
     width: 75%;
     height: 20px;
     font-size: 15px;
 }
+
 ::placeholder{
-    color: rgb(155, 143, 202); 
-}
+    color: #999999; 
+} 
 
 /*Category picker*/
 .select-category-container{
@@ -664,7 +693,7 @@ input[type=text]{
 }
 i.fa-solid.fa-layer-group{
     padding: 0 9px 0 3px;
-    color: #676b6f;
+    color: #666666;
 }
 #categories-option{
     font-family:'Inter', sans-serif;
@@ -689,7 +718,7 @@ i.fa-solid.fa-layer-group{
 i.fa-solid.fa-paintbrush{
     padding-left: 3px;
     margin-right: 13px;
-    color: #676b6f;
+    color: #666666;
 }
 input#color-options{
     -webkit-appearance: none;
@@ -745,7 +774,9 @@ i.fa-solid.fa-location-dot{
 /**location buttons**/
 .map-btn{
     margin-left: 3px;
-    border: 1px solid rgb(155, 143, 202);
+    border: 1px solid #BA5E32;
+    background-color: #BA5E32;;
+    color: white;
     padding: 5px 5px;
     border-radius: 5px;
     box-shadow: 0px 1px 23px -7px rgba(145, 144, 144, 0.67);
@@ -768,9 +799,11 @@ i.fa-solid.fa-map-location{
     width: 45%;
     font-family: 'Inter', sans-serif;
     font-size: 17px;
-    margin-right: 5px;
-    border: 1px solid rgb(102, 90, 145);
-    color: rgb(102, 90, 145);
+    margin-right: 7px;
+    margin-left: 3px;;
+    border: 1px solid #BA5E32;
+    background-color: #BA5E32;
+    color: white;
     cursor: pointer;
 }
 .save-btn{
@@ -778,17 +811,19 @@ i.fa-solid.fa-map-location{
     width: 45%;
     font-family: 'Inter', sans-serif;
     font-size: 17px;
-    margin-left: 5px;
-    border: 1px solid rgb(102, 90, 145);
-    color: rgb(102, 90, 145);
+    margin-left: 7px;
+    margin-right: 3px;;
+    border: 1px solid #BA5E32;
+    background-color: #BA5E32;
+    color: white;
     cursor: pointer;
 }
 .clear-btn:hover, .save-btn:hover{
-    background-color: rgb(102, 90, 145);
+    background-color: #F6C15C;
     color: white;
-    border: 1px solid rgb(102, 90, 145);
+    border: 1px solid #F6C15C;
    /* box-shadow: 0px 2px 16px -6px rgba(0,0,0,0.75); */
-   box-shadow: 0px 1px 23px -7px rgba(0,0,0,0.67);
+   box-shadow: 0px 1px 23px -7px rgba(142, 142, 142, 0.67);
 }
 
 /****Open Form****/
@@ -799,8 +834,8 @@ i.fa-solid.fa-map-location{
 .fa-plus:hover{
     padding: 4px;
     border-radius: 50%;
-    border: 1px solid rgb(102, 90, 145);
-    background-color:rgb(102, 90, 145);
+    border: 1px solid #F6C15C;
+    background-color:#F6C15C;
     color: white; 
 }
 
@@ -811,8 +846,9 @@ i.fa-solid.fa-map-location{
     left: 10px;
     font-size: 13px;
     padding: 2px 4px;
-    color:rgba(140, 127, 181, 0.497);
+    color:#999999;
 }
+/*
 .fa-xmark:hover{
     padding: 2px 4px;
     border-radius: 50%;
@@ -820,6 +856,7 @@ i.fa-solid.fa-map-location{
     color: white;
     
 }
+*/
 
 
 /********* EDIT TASK/EVENT CONTAINER 
