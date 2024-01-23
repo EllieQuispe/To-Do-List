@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     document.querySelector('.fa-circle-plus').addEventListener('click', addNewCategory)    
     //Call the function to display categories when the page loads
     displayCreatedCategories();
+    categoryDeleteBtn()
 
     //Form submission when adding a new event or task
     document.getElementById('todo-form').addEventListener('submit', submitForm )
@@ -89,8 +90,9 @@ function addNewCategory() {
     //push object to the categories array
     categories.push(category);  
 
-     //reset the value box to blank                                           
-    document.getElementById('input-category').value = "Add a Category"  
+     //reset the value box to blank   
+     document.getElementById('input-category').value = ""                                       
+    document.getElementById('input-category').placeholder = "Add a Category"  
    
     //Saving array to localStorage
     localStorage.setItem('MyCategoryList', JSON.stringify(categories))
@@ -100,7 +102,7 @@ function addNewCategory() {
 }
 
 
-const paragraphContainer = document.querySelector('.category-list-container')
+let paragraphContainer = document.querySelector('.category-list-container')
 const categorySection = document.querySelector('.categories')
 
 function displayCreatedCategories(){
@@ -121,6 +123,7 @@ function displayCreatedCategories(){
             categories.forEach((category) => {
                 paragraphContainer.innerHTML +=  `<p class="top-margin-menu new-category">${category.name}<i class="fa-solid fa-xmark categories-xmark-icon"></i></p>`
                 categoriesArr.push(category.name)
+
             })
            
             //Option to delete created category is now available
@@ -129,6 +132,29 @@ function displayCreatedCategories(){
 
    displayCategoryOptions(categoriesArr) //categories created should be in sync with category options in the new entry form
    deleteCategoryPickerContainer(categories) //Remove the categories option when no category created
+   categoryDeleteBtn()
+}
+
+function categoryDeleteBtn(){
+    paragraphContainer = document.querySelector('.category-list-container')
+    let newCategories = document.querySelectorAll('.new-category')
+    let xMarkCategory = document.querySelectorAll('.categories-xmark-icon')
+    let xMarkArr = Array.from(xMarkCategory)
+    
+    newCategories.forEach((category,i)=>{
+        
+        category.addEventListener("mouseenter", function(){
+            xMarkArr[i].classList.add('shadow')
+            
+            
+        })
+        category.addEventListener("mouseleave", function() {
+            // Remove the class from the xMarkCategory when the mouse leaves the newCategory
+            xMarkArr[i].classList.remove('shadow')
+        })
+
+    })
+    
 }
 
 
@@ -150,6 +176,8 @@ function deleteCategories(){
         })
     })
 }
+
+
 
 /*********************OPENING AND CLOSING FORM FOR NEW ENTRY *********************/
 /*const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container */
@@ -379,7 +407,11 @@ function compareDates(){
 }
 
 function displayPreviewOfTodoList(id, title, type, date, category, color){
-    todoList.innerHTML += `<li class="list-item" id="${id}"><label class="container"> <input type="checkbox" id="${id}" class="checkbox"><span class="checkmark"></span></label> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i></li><p class="list-details">${date} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>`
+    todoList.innerHTML += ` 
+                        <li class="list-item" id="${id}">
+                        <label class="container"> 
+                        <input type="checkbox" id="${id}" class="checkbox"><span class="checkmark"></span></label> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i>
+                        </li><p class="list-details">${date} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>`
     
     //To add an eventlistener to arrow icons next to list item incase user wants to a full view
     getList()
@@ -452,7 +484,7 @@ function viewFullDetailsOfTodoItem(title, date, type, description, category, col
                                 <p class="entry-date-category-color">${date} | ${category} <span class="color-box" style="background-color:${color};"></span></p>
                                 <h2 id="entry-title">${title}</h2>
                                 <p id="entry-description">${description}</p>
-                                <p id="entry-location">Location: ${location}</p>
+                                <p id="entry-location">Location<span class="location">${location}</span></p>
                                 </div>
                                 <div class="delete-edit-btn-container">
                                     <button type="button" class="delete-btn">Delete</button>
