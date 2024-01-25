@@ -35,6 +35,7 @@ function openSettings(){
     dropDownContainer.classList.toggle('display')
 }
 
+///////////////////CURRENT DATE///////////////////////////////
 let currentDate = new Date()
 function initializeDateFeature(){
     function updateDateDisplay(){
@@ -70,7 +71,7 @@ function initializeDateFeature(){
 }
 
 
-
+////////////////////////ADDING A CATEGORY/////////////////////////////
 let categories = [];
 function addNewCategory() {
     
@@ -100,6 +101,7 @@ function addNewCategory() {
     } 
 }
 
+////Validating the category input box////
 function validateInput(name){
     //Check if the input is blank
     if (name === "" || name === "Add a Category"){
@@ -109,7 +111,6 @@ function validateInput(name){
         categoryErrorMessage("")
         return true;
 }
-
 function categoryErrorMessage(message){
     const errorMessage = document.getElementById('errorMessage');
     errorMessage.innerHTML = message;
@@ -125,33 +126,32 @@ function capitalizeFirstLetter(str){
 }
 
 
-
-let paragraphContainer = document.querySelector('.category-list-container')
-const categorySection = document.querySelector('.categories')
+/////Display category/////
+let paragraphContainer = document.querySelector('.category-list-container') //<div>
+//const categorySection = document.querySelector('.categories')
 
 function displayCreatedCategories(){
-     const savedCategories = localStorage.getItem('MyCategoryList')
+     const savedCategories = localStorage.getItem('MyCategoryList') //Array of objects
      let categoriesArr = [];
      paragraphContainer.innerHTML = ""  
     
-   if(!savedCategories || savedCategories === '[]'){  //false('[]')  true
+   if(!savedCategories || savedCategories === '[]'){  //true false('[]')  
         categories = JSON.parse(savedCategories) //Turns it into an object
-
+       
         if(!categories){ //null is falsy (When localStorage key is deleted manually)
-            categories = [ ]
+            categories = []
         }
 
    } else{ //false false
          categories = JSON.parse(savedCategories) //Turns it into an array of objects
 
-            categories.forEach((category) => {
-                paragraphContainer.innerHTML +=  `<p class="top-margin-menu new-category">${category.name}<i class="fa-solid fa-xmark categories-xmark-icon"></i></p>`
-                categoriesArr.push(category.name)
-
-            })
+         categories.map((category)=>{
+            paragraphContainer.innerHTML +=  `<p class="top-margin-menu new-category">${category.name}<i class="fa-solid fa-xmark categories-xmark-icon"></i></p>`
+            categoriesArr.push(category.name)
+         })           
            
-            //Option to delete created category is now available
-            deleteCategories()
+        //Option to delete created category is now available
+        deleteCategories()
    }
 
    displayCategoryOptions(categoriesArr) //categories created should be in sync with category options in the new entry form
@@ -159,29 +159,29 @@ function displayCreatedCategories(){
    displayCategoryDeleteBtn()
 }
 
+///Hovering over the category x-icon////
 function displayCategoryDeleteBtn(){
     paragraphContainer = document.querySelector('.category-list-container')
-    let newCategories = document.querySelectorAll('.new-category')
+    let paragraphEnclosingIcons = document.querySelectorAll('.new-category')
     let xMarkCategory = document.querySelectorAll('.categories-xmark-icon')
+
+    let paragraphEnclosingIconArr = Array.from(paragraphEnclosingIcons)
     let xMarkArr = Array.from(xMarkCategory)
-    
-    newCategories.forEach((category,i)=>{
+
+    paragraphEnclosingIconArr.map((category,i)=>{
         
         category.addEventListener("mouseenter", function(){
             xMarkArr[i].classList.add('shadow')
-            
-            
         })
         category.addEventListener("mouseleave", function() {
             // Remove the class from the xMarkCategory when the mouse leaves the newCategory
             xMarkArr[i].classList.remove('shadow')
         })
-
-    })
-    
+    }) 
 }
 
 
+///Deleting a category////
 function deleteCategories(){
     const savedCategories = localStorage.getItem('MyCategoryList')
     categories = JSON.parse(savedCategories)
@@ -190,12 +190,13 @@ function deleteCategories(){
     let iconArr = Array.from(closeIcons)
     
     //Use the index of iconArr array to find the index of the categories array 
-    iconArr.forEach((icon, i)=>{ 
+    iconArr.map((icon, i)=>{ 
         icon.addEventListener('click', function(){
           
             //Remove selected i from the categories array when x-mark icon clicked, update localStorage, and update the UI
             categories.splice(i, 1)
             localStorage.setItem('MyCategoryList', JSON.stringify(categories))
+            
             displayCreatedCategories()
         })
     })
@@ -203,9 +204,7 @@ function deleteCategories(){
 
 
 
-
-
-/*********************OPENING AND CLOSING FORM FOR NEW ENTRY *********************/
+////////////////////////////////// NEW ENTRY FORM //////////////////////////////////
 /*const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container */
 const todoNewEntryForm = document.querySelector('.new-todo-item-container')
 const todoListDisplay = document.querySelector('.middle-container')
@@ -216,19 +215,21 @@ function openNewForm(){
     //If list detail container is open
     listDetailContainer.classList.remove('display-list-detail-container')
 }
+
 /*
 function reOpenFormToEdit(){
     listDetailContainer.classList.remove('display-list-detail-container')
     todoListDisplay.classList.add('screen-size-40')
     todoNewEntryForm.classList.add('display')
 } */
+
 function closeForm(){
     todoListDisplay.classList.remove('screen-size-40')
     todoNewEntryForm.classList.remove('display')
     clearForm()
 }
 
-//******************* FORM SUBMISSION FOR NEW EVENT OR TASK ************************//
+////FORM SUBMISSION FOR NEW EVENT OR TASK/////
 const mapID = document.getElementById('map')
 let formDataArr = [];
 
@@ -314,9 +315,20 @@ function savingDataInArr(){
 const taskCountContainer=document.querySelector('.taskCount')
 const eventCountContainer=document.querySelector('.eventCount')
 function eventsTasksCounter(){
-    let taskCount = ""
-    let eventCount = ""
-    formDataArr.forEach((dataEntry, i)=>{
+    let taskCount = 0;
+    let eventCount = 0;
+
+    if(formDataArr == [] || formDataArr == null){
+        taskCountContainer.innerHTML = taskCount
+        eventCountContainer.innerHTML = eventCount
+        return;
+    } 
+
+    //Both values should start at zero
+    taskCountContainer.innerHTML = taskCount
+    eventCountContainer.innerHTML = eventCount
+
+    formDataArr.map((dataEntry)=>{
         if(dataEntry.type == "Task"){
             taskCount++
             taskCountContainer.innerHTML = taskCount
@@ -327,6 +339,7 @@ function eventsTasksCounter(){
         }
     })
 }
+
 
 function clearForm(typeOfTodo){
     //clear title
@@ -385,17 +398,18 @@ function resetEntry(listId){
                 reEnterForm(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.description, dataEntry.category, dataEntry.color)
             }
         })
-
     })
 }
 */
 
-/*********** DELETY ENTRY, REMOVE CHECKBOX FROM LOCALSTORAGE, RESET FORMDATA, AND RESERT COUNTER *************/
+
+////// Delete entry /////
 function deleteEntry(currentListID){
     const deleteBtn = document.querySelector('.delete-btn')
     deleteBtn.addEventListener('click', function(){
 
-        formDataArr.forEach((dataEntry, i)=>{
+        
+        formDataArr.filter((dataEntry, i) =>{
             if(dataEntry.id == currentListID){
                 //delete 
                 formDataArr.splice(i, 1)
@@ -408,7 +422,7 @@ function deleteEntry(currentListID){
                 localStorage.removeItem(currentListID) 
                 eventsTasksCounter()  
             } 
-        })
+        }) 
     })
 }
 
@@ -425,7 +439,7 @@ function compareDates(){
    let dateFormat = currentDate.toLocaleDateString('en-US', options) 
    
    todoList.innerHTML =""
-   formDataArr.forEach((dataEntry, i)=>{
+   formDataArr.filter((dataEntry, i)=>{
         if(dataEntry.date == dateFormat){
             displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.category, dataEntry.color)
         } 
@@ -447,6 +461,7 @@ function displayPreviewOfTodoList(id, title, type, date, category, color){
 
 function trackCheckboxStatus(){
     todoList = document.getElementById('todo-List') //updated UL element
+    
     //Add an event listener to the checkboxes
     document.querySelectorAll('.container input').forEach(checkbox => {
         checkbox.addEventListener('change', function () {
@@ -459,7 +474,7 @@ function trackCheckboxStatus(){
     });
 }
 
-
+/////////////////////////////////// FULL VIEW OF TODO LIST ////////////////////////////////
 const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container
 function openFullViewContainer(){
     listDetailContainer.classList.add('display-list-detail-container')
@@ -480,13 +495,14 @@ function getList(){
     todoList = document.getElementById('todo-List') //list of item(s) displayed for selected date
     let arrowIcon = document.querySelectorAll('.list-arrow')
     let list = document.querySelectorAll('.list-item')
+    let arrowIconArr = Array.from(arrowIcon)
 
-    arrowIcon.forEach((arrow, j)=>{
+    arrowIconArr.map((arrow, j)=>{
         arrow.addEventListener('click', function(){
            let currentListID = Number(list[j].id) //getting id of each list item and turning it into a number
 
            fullListView.innerHTML= ""
-            formDataArr.forEach((dataEntry)=>{
+            formDataArr.filter((dataEntry)=>{
                 if(dataEntry.id == currentListID ){
 
                     /////FULL VIEW OF TODO LIST/////
@@ -502,7 +518,7 @@ function getList(){
 }
 
 
-/**********************************FULL VIEW OF TODO LIST*****************************/
+
 function viewFullDetailsOfTodoItem(title, date, type, description, category, color, location){
     fullListView.innerHTML = `<li id='todo-entry'>
                                 <div>
@@ -520,7 +536,11 @@ function viewFullDetailsOfTodoItem(title, date, type, description, category, col
 }
 // <button type="button" class="edit-btn">Edit</button> (might add it back to the above function)
 
-/****************************INFORMATION NEEDED FOR TODO LIST FORM SUBMISSION************************/
+
+
+
+
+/////////////////////////// INFORMATION NEEDED FOR TODO LIST FORM SUBMISSION ///////////////////////
 function getTitle(){
         const titleInput = document.getElementById("title-input")
         const titleValue = titleInput.value.trim()  
@@ -623,16 +643,16 @@ function displayCategoryOptions(catArr){
     const categoryOption = document.getElementById('categories-option')
     categoryOption.innerHTML = ""
     
-    catArr.forEach((category)=>{
+    catArr.map((category)=>{
         categoryOption.innerHTML += `<option class="category-option" value=${category}>${category}</option>`
     }) 
-    categorySelected()
+
 }
 
 
 function deleteCategoryPickerContainer(catg){
     const categoryContainer = document.querySelector('.select-category-container')
-    if(catg == ''){  //if
+    if(catg == '' || catg == [{}]){  //if
        categoryContainer.classList.add('hideCategoryBox')
     } else{
         categoryContainer.classList.remove('hideCategoryBox')
@@ -646,7 +666,6 @@ categoriesOption.addEventListener('change', categorySelected)
 function categorySelected(){
    const selectedOption = categoriesOption.options[categoriesOption.selectedIndex];
    const categoryName = selectedOption.textContent;
-    console.log(categoryName)
     
     return categoryName
 }
