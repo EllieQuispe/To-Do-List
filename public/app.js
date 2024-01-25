@@ -4,7 +4,13 @@ document.addEventListener('DOMContentLoaded', () =>{
     document.querySelector('.fa-circle-plus').addEventListener('click', addNewCategory)    
     //Call the function to display categories when the page loads
     displayCreatedCategories();
-    categoryDeleteBtn()
+    //Delete categories
+    displayCategoryDeleteBtn()
+
+     //Open form for new list entry
+     document.querySelector('.add-new-item').addEventListener('click', openNewForm )
+     //Close to-do list form
+     document.querySelector('.exit-form').addEventListener('click', closeForm)
 
     //Form submission when adding a new event or task
     document.getElementById('todo-form').addEventListener('submit', submitForm )
@@ -13,20 +19,14 @@ document.addEventListener('DOMContentLoaded', () =>{
     //Call the function to display the data from the form when the page loads
     savingDataInArr()
 
-    //Date feature initilization
-    initializeDateFeature();
-
-    //Open form for new list entry
-    document.querySelector('.add-new-item').addEventListener('click', openNewForm )
-    //Close to-do list form
-    document.querySelector('.exit-form').addEventListener('click', closeForm)
-
-     
     //Close full view container
     document.querySelector('.exit-full-view').addEventListener('click', closeFullViewContainer)
 
-    //drop-down for settings
+    //drop-down container for settings
     document.querySelector('.drop-down-menu-icon').addEventListener('click', openSettings)
+
+    //Date feature initilization
+    initializeDateFeature();
     
 })
 
@@ -73,33 +73,57 @@ function initializeDateFeature(){
 
 let categories = [];
 function addNewCategory() {
-    //I need to capitalize the first letter of each value entered and give it a word limit
+    
+    let inputCategory = document.getElementById('input-category')
+    let categoryName = inputCategory.value.trim();
 
-    let category = {
-        id: Date.now(),
-        name: document.getElementById('input-category').value
-    }
+    if(validateInput(categoryName)){
+        categoryName = capitalizeFirstLetter(categoryName);
 
-    //If statement if users leave the form empty - It need to make the UI better
-    //Maybe this comment should be placed above the inptu box
-    if (category.name.trim() === "" || category.name.trim() == "Add a Category"){
-        alert("Please enter a category name");
-        return;
-    }
+        let category = {
+            id: Date.now(),
+            name: categoryName
+        };
 
-    //push object to the categories array
-    categories.push(category);  
+        //push object to the categories array
+        categories.push(category); 
 
-     //reset the value box to blank   
-     document.getElementById('input-category').value = ""                                       
-    document.getElementById('input-category').placeholder = "Add a Category"  
-   
-    //Saving array to localStorage
-    localStorage.setItem('MyCategoryList', JSON.stringify(categories))
+         //reset the value box to blank   
+        inputCategory.value = ""                                       
+        inputCategory.placeholder = "Add a Category" 
 
-     //Call the function that will display the categories
-     displayCreatedCategories()    
+         //Saving array to localStorage
+        localStorage.setItem('MyCategoryList', JSON.stringify(categories))
+
+         //Call the function that will display the categories
+        displayCreatedCategories()  
+    } 
 }
+
+function validateInput(name){
+    //Check if the input is blank
+    if (name === "" || name === "Add a Category"){
+        categoryErrorMessage("Enter a category name")
+        return false;
+    } 
+        categoryErrorMessage("")
+        return true;
+}
+
+function categoryErrorMessage(message){
+    const errorMessage = document.getElementById('errorMessage');
+    errorMessage.innerHTML = message;
+}
+
+document.getElementById('input-category').addEventListener('input', function(){
+    categoryErrorMessage("")
+})
+
+function capitalizeFirstLetter(str){
+    //Capitalize the first letter of a string
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 
 
 let paragraphContainer = document.querySelector('.category-list-container')
@@ -132,10 +156,10 @@ function displayCreatedCategories(){
 
    displayCategoryOptions(categoriesArr) //categories created should be in sync with category options in the new entry form
    deleteCategoryPickerContainer(categories) //Remove the categories option when no category created
-   categoryDeleteBtn()
+   displayCategoryDeleteBtn()
 }
 
-function categoryDeleteBtn(){
+function displayCategoryDeleteBtn(){
     paragraphContainer = document.querySelector('.category-list-container')
     let newCategories = document.querySelectorAll('.new-category')
     let xMarkCategory = document.querySelectorAll('.categories-xmark-icon')
@@ -176,6 +200,8 @@ function deleteCategories(){
         })
     })
 }
+
+
 
 
 
