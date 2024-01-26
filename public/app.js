@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () =>{
      document.querySelector('.exit-form').addEventListener('click', closeForm)
 
     //Form submission when adding a new event or task
+    document.getElementById('todo-form').setAttribute('novalidate', '')
     document.getElementById('todo-form').addEventListener('submit', submitForm )
     //Clear form
     document.querySelector('.clear-btn').addEventListener('click', clearForm)
@@ -136,7 +137,7 @@ function displayCreatedCategories(){
      paragraphContainer.innerHTML = ""  
     
    if(!savedCategories || savedCategories === '[]'){  //true false('[]')  
-        categories = JSON.parse(savedCategories) //Turns it into an object
+        categories = JSON.parse(savedCategories) 
        
         if(!categories){ //null is falsy (When localStorage key is deleted manually)
             categories = []
@@ -236,8 +237,9 @@ let formDataArr = [];
 function submitForm(ev){
     ev.preventDefault(); //to stop the form from submitting
 
+    
     //Title 
-    const title = getTitle()    
+    let title = getTitle()    
     //Due Date
     const date = getSelectedDate()
     //Description
@@ -249,9 +251,10 @@ function submitForm(ev){
     //Location
     const location = clientAddress()
 
-    
-    //Object
-    const formData = {
+    if(validateForm(title, typeOfTodo)){
+        title = capitalizeFirstLetter(title)
+
+        const formData = {
         id: Date.now(),
         title: title,
         type: typeOfTodo,
@@ -260,53 +263,79 @@ function submitForm(ev){
         category: category,
         color: color,
         location: location,
+        }
 
+        //Reset Values//
+        clearForm(typeOfTodo) 
+
+        //Insert object to array
+        formDataArr.push(formData)
+
+        //Saving object to localStorage
+        localStorage.setItem('FormData', JSON.stringify(formDataArr))
+ 
+        //Call the function that will display the categories
+        compareDates()
+        closeForm()
+        eventsTasksCounter()
     }
-
-    //Missing items before submission//
-        //Add title input field
-        if(formData.title.trim() === "" || formData.title.trim() == "Add Title"){
-            alert("Please enter a title");
-            return;
-        }
-
-        //Btn for event and task
-        if (!typeOfTodo){
-            alert('Please select Event or Task');
-            return;
-        }
-     
-        //Date submission
-        if(!date){
-            alert('Please submit a due date')
-            return;
-        }
-
+    
     //resetBtn() I don't think I need the resetBtn() since clearForm could replace it
-
-    //Reset Values//
-    clearForm(typeOfTodo)        
-
-    //Insert object to array
-     formDataArr.push(formData)
- 
-    //Saving object to localStorage
-     localStorage.setItem('FormData', JSON.stringify(formDataArr))
- 
-    //Call the function that will display the categories
-      compareDates()
-      closeForm()
-      eventsTasksCounter()
-  
 }
 
-//Used when localStorage key is deleted manually
+
+
+function validateForm(title, typeOfTodo){
+
+    const validations = [
+        { condition: title.trim() === "" || title.trim() == "Add Title", message: "Enter a title"},
+        { condition: !typeOfTodo, message: "Select a Task or Event"},
+        { condition: categories == '' ||  categories == [{}], message:"Create a category name to submit your entry"}
+    ]
+   
+        if(validations[0].condition){
+            //display error message
+            titleErrorMessage(validations[0].message)
+            return false;
+        }
+        if(validations[1].condition){
+            typeErrorMessage(validations[1].message)
+            return false;
+        }
+        if(validations[2].condition){
+            categoryErrorMessage(validations[2].message)
+            return false;
+        }
+
+       // categoryErrorMessage("")
+        titleErrorMessage("")
+        typeErrorMessage("")
+        categoryErrorMessage("")
+        return true;
+}
+
+
+function titleErrorMessage(message){
+    const titleErrorMessage = document.querySelector('.titleErrorMessage')
+    titleErrorMessage.innerHTML = message
+}
+function typeErrorMessage(message){
+    const typeErrorMessage = document.querySelector('.typeErrorMessage')
+    typeErrorMessage.innerHTML = message
+}
+document.getElementById("title-input").addEventListener('input', function(){
+    titleErrorMessage("")
+})
+
+
+
+////Used when localStorage key is deleted manually////
 function savingDataInArr(){
     const savedFormItems = localStorage.getItem('FormData')
     formDataArr = JSON.parse(savedFormItems)
 
     eventsTasksCounter()
-
+    
     if(!formDataArr){ //null is falsy
         formDataArr = []
     }
@@ -319,15 +348,14 @@ function eventsTasksCounter(){
     let eventCount = 0;
 
     if(formDataArr == [] || formDataArr == null){
-        taskCountContainer.innerHTML = taskCount
-        eventCountContainer.innerHTML = eventCount
+        setTaskEventToZero(taskCount, eventCount)
         return;
     } 
 
-    //Both values should start at zero
-    taskCountContainer.innerHTML = taskCount
-    eventCountContainer.innerHTML = eventCount
 
+    //Both values should start at zero
+    setTaskEventToZero(taskCount, eventCount)
+    
     formDataArr.map((dataEntry)=>{
         if(dataEntry.type == "Task"){
             taskCount++
@@ -339,20 +367,28 @@ function eventsTasksCounter(){
         }
     })
 }
+function setTaskEventToZero(tasknum, eventnum){
+    taskCountContainer.innerHTML = tasknum
+    eventCountContainer.innerHTML = eventnum
+}
 
 
 function clearForm(typeOfTodo){
     //clear title
     document.getElementById('title-input').value = ""
     document.getElementById('title-input').placeholder = "Add Title"
+    titleErrorMessage("")
+       
 
     //clear type
     const eventOption = document.getElementById('event-option')
     const taskOption = document.getElementById('task-option')
+    typeErrorMessage("")
 
     eventOption.classList.remove('clicked')
     taskOption.classList.remove('clicked')
     typeOfTodo = ""; //Event or task
+    categoryErrorMessage("") //clear error message on category input field
 
     //clear description
     document.getElementById('input-dedscription').value = ""
@@ -367,6 +403,7 @@ function clearForm(typeOfTodo){
     //Clear location
     document.getElementById('addressInput').value = ""
     document.getElementById('addressInput').placeholder = "Add Location"
+
 }
 
 /*
@@ -414,12 +451,14 @@ function deleteEntry(currentListID){
                 //delete 
                 formDataArr.splice(i, 1)
                 localStorage.setItem('FormData', JSON.stringify(formDataArr))
-                
+
                 closeFullViewContainer()
                 compareDates()
 
                 //Remove selected checkbox 
                 localStorage.removeItem(currentListID) 
+
+                //Reset counter
                 eventsTasksCounter()  
             } 
         }) 
@@ -427,7 +466,7 @@ function deleteEntry(currentListID){
 }
 
 
-//HTML element where list will be inserted (UL)
+/////Preview of List Depending of Date Selected///// 
 let todoList = document.getElementById('todo-List')
 function compareDates(){
     const options={
@@ -459,11 +498,13 @@ function displayPreviewOfTodoList(id, title, type, date, category, color){
     trackCheckboxStatus()
 }  
 
+
 function trackCheckboxStatus(){
     todoList = document.getElementById('todo-List') //updated UL element
-    
+
     //Add an event listener to the checkboxes
     document.querySelectorAll('.container input').forEach(checkbox => {
+
         checkbox.addEventListener('change', function () {
             localStorage.setItem(this.id, this.checked);
         });
@@ -473,6 +514,11 @@ function trackCheckboxStatus(){
     checkbox.checked = isChecked;
     });
 }
+
+
+
+
+
 
 /////////////////////////////////// FULL VIEW OF TODO LIST ////////////////////////////////
 const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container
@@ -546,7 +592,7 @@ function getTitle(){
         const titleValue = titleInput.value.trim()  
 
         //reset the value box to blank
-        document.getElementById('title-input').value = "Add Title" 
+        document.getElementById('title-input').placeholder = "Add Title" 
 
         return titleValue
 }
@@ -566,6 +612,7 @@ function toggleTaskEventHighlight(){
             //Change color of the button
             eventOption.classList.add('clicked')
             taskOption.classList.remove('clicked')
+            typeErrorMessage("")
 
             //Obtain the value
             const value = target.textContent.trim()
@@ -576,6 +623,7 @@ function toggleTaskEventHighlight(){
             //Change color of the button
             taskOption.classList.add('clicked')
             eventOption.classList.remove('clicked')
+            typeErrorMessage("")
 
             //Obtain the value
             const value = target.textContent.trim()
@@ -665,8 +713,12 @@ const categoriesOption = document.getElementById('categories-option')
 categoriesOption.addEventListener('change', categorySelected)
 function categorySelected(){
    const selectedOption = categoriesOption.options[categoriesOption.selectedIndex];
+   console.log(selectedOption)
+   if(!selectedOption){
+        console.log('nothing in the category section')
+        return;
+   }
    const categoryName = selectedOption.textContent;
-    
     return categoryName
 }
 

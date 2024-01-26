@@ -132,9 +132,14 @@
                     <div>
                         <div class="top-section">
                             <input type="text" placeholder="Add Title" maxlength="27" id="title-input" autocomplete="off">
+                            <div class="titleErrorMessage"></div>
                             <br>
-                            <p id="event-option">Event</p>
-                            <p id="task-option">Task</p>
+                            <div class="type-container">
+                                <p id="event-option">Event</p>
+                                <p id="task-option">Task</p>
+                                <div class="typeErrorMessage"></div>
+                            </div>
+                            
 
                             <div class="due-date-container">
                                 <p class="menu-options due-date"><i class="fa-regular fa-clock"></i><input id="form-Due-date" type="date" required pattern="\d{4}-\d{2}-\d{2}" ></p>
@@ -145,10 +150,9 @@
                         </div>
 
                         <div class="select-category-container">
-                            <!--drop down selection-->
                             <label for="categories-option"><i class="fa-solid fa-layer-group"></i></label>
                             <select name="categories-options" id="categories-option">
-
+                                  <!--drop down selection-->
                             </select>
                         </div>
                         <div class="color-picker-container">
