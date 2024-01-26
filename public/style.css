@@ -668,7 +668,7 @@ p#task-option.clicked, p#event-option.clicked{   /*You will need this for the ja
     color:#666666;
     margin-top: 10px;
     margin-bottom: 10px;
-    padding: 4px 4px;
+    padding: 5px 4px;
     cursor: pointer;
     position: relative;
 }
@@ -678,10 +678,12 @@ p.menu-options.due-date{
 input[type=date]{
     font-family:'Inter', sans-serif;
     font-size: 15;
-    padding: 4px 3px;
+    padding: 6px 3px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
 }
 i.fa-regular.fa-clock{
-    padding-left: 2px;
     padding-right: 10px;
 }
 
@@ -696,6 +698,7 @@ i.fa-regular.fa-clock{
 }
 textarea {
     color: #2C2C2C;
+    outline: none;
 }
 input[type=text]{
     border: none;
@@ -723,6 +726,9 @@ i.fa-solid.fa-layer-group{
     font-family:'Inter', sans-serif;
     font-size: 15px;
     padding: 4px 3px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
 }
 .hideCategoryBox{ /*this works with JS*/
     display: none;
