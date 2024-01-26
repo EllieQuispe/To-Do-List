@@ -50,7 +50,7 @@ function initializeDateFeature(){
         //Display week day to UI
         document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
         
-        compareDates()
+        compareDates()//compare localStorage object dates with current date
     }
     updateDateDisplay()
 
@@ -129,54 +129,51 @@ function capitalizeFirstLetter(str){
 
 /////Display category/////
 let paragraphContainer = document.querySelector('.category-list-container') //<div>
-//const categorySection = document.querySelector('.categories')
 
 function displayCreatedCategories(){
      const savedCategories = localStorage.getItem('MyCategoryList') //Array of objects
-     let categoriesArr = [];
      paragraphContainer.innerHTML = ""  
+     let categoryNamesArr = [];
     
    if(!savedCategories || savedCategories === '[]'){  //true false('[]')  
         categories = JSON.parse(savedCategories) 
        
-        if(!categories){ //null is falsy (When localStorage key is deleted manually)
+        if(!categories){ //null is falsy 
             categories = []
         }
 
    } else{ //false false
-         categories = JSON.parse(savedCategories) //Turns it into an array of objects
+         categories = JSON.parse(savedCategories) //An array of objects
 
          categories.map((category)=>{
             paragraphContainer.innerHTML +=  `<p class="top-margin-menu new-category">${category.name}<i class="fa-solid fa-xmark categories-xmark-icon"></i></p>`
-            categoriesArr.push(category.name)
+            categoryNamesArr.push(category.name)
          })           
            
         //Option to delete created category is now available
         deleteCategories()
    }
 
-   displayCategoryOptions(categoriesArr) //categories created should be in sync with category options in the new entry form
+   displayCategoryOptions(categoryNamesArr) //synching the category names with the category options available in the new entry form
    deleteCategoryPickerContainer(categories) //Remove the categories option when no category created
    displayCategoryDeleteBtn()
 }
 
 ///Hovering over the category x-icon////
 function displayCategoryDeleteBtn(){
-    paragraphContainer = document.querySelector('.category-list-container')
     let paragraphEnclosingIcons = document.querySelectorAll('.new-category')
-    let xMarkCategory = document.querySelectorAll('.categories-xmark-icon')
+    let xIcons = document.querySelectorAll('.categories-xmark-icon')
 
     let paragraphEnclosingIconArr = Array.from(paragraphEnclosingIcons)
-    let xMarkArr = Array.from(xMarkCategory)
+    let xIconsArr = Array.from(xIcons)
 
     paragraphEnclosingIconArr.map((category,i)=>{
-        
         category.addEventListener("mouseenter", function(){
-            xMarkArr[i].classList.add('shadow')
+            xIconsArr[i].classList.add('visible')
         })
         category.addEventListener("mouseleave", function() {
             // Remove the class from the xMarkCategory when the mouse leaves the newCategory
-            xMarkArr[i].classList.remove('shadow')
+            xIconsArr[i].classList.remove('visible')
         })
     }) 
 }
@@ -187,8 +184,8 @@ function deleteCategories(){
     const savedCategories = localStorage.getItem('MyCategoryList')
     categories = JSON.parse(savedCategories)
 
-    const closeIcons = document.querySelectorAll('.categories-xmark-icon');
-    let iconArr = Array.from(closeIcons)
+    const xIcons = document.querySelectorAll('.categories-xmark-icon');
+    let iconArr = Array.from(xIcons)
     
     //Use the index of iconArr array to find the index of the categories array 
     iconArr.map((icon, i)=>{ 
@@ -207,6 +204,7 @@ function deleteCategories(){
 
 ////////////////////////////////// NEW ENTRY FORM //////////////////////////////////
 /*const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container */
+
 const todoNewEntryForm = document.querySelector('.new-todo-item-container')
 const todoListDisplay = document.querySelector('.middle-container')
 function openNewForm(){
@@ -230,119 +228,64 @@ function closeForm(){
     clearForm()
 }
 
-////FORM SUBMISSION FOR NEW EVENT OR TASK/////
-const mapID = document.getElementById('map')
-let formDataArr = [];
 
-function submitForm(ev){
-    ev.preventDefault(); //to stop the form from submitting
+/////Preview of List Depending of Date Selected/////
+function trackCheckboxStatus(){
+    todoList = document.getElementById('todo-List') //updated UL element
 
-    
-    //Title 
-    let title = getTitle()    
-    //Due Date
-    const date = getSelectedDate()
-    //Description
-    const description = textareaValue()
-    //Category
-    const category = categorySelected()
-    //Color
-    const color = colorPickerValue()
-    //Location
-    const location = clientAddress()
+    //Add an event listener to the checkboxes
+    document.querySelectorAll('.container input').forEach(checkbox => {
 
-    if(validateForm(title, typeOfTodo)){
-        title = capitalizeFirstLetter(title)
+        checkbox.addEventListener('change', function () {
+            localStorage.setItem(this.id, this.checked);
+        });
 
-        const formData = {
-        id: Date.now(),
-        title: title,
-        type: typeOfTodo,
-        date: date,
-        description: description,
-        category: category,
-        color: color,
-        location: location,
-        }
-
-        //Reset Values//
-        clearForm(typeOfTodo) 
-
-        //Insert object to array
-        formDataArr.push(formData)
-
-        //Saving object to localStorage
-        localStorage.setItem('FormData', JSON.stringify(formDataArr))
- 
-        //Call the function that will display the categories
-        compareDates()
-        closeForm()
-        eventsTasksCounter()
-    }
-    
-    //resetBtn() I don't think I need the resetBtn() since clearForm could replace it
+    // Retrieve the checked state from local storage on page load
+    const isChecked = localStorage.getItem(checkbox.id) === 'true';
+    checkbox.checked = isChecked;
+    });
 }
 
+function displayPreviewOfTodoList(id, title, type, date, category, color){
+    todoList.innerHTML += ` 
+                        <li class="list-item" id="${id}">
+                        <label class="container"> 
+                        <input type="checkbox" id="${id}" class="checkbox"><span class="checkmark"></span></label> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i>
+                        </li><p class="list-details">${date} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>`
+    
+    //To add an eventlistener to arrow icons next to list item incase user wants to a full view
+    getList()
+    //checkbox
+    trackCheckboxStatus()
+}  
 
-
-function validateForm(title, typeOfTodo){
-
-    const validations = [
-        { condition: title.trim() === "" || title.trim() == "Add Title", message: "Enter a title"},
-        { condition: !typeOfTodo, message: "Select a Task or Event"},
-        { condition: categories == '' ||  categories == [{}], message:"Create a category name to submit your entry"}
-    ]
+let todoList = document.getElementById('todo-List')
+function compareDates(){
+    const options={
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    }
+   //Changed date format to ##/##/####
+   let dateFormat = currentDate.toLocaleDateString('en-US', options) 
    
-        if(validations[0].condition){
-            //display error message
-            titleErrorMessage(validations[0].message)
-            return false;
-        }
-        if(validations[1].condition){
-            typeErrorMessage(validations[1].message)
-            return false;
-        }
-        if(validations[2].condition){
-            categoryErrorMessage(validations[2].message)
-            return false;
-        }
-
-       // categoryErrorMessage("")
-        titleErrorMessage("")
-        typeErrorMessage("")
-        categoryErrorMessage("")
-        return true;
+   todoList.innerHTML =""
+   formDataArr.filter((dataEntry, i)=>{
+        if(dataEntry.date == dateFormat){
+            displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.category, dataEntry.color)
+        } 
+    })
 }
 
 
-function titleErrorMessage(message){
-    const titleErrorMessage = document.querySelector('.titleErrorMessage')
-    titleErrorMessage.innerHTML = message
-}
-function typeErrorMessage(message){
-    const typeErrorMessage = document.querySelector('.typeErrorMessage')
-    typeErrorMessage.innerHTML = message
-}
-document.getElementById("title-input").addEventListener('input', function(){
-    titleErrorMessage("")
-})
-
-
-
-////Used when localStorage key is deleted manually////
-function savingDataInArr(){
-    const savedFormItems = localStorage.getItem('FormData')
-    formDataArr = JSON.parse(savedFormItems)
-
-    eventsTasksCounter()
-    
-    if(!formDataArr){ //null is falsy
-        formDataArr = []
-    }
-}
-
+/// Event & Task Counter ///
 const taskCountContainer=document.querySelector('.taskCount')
 const eventCountContainer=document.querySelector('.eventCount')
+
+function setTaskEventToZero(tasknum, eventnum){
+    taskCountContainer.innerHTML = tasknum
+    eventCountContainer.innerHTML = eventnum
+}
 function eventsTasksCounter(){
     let taskCount = 0;
     let eventCount = 0;
@@ -367,12 +310,63 @@ function eventsTasksCounter(){
         }
     })
 }
-function setTaskEventToZero(tasknum, eventnum){
-    taskCountContainer.innerHTML = tasknum
-    eventCountContainer.innerHTML = eventnum
+
+
+////Used when localStorage key is deleted manually////
+function savingDataInArr(){
+    const savedFormItems = localStorage.getItem('FormData')
+    formDataArr = JSON.parse(savedFormItems)
+
+    eventsTasksCounter()//To update counter
+    
+    if(!formDataArr){ //null is falsy
+        formDataArr = []
+    }
 }
 
 
+//// Validate Form ////
+function titleErrorMessage(message){
+    const titleErrorMessage = document.querySelector('.titleErrorMessage')
+    titleErrorMessage.innerHTML = message
+}
+function typeErrorMessage(message){
+    const typeErrorMessage = document.querySelector('.typeErrorMessage')
+    typeErrorMessage.innerHTML = message
+}
+function validateForm(title, typeOfTodo){
+
+    const validations = [
+        { condition: title.trim() === "" || title.trim() == "Add Title", message: "Enter a title"},
+        { condition: !typeOfTodo, message: "Select a Task or Event"},
+        { condition: categories == '' ||  categories == [{}], message:"Create a category name to submit your entry"}
+    ]
+    
+        if(validations[0].condition){
+            titleErrorMessage(validations[0].message)
+            return false;
+        }
+        if(validations[1].condition){
+            typeErrorMessage(validations[1].message)
+            return false;
+        }
+        if(validations[2].condition){
+            categoryErrorMessage(validations[2].message)
+            return false;
+        }
+
+      
+        titleErrorMessage("")
+        typeErrorMessage("")
+        categoryErrorMessage("")
+        return true;
+}
+document.getElementById("title-input").addEventListener('input', function(){
+    titleErrorMessage("")
+})
+
+
+//// Reset/Clear form ////
 function clearForm(typeOfTodo){
     //clear title
     document.getElementById('title-input').value = ""
@@ -405,6 +399,7 @@ function clearForm(typeOfTodo){
     document.getElementById('addressInput').placeholder = "Add Location"
 
 }
+
 
 /*
 function resetBtn(){
@@ -439,161 +434,10 @@ function resetEntry(listId){
 }
 */
 
-
-////// Delete entry /////
-function deleteEntry(currentListID){
-    const deleteBtn = document.querySelector('.delete-btn')
-    deleteBtn.addEventListener('click', function(){
-
-        
-        formDataArr.filter((dataEntry, i) =>{
-            if(dataEntry.id == currentListID){
-                //delete 
-                formDataArr.splice(i, 1)
-                localStorage.setItem('FormData', JSON.stringify(formDataArr))
-
-                closeFullViewContainer()
-                compareDates()
-
-                //Remove selected checkbox 
-                localStorage.removeItem(currentListID) 
-
-                //Reset counter
-                eventsTasksCounter()  
-            } 
-        }) 
-    })
-}
-
-
-/////Preview of List Depending of Date Selected///// 
-let todoList = document.getElementById('todo-List')
-function compareDates(){
-    const options={
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-    }
-   //Changed date format to ##/##/####, so that it matches the list item date format
-   let dateFormat = currentDate.toLocaleDateString('en-US', options) 
-   
-   todoList.innerHTML =""
-   formDataArr.filter((dataEntry, i)=>{
-        if(dataEntry.date == dateFormat){
-            displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.category, dataEntry.color)
-        } 
-    })
-}
-
-function displayPreviewOfTodoList(id, title, type, date, category, color){
-    todoList.innerHTML += ` 
-                        <li class="list-item" id="${id}">
-                        <label class="container"> 
-                        <input type="checkbox" id="${id}" class="checkbox"><span class="checkmark"></span></label> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i>
-                        </li><p class="list-details">${date} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>`
-    
-    //To add an eventlistener to arrow icons next to list item incase user wants to a full view
-    getList()
-    //checkbox
-    trackCheckboxStatus()
-}  
-
-
-function trackCheckboxStatus(){
-    todoList = document.getElementById('todo-List') //updated UL element
-
-    //Add an event listener to the checkboxes
-    document.querySelectorAll('.container input').forEach(checkbox => {
-
-        checkbox.addEventListener('change', function () {
-            localStorage.setItem(this.id, this.checked);
-        });
-
-    // Retrieve the checked state from local storage on page load
-    const isChecked = localStorage.getItem(checkbox.id) === 'true';
-    checkbox.checked = isChecked;
-    });
-}
-
-
-
-
-
-
-/////////////////////////////////// FULL VIEW OF TODO LIST ////////////////////////////////
-const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container
-function openFullViewContainer(){
-    listDetailContainer.classList.add('display-list-detail-container')
-    todoListDisplay.classList.add('screen-size-40') //not remove a window, just making it smaller
-
-    //If form is open, we do the below code
-    todoNewEntryForm.classList.remove('display')
-    clearForm()
-}
-function closeFullViewContainer(){
-    todoListDisplay.classList.remove('screen-size-40')
-    listDetailContainer.classList.remove('display-list-detail-container')
-}
-
-
-let fullListView = document.getElementById('full-list-view')
-function getList(){
-    todoList = document.getElementById('todo-List') //list of item(s) displayed for selected date
-    let arrowIcon = document.querySelectorAll('.list-arrow')
-    let list = document.querySelectorAll('.list-item')
-    let arrowIconArr = Array.from(arrowIcon)
-
-    arrowIconArr.map((arrow, j)=>{
-        arrow.addEventListener('click', function(){
-           let currentListID = Number(list[j].id) //getting id of each list item and turning it into a number
-
-           fullListView.innerHTML= ""
-            formDataArr.filter((dataEntry)=>{
-                if(dataEntry.id == currentListID ){
-
-                    /////FULL VIEW OF TODO LIST/////
-                    viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.type, dataEntry.description, dataEntry.category, dataEntry.color, dataEntry.location ) 
-                    openFullViewContainer() //Div opens up on the right side
-                }  
-            })
-
-            deleteEntry(currentListID) //The delete btn is now able to listen to clicks
-            //resetEntry(currentListID) //The option to reset entry is now available
-        })
-    })    
-}
-
-
-
-function viewFullDetailsOfTodoItem(title, date, type, description, category, color, location){
-    fullListView.innerHTML = `<li id='todo-entry'>
-                                <div>
-                                <p id="type-of-List">${type}</p>
-                                <p class="entry-date-category-color">${date} | ${category} <span class="color-box" style="background-color:${color};"></span></p>
-                                <h2 id="entry-title">${title}</h2>
-                                <p id="entry-description">${description}</p>
-                                <p id="entry-location">Location<span class="location">${location}</span></p>
-                                </div>
-                                <div class="delete-edit-btn-container">
-                                    <button type="button" class="delete-btn">Delete</button>
-                                   
-                                </div>
-                            </li>`
-}
-// <button type="button" class="edit-btn">Edit</button> (might add it back to the above function)
-
-
-
-
-
-/////////////////////////// INFORMATION NEEDED FOR TODO LIST FORM SUBMISSION ///////////////////////
+///////////// INFORMATION NEEDED FOR TODO LIST FORM SUBMISSION ////////////////
 function getTitle(){
         const titleInput = document.getElementById("title-input")
         const titleValue = titleInput.value.trim()  
-
-        //reset the value box to blank
-        document.getElementById('title-input').placeholder = "Add Title" 
-
         return titleValue
 }
 
@@ -667,25 +511,14 @@ function getSelectedDate(){
     return formattedDate
 }
 
-function clientAddress(){
-    const addressInput = document.getElementById('addressInput')
-    const address = addressInput.value.trim()
-
-    //Reset
-    addressInput.value = "Add Location"
-
-    return address
-}
 
 //Obtain the value entered in the textarea element
 function textareaValue(){
     const textareaId = document.getElementById('input-dedscription')
     const description = textareaId.value.trim()
-
-    //Reset
-    textareaId.value = "Add Description"
     return description
 }
+
 
 function displayCategoryOptions(catArr){
     const categoryOption = document.getElementById('categories-option')
@@ -713,9 +546,9 @@ const categoriesOption = document.getElementById('categories-option')
 categoriesOption.addEventListener('change', categorySelected)
 function categorySelected(){
    const selectedOption = categoriesOption.options[categoriesOption.selectedIndex];
-   console.log(selectedOption)
+ 
    if(!selectedOption){
-        console.log('nothing in the category section')
+       categoryErrorMessage("Create a category name to submit your entry")
         return;
    }
    const categoryName = selectedOption.textContent;
@@ -740,14 +573,16 @@ function colorPickerValue(){
     }  
 }
 
-
-/********************FINDING LOCATION VIA MAPBOX**********************/
+/*
 function clientAddress(){
     const addressInput = document.getElementById('addressInput')
     const address = addressInput.value.trim()
-
-    //reset
-    addressInput.value = "Add Location"
+    return address
+}*/
+///// FINDING LOCATION /////
+function clientAddress(){
+    const addressInput = document.getElementById('addressInput')
+    const address = addressInput.value.trim()
 
     return address
 }
@@ -820,10 +655,145 @@ function findAddress(map, marker){
         .catch(error => console.error('Error:', error))
 }
 initializeMap()
-
 */
 
+////////////////// FORM SUBMISSION FOR NEW EVENT OR TASK ////////////////
+const mapID = document.getElementById('map')
+let formDataArr = [];
+
+function submitForm(ev){
+    ev.preventDefault(); //to stop the form from submitting
+
+    
+    //Title 
+    let title = getTitle()    
+    //Due Date
+    const date = getSelectedDate()
+    //Description
+    const description = textareaValue()
+    //Category
+    const category = categorySelected()
+    //Color
+    const color = colorPickerValue()
+    //Location
+    const location = clientAddress()
+
+    if(validateForm(title, typeOfTodo)){
+        title = capitalizeFirstLetter(title)
+
+        const formData = {
+        id: Date.now(),
+        title: title,
+        type: typeOfTodo,
+        date: date,
+        description: description,
+        category: category,
+        color: color,
+        location: location,
+        }
+
+        //Reset Values//
+        clearForm(typeOfTodo) 
+
+        //Insert object to array
+        formDataArr.push(formData)
+
+        //Saving object to localStorage
+        localStorage.setItem('FormData', JSON.stringify(formDataArr))
+ 
+        //Call the function that will display the categories
+        compareDates()
+        closeForm()
+        eventsTasksCounter()
+    }
+    
+}
 
 
 
+/////////////////////////////////// FULL VIEW OF TODO LIST ////////////////////////////////
+const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container
+function openFullViewContainer(){
+    listDetailContainer.classList.add('display-list-detail-container')
+    todoListDisplay.classList.add('screen-size-40') //not remove a window, just making it smaller
+
+    //If form is open, we do the below code
+    todoNewEntryForm.classList.remove('display')
+    clearForm()
+}
+function closeFullViewContainer(){
+    todoListDisplay.classList.remove('screen-size-40')
+    listDetailContainer.classList.remove('display-list-detail-container')
+}
+
+////// Delete entry /////
+function deleteEntry(currentListID){
+    const deleteBtn = document.querySelector('.delete-btn')
+    deleteBtn.addEventListener('click', function(){
+
+        
+        formDataArr.filter((dataEntry, i) =>{
+            if(dataEntry.id == currentListID){
+                //delete 
+                formDataArr.splice(i, 1)
+                localStorage.setItem('FormData', JSON.stringify(formDataArr))
+
+                closeFullViewContainer()
+                compareDates()
+
+                //Remove selected checkbox 
+                localStorage.removeItem(currentListID) 
+
+                //Reset counter
+                eventsTasksCounter()  
+            } 
+        }) 
+    })
+}
+
+
+function viewFullDetailsOfTodoItem(title, date, type, description, category, color, location){
+    fullListView.innerHTML = `<li id='todo-entry'>
+                                <div>
+                                <p id="type-of-List">${type}</p>
+                                <p class="entry-date-category-color">${date} | ${category} <span class="color-box" style="background-color:${color};"></span></p>
+                                <h2 id="entry-title">${title}</h2>
+                                <p id="entry-description">${description}</p>
+                                <p id="entry-location">Location<span class="location">${location}</span></p>
+                                </div>
+                                <div class="delete-edit-btn-container">
+                                    <button type="button" class="delete-btn">Delete</button>
+                                   
+                                </div>
+                            </li>`
+}
+// <button type="button" class="edit-btn">Edit</button> (might add it back to the above function)
+
+
+let fullListView = document.getElementById('full-list-view')
+function getList(){
+    todoList = document.getElementById('todo-List') //list of item(s) displayed for selected date
+    let arrowIcon = document.querySelectorAll('.list-arrow')
+    let list = document.querySelectorAll('.list-item')
+    let arrowIconArr = Array.from(arrowIcon)
+
+    arrowIconArr.map((arrow, j)=>{
+        arrow.addEventListener('click', function(){
+           let currentListID = Number(list[j].id) //Turn ID to number
+
+           fullListView.innerHTML= ""
+            formDataArr.filter((dataEntry)=>{
+                if(dataEntry.id == currentListID ){
+
+                    /////FULL VIEW OF TODO LIST/////
+                    viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.type, dataEntry.description, dataEntry.category, dataEntry.color, dataEntry.location ) 
+                    openFullViewContainer() 
+                }  
+            })
+
+            deleteEntry(currentListID) //The delete btn is now able to listen to clicks
+            //resetEntry(currentListID) //The option to reset entry is now available
+        })
+    })    
+}
 
