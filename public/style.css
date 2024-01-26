@@ -101,6 +101,7 @@ ul li.menu-settings:hover{
 }
 i.fa-gear, i.fa-circle-question, i.fa-comment-dots, i.fa-arrow-right-from-bracket{
     padding-right: 7px;
+    color: #666666;
 }
 
 /*** Socials of user profile*/
@@ -138,6 +139,9 @@ p.taskCount, p.eventCount{
 }
 .categories{
     margin-top: 50px;
+}
+h3{
+    color: #666666;
 }
 
 /********** Counter ***********/
