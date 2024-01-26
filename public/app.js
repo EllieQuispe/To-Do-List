@@ -587,7 +587,7 @@ function clientAddress(){
     return address
 }
 
-
+/*
 //Map that will display the location
 function initializeMap(){
     //Fetch the Mapbox API Token from server
@@ -655,7 +655,7 @@ function findAddress(map, marker){
         .catch(error => console.error('Error:', error))
 }
 initializeMap()
-
+*/
 
 ////////////////// FORM SUBMISSION FOR NEW EVENT OR TASK ////////////////
 const mapID = document.getElementById('map')
