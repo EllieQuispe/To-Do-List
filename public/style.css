@@ -227,7 +227,7 @@ p.taskCount, p.eventCount{
 .fa-solid.fa-xmark.categories-xmark-icon{
     color: transparent;
 }
-.fa-solid.fa-xmark.shadow{
+.fa-solid.fa-xmark.visible{
     color: #999999;
 }
 
@@ -463,6 +463,9 @@ i.exit-full-view{
     font-size:32px;
     cursor: pointer;
 }
+i.exit-full-view:hover{
+   color:#F6C15C;
+}
 
 .list-container{
     height: 100%;
@@ -579,6 +582,9 @@ span.location{
 i#exit-icon{
     font-size:32px;
     cursor: pointer;
+}
+i#exit-icon:hover{
+    color:#F6C15C;
 }
 
 #todo-form{
