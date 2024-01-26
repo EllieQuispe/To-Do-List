@@ -392,7 +392,7 @@ function clearForm(typeOfTodo){
     formCurrentDate() //Date
 
     //Remove Map - Remove display block for the map once the user clicks the save btn
-    //mapID.style.display = 'none' I will active this code later - this is the map
+     mapID.style.display = 'none' 
 
     //Clear location
     document.getElementById('addressInput').value = ""
@@ -587,7 +587,7 @@ function clientAddress(){
     return address
 }
 
-/* The code below works but to not go past my request rate
+
 //Map that will display the location
 function initializeMap(){
     //Fetch the Mapbox API Token from server
@@ -655,7 +655,7 @@ function findAddress(map, marker){
         .catch(error => console.error('Error:', error))
 }
 initializeMap()
-*/
+
 
 ////////////////// FORM SUBMISSION FOR NEW EVENT OR TASK ////////////////
 const mapID = document.getElementById('map')
