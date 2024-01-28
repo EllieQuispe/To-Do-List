@@ -23,17 +23,19 @@ body{
     background-color: #f4f4f4;
     border-radius: 15px;
     min-width: 235px;
-    height: 95%;
-    margin-left: 20px;
+    height: 97%;
+    margin-left: 12px;
     align-self: center;
     font-family: 'Inter', sans-serif;
-    font-size: 15px;
+    font-weight: 300;
+    font-size: 14px;
+    color: #202020;
 }
 
 /*User Profile*/
 div#user-img{
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     overflow: hidden;
     border-radius: 50%;
     margin-top: 20px;
@@ -55,8 +57,9 @@ div#user-img img{
 }
 .username{
     font-family: 'Inter', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     color:#202020;
+    font-weight: 500;
     align-self: center;
     margin-top: 34px;
     margin-left: 5px;
@@ -65,7 +68,7 @@ div#user-img img{
 i.fa-solid.fa-angle-down.drop-down-menu-icon{
     align-self: center;
     padding: 34px 5px 0px 5px;
-    color:#202020;
+    color:#999999;
     cursor: pointer;
 }
 i.fa-solid.fa-angle-down.drop-down-menu-icon:hover{
@@ -141,26 +144,29 @@ p.taskCount, p.eventCount{
     margin-top: 50px;
 }
 h3{
-    color: #666666;
+    color: #202020;
+    font-weight: 500;
+    margin-bottom: 10px;
 }
 
 /********** Counter ***********/
 .taskCount{
     margin-left: 3px;
-    padding: 3px 7px;
+    padding: 2px 6px;
     color: #2C2C2C;
-    font-size: 15px;
+    font-size: 12px;
     border: 1px solid #BA5E32;
     border-radius: 45px;
 }
 .eventCount{
     margin-left: 3px;
-    padding: 3px 7px;
+    padding: 2px 6px;
     color: #2C2C2C;
-    font-size: 15px;
+    font-size: 12px;
     border: 1px solid #BA5E32;
     border-radius: 45px;
 }
+
 
 /**** Category inputbox with icon ****/
 .category-list-container{
@@ -182,7 +188,7 @@ h3{
     box-sizing: border-box;
     border-radius: 5px;
     width: 100%;
-   /* text-transform: capitalize;*/
+
 }
 #category-input-container input[type=text]{
     border-bottom: none;
@@ -211,8 +217,9 @@ h3{
 /*** Template literal - In JS file ***/
 .new-category{
     font-family: 'Inter', sans-serif;
+    font-weight: 300;
     color:#2C2C2C;
-    font-size: 15px;
+    font-size: 14px;
     margin-top: 2px;
     margin-bottom: 10px;
     padding: 4px 4px;
@@ -243,7 +250,7 @@ h3{
     position: relative;
     background-color: white;
     width: 100%;
-    height: 95%;
+    height: 100%;
     align-self: center;
  
 }
@@ -331,7 +338,7 @@ ul#todo-List{
 ul li{ 
     display: flex;
     color: #2C2C2C;
-    font-size: 18px;
+    font-size: 15px;
     font-family: 'Inter', sans-serif;
     font-weight: 300;
     margin-bottom: 25px;
@@ -361,12 +368,12 @@ li.list-item{
 }
 .checkmark{
     position: absolute;
-    top: -9px;
-    left: 0;
-    height: 16px;
-    width: 17px;
+    top: -6px;
+    left: 10px;
+    height: 11px;
+    width: 11px;
     background-color: transparent;
-    border: 1px solid #666666;
+    border: 1px solid #BA5E32;
     border-radius: 50%;
 }
 .container:hover input ~ .checkmark{
@@ -385,12 +392,12 @@ li.list-item{
     display: block;
 }
 .container .checkmark:after{
-    left: 5px;
-    top: 0px;
-    width: 4px;
-    height: 10px;
+    left: 3px;
+    top: 1px;
+    width: 3px;
+    height: 6px;
     border: solid white;
-    border-width: 0 3px 3px 0;
+    border-width: 0 2px 2px 0;
     transform: rotate(45deg);
 }
 
@@ -407,7 +414,8 @@ p.list-details{
     margin-top: 10px;
     margin-bottom: 40px;
     padding-left: 36px;
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 300;
     color:#666666;
 }
 .color-box{
@@ -449,8 +457,8 @@ p.list-details{
     background-color: #f4f4f4;
     border-radius: 15px;
     width: 40%;
-    height: 95%;
-    margin-right: 20px;
+    height: 97%;
+    margin-right: 12px;
     align-self: center;
     display: none;
 }
@@ -464,7 +472,7 @@ p.list-details{
     right: 50px;
 }
 i.exit-full-view{
-    font-size:32px;
+    font-size:25px;
     cursor: pointer;
 }
 i.exit-full-view:hover{
@@ -500,7 +508,7 @@ p#type-of-List{
 
 p.entry-date-category-color{
     margin-top: 30px;
-    font-size: 15px;
+    font-size: 14px;
     font-family: 'Inter', sans-serif;
     color:#2C2C2C;
 }
@@ -509,10 +517,12 @@ h2#entry-title{
     margin-bottom: 0px;
     font-family: 'Inter', sans-serif;
     color:#202020;
+    font-size: 23px;
+    font-weight: 500;
     
 }
 p#entry-description{
-    font-size: 15px;
+    font-size: 14px;
     color:#2C2C2C;
     border:1px solid rgb(227, 224, 224);
     border-radius: 5px;
@@ -523,7 +533,7 @@ p#entry-description{
     margin-top: 6px; 
 }
 p#entry-location{
-    font-size: 15px;
+    font-size: 14px;
     color:#2C2C2C;
 }
 span.location{
@@ -569,8 +579,8 @@ span.location{
     border-radius: 15px;
     width: 40%;
     min-width: 150px;
-    height: 95%;
-    margin-right: 20px;
+    height: 97%;
+    margin-right: 12px;
     align-self: center;
     display:none;
 }
@@ -584,7 +594,7 @@ span.location{
     right: 50px;
 }
 i#exit-icon{
-    font-size:32px;
+    font-size:25px;
     cursor: pointer;
 }
 i#exit-icon:hover{
@@ -681,7 +691,8 @@ p.menu-options.due-date{
 }
 input[type=date]{
     font-family:'Inter', sans-serif;
-    font-size: 15;
+    font-size: 14px;
+    font-weight: 300;
     padding: 6px 3px;
     outline: none;
     border: none;
@@ -698,7 +709,7 @@ i.fa-regular.fa-clock{
     border-radius: 5px;
     border: none;
     font-family: 'Inter', sans-serif;
-    font-size: 15px;
+    font-size: 13px;
 }
 textarea {
     color: #2C2C2C;
@@ -706,12 +717,11 @@ textarea {
 }
 input[type=text]{
     border: none;
-    /*border-bottom: 1px solid rgb(102, 90, 145);*/
     color: #2C2C2C; 
     outline: none;
     width: 75%;
     height: 20px;
-    font-size: 15px;
+    font-size: 13px;
 }
 
 ::placeholder{
@@ -728,7 +738,8 @@ i.fa-solid.fa-layer-group{
 }
 #categories-option{
     font-family:'Inter', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: 300;
     padding: 4px 3px;
     outline: none;
     border: none;
@@ -747,7 +758,9 @@ i.fa-solid.fa-layer-group{
     position: relative;
     padding-right: 5px;
     margin: 0px;
-    font-size: 15px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
 }
 i.fa-solid.fa-paintbrush{
     padding-left: 3px;
@@ -758,15 +771,15 @@ input#color-options{
     -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   border-radius: 5px;
   background-color: transparent;
   border: none;
   cursor: pointer;
   position: absolute;
   bottom: -8px;
-  right: -34px;
+  right: -28px;
   box-shadow: 0px 1px 13px -7px rgba(0,0,0,0.56);
   border-radius: 50%;
 }
@@ -794,7 +807,7 @@ i.fa-solid.fa-location-dot{
     width: 60%;
     margin-right: 10px;
     font-family: 'Inter', sans-serif;
-    font-size: 15px;
+    font-size: 13px;
  }
  .location{
     display: flex;
