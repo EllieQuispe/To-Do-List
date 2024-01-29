@@ -273,17 +273,24 @@ function trackCheckboxStatus(){
 }
 
 function displayPreviewOfTodoList(id, title, type, date, time, category, color){
+    let timeDisplay = ''
+    if(time === 'NaN: PM' || !time){
+        timeDisplay  
+    } else {
+        timeDisplay = `| ${time}`
+    }
+    
     todoList.innerHTML += ` 
                         <li class="list-item" id="${id}">
                         <label class="container"> 
                         <input type="checkbox" id="${id}" class="checkbox"><span class="checkmark"></span></label> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i>
-                        </li><p class="list-details">${date} | ${time} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>`
+                        </li><p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>`
     
     //To add an eventlistener to arrow icons next to list item incase user wants to a full view
     getList()
     //checkbox
     trackCheckboxStatus()
-}  
+} 
 
 let todoList = document.getElementById('todo-List')
 function compareDates(){
@@ -297,7 +304,7 @@ function compareDates(){
    
    todoList.innerHTML =""
    formDataArr.filter((dataEntry, i)=>{
-        if(dataEntry.date == dateFormat){
+        if(dataEntry.date == dateFormat){           
             displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.color)
         } 
     })
