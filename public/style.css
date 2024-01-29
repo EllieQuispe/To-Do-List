@@ -50,7 +50,7 @@ div#user-img img{
     display: flex;
     margin-top: 0px;
 }
-.name-setting-container{
+.settings-container{
     position: relative;
     padding-left: 7px;
     display: flex;
@@ -70,10 +70,27 @@ i.fa-solid.fa-angle-down.drop-down-menu-icon{
     padding: 34px 5px 0px 5px;
     color:#999999;
     cursor: pointer;
+    display: none;
 }
-i.fa-solid.fa-angle-down.drop-down-menu-icon:hover{
+
+i.up-arrow-icon{
+    align-self: center;
+    padding: 34px 5px 0px 5px;
+    color:#999999;
+    cursor: pointer;
+    display: none; 
+}
+
+i.up-arrow-icon.active,
+i.fa-solid.fa-angle-down.drop-down-menu-icon.active{
+    display: block;
+}
+
+i.fa-solid.fa-angle-down.drop-down-menu-icon:hover,
+i.up-arrow-icon:hover{
     color:#F6C15C;
 }
+
 .drop-down-container{
     position: absolute;
     background-color: white;

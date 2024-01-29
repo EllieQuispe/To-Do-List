@@ -23,18 +23,44 @@ document.addEventListener('DOMContentLoaded', () =>{
     //Close full view container
     document.querySelector('.exit-full-view').addEventListener('click', closeFullViewContainer)
 
-    //drop-down container for settings
-    document.querySelector('.drop-down-menu-icon').addEventListener('click', openSettings)
-
     //Date feature initilization
     initializeDateFeature();
     
 })
 
-function openSettings(){
-    const dropDownContainer = document.querySelector('.drop-down-container')
-    dropDownContainer.classList.toggle('display')
+const container = document.querySelector('.settings-container');
+const dropDownContainer = document.querySelector('.drop-down-container')
+
+function openSettings(downArrow, upArrow){
+    dropDownContainer.classList.add('display') //displaying the dropdown container
+    downArrow.classList.remove('active')
+    upArrow.classList.add('active')
 }
+function closeSettings(upArrow, downArrow){
+    dropDownContainer.classList.remove('display')
+    downArrow.classList.add('active') 
+    upArrow.classList.remove('active')
+      
+}
+
+container.addEventListener('click', function(event){
+    const downArrow = container.querySelector('.drop-down-menu-icon')
+    const upArrow = container.querySelector('.up-arrow-icon')
+
+    if(event.target.classList.contains('drop-down-menu-icon')){
+        openSettings(downArrow, upArrow)
+
+    } else if(event.target.classList.contains('up-arrow-icon')){
+        closeSettings(upArrow, downArrow)
+    } 
+    //Close menu if user clicks outside of menu container
+    document.addEventListener('click', function(event){
+        if(!dropDownContainer.contains(event.target) && !downArrow.contains(event.target)){
+           closeSettings(upArrow, downArrow)
+        }
+    })
+})
+
 
 ///////////////////CURRENT DATE///////////////////////////////
 let currentDate = new Date()
