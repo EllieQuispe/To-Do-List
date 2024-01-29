@@ -690,12 +690,10 @@ p#task-option.clicked, p#event-option.clicked{   /*You will need this for the ja
 .due-date-container{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content:flex-start;
     margin: 18px 0px 14px 0px;
 }
 .menu-options{
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
     color:#666666;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -703,7 +701,7 @@ p#task-option.clicked, p#event-option.clicked{   /*You will need this for the ja
     cursor: pointer;
     position: relative;
 }
-p.menu-options.due-date{
+p.menu-options.due-date, p.time-container{
     align-self: center;
 }
 input[type=date]{
@@ -714,10 +712,27 @@ input[type=date]{
     outline: none;
     border: none;
     border-radius: 5px;
+    width: 107px;
 }
-i.fa-regular.fa-clock{
-    padding-right: 10px;
+
+/*Time*/
+.time-container{
+    cursor: pointer;
+    margin-left: 7px;
 }
+input[type=time]{
+    font-family:'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 6px 3px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    width: 96px;
+}
+
+
+
 
 /*Text area box*/
 #input-dedscription{
