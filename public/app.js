@@ -272,12 +272,12 @@ function trackCheckboxStatus(){
     });
 }
 
-function displayPreviewOfTodoList(id, title, type, date, category, color){
+function displayPreviewOfTodoList(id, title, type, date, time, category, color){
     todoList.innerHTML += ` 
                         <li class="list-item" id="${id}">
                         <label class="container"> 
                         <input type="checkbox" id="${id}" class="checkbox"><span class="checkmark"></span></label> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i>
-                        </li><p class="list-details">${date} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>`
+                        </li><p class="list-details">${date} | ${time} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>`
     
     //To add an eventlistener to arrow icons next to list item incase user wants to a full view
     getList()
@@ -298,7 +298,7 @@ function compareDates(){
    todoList.innerHTML =""
    formDataArr.filter((dataEntry, i)=>{
         if(dataEntry.date == dateFormat){
-            displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.category, dataEntry.color)
+            displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.color)
         } 
     })
 }
@@ -538,6 +538,25 @@ function getSelectedDate(){
 }
 
 
+function getTime(){
+    const timeEntered = document.querySelector('.time-container').value
+   
+    let hour = parseInt(timeEntered.slice(0, 2), 10);
+    let minute = timeEntered.slice(3);
+
+    let period = (hour < 12) ? 'AM' : 'PM';
+
+    if (hour === 0) {
+        hour = 12;
+    } else if (hour > 12) {
+        hour -= 12;
+    }
+
+    let setTime = `${hour}:${minute} ${period}`;
+    return setTime
+}
+
+
 //Obtain the value entered in the textarea element
 function textareaValue(){
     const textareaId = document.getElementById('input-dedscription')
@@ -695,6 +714,8 @@ function submitForm(ev){
     let title = getTitle()    
     //Due Date
     const date = getSelectedDate()
+    //Time
+    const time = getTime()
     //Description
     const description = textareaValue()
     //Category
@@ -712,6 +733,7 @@ function submitForm(ev){
         title: title,
         type: typeOfTodo,
         date: date,
+        time: time,
         description: description,
         category: category,
         color: color,
