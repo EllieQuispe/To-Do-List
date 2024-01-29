@@ -29,7 +29,7 @@ body{
     font-family: 'Inter', sans-serif;
     font-weight: 300;
     font-size: 14px;
-    color: #202020;
+    color: #1c1c1c;
 }
 
 /*User Profile*/
@@ -107,7 +107,7 @@ i.up-arrow-icon:hover{
 }
 ul li.menu-settings{
     font-size: 13px;
-    color: #2C2C2C;
+    color: #1c1c1c;
     margin-bottom: 16px;
     cursor: pointer;
     padding: 4px 3px;
@@ -148,7 +148,7 @@ i.fa-envelope:hover, i.fa-square-twitter:hover, i.fa-facebook:hover{
     margin-right: 20px;
 }
 p.taskCount, p.eventCount{
-    color:#2C2C2C;
+    color:#1c1c1c;
     margin-bottom: 6px;
 }
 .task{
@@ -170,7 +170,7 @@ h3{
 .taskCount{
     margin-left: 3px;
     padding: 2px 6px;
-    color: #2C2C2C;
+    color: #1c1c1c;
     font-size: 12px;
     border: 1px solid #BA5E32;
     border-radius: 45px;
@@ -178,7 +178,7 @@ h3{
 .eventCount{
     margin-left: 3px;
     padding: 2px 6px;
-    color: #2C2C2C;
+    color: #1c1c1c;
     font-size: 12px;
     border: 1px solid #BA5E32;
     border-radius: 45px;
@@ -235,7 +235,7 @@ h3{
 .new-category{
     font-family: 'Inter', sans-serif;
     font-weight: 300;
-    color:#2C2C2C;
+    color:#1c1c1c;
     font-size: 14px;
     margin-top: 2px;
     margin-bottom: 10px;
@@ -299,10 +299,7 @@ h3{
     transform: translateY(-53%);
 }
 .date-arrow:hover{
-    color: #999999; 
-    box-shadow: 0px 0px 3px 1px rgba(172,172,172);
-    border-radius: 50%;
-    padding: 4px 7px;
+    color: #F6C15C; 
 }
 .fa-chevron-left{
     left: 55%;
@@ -354,11 +351,10 @@ ul#todo-List{
 /***Template Literal in JS***/
 ul li{ 
     display: flex;
-    color: #2C2C2C;
+    color: #1c1c1c;
     font-size: 15px;
     font-family: 'Inter', sans-serif;
     font-weight: 300;
-    margin-bottom: 25px;
     width: 100%;  
     align-items: center; 
     position: relative;  
@@ -514,10 +510,11 @@ ul li#todo-entry{
 }
 p#type-of-List{
     display: inline;
+    font-size: 19px;
     padding: 4px 12px;
     border: 1px solid #BA5E32;
     background-color: transparent;
-    color: #2C2C2C;
+    color: #1c1c1c;
     border-radius: 5px;
     text-align: center;
     text-decoration: none;
@@ -532,6 +529,7 @@ p.entry-date-category-color{
 
 h2#entry-title{
     margin-bottom: 0px;
+    padding-top: 20px;
     font-family: 'Inter', sans-serif;
     color:#202020;
     font-size: 23px;
