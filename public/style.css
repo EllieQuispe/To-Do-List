@@ -797,6 +797,28 @@ i.fa-solid.fa-paintbrush{
     margin-right: 13px;
     color: #666666;
 }
+
+#showColorPicker{ /*button*/
+    padding: 7px 5px 7px 5px;
+    border: none;
+    text-decoration: none;
+    background-color: white;
+    border-radius: 5px;
+
+}
+.color-dropdown-arrow{ /*arrow icon*/
+    padding-left: 7px;
+    color:#1c1c1c;
+    font-size: 10px;
+    cursor: pointer;
+}
+#current-color{
+    padding: 3px 11px;
+    background-color: yellowgreen;
+    border-radius: 50%;
+
+}
+/*
 input#color-options{
     -webkit-appearance: none;
   -moz-appearance: none;
@@ -812,7 +834,9 @@ input#color-options{
   right: -28px;
   box-shadow: 0px 1px 13px -7px rgba(0,0,0,0.56);
   border-radius: 50%;
-}
+} 
+
+
 input#color-options::-webkit-color-swatch {
     border-radius: 15px;
     border: none;
@@ -821,6 +845,7 @@ input#color-options::-moz-color-swatch {
     border-radius: 15px;
     border: none;
   }
+  */
 
 /*Location*/
 i.fa-solid.fa-location-dot{

@@ -609,6 +609,7 @@ function categorySelected(){
 
 
 //Obtain the color picker value
+/*
 const defaultColor = document.getElementById('color-options')
 defaultColor.addEventListener('change', watchColorPicker, false)
 let newColorValue =''
@@ -624,13 +625,10 @@ function colorPickerValue(){
         return newColorValue
     }  
 }
+*/
 
-/*
-function clientAddress(){
-    const addressInput = document.getElementById('addressInput')
-    const address = addressInput.value.trim()
-    return address
-}*/
+
+
 ///// FINDING LOCATION /////
 function clientAddress(){
     const addressInput = document.getElementById('addressInput')
