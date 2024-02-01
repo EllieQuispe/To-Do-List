@@ -39,8 +39,7 @@ function openSettings(downArrow, upArrow){
 function closeSettings(upArrow, downArrow){
     dropDownContainer.classList.remove('display')
     downArrow.classList.add('active') 
-    upArrow.classList.remove('active')
-      
+    upArrow.classList.remove('active')   
 }
 
 container.addEventListener('click', function(event){
@@ -517,7 +516,8 @@ function formCurrentDate(){
     let today = new Date()
     let monthNum = today.getMonth() + 1 //zero 
     let month = monthNum < 10 ? `0${monthNum}` : `${monthNum}`;
-    let date = today.getDate() 
+    let dateNum = today.getDate() 
+    let date = dateNum < 10 ? `0${dateNum}` : `${dateNum}`
     let year = today.getFullYear()
 
     let fullDate = `${year}-${month}-${date}`
@@ -726,7 +726,7 @@ function submitForm(ev){
     //Category
     const category = categorySelected()
     //Color
-    const color = colorPickerValue()
+    /*const color = colorPickerValue()*/
     //Location
     const location = clientAddress()
 

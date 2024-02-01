@@ -813,7 +813,7 @@ i.fa-solid.fa-paintbrush{
     cursor: pointer;
 }
 #current-color{
-    padding: 3px 11px;
+    padding: 1px 9px;
     background-color: yellowgreen;
     border-radius: 50%;
 
