@@ -782,6 +782,7 @@ i.fa-solid.fa-layer-group{
 /**Color picker*/
 .color-picker-container{
     margin: 17px 20px 12px 20px;
+    position: relative;
 }
 .color-picker-container p{
     display: inline;
@@ -798,14 +799,49 @@ i.fa-solid.fa-paintbrush{
     color: #666666;
 }
 
-#showColorPicker{ /*button*/
-    padding: 7px 5px 7px 5px;
+#color-picker-btn{ /*button*/
+    padding: 5px 5px 5px 5px;
     border: none;
     text-decoration: none;
     background-color: white;
     border-radius: 5px;
-
 }
+#color-picker-popup-box{
+    position:absolute;
+    z-index: 1;
+    width: 37px;
+    height: 95px;
+    left: 40px;
+    top: 30px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 1px 2px 5px rgb(149, 149, 149);
+    padding: 5px 4px 2px 4px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /*border: 1px solid black; */
+}
+p.color-option{
+    width: 12px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 3px;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
+
+p.color-checkmark::after{
+    content:'\2713';
+    position: absolute;
+    left: 3px;
+    top: -1px;
+    width: 3px;
+    color: white;
+    font-size: 13px;
+    transform: rotate(22deg);
+}
+
 .color-dropdown-arrow{ /*arrow icon*/
     padding-left: 7px;
     color:#1c1c1c;
@@ -814,7 +850,7 @@ i.fa-solid.fa-paintbrush{
 }
 #current-color{
     padding: 1px 9px;
-    background-color: yellowgreen;
+    background-color: #BA5E32;
     border-radius: 50%;
 
 }

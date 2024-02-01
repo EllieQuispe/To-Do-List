@@ -608,24 +608,66 @@ function categorySelected(){
 }
 
 
-//Obtain the color picker value
-/*
-const defaultColor = document.getElementById('color-options')
-defaultColor.addEventListener('change', watchColorPicker, false)
-let newColorValue =''
+////Obtain the color picker value
+let colorPicked = '#BA5E32'
 
-function watchColorPicker(event){
-    newColorValue = event.target.value
-    return newColorValue
+function colorPicker(){
+    const colorPickerMainBox = document.querySelector('color-picker-container')
+    const colorPickerBtn = document.getElementById('color-picker-btn');
+    const colorPickerContainer = document.getElementById('color-picker-popup-box')
+    const displayColorContainer = document.getElementById('current-color')
+
+
+    const colorOptions = ['#BA5E32', '#DC7D39', '#442053', '#86BCC0', '#F6C15C', '#606C38', '#DDA15E', '#9D0208', '#99582A', '#4340BB']
+
+    function colorSelected(colorOption){
+    
+      colorOption.addEventListener('click', function(e){
+        colorPickerContainer.querySelectorAll('.color-option').forEach(option =>{
+            option.classList.remove('color-checkmark')
+        })
+
+       colorOption.classList.add('color-checkmark')
+       
+        
+       //Change UI color to the one selected
+        let target = e.target
+        colorPicked = target.id
+        displayColorContainer.style.backgroundColor = colorPicked;
+        colorPickerContainer.style.display = 'none'
+        
+      })
+
+    
+    }
+
+    function createColorOptions(color){
+        const colorOption = document.createElement('p')
+        colorOption.className = "color-option";
+        colorOption.id = color;
+        colorOption.style.backgroundColor = color;
+        colorPickerContainer.style.display = 'none';
+
+        colorPickerContainer.appendChild(colorOption);
+        colorSelected(colorOption)
+    }
+
+    colorOptions.forEach(createColorOptions);
+    colorPickerBtn.addEventListener('click', ()=>{
+        colorPickerContainer.style.display = 'flex'   
+        
+    })
+
+    document.addEventListener('click', function(event){
+        if(!colorPickerBtn.contains(event.target)){
+            console.log('outside')
+            colorPickerContainer.style.display = 'none'
+        }
+    })
+
+
 }
-function colorPickerValue(){
-    if (defaultColor.value == '#7d5e8f'){
-        return defaultColor.value
-    } else{
-        return newColorValue
-    }  
-}
-*/
+colorPicker()
 
 
 
@@ -726,7 +768,7 @@ function submitForm(ev){
     //Category
     const category = categorySelected()
     //Color
-    /*const color = colorPickerValue()*/
+    const color = colorPicked;
     //Location
     const location = clientAddress()
 
