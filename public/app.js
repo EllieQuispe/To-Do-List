@@ -263,6 +263,8 @@ function trackCheckboxStatus(){
 
         checkbox.addEventListener('change', function () {
             localStorage.setItem(this.id, this.checked);
+            let mySound = new Audio('public/sound/clickSound.mp3')
+            mySound.play()
         });
 
     // Retrieve the checked state from local storage on page load
@@ -270,6 +272,8 @@ function trackCheckboxStatus(){
     checkbox.checked = isChecked;
     });
 }
+
+
 
 function displayPreviewOfTodoList(id, title, type, date, time, category, color){
     let timeDisplay = ''
@@ -660,7 +664,6 @@ function colorPicker(){
 
     document.addEventListener('click', function(event){
         if(!colorPickerBtn.contains(event.target)){
-            console.log('outside')
             colorPickerContainer.style.display = 'none'
         }
     })
