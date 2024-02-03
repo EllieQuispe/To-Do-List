@@ -760,6 +760,9 @@ input[type=text]{
 
 /*Category picker*/
 .select-category-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     margin: 0px 20px 0px 20px;
 }
 i.fa-solid.fa-layer-group{
@@ -781,7 +784,7 @@ i.fa-solid.fa-layer-group{
 
 /**Color picker*/
 .color-picker-container{
-    margin: 17px 20px 12px 20px;
+    margin-left: 10px;
     position: relative;
 }
 .color-picker-container p{
@@ -810,8 +813,8 @@ i.fa-solid.fa-paintbrush{
     position:absolute;
     z-index: 1;
     width: 37px;
-    height: 95px;
-    left: 40px;
+    height: 105px;
+    left: 1px;
     top: 30px;
     background-color: white;
     border-radius: 5px;
@@ -823,7 +826,7 @@ i.fa-solid.fa-paintbrush{
 }
 p.color-option{
     width: 12px;
-    height: 15px;
+    height: 17px;
     border-radius: 50%;
     margin-right: 3px;
     margin-bottom: 4px;
