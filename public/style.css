@@ -642,6 +642,7 @@ i#exit-icon:hover{
 }
 .top-section{
     margin: 53px 20px 20px 20px;
+    height: 350px;
 }
 .top-section input[type=text]{
     border-bottom: none;
@@ -707,7 +708,7 @@ p#task-option.clicked, p#event-option.clicked{   /*You will need this for the ja
     display: flex;
     flex-direction: row;
     justify-content:flex-start;
-    margin: 18px 0px 14px 0px;
+    margin: 18px 0px 4px 0px;
 }
 .menu-options{
     color:#666666;
@@ -758,6 +759,7 @@ input[type=time]{
     border: none;
     font-family: 'Inter', sans-serif;
     font-size: 13px;
+    padding: 7px 2px 7px 2px;
 }
 textarea {
     color: #2C2C2C;
@@ -773,8 +775,40 @@ input[type=text]{
 }
 
 ::placeholder{
-    color: #999999; 
+    color: #999999;
 } 
+
+/*Subtask*/
+#subtask-container{
+    display: flex; 
+    padding-left: 15px;
+}
+p.subtask-label{
+    padding-left: 10px;
+    font-family: 'Inter',j sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    cursor: pointer;
+    color: #999999
+}
+p.subtask-label:hover{
+    text-decoration: underline;
+}
+
+i.add-subtask-icon{
+   color: #666666;
+   align-self: center;
+   font-size: 17px;
+   padding: 0px;
+}
+i.add-subtask-icon:hover{
+    padding: 0px;
+    border-radius: 0%;
+    border:none;
+    background-color: transparent;
+    color: #666666; 
+}
+
 
 /*Category picker*/
 .select-category-container{
