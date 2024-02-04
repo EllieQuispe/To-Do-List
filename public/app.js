@@ -850,11 +850,17 @@ function deleteEntry(currentListID){
 }
 
 
-function viewFullDetailsOfTodoItem(title, date, type, description, category, color, location){
+function viewFullDetailsOfTodoItem(title, date, time, type, description, category, color, location){
+    let timeDisplay = ''
+    if(time === 'NaN: PM' || !time){
+        timeDisplay  
+    } else {
+        timeDisplay = `| ${time}`
+    }
     fullListView.innerHTML = `<li id='todo-entry'>
                                 <div>
                                 <p id="type-of-List">${type}</p>
-                                <p class="entry-date-category-color">${date} | ${category} <span class="color-box" style="background-color:${color};"></span></p>
+                                <p class="entry-date-category-color">${date} ${timeDisplay} | ${category} <span class="color-box" style="background-color:${color};"></span></p>
                                 <h2 id="entry-title">${title}</h2>
                                 <p id="entry-description">${description}</p>
                                 <p id="entry-location">Location<span class="location">${location}</span></p>
@@ -884,7 +890,7 @@ function getList(){
                 if(dataEntry.id == currentListID ){
 
                     /////FULL VIEW OF TODO LIST/////
-                    viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.type, dataEntry.description, dataEntry.category, dataEntry.color, dataEntry.location ) 
+                    viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.time, dataEntry.type, dataEntry.description, dataEntry.category, dataEntry.color, dataEntry.location ) 
                     openFullViewContainer() 
                 }  
             })
