@@ -781,6 +781,7 @@ input[type=text]{
 /*Subtask*/
 #subtask-container{
     display: flex; 
+    flex-direction: column;
     padding-left: 15px;
 }
 p.subtask-label{
@@ -808,7 +809,28 @@ i.add-subtask-icon:hover{
     background-color: transparent;
     color: #666666; 
 }
-
+.subtask-btn-container{
+    display: flex;
+}
+#subtasks{
+    display: flex;
+    flex-direction: column;
+}
+.input-container{
+    display: flex;
+    align-items: center;
+    padding-left: 9px;
+}
+/*Input container of subtask*/
+input.input-subtask{
+    width: 40%;
+    margin: 5px 12px 5px 12px;
+    border-radius: 5px;
+}
+i.remove-subtask-btn{
+    cursor: pointer;
+    color:#BA5E32;
+}
 
 /*Category picker*/
 .select-category-container{
