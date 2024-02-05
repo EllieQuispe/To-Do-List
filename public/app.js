@@ -788,8 +788,8 @@ function displaySubtasks(subtasks){
     tempDiv.innerHTML =  
     `<div class="input-container">
         <i class="fa-solid fa-circle-minus remove-subtask-btn"></i>
-        <input type="text" class="input-subtask" placeholder="new">
-            <div class="custom-select">
+        <input type="text" class="input-subtask">
+            <div class="priority-options">
                 <select>
                     <option value="Set Priority">Set Priority</option>
                     <option value="High Priority">Today</option>

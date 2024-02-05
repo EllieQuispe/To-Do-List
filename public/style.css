@@ -641,7 +641,7 @@ i#exit-icon:hover{
     height: 100%;
 }
 .top-section{
-    margin: 53px 20px 20px 20px;
+    margin: 48px 20px 20px 20px;
     height: 350px;
 }
 .top-section input[type=text]{
@@ -760,6 +760,7 @@ input[type=time]{
     font-family: 'Inter', sans-serif;
     font-size: 13px;
     padding: 7px 2px 7px 2px;
+    margin-bottom: 3px;
 }
 textarea {
     color: #2C2C2C;
@@ -786,7 +787,7 @@ input[type=text]{
 }
 p.subtask-label{
     padding-left: 10px;
-    font-family: 'Inter',j sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 13px;
     font-weight: 300;
     cursor: pointer;
@@ -815,6 +816,8 @@ i.add-subtask-icon:hover{
 #subtasks{
     display: flex;
     flex-direction: column;
+    max-height: 120px;
+    overflow: scroll;
 }
 .input-container{
     display: flex;
@@ -826,18 +829,34 @@ input.input-subtask{
     width: 40%;
     margin: 5px 12px 5px 12px;
     border-radius: 5px;
+    padding: 3px 2px;
 }
 i.remove-subtask-btn{
     cursor: pointer;
     color:#BA5E32;
 }
+/* Priority*/
+.priority-options{
+    position: relative;
+}
+.priority-options select{
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    padding: 3px 2px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 
 /*Category picker*/
 .select-category-container{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin: 0px 20px 0px 20px;
+    padding: 15px 0px;
 }
 i.fa-solid.fa-layer-group{
     padding: 0 9px 0 3px;
@@ -851,6 +870,7 @@ i.fa-solid.fa-layer-group{
     outline: none;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
 }
 .hideCategoryBox{ /*this works with JS*/
     display: none;
@@ -939,9 +959,7 @@ i.fa-solid.fa-location-dot{
     padding-right: 14px;
     align-self: center;
 }
-.add-location-container{
-    margin: 17px 20px 0px 20px;
- }
+
  #addressInput{
     padding: 6px 3px;
     border-radius: 5px;
