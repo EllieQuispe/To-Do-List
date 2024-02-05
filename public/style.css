@@ -272,7 +272,7 @@ h3{
  
 }
 .middle-container.screen-size-40{ /*works with JS*/
-    width: 40%
+    width: 45%
 }
 .top-container{
     position: relative;
@@ -487,7 +487,7 @@ p.list-details{
     position: relative;
     background-color: #f4f4f4;
     border-radius: 15px;
-    width: 40%;
+    width: 45%;
     height: 97%;
     margin-right: 12px;
     align-self: center;
@@ -610,7 +610,7 @@ span.location{
     position: relative;
     background-color: #f4f4f4;
     border-radius: 15px;
-    width: 40%;
+    width: 35%;
     min-width: 150px;
     height: 97%;
     margin-right: 12px;
