@@ -752,78 +752,59 @@ function findAddress(map, marker){
 initializeMap()
 */
 
-function removeSubtaskFromForm(subtasks){
-    const inputContainerArr = Array.from(subtasks.querySelectorAll('div.input-container'))
-    const removeSubtaskBtnArr = Array.from(subtasks.querySelectorAll('.remove-subtask-btn'))
-    console.log(subtasks) //main container
-    console.log(removeSubtaskBtnArr) //btn array
-    console.log(inputContainerArr.length) //one input container
+
+function removeSubtaskFromForm(selectedSubtask){
     
-    removeSubtaskBtnArr.map((function(btn, i){
-        btn.addEventListener('click', ()=>{
-            console.log('clicked', i)
-
-            //console.log(inputContainerArr)
-            inputContainerArr.splice(i, 1)
-
-            //console.log(inputContainerArr) //changes
-            //console.log(subtasks) //doesn't change
-            //subtasks.innerHTML = inputContainerArr
-            subtasks.removeChild(subtasks.childNodes[i]) //not working
-
-
-            /*categories.splice(i, 1)
-            localStorage.setItem('MyCategoryList', JSON.stringify(categories))
-            
-            displayCreatedCategories() */
-        })
-    }))
+    if (subtasks.contains(selectedSubtask)) {
+        subtasks.removeChild(selectedSubtask);
+    }
+    
 }
+
 
 
 function addInputFieldSubtask(){
     const addSubtask = document.querySelector('.subtask-label') //from html
     const subtasks = document.getElementById('subtasks') //from html
-    addSubtask.addEventListener('click', ()=>{
-
+   
+    addSubtask.addEventListener('click', ()=>{       
         displaySubtasks(subtasks)
     })
     
+    subtasks.addEventListener('click', (event)=>{
+        const target = event.target;
+        if(target.classList.contains('remove-subtask-btn')){
+            console.log('clicked')
+            removeSubtaskFromForm(target.parentElement)
+        }
+    })
 }
 addInputFieldSubtask()
 
 
 function displaySubtasks(subtasks){
 
-    subtasks.innerHTML += `<div class="input-container">
-    <i class="fa-solid fa-circle-minus remove-subtask-btn"></i>
-   <input type="text" class="input-subtask" placeholder="new">
-   <div class="custom-select">
-    <select>
-        <option value="Set Priority">Set Priority</option>
-        <option value="High Priority">Today</option>
-        <option value="Medium Priority">Very Soon</option>
-        <option value="Low Priority">Next Week</option>
-    </select>
-   </div>
-   </div>
-   `
-   removeSubtaskFromForm(subtasks)
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML =  
+    `<div class="input-container">
+        <i class="fa-solid fa-circle-minus remove-subtask-btn"></i>
+        <input type="text" class="input-subtask" placeholder="new">
+            <div class="custom-select">
+                <select>
+                    <option value="Set Priority">Set Priority</option>
+                    <option value="High Priority">Today</option>
+                    <option value="Medium Priority">Very Soon</option>
+                    <option value="Low Priority">Next Week</option>
+                </select>
+            </div>
+        </div>`
+        
+
+    subtasks.appendChild(tempDiv.firstChild); //I had to create a 'div' becuase it doesn't accept a string, it needs DOM node as an argument
+    
 }
 
-/*function displayPreviewOfTodoList(id, title, type, date, time, category, color){
-    let timeDisplay = ''
-    if(time === 'NaN: PM' || !time){
-        timeDisplay  
-    } else {
-        timeDisplay = `| ${time}`
-    }
-    
-    todoList.innerHTML += ` 
-                        <li class="list-item" id="${id}">
-                        <label class="container"> 
-                        <input type="checkbox" id="${id}" class="checkbox"><span class="checkmark"></span></label> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i>
-                        </li><p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>` */
+
 
 
 ////////////////// FORM SUBMISSION FOR NEW EVENT OR TASK ////////////////
