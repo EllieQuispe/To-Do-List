@@ -575,7 +575,97 @@ function textareaValue(){
     return description
 }
 
+let finalSubtasks = [];
+//Obtain the value entered in the subtasks section
+function subtaskInputValue(subtasks){
+    const subTaskInputArr = Array.from(document.querySelectorAll('.input-subtask'))
+    const priorityDiv = document.querySelector('.priority-options')
+    
+    subTaskInputArr.map((Arr, i)=>{
+        Arr.addEventListener('change', function(){
 
+        /*
+          let prioritySelected = priorityDiv.options[priorityDiv.selectedIndex]
+          let priority = prioritySelected.textContent
+
+            if(priority == 'Set Priority'){
+                    console.log('nothing selected')
+                    return;
+                }
+        */
+         
+    
+          let existingObjectIndex = finalSubtasks.findIndex(function(obj){
+            return obj.id === i; //if no id is found, you get a -1
+          })
+
+          if(existingObjectIndex !== -1){
+                finalSubtasks[existingObjectIndex].name = subTaskInputArr[i].value
+                console.log(finalSubtasks)
+          } else{
+            var inputObject = {
+                id: i,
+                name: subTaskInputArr[i].value
+
+            }
+                finalSubtasks.push(inputObject)
+                console.log(finalSubtasks)
+          }
+        })
+    })
+    
+}
+
+function removeSubtaskFromForm(selectedSubtask){
+    
+    if (subtasks.contains(selectedSubtask)) {
+        subtasks.removeChild(selectedSubtask);
+    }
+}
+
+function addInputFieldSubtask(){
+    const addSubtask = document.querySelector('.subtask-label') //from html
+    const subtasks = document.getElementById('subtasks') //from html
+   
+    addSubtask.addEventListener('click', ()=>{       
+        displaySubtasks(subtasks)
+    })
+    
+    subtasks.addEventListener('click', (event)=>{
+        const target = event.target;
+        if(target.classList.contains('remove-subtask-btn')){
+            removeSubtaskFromForm(target.parentElement)
+        }
+    })
+    
+}
+addInputFieldSubtask()
+
+
+function displaySubtasks(subtasks){
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML =  
+    `<div class="input-container">
+        <i class="fa-solid fa-circle-minus remove-subtask-btn"></i>
+        <input type="text" class="input-subtask">
+            <div class="priority-options">
+                <select>
+                    <option value="Set Priority" class="prioritySelected">Set Priority</option>
+                    <option value="High Priority" class="prioritySelected">Today</option>
+                    <option value="Medium Priority" class="prioritySelected">This week</option>
+                    <option value="Low Priority" class="prioritySelected">Next Week</option> 
+                    <option value="Low Priority" class="prioritySelected">Within this month</option>
+                </select>
+            </div>
+        </div>`
+        
+    subtasks.appendChild(tempDiv.firstChild); //I had to create a 'div' becuase it doesn't accept a string, it needs DOM node as an argument
+    subtaskInputValue(subtasks)
+}
+
+
+
+//Display category options
 function displayCategoryOptions(catArr){
     const categoryOption = document.getElementById('categories-option')
     categoryOption.innerHTML = ""
@@ -753,56 +843,7 @@ initializeMap()
 */
 
 
-function removeSubtaskFromForm(selectedSubtask){
-    
-    if (subtasks.contains(selectedSubtask)) {
-        subtasks.removeChild(selectedSubtask);
-    }
-    
-}
 
-
-
-function addInputFieldSubtask(){
-    const addSubtask = document.querySelector('.subtask-label') //from html
-    const subtasks = document.getElementById('subtasks') //from html
-   
-    addSubtask.addEventListener('click', ()=>{       
-        displaySubtasks(subtasks)
-    })
-    
-    subtasks.addEventListener('click', (event)=>{
-        const target = event.target;
-        if(target.classList.contains('remove-subtask-btn')){
-            console.log('clicked')
-            removeSubtaskFromForm(target.parentElement)
-        }
-    })
-}
-addInputFieldSubtask()
-
-
-function displaySubtasks(subtasks){
-
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML =  
-    `<div class="input-container">
-        <i class="fa-solid fa-circle-minus remove-subtask-btn"></i>
-        <input type="text" class="input-subtask">
-            <div class="priority-options">
-                <select>
-                    <option value="Set Priority">Set Priority</option>
-                    <option value="High Priority">Today</option>
-                    <option value="Medium Priority">Very Soon</option>
-                    <option value="Low Priority">Next Week</option>
-                </select>
-            </div>
-        </div>`
-        
-
-    subtasks.appendChild(tempDiv.firstChild); //I had to create a 'div' becuase it doesn't accept a string, it needs DOM node as an argument
-    
-}
 
 
 
@@ -823,6 +864,9 @@ function submitForm(ev){
     const time = getTime()
     //Description
     const description = textareaValue()
+    //Subtask
+    //const subtask = subtaskInputValue()
+    //console.log(subtask)
     //Category
     const category = categorySelected()
     //Color
