@@ -285,12 +285,18 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, color){
     
     todoList.innerHTML += ` 
                         <li class="list-item" id="${id}">
-                        <label class="container"> 
-                        <input type="checkbox" id="${id}" class="checkbox"><span class="checkmark"></span></label> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i>
-                        </li><p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>`
+
+                        <div class="row-list">
+                            <label class="container"> 
+                            <input type="checkbox" id="${id}" class="checkbox"><span class="checkmark"></span></label> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i>
+                        </div>
+
+                        <p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>
+                        </li>`
     
     //To add an eventlistener to arrow icons next to list item incase user wants to a full view
     getList()
+
     //checkbox
     trackCheckboxStatus()
 } 
@@ -577,47 +583,42 @@ function textareaValue(){
 
 let finalSubtasks = [];
 //Obtain the value entered in the subtasks section
-function subtaskInputValue(subtasks){
+function subtaskInputValue(){
     const subTaskInputArr = Array.from(document.querySelectorAll('.input-subtask'))
-    const priorityDiv = document.querySelector('.priority-options')
+    const priorityElement = document.getElementById('priority-options')
     
     subTaskInputArr.map((Arr, i)=>{
-        Arr.addEventListener('change', function(){
-
-        /*
-          let prioritySelected = priorityDiv.options[priorityDiv.selectedIndex]
-          let priority = prioritySelected.textContent
-
+        
+         /*
             if(priority == 'Set Priority'){
                     console.log('nothing selected')
                     return;
                 }
         */
-         
-    
-          let existingObjectIndex = finalSubtasks.findIndex(function(obj){
+        
+        let existingObjectIndex = finalSubtasks.findIndex(function(obj){
             return obj.id === i; //if no id is found, you get a -1
-          })
+        })
 
-          if(existingObjectIndex !== -1){
-                finalSubtasks[existingObjectIndex].name = subTaskInputArr[i].value
-                console.log(finalSubtasks)
-          } else{
-            var inputObject = {
+        if(existingObjectIndex !== -1){
+            finalSubtasks[existingObjectIndex].name = subTaskInputArr[i].value
+            console.log(finalSubtasks)
+
+        } else{  
+            let inputObject = {
                 id: i,
-                name: subTaskInputArr[i].value
+                name: subTaskInputArr[i].value,
+                priority: priorityElement.value
 
             }
                 finalSubtasks.push(inputObject)
                 console.log(finalSubtasks)
           }
-        })
-    })
-    
+        
+    })    
 }
 
 function removeSubtaskFromForm(selectedSubtask){
-    
     if (subtasks.contains(selectedSubtask)) {
         subtasks.removeChild(selectedSubtask);
     }
@@ -648,19 +649,18 @@ function displaySubtasks(subtasks){
     `<div class="input-container">
         <i class="fa-solid fa-circle-minus remove-subtask-btn"></i>
         <input type="text" class="input-subtask">
-            <div class="priority-options">
-                <select>
+            <div class="priority-container">
+                <select id="priority-options">
                     <option value="Set Priority" class="prioritySelected">Set Priority</option>
-                    <option value="High Priority" class="prioritySelected">Today</option>
-                    <option value="Medium Priority" class="prioritySelected">This week</option>
-                    <option value="Low Priority" class="prioritySelected">Next Week</option> 
-                    <option value="Low Priority" class="prioritySelected">Within this month</option>
+                    <option value="High Priority" class="prioritySelected">High Priority</option>
+                    <option value="Medium Priority" class="prioritySelected">Medium Priority</option>
+                    <option value="Low Priority" class="prioritySelected">Low Priority</option> 
                 </select>
             </div>
         </div>`
         
     subtasks.appendChild(tempDiv.firstChild); //I had to create a 'div' becuase it doesn't accept a string, it needs DOM node as an argument
-    subtaskInputValue(subtasks)
+    //subtaskInputValue()
 }
 
 
@@ -866,7 +866,7 @@ function submitForm(ev){
     const description = textareaValue()
     //Subtask
     //const subtask = subtaskInputValue()
-    //console.log(subtask)
+    subtaskInputValue()
     //Category
     const category = categorySelected()
     //Color
