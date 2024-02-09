@@ -359,16 +359,20 @@ ul#todo-List{
 /***Template Literal in JS***/
 ul li{ 
     display: flex;
+    flex-direction: column;
     color: #1c1c1c;
     font-size: 15px;
     font-family: 'Inter', sans-serif;
     font-weight: 300;
-    width: 100%;  
-    align-items: center; 
+    width: 100%;   
     position: relative;  
 }
 li.list-item{
     margin-bottom: 10px;;
+}
+.row-list{
+    display: flex;
+    align-items: center;
 }
 
 /*checkbox next to list*/
@@ -442,9 +446,8 @@ i.list-arrow{
 p.list-details{
     display: flex;
     align-items: center;
-    margin-top: 10px;
-    margin-bottom: 40px;
-    padding-left: 36px;
+    margin: 0px;
+    padding: 10px 0px 10px 36px;
     font-size: 12px;
     font-weight: 300;
     color:#666666;
@@ -836,10 +839,10 @@ i.remove-subtask-btn{
     color:#BA5E32;
 }
 /* Priority*/
-.priority-options{
+.priority-container{
     position: relative;
 }
-.priority-options select{
+.priority-constainer select{
     font-size: 13px;
     font-family: 'Inter', sans-serif;
     font-weight: 300;
