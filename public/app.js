@@ -292,9 +292,9 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, color){
                         </div>
 
                         <p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>
-                            <li class="subTask-list>
-                            <input type="checkbox" class="checkbox">
-                            </li>
+                            <ul class="innerUl">
+                                <li class="innerList" ><input type="checkbox" name="subtask" class="checkbox">Test</li>
+                            </ul>
                         </li>`
     
     //To add an eventlistener to arrow icons next to list item incase user wants to a full view
