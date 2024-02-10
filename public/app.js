@@ -275,12 +275,28 @@ function trackCheckboxStatus(){
 
 
 
-function displayPreviewOfTodoList(id, title, type, date, time, category, color){
+function displayPreviewOfTodoList(dataEntry, id, title, type, date, time, category, color){
     let timeDisplay = ''
     if(time === 'NaN: PM' || !time){
         timeDisplay  
     } else {
         timeDisplay = `| ${time}`
+    }
+
+            
+    let subtasksPresent = dataEntry.subtasks.filter(subtask => subtask.name);
+    let innerUl = ''
+    if (subtasksPresent.length === 0){
+        console.log('nothing here')
+        //close ul by adding the class hidden 
+        innerUl = `<ul class="innerUl hidden">`
+
+    } else{
+                //console.log(subtasksPresent)
+        console.log(innerUl)
+        innerUl = `<ul class="innerUl">`;
+                //Inner if statement
+                //don't display li
     }
     
     todoList.innerHTML += ` 
@@ -292,8 +308,7 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, color){
                         </div>
 
                         <p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>
-                            <ul class="innerUl">
-                                <li class="innerList" ><input type="checkbox" name="subtask" class="checkbox">Test</li>
+                            ${innerUl}<li class="innerList" ><input type="checkbox" name="subtask" class="checkbox">Test</li>
                             </ul>
                         </li>`
     
@@ -315,9 +330,12 @@ function compareDates(){
    let dateFormat = currentDate.toLocaleDateString('en-US', options) 
    
    todoList.innerHTML =""
+
    formDataArr.filter((dataEntry, i)=>{
-        if(dataEntry.date == dateFormat){           
-            displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.color)
+    
+        if(dataEntry.date == dateFormat){    
+            
+            displayPreviewOfTodoList(dataEntry, dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.color)
         } 
     })
 }

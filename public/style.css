@@ -465,6 +465,9 @@ ul.innerUl{
     margin: 0px;
     padding: 2px 5px 12px 51px;
 }
+ul.innerUl.hidden{
+    display: none;
+}
 li.innerList{
     flex-direction: row;
 }
