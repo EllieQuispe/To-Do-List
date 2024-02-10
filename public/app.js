@@ -275,7 +275,7 @@ function trackCheckboxStatus(){
 
 
 
-function displayPreviewOfTodoList(dataEntry, id, title, type, date, time, category, color){
+function displayPreviewOfTodoList(id, title, type, date, time, category, subtasks, color){
     let timeDisplay = ''
     if(time === 'NaN: PM' || !time){
         timeDisplay  
@@ -283,21 +283,26 @@ function displayPreviewOfTodoList(dataEntry, id, title, type, date, time, catego
         timeDisplay = `| ${time}`
     }
 
-            
-    let subtasksPresent = dataEntry.subtasks.filter(subtask => subtask.name);
+    //Add subtasks if required
+    let subtasksPresent = subtasks.filter(subtask => subtask.name); //true or false
+   
     let innerUl = ''
-    if (subtasksPresent.length === 0){
-        console.log('nothing here')
-        //close ul by adding the class hidden 
-        innerUl = `<ul class="innerUl hidden">`
+    let innerli = ''
+    let subName = ''
+    let subPriority = ''
 
-    } else{
-                //console.log(subtasksPresent)
-        console.log(innerUl)
-        innerUl = `<ul class="innerUl">`;
-                //Inner if statement
-                //don't display li
-    }
+    innerUl = subtasksPresent.length === 0 ? `<ul class="innerUl hidden">` : `<ul class="innerUl">`;
+
+    subtasks.forEach((subtask)=>{
+        if (subtask.name !== ''){
+            subName = subtask.name
+            subPriority = subtask.priority
+         
+            innerli += `<li class="innerList" ><input type="checkbox" id="${subtask.id}" name="subtask" class="checkbox">
+                        <p>${subName} | ${subPriority} </p>
+                      </li>`
+        }
+    });
     
     todoList.innerHTML += ` 
                         <li class="list-item" id="${id}">
@@ -308,7 +313,8 @@ function displayPreviewOfTodoList(dataEntry, id, title, type, date, time, catego
                         </div>
 
                         <p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>
-                            ${innerUl}<li class="innerList" ><input type="checkbox" name="subtask" class="checkbox">Test</li>
+                            ${innerUl}
+                                ${innerli}
                             </ul>
                         </li>`
     
@@ -334,8 +340,8 @@ function compareDates(){
    formDataArr.filter((dataEntry, i)=>{
     
         if(dataEntry.date == dateFormat){    
-            
-            displayPreviewOfTodoList(dataEntry, dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.color)
+      
+            displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color)
         } 
     })
 }
@@ -612,34 +618,25 @@ function textareaValue(){
 
 //Subtasks section
 let finalSubtasks = [];
-
+let count = 0
 function subtaskInputValue(){
     const subTaskInputArr = Array.from(document.querySelectorAll('.input-subtask'))
     const priorityElement = Array.from(document.querySelectorAll('.priority-options'))
     
-    subTaskInputArr.map((Arr, i)=>{
-        
-        //const selectedOption = priorityElement[i].options[priorityElement[i].selectedIndex]
-        //console.log(selectedOption)
-        let existingObjectIndex = finalSubtasks.findIndex(function(obj){
-            return obj.id === i; //if no id is found, you get a -1
-        })
-
-        if(existingObjectIndex !== -1 ){
-            finalSubtasks[existingObjectIndex].name = subTaskInputArr[i].value
-            
-        } else{  
+    subTaskInputArr.forEach((input, i)=>{
+         
             let inputObject = {
-                id: i,
+                id: count++,
                 name: subTaskInputArr[i].value,
                 priority: priorityElement[i].value
             }
             finalSubtasks.push(inputObject)
-          }
-         
-    })   
+    }) 
+
     return finalSubtasks 
 }
+
+
 
 
 
@@ -893,7 +890,6 @@ function submitForm(ev){
     const description = textareaValue()
     //Subtask
     const subtasks = subtaskInputValue()
-    console.log(subtasks)
     //Category
     const category = categorySelected()
     //Color
