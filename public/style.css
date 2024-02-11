@@ -907,19 +907,57 @@ i.remove-subtask-btn{
     cursor: pointer;
     color:#BA5E32;
 }
-/* Priority*/
-.priority-container{
-    position: relative;
+i.remove-subtask-btn:hover{
+    box-shadow: 0px 1px 4px rgb(149, 149, 149);
+    border-radius: 8px;
 }
-select.priority-options{
-    font-size: 13px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    padding: 3px 2px;
-    border: none;
-    outline: none;
+
+/* Priority*/
+.select-selected{
+    /*border: 1px solid black; */
+    position: relative;
+    padding: 1px 5px;
     border-radius: 5px;
     cursor: pointer;
+    background-color: #BA5E32;
+    box-shadow: 0px 1px 2px rgb(149, 149, 149);
+}
+.select-selected:hover{
+    box-shadow: 0px 1px 4px rgb(149, 149, 149);
+}
+/*flag icon*/
+i.flag-icon{
+    font-size: 13px;
+    color: white; 
+}
+i.flag-priority{
+    color:rgb(35, 35, 35);
+    font-size: 13px;
+} 
+
+.priority{
+    padding-left: 5px;
+}
+.priority:hover{
+    background-color: rgba(229, 229, 229, 0.397);
+    border-radius: 5px;
+}
+
+/*dropdown container*/
+.select-items{
+    background-color: white;
+    border-radius: 5px;
+    margin-top: 5px;
+    text-align: left;
+    padding: 4px;
+    display: none;
+}
+.select-items.active{
+    display: block;
+    position: absolute;
+    width: 55px; 
+    cursor: pointer;
+    box-shadow: 0px 1px 4px rgb(149, 149, 149);
 }
 
 
