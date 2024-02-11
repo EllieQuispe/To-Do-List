@@ -289,6 +289,7 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
     let innerUl = ''
     let innerli = ''
     let subName = ''
+    let subId = ''
     let subPriority = ''
 
     innerUl = subtasksPresent.length === 0 ? `<ul class="innerUl hidden">` : `<ul class="innerUl">`;
@@ -297,8 +298,13 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
         if (subtask.name !== ''){
             subName = subtask.name
             subPriority = subtask.priority
+            subId = subtask.id
          
-            innerli += `<li class="innerList" ><input type="checkbox" id="${subtask.id}" name="subtask" class="checkbox">
+            innerli += `<li class="innerList">
+                        <label class="container">
+                        <input type="checkbox" id="${subId}" class="checkbox">
+                        <span class="subtask-checkmark"></span>
+                        </label>
                         <p>${subName} | ${subPriority} </p>
                       </li>`
         }

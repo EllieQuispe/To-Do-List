@@ -436,6 +436,53 @@ li.list-item{
     transform: rotate(45deg);
 }
 
+/* Subtask checkmark */
+.subtask-checkmark{
+    position: absolute;
+    top: 17.5px;
+    left: 10px;
+    height: 10px;
+    width: 10px;
+    background-color: transparent;
+    border: 1px solid #BA5E32;
+    border-radius: 50%;
+} /*Checkbox with a border called #BA5E32*/
+
+.container:hover input ~ .subtask-checkmark{
+    /*background-color: */
+    height: 12px;
+    width: 12px;
+    top: 16px;
+} /*Circle filled with color grey when hover*/
+
+.container input:checked ~ .subtask-checkmark{
+    background-color: #BA5E32;
+}
+.subtask-checkmark:after{
+    content: "";
+    position: absolute;
+    display: none;
+}
+.container input:checked ~
+.subtask-checkmark:after{
+    display: block;
+}
+
+.container:hover .subtask-checkmark:after{
+    left: 3.5px;
+    top: 1.5px;
+}
+.container .subtask-checkmark:after{
+    left: 2.5px;
+    top: 0.5px;
+    width: 3px;
+    height: 6px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+
 /*Arrow next to each to-do list*/
 i.list-arrow{
     position: absolute;
