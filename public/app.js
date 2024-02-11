@@ -624,27 +624,23 @@ function textareaValue(){
 
 //Subtasks section
 let finalSubtasks = [];
-let count = 0
+
 function subtaskInputValue(){
     const subTaskInputArr = Array.from(document.querySelectorAll('.input-subtask'))
     const priorityElement = Array.from(document.querySelectorAll('.priority-options'))
+
     
     subTaskInputArr.forEach((input, i)=>{
          
             let inputObject = {
-                id: count++,
+                id: Math.floor(Math.random() * 500) + 1,
                 name: subTaskInputArr[i].value,
                 priority: priorityElement[i].value
             }
             finalSubtasks.push(inputObject)
     }) 
-
     return finalSubtasks 
 }
-
-
-
-
 
 
 function addInputFieldSubtask(){
@@ -673,24 +669,62 @@ function addInputFieldSubtask(){
 addInputFieldSubtask()
 
 
+function displayPriorityOptions(subtasks){
+    const flagIconBtn = subtasks.querySelector('.select-selected')
+    const dropdown = subtasks.querySelector('.select-items')
+
+    flagIconBtn.addEventListener('click', function(){
+        console.log(dropdown)
+        dropdown.classList.add('active')
+    })
+
+    document.addEventListener('click', function(event){
+        if(!flagIconBtn.contains(event.target)){
+            dropdown.classList.remove('active')
+        }
+    })
+ /*
+ //Remove color picker div
+ document.addEventListener('click', function(event){
+    if(!colorPickerBtn.contains(event.target)){
+        colorPickerContainer.style.display = 'none'
+    }
+})
+*/
+
+}
+
 function displaySubtasks(subtasks){
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML =  
     `<div class="input-container">
         <i class="fa-solid fa-circle-minus remove-subtask-btn"></i>
         <input type="text" class="input-subtask" name="subtask-value">
-            <div class="priority-container">
-                <select class="priority-options" name="set-priority">
-                    <option value="Set Priority" class="prioritySelected">Set Priority</option>
-                    <option value="High Priority" class="prioritySelected">High Priority</option>
-                    <option value="Medium Priority" class="prioritySelected">Medium Priority</option>
-                    <option value="Low Priority" class="prioritySelected">Low Priority</option> 
-                </select>
+               
+        <div class="priority-container custom-select">
+            <div class="select-selected">
+                <i class="fa-regular fa-font-awesome flag-icon"></i>
             </div>
-        </div>`
+            <div class="select-items">
+                <div title="High Priority" class="high-prioriy priority">
+                    <i class="fa-regular fa-font-awesome flag-priority"></i>
+                </div>
+                <div title="Medium Priority" class="high-prioriy priority">
+                    <i class="fa-regular fa-font-awesome flag-priority"></i> 
+                    <i class="fa-regular fa-font-awesome flag-priority"></i>
+                </div>
+                <div title="Low Priority" class="high-prioriy priority">
+                    <i class="fa-regular fa-font-awesome flag-priority"></i>
+                    <i class="fa-regular fa-font-awesome flag-priority"></i>
+                    <i class="fa-regular fa-font-awesome flag-priority"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>`
         
     subtasks.appendChild(tempDiv.firstChild); //I had to create a 'div' becuase it doesn't accept a string, it needs DOM node as an argument
-    //subtaskInputValue()
+    displayPriorityOptions(subtasks)  //Display drowpn of priority list on click
 }
 
 
@@ -736,7 +770,7 @@ function categorySelected(){
 let colorPicked = '#BA3246'
 
 function colorPicker(){
-    const colorPickerMainBox = document.querySelector('color-picker-container')
+   // const colorPickerMainBox = document.querySelector('color-picker-container')
     const colorPickerBtn = document.getElementById('color-picker-btn');
     const colorPickerContainer = document.getElementById('color-picker-popup-box')
     const displayColorContainer = document.getElementById('current-color')
@@ -745,7 +779,6 @@ function colorPicker(){
     const colorOptions = ['#BA3246', '#DD8997', '#86BCC0','#71358A', '#F6C15C', '#606C38', '#4340BB', '#74D154', '#99582A', '#DD885E' ]
 
     function colorSelected(colorOption){
-    
       colorOption.addEventListener('click', function(e){
         colorPickerContainer.querySelectorAll('.color-option').forEach(option =>{
             option.classList.remove('color-checkmark')
@@ -753,16 +786,12 @@ function colorPicker(){
 
        colorOption.classList.add('color-checkmark')
        
-        
        //Change UI color to the one selected
         let target = e.target
         colorPicked = target.id
         displayColorContainer.style.backgroundColor = colorPicked;
         colorPickerContainer.style.display = 'none'
-        
       })
-
-    
     }
 
     function createColorOptions(color){
@@ -778,17 +807,15 @@ function colorPicker(){
 
     colorOptions.forEach(createColorOptions);
     colorPickerBtn.addEventListener('click', ()=>{
-        colorPickerContainer.style.display = 'flex'   
-        
+        colorPickerContainer.style.display = 'flex'       
     })
 
+    //Remove color picker div
     document.addEventListener('click', function(event){
         if(!colorPickerBtn.contains(event.target)){
             colorPickerContainer.style.display = 'none'
         }
     })
-
-
 }
 colorPicker()
 
