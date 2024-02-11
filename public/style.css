@@ -95,22 +95,26 @@ i.up-arrow-icon:hover{
     position: absolute;
     background-color: white;
     border-radius: 12px;
-    width: 153px;
+    width: 144px;
+    padding: 6px;
     left: 4px;
     top: 54px;
     box-shadow: 0px 0px 7px -2px rgba(172,172,172);
+    box-sizing: border-box;
     display: none; 
 }
 .drop-down-container ul{
     padding: 0px;
-    margin: 16px 16px 16px 10px;
+    margin: 0px;
 }
 ul li.menu-settings{
     font-size: 13px;
     color: #1c1c1c;
-    margin-bottom: 16px;
     cursor: pointer;
-    padding: 4px 3px;
+    padding: 8px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
 }
 ul li.sign-out{
     color:#BA5E32;
@@ -359,7 +363,6 @@ ul#todo-List{
 /***Template Literal in JS***/
 ul li{ 
     display: flex;
-    flex-direction: column;
     color: #1c1c1c;
     font-size: 15px;
     font-family: 'Inter', sans-serif;
@@ -912,7 +915,7 @@ i.remove-subtask-btn:hover{
     border-radius: 8px;
 }
 
-/* Priority*/
+/* Priority container*/
 .select-selected{
     /*border: 1px solid black; */
     position: relative;
@@ -934,7 +937,6 @@ i.flag-priority{
     color:rgb(35, 35, 35);
     font-size: 13px;
 } 
-
 .priority{
     padding-left: 5px;
 }
