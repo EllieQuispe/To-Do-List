@@ -305,7 +305,7 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
                         <input type="checkbox" id="${subId}" class="checkbox">
                         <span class="subtask-checkmark"></span>
                         </label>
-                        <p>${subName} | ${subPriority} </p>
+                        <p class="subtask-name">${subName} <span class="priority">${subPriority}</span> </p>
                       </li>`
         }
     });
@@ -733,7 +733,7 @@ function categorySelected(){
 
 
 ////Obtain the color picker value
-let colorPicked = '#BA5E32'
+let colorPicked = '#BA3246'
 
 function colorPicker(){
     const colorPickerMainBox = document.querySelector('color-picker-container')
@@ -742,7 +742,7 @@ function colorPicker(){
     const displayColorContainer = document.getElementById('current-color')
 
 
-    const colorOptions = ['#BA5E32', '#DC7D39', '#442053', '#86BCC0', '#F6C15C', '#606C38', '#DDA15E', '#9D0208', '#99582A', '#4340BB']
+    const colorOptions = ['#BA3246', '#DD8997', '#86BCC0','#71358A', '#F6C15C', '#606C38', '#4340BB', '#74D154', '#99582A', '#DD885E' ]
 
     function colorSelected(colorOption){
     

@@ -482,6 +482,17 @@ li.list-item{
     transform: rotate(45deg);
 }
 
+.subtask-name{
+    font-size: 14px;
+}
+/*
+span.priority{
+    font-size: 12px;
+    padding: 3px 6px;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: 1px solid black;
+}*/
 
 /*Arrow next to each to-do list*/
 i.list-arrow{
@@ -1008,7 +1019,7 @@ p.color-checkmark::after{
 }
 #current-color{
     padding: 1px 9px;
-    background-color: #BA5E32;
+    background-color: #BA3246;
     border-radius: 50%;
 
 }
