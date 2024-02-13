@@ -305,7 +305,7 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
                         <input type="checkbox" id="${subId}" class="checkbox">
                         <span class="subtask-checkmark"></span>
                         </label>
-                        <p class="subtask-name">${subName} <span class="priority">${subPriority}</span> </p>
+                        <p class="subtask-name">${subName} <span class="priority-selected">${subPriority}</span> </p>
                       </li>`
         }
     });
@@ -637,6 +637,7 @@ function subtaskInputValue(){
         //Change color to black for icons
         mainbtnArr[i].querySelectorAll('i').forEach(iTag =>{
             iTag.style.color = 'black';
+            iTag.style.fontSize ='12px';
            })
         let template = mainbtnArr[i].innerHTML
 

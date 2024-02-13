@@ -488,8 +488,12 @@ li.list-item{
 }
 
 .subtask-name{
-    font-size: 14px;
+    font-size: 13px;
     margin: 7px 0px;
+}
+
+.priority-selected{  /*move it*/
+    padding-left: 10px;
 }
 /*
 span.priority{
@@ -950,12 +954,15 @@ i.flag-priority{
 }
 
 .priority{
-    padding-left: 5px;
+    padding-left: 6px;
 }
+
+
 .priority:hover{
     background-color: rgba(229, 229, 229, 0.397);
     border-radius: 5px;
 }
+
 
 /*dropdown container*/
 .select-items{
