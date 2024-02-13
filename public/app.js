@@ -623,60 +623,38 @@ function textareaValue(){
 
 
 //Subtasks section
-let flagIcons;
-let flagIconsArr = []
-let flagIconsNewArr = []
-/*
-function obtainPriorityPicked(subtasks){
-    const priorityElement = Array.from(document.querySelectorAll('.priority-container .select-items .priority'))
-    console.log(priorityElement)
 
-    flagIconsArr = [];
-
-    for(let i = 0; i< priorityElement.length; i += 3){
-        const priorityGroup = priorityElement.slice(i, i + 3);
-        flagIconsArr.push(priorityGroup)
-    }
-    
-    console.log(flagIconsArr)
-
-    flagIconsArr.forEach((singleArr, i)=>{
-        console.log(singleArr, i)
-        //grab the first three and push it to an array, then the next three into another
-
-        singleArr.forEach((priorityFlag)=>{
-            priorityFlag.addEventListener('click', function(){
-                //console.log(indv.innerHTML)
-    
-                flagIcons = `${priorityFlag.innerHTML}`
-                console.log(flagIcons)
-    
-                //condition
-                flagIconsNewArr.push(flagIcons)
-               
-            })
-
-        })
-        
-    })
-} 
-*/
 
 function subtaskInputValue(){
     const subTaskInputArr = Array.from(document.querySelectorAll('.input-subtask'))
-    const priorityElement = Array.from(document.querySelectorAll('.priority-container .select-items .priority'))
+    const mainbtnArr = Array.from(document.querySelectorAll('.select-selected')) //array
+
+
     let finalSubtasks = [];
 
     subTaskInputArr.forEach((input, i)=>{
+       
+        //Change color to black for icons
+        mainbtnArr[i].querySelectorAll('i').forEach(iTag =>{
+            iTag.style.color = 'black';
+           })
+        let template = mainbtnArr[i].innerHTML
+
+       // Generate unique random number:
+        let randomNumber;
+        do {
+            randomNumber = Math.floor(Math.random() * 500) + 1;
+        } while (finalSubtasks.some(subtask => subtask.id === randomNumber)); // Check for duplicates
+       
         let inputObject = {
-            id: Math.floor(Math.random() * 500) + 1,
+            id: randomNumber,
             name: subTaskInputArr[i].value,
-            priority: flagIconsNewArr[i]
+            priority: `${template}`
         }
         finalSubtasks.push(inputObject)
         
     }) 
-    flagIconsNewArr=[];
+  
     return finalSubtasks 
 }
 
@@ -733,12 +711,11 @@ function displayPriorityOptions(subtasks){
     
 
 }
-
+let flagIconsArr = []
 
 function colorOfSelectedFlag(subtasks){
    // Get all flag icons
    const flagIcons = document.querySelectorAll('.priority');
-
 
    // Add event listener to each flag icon
    flagIcons.forEach(flagIcon => {
@@ -747,16 +724,17 @@ function colorOfSelectedFlag(subtasks){
            const selectedIcon = flagIcon.innerHTML;
            
    
-           
-   
            // Find the flag icon/button within the same input container
            const flagIconButton = flagIcon.closest('.input-container').querySelector('.select-selected');
+    
           //Change color of the selected flag icon/s
            flagIconButton.querySelectorAll('i').forEach(iTag =>{
-               iTag.style.color = 'white';
+            iTag.style.color = 'white';
            })
             // Replace the inner HTML of the flag icon/button with the selected icon's content
            flagIconButton.innerHTML = selectedIcon;   
+
+        
          
        });
    });
@@ -996,7 +974,7 @@ function submitForm(ev){
     const description = textareaValue()
     //Subtask
     const subtasks = subtaskInputValue()
-    console.log(subtasks)
+   
     //Category
     const category = categorySelected()
     //Color
