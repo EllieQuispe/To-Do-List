@@ -370,8 +370,10 @@ ul li{
     width: 100%;   
     position: relative;  
 }
+
 li.list-item{
     margin-bottom: 20px;;
+    flex-direction: column;
 }
 .row-list{
     display: flex;
@@ -442,7 +444,7 @@ li.list-item{
 /* Subtask checkmark */
 .subtask-checkmark{
     position: absolute;
-    top: 17.5px;
+    top: 10.5px;
     left: 10px;
     height: 10px;
     width: 10px;
@@ -455,7 +457,7 @@ li.list-item{
     /*background-color: */
     height: 12px;
     width: 12px;
-    top: 16px;
+    top: 9px;
 } /*Circle filled with color grey when hover*/
 
 .container input:checked ~ .subtask-checkmark{
@@ -487,6 +489,7 @@ li.list-item{
 
 .subtask-name{
     font-size: 14px;
+    margin: 7px 0px;
 }
 /*
 span.priority{
@@ -933,10 +936,19 @@ i.flag-icon{
     font-size: 13px;
     color: white; 
 }
+
 i.flag-priority{
-    color:rgb(35, 35, 35);
+    /*color:rgb(35, 35, 35);*/
     font-size: 13px;
 } 
+
+.selected-icon{
+    color: white;
+}
+.select-selected > i {
+    color: white;
+}
+
 .priority{
     padding-left: 5px;
 }
@@ -947,6 +959,7 @@ i.flag-priority{
 
 /*dropdown container*/
 .select-items{
+    position: relative;
     background-color: white;
     border-radius: 5px;
     margin-top: 5px;
@@ -959,6 +972,7 @@ i.flag-priority{
     position: absolute;
     width: 55px; 
     cursor: pointer;
+    z-index: 1;
     box-shadow: 0px 1px 4px rgb(149, 149, 149);
 }
 

@@ -409,7 +409,7 @@ function typeErrorMessage(message){
     const typeErrorMessage = document.querySelector('.typeErrorMessage')
     typeErrorMessage.innerHTML = message
 }
-function validateForm(title, typeOfTodo){
+function validateForm(title, typeOfTodo, subtasks){
 
     const validations = [
         { condition: title.trim() === "" || title.trim() == "Add Title", message: "Enter a title"},
@@ -442,7 +442,7 @@ document.getElementById("title-input").addEventListener('input', function(){
 
 
 //// Reset/Clear form ////
-function clearForm(typeOfTodo){
+function clearForm(){
     //clear title
     document.getElementById('title-input').value = ""
     document.getElementById('title-input').placeholder = "Add Title"
@@ -623,40 +623,72 @@ function textareaValue(){
 
 
 //Subtasks section
-let finalSubtasks = [];
+let flagIcons;
+let flagIconsArr = []
+let flagIconsNewArr = []
+/*
+function obtainPriorityPicked(subtasks){
+    const priorityElement = Array.from(document.querySelectorAll('.priority-container .select-items .priority'))
+    console.log(priorityElement)
+
+    flagIconsArr = [];
+
+    for(let i = 0; i< priorityElement.length; i += 3){
+        const priorityGroup = priorityElement.slice(i, i + 3);
+        flagIconsArr.push(priorityGroup)
+    }
+    
+    console.log(flagIconsArr)
+
+    flagIconsArr.forEach((singleArr, i)=>{
+        console.log(singleArr, i)
+        //grab the first three and push it to an array, then the next three into another
+
+        singleArr.forEach((priorityFlag)=>{
+            priorityFlag.addEventListener('click', function(){
+                //console.log(indv.innerHTML)
+    
+                flagIcons = `${priorityFlag.innerHTML}`
+                console.log(flagIcons)
+    
+                //condition
+                flagIconsNewArr.push(flagIcons)
+               
+            })
+
+        })
+        
+    })
+} 
+*/
 
 function subtaskInputValue(){
     const subTaskInputArr = Array.from(document.querySelectorAll('.input-subtask'))
-    const priorityElement = Array.from(document.querySelectorAll('.priority-options'))
+    const priorityElement = Array.from(document.querySelectorAll('.priority-container .select-items .priority'))
+    let finalSubtasks = [];
 
-    
     subTaskInputArr.forEach((input, i)=>{
-         
-            let inputObject = {
-                id: Math.floor(Math.random() * 500) + 1,
-                name: subTaskInputArr[i].value,
-                priority: priorityElement[i].value
-            }
-            finalSubtasks.push(inputObject)
+        let inputObject = {
+            id: Math.floor(Math.random() * 500) + 1,
+            name: subTaskInputArr[i].value,
+            priority: flagIconsNewArr[i]
+        }
+        finalSubtasks.push(inputObject)
+        
     }) 
+    flagIconsNewArr=[];
     return finalSubtasks 
 }
 
 
-function addInputFieldSubtask(){
-    const addSubtask = document.querySelector('.subtask-label') //from html
-    const subtasks = document.getElementById('subtasks') //from html
+function deleteOrAddInputField(subtasks){
 
     function removeSubtaskFromForm(selectedSubtask){
         if (subtasks.contains(selectedSubtask)) {
             subtasks.removeChild(selectedSubtask);
+           // obtainPriorityPicked(subtasks) 
         }
     }
-    
-    //Add input box
-    addSubtask.addEventListener('click', ()=>{       
-        displaySubtasks(subtasks)
-    })
     
     //Remove input box
     subtasks.addEventListener('click', (event)=>{
@@ -665,34 +697,72 @@ function addInputFieldSubtask(){
             removeSubtaskFromForm(target.parentElement)
         }
     })  
+    
 }
-addInputFieldSubtask()
+
+function addSubtaskInputField(){
+    const addSubtask = document.querySelector('.subtask-label') //from html
+    const subtasks = document.getElementById('subtasks')
+
+    //Add input box
+    addSubtask.addEventListener('click', ()=>{       
+        displaySubtasks(subtasks)
+    })
+}
+addSubtaskInputField()
+
 
 
 function displayPriorityOptions(subtasks){
-    const flagIconBtn = subtasks.querySelector('.select-selected')
-    const dropdown = subtasks.querySelector('.select-items')
+    const flagIconBtn = Array.from(subtasks.querySelectorAll('.select-selected'))
+    const dropdowns = Array.from(subtasks.querySelectorAll('.select-items'))
 
-    flagIconBtn.addEventListener('click', function(){
-        console.log(dropdown)
-        dropdown.classList.add('active')
-    })
+    flagIconBtn.forEach((btn, i )=>{
+        btn.addEventListener('click', function(event){
+            event.stopPropagation();
+            dropdowns.forEach(dropdown => dropdown.classList.remove('active'))
+            dropdowns[i].classList.add('active')
+        })
 
-    document.addEventListener('click', function(event){
-        if(!flagIconBtn.contains(event.target)){
-            dropdown.classList.remove('active')
-        }
+        document.addEventListener('click', function(event){
+            if(!flagIconBtn.some(element => element.contains(event.target))){
+                dropdowns.forEach(dropdown => dropdown.classList.remove('active'))
+            }
+        });
     })
- /*
- //Remove color picker div
- document.addEventListener('click', function(event){
-    if(!colorPickerBtn.contains(event.target)){
-        colorPickerContainer.style.display = 'none'
-    }
-})
-*/
+    
 
 }
+
+
+function colorOfSelectedFlag(subtasks){
+   // Get all flag icons
+   const flagIcons = document.querySelectorAll('.priority');
+
+
+   // Add event listener to each flag icon
+   flagIcons.forEach(flagIcon => {
+       flagIcon.addEventListener('click', () => {
+           // Get the selected flag icon's HTML content
+           const selectedIcon = flagIcon.innerHTML;
+           
+   
+           
+   
+           // Find the flag icon/button within the same input container
+           const flagIconButton = flagIcon.closest('.input-container').querySelector('.select-selected');
+          //Change color of the selected flag icon/s
+           flagIconButton.querySelectorAll('i').forEach(iTag =>{
+               iTag.style.color = 'white';
+           })
+            // Replace the inner HTML of the flag icon/button with the selected icon's content
+           flagIconButton.innerHTML = selectedIcon;   
+         
+       });
+   });
+
+}
+
 
 function displaySubtasks(subtasks){
     const tempDiv = document.createElement('div');
@@ -706,14 +776,14 @@ function displaySubtasks(subtasks){
                 <i class="fa-regular fa-font-awesome flag-icon"></i>
             </div>
             <div class="select-items">
-                <div title="High Priority" class="high-prioriy priority">
+                <div title="Low Priority" class="high-prioriy priority">
                     <i class="fa-regular fa-font-awesome flag-priority"></i>
                 </div>
                 <div title="Medium Priority" class="high-prioriy priority">
                     <i class="fa-regular fa-font-awesome flag-priority"></i> 
                     <i class="fa-regular fa-font-awesome flag-priority"></i>
                 </div>
-                <div title="Low Priority" class="high-prioriy priority">
+                <div title="High Priority" class="high-prioriy priority">
                     <i class="fa-regular fa-font-awesome flag-priority"></i>
                     <i class="fa-regular fa-font-awesome flag-priority"></i>
                     <i class="fa-regular fa-font-awesome flag-priority"></i>
@@ -725,11 +795,14 @@ function displaySubtasks(subtasks){
         
     subtasks.appendChild(tempDiv.firstChild); //I had to create a 'div' becuase it doesn't accept a string, it needs DOM node as an argument
     displayPriorityOptions(subtasks)  //Display drowpn of priority list on click
+    deleteOrAddInputField(subtasks)
+    colorOfSelectedFlag(subtasks)
+    //obtainPriorityPicked(subtasks) 
 }
 
 
 
-//Display category options
+/////////////Display category options///////////
 function displayCategoryOptions(catArr){
     const categoryOption = document.getElementById('categories-option')
     categoryOption.innerHTML = ""
@@ -923,6 +996,7 @@ function submitForm(ev){
     const description = textareaValue()
     //Subtask
     const subtasks = subtaskInputValue()
+    console.log(subtasks)
     //Category
     const category = categorySelected()
     //Color
@@ -930,7 +1004,7 @@ function submitForm(ev){
     //Location
     const location = clientAddress()
 
-    if(validateForm(title, typeOfTodo)){
+    if(validateForm(title, typeOfTodo, subtasks)){
         title = capitalizeFirstLetter(title)
 
         const formData = {
@@ -947,7 +1021,7 @@ function submitForm(ev){
         }
 
         //Reset Values//
-        clearForm(typeOfTodo) 
+        clearForm() 
 
         //Insert object to array
         formDataArr.push(formData)
@@ -959,7 +1033,7 @@ function submitForm(ev){
         compareDates()
         closeForm()
         eventsTasksCounter()
-    }
+    } 
     
 }
 
