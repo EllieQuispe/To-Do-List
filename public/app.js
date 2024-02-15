@@ -1067,22 +1067,19 @@ function viewFullDetailsOfTodoItem(title, date, time, type, description, subtask
     }
     
 
-    //If required, I will add subtasks using ${ }
-    //console.log(subtasks)
-    let subtaskDisplay = '';
+    //Add Subtask
+    let subtaskDisplay;
     if (subtasks.length > 0){
-
-        console.log('Subtask found')
-
+        let ilTag = ''
         subtasks.forEach((subtask)=>{
-            subtaskDisplay += `<ul>
-                            <li class="Todo-subtask">${subtask.name}<span class="todo-pritority">${subtask.priority}</span></li>
-                            </ul>`
+            ilTag += `<li class="todo-subtask">${subtask.name}<span class="todo-pritority">${subtask.priority}</span></li>`
         })
+        subtaskDisplay  = `<ul class="ulSubtask">${ilTag}</ul>`
+        
     } else{
-        subtaskDisplay = `<p>No subtasks created.</p>`
+        subtaskDisplay = `<p class="no-subtasks"></p>`
     }
-
+    
     
     fullListView.innerHTML = `<li id='todo-entry'>
                                 <div>
@@ -1090,9 +1087,9 @@ function viewFullDetailsOfTodoItem(title, date, time, type, description, subtask
                                 <p class="entry-date-category-color">${date} ${timeDisplay} | ${category} <span class="color-box" style="background-color:${color};"></span></p>
                                 <h2 id="entry-title">${title}</h2>
                                 <p id="entry-description">${description}</p>
-                                <div>
+                                <div class="subtask-container">
                                     <p id="entry-subtasks">Subtask</p>
-                                    <p class="no-subtask">${subtaskDisplay}</p>
+                                    ${subtaskDisplay}
                                 </div>
 
                                 <p id="entry-location">Location<span class="location">${location}</span></p>

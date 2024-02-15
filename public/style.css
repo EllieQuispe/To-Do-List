@@ -351,10 +351,11 @@ h3{
   }
 
 
-ul {
+ul#todo-List {
     position: relative;
     list-style: none;
     margin-top: 40px;
+    padding: 0px;
 }
 ul#todo-List{
     padding: 0px;
@@ -647,6 +648,38 @@ p#entry-description{
     box-sizing: border-box; 
     margin-top: 6px; 
 }
+
+p#entry-subtasks{
+    margin-top: 0px;
+    margin-bottom: 1px;
+    padding-left: 20px;
+}
+/*No subtask*/
+p.no-subtasks{
+    border:1px solid rgb(227, 224, 224);
+    border-radius: 5px;
+    margin: 0px 0px 40px 20px;
+    min-height: 30px;
+}
+/*Subtask present*/
+ul.ulSubtask{
+    padding: 3px 0px 3px 3px;
+    border:1px solid rgb(227, 224, 224);
+    border-radius: 5px;
+    margin-left: 20px;
+ 
+}
+ul li.todo-subtask{
+    padding: 3px 0px;
+    font-size: 14px;
+}
+
+span.todo-pritority{
+    padding-left: 10px;
+}
+
+
+
 p#entry-location{
     font-size: 14px;
     color:#2C2C2C;
