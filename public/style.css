@@ -531,7 +531,7 @@ p.list-details{
 /* Subtask UL, LI, and checkbox*/
 ul.innerUl{
     margin: 0px;
-    padding: 2px 5px 2px 51px;
+    padding: 0x 5px 0px 51px;
 }
 ul.innerUl.hidden{
     display: none;
@@ -642,7 +642,7 @@ p#entry-description{
     border:1px solid rgb(227, 224, 224);
     border-radius: 5px;
     width: 100%;
-    min-height: 200px;
+    min-height: 70px;
     padding: 5px;
     box-sizing: border-box; 
     margin-top: 6px; 

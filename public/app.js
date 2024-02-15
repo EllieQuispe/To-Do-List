@@ -623,29 +623,26 @@ function textareaValue(){
 
 
 //Subtasks section
-
-
 function subtaskInputValue(){
     const subTaskInputArr = Array.from(document.querySelectorAll('.input-subtask'))
     const mainbtnArr = Array.from(document.querySelectorAll('.select-selected')) //array
-
-
     let finalSubtasks = [];
 
     subTaskInputArr.forEach((input, i)=>{
        
-        //Change color to black for icons
+        //Change color to black for flag icons
         mainbtnArr[i].querySelectorAll('i').forEach(iTag =>{
-            iTag.style.color = 'black';
+            iTag.style.color = 'rgb(102,102,102)';
             iTag.style.fontSize ='12px';
            })
-        let template = mainbtnArr[i].innerHTML
 
-       // Generate unique random number:
-        let randomNumber;
-        do {
-            randomNumber = Math.floor(Math.random() * 500) + 1;
-        } while (finalSubtasks.some(subtask => subtask.id === randomNumber)); // Check for duplicates
+    let template = mainbtnArr[i].innerHTML
+
+    // Generate unique random number:
+    let randomNumber;
+    do {
+        randomNumber = Math.floor(Math.random() * 500) + 1;
+    } while (finalSubtasks.some(subtask => subtask.id === randomNumber)); // Check for duplicates
        
         let inputObject = {
             id: randomNumber,
@@ -660,7 +657,7 @@ function subtaskInputValue(){
 }
 
 
-function deleteOrAddInputField(subtasks){
+function deleteInputField(subtasks){
 
     function removeSubtaskFromForm(selectedSubtask){
         if (subtasks.contains(selectedSubtask)) {
@@ -712,9 +709,11 @@ function displayPriorityOptions(subtasks){
     
 
 }
+
+
 let flagIconsArr = []
 
-function colorOfSelectedFlag(subtasks){
+function updateMainFlagIconBtn(subtasks){
    // Get all flag icons
    const flagIcons = document.querySelectorAll('.priority');
 
@@ -774,8 +773,8 @@ function displaySubtasks(subtasks){
         
     subtasks.appendChild(tempDiv.firstChild); //I had to create a 'div' becuase it doesn't accept a string, it needs DOM node as an argument
     displayPriorityOptions(subtasks)  //Display drowpn of priority list on click
-    deleteOrAddInputField(subtasks)
-    colorOfSelectedFlag(subtasks)
+    deleteInputField(subtasks)
+    updateMainFlagIconBtn(subtasks)
     //obtainPriorityPicked(subtasks) 
 }
 
@@ -1059,20 +1058,45 @@ function deleteEntry(currentListID){
 }
 
 
-function viewFullDetailsOfTodoItem(title, date, time, type, description, category, color, location){
+function viewFullDetailsOfTodoItem(title, date, time, type, description, subtasks, category, color, location){
     let timeDisplay = ''
     if(time === 'NaN: PM' || !time){
         timeDisplay  
     } else {
         timeDisplay = `| ${time}`
     }
+    
+
+    //If required, I will add subtasks using ${ }
+    //console.log(subtasks)
+    let subtaskDisplay = '';
+    if (subtasks.length > 0){
+
+        console.log('Subtask found')
+
+        subtasks.forEach((subtask)=>{
+            subtaskDisplay += `<ul>
+                            <li class="Todo-subtask">${subtask.name}<span class="todo-pritority">${subtask.priority}</span></li>
+                            </ul>`
+        })
+    } else{
+        subtaskDisplay = `<p>No subtasks created.</p>`
+    }
+
+    
     fullListView.innerHTML = `<li id='todo-entry'>
                                 <div>
                                 <p id="type-of-List">${type}</p>
                                 <p class="entry-date-category-color">${date} ${timeDisplay} | ${category} <span class="color-box" style="background-color:${color};"></span></p>
                                 <h2 id="entry-title">${title}</h2>
                                 <p id="entry-description">${description}</p>
+                                <div>
+                                    <p id="entry-subtasks">Subtask</p>
+                                    <p class="no-subtask">${subtaskDisplay}</p>
+                                </div>
+
                                 <p id="entry-location">Location<span class="location">${location}</span></p>
+                                
                                 </div>
                                 <div class="delete-edit-btn-container">
                                     <button type="button" class="delete-btn">Delete</button>
@@ -1099,7 +1123,7 @@ function getList(){
                 if(dataEntry.id == currentListID ){
 
                     /////FULL VIEW OF TODO LIST/////
-                    viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.time, dataEntry.type, dataEntry.description, dataEntry.category, dataEntry.color, dataEntry.location ) 
+                    viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.time, dataEntry.type, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location ) 
                     openFullViewContainer() 
                 }  
             })
