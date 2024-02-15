@@ -627,29 +627,33 @@ function subtaskInputValue(){
     const subTaskInputArr = Array.from(document.querySelectorAll('.input-subtask'))
     const mainbtnArr = Array.from(document.querySelectorAll('.select-selected')) //array
     let finalSubtasks = [];
-
+    console.log(subTaskInputArr)
     subTaskInputArr.forEach((input, i)=>{
-       
-        //Change color to black for flag icons
-        mainbtnArr[i].querySelectorAll('i').forEach(iTag =>{
-            iTag.style.color = 'rgb(102,102,102)';
-            iTag.style.fontSize ='12px';
-           })
+        if(subTaskInputArr[i].value !== ''){
 
-    let template = mainbtnArr[i].innerHTML
+            //Change color to black for flag icons
+            mainbtnArr[i].querySelectorAll('i').forEach(iTag =>{
+                iTag.style.color = 'rgb(102,102,102)';
+                iTag.style.fontSize ='12px';
+            })
 
-    // Generate unique random number:
-    let randomNumber;
-    do {
-        randomNumber = Math.floor(Math.random() * 500) + 1;
-    } while (finalSubtasks.some(subtask => subtask.id === randomNumber)); // Check for duplicates
-       
-        let inputObject = {
-            id: randomNumber,
-            name: subTaskInputArr[i].value,
-            priority: `${template}`
+            let template = mainbtnArr[i].innerHTML
+
+            // Generate unique random number:
+            let randomNumber;
+            do {
+                randomNumber = Math.floor(Math.random() * 500) + 1;
+            } while (finalSubtasks.some(subtask => subtask.id === randomNumber)); // Check for duplicates
+
+            //Object for subtask
+            let inputObject = {
+                id: randomNumber,
+                name: subTaskInputArr[i].value,
+                priority: `${template}`
+            }
+            finalSubtasks.push(inputObject)
+
         }
-        finalSubtasks.push(inputObject)
         
     }) 
   
@@ -711,7 +715,7 @@ function displayPriorityOptions(subtasks){
 }
 
 
-let flagIconsArr = []
+//let flagIconsArr = []
 
 function updateMainFlagIconBtn(subtasks){
    // Get all flag icons
@@ -723,7 +727,6 @@ function updateMainFlagIconBtn(subtasks){
            // Get the selected flag icon's HTML content
            const selectedIcon = flagIcon.innerHTML;
            
-   
            // Find the flag icon/button within the same input container
            const flagIconButton = flagIcon.closest('.input-container').querySelector('.select-selected');
     
@@ -731,11 +734,9 @@ function updateMainFlagIconBtn(subtasks){
            flagIconButton.querySelectorAll('i').forEach(iTag =>{
             iTag.style.color = 'white';
            })
-            // Replace the inner HTML of the flag icon/button with the selected icon's content
-           flagIconButton.innerHTML = selectedIcon;   
 
-        
-         
+           // Replace the inner HTML of the flag icon/button with the selected icon's content
+           flagIconButton.innerHTML = selectedIcon;   
        });
    });
 
