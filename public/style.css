@@ -387,6 +387,11 @@ li.list-item:hover{
 .row-list{
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    padding-right: 24px;
+}
+.input-container{
+    display: flex;
 }
 
 /*checkbox next to list*/
@@ -411,7 +416,7 @@ li.list-item:hover{
     left: 10px;
     height: 12px;
     width: 12px;
-    background-color: transparent;
+    background-color: white;
     border: 1px solid #BA5E32;
     border-radius: 50%;
 } /*Checkbox with a border called #BA5E32*/
@@ -457,7 +462,7 @@ li.list-item:hover{
     left: 10px;
     height: 10px;
     width: 10px;
-    background-color: transparent;
+    background-color: white;
     border: 1px solid #BA5E32;
     border-radius: 50%;
 } /*Checkbox with a border called #BA5E32*/
@@ -513,22 +518,45 @@ span.priority{
     border: 1px solid black;
 }*/
 
-/*Arrow next to each to-do list*/
-i.list-arrow{
-    position: absolute;
-    right: 14px;
-    font-size: 17px;
+/*Buttons*/
+.editBtn,
+.item-delete-Btn{
+    background-color: white;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 3px 6px;
+    color: transparent;
+    margin-left: 3px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
     cursor: pointer;
 }
+
+
+.editBtn.visible,
+.item-delete-Btn.visible{
+    color: #BA5E32;
+    background-color: white;
+    border: 1px solid #BA5E32;
+}
+.editBtn.visible:hover,
+.item-delete-Btn.visible:hover{
+    background-color: #BA5E32;
+    color: white;
+}
+
+
+
 p.list-details{
     display: flex;
     align-items: center;
     margin: 0px;
-    padding: 10px 0px 10px 36px;
+    padding: 10px 0px 10px 43px;
     font-size: 12px;
     font-weight: 300;
     color:#666666;
 }
+
 .color-box{
     display: inline-block;
     width: 10px;
