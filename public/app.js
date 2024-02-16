@@ -292,23 +292,28 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
     let subId = ''
     let subPriority = ''
 
-    innerUl = subtasksPresent.length === 0 ? `<ul class="innerUl hidden">` : `<ul class="innerUl">`;
-
-    subtasks.forEach((subtask)=>{
-        if (subtask.name !== ''){
-            subName = subtask.name
-            subPriority = subtask.priority
-            subId = subtask.id
-         
-            innerli += `<li class="innerList">
-                        <label class="container">
-                        <input type="checkbox" id="${subId}" class="checkbox">
-                        <span class="subtask-checkmark"></span>
-                        </label>
-                        <p class="subtask-name">${subName} <span class="priority-selected">${subPriority}</span> </p>
-                      </li>`
-        }
-    });
+   
+    if(subtasksPresent.length === 0){
+        innerUl =  `<ul class="innerUl hidden"></ul>`;
+    } else{
+        subtasks.forEach((subtask)=>{
+            if (subtask.name !== ''){
+                subName = subtask.name
+                subPriority = subtask.priority
+                subId = subtask.id
+             
+                innerli += `<li class="innerList">
+                            <label class="container">
+                            <input type="checkbox" id="${subId}" class="checkbox">
+                            <span class="subtask-checkmark"></span>
+                            </label>
+                            <p class="subtask-name">${subName} <span class="priority-selected">${subPriority}</span> </p>
+                          </li>`
+            }
+        });
+        innerUl = `<ul class="innerUl">${innerli}</ul>`;
+    }
+   
     
     todoList.innerHTML += ` 
                         <li class="list-item" id="${id}">
@@ -319,9 +324,7 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
                         </div>
 
                         <p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>
-                            ${innerUl}
-                                ${innerli}
-                            </ul>
+                        ${innerUl}  
                         </li>`
     
     //To add an eventlistener to arrow icons next to list item incase user wants to a full view
