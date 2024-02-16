@@ -203,7 +203,6 @@ function displayCategoryDeleteBtn(){
     }) 
 }
 
-
 ///Deleting a category////
 function deleteCategories(){
     const savedCategories = localStorage.getItem('MyCategoryList')
@@ -233,7 +232,7 @@ function deleteCategories(){
 const todoNewEntryForm = document.querySelector('.new-todo-item-container')
 const todoListDisplay = document.querySelector('.middle-container')
 function openNewForm(){
-    todoListDisplay.classList.add('screen-size-40')
+    todoListDisplay.classList.add('screen-size-40') //middle container change size
     todoNewEntryForm.classList.add('display')
 
     //If list detail container is open
@@ -253,8 +252,7 @@ function closeForm(){
     clearForm()
 }
 
-
-/////Preview of List Depending of Date Selected/////
+//////////////////////Preview of List Depending of Date Selected//////////////////////
 function trackCheckboxStatus(){
     todoList = document.getElementById('todo-List') //updated UL element
 
@@ -272,7 +270,6 @@ function trackCheckboxStatus(){
     checkbox.checked = isChecked;
     });
 }
-
 
 
 function displayPreviewOfTodoList(id, title, type, date, time, category, subtasks, color){
@@ -304,8 +301,8 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
              
                 innerli += `<li class="innerList">
                             <label class="container">
-                            <input type="checkbox" id="${subId}" class="checkbox">
-                            <span class="subtask-checkmark"></span>
+                            <input type="checkbox" id="${subId}" class="checkbox secondary-checkbox">
+                            <span class="subtask-checkmark secondary-checkbox"></span>
                             </label>
                             <p class="subtask-name">${subName} <span class="priority-selected">${subPriority}</span> </p>
                           </li>`
@@ -320,7 +317,7 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
 
                         <div class="row-list">
                             <label class="container"> 
-                            <input type="checkbox" id="${id}" class="checkbox"><span class="checkmark"></span></label> ${title} <i class="fa-solid fa-chevron-right list-arrow"></i>
+                            <input type="checkbox" id="${id}" class="checkbox main-checkbox"><span class="checkmark main-checkbox"></span></label> ${title} <button type="button" class="editBtn">Edit</button> <button type="button" class="delete-Btn">Delete</button> 
                         </div>
 
                         <p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>
@@ -716,8 +713,6 @@ function displayPriorityOptions(subtasks){
     
 
 }
-
-
 //let flagIconsArr = []
 
 function updateMainFlagIconBtn(subtasks){
@@ -744,7 +739,6 @@ function updateMainFlagIconBtn(subtasks){
    });
 
 }
-
 
 function displaySubtasks(subtasks){
     const tempDiv = document.createElement('div');
@@ -795,7 +789,6 @@ function displayCategoryOptions(catArr){
 
 }
 
-
 function deleteCategoryPickerContainer(catg){
     const categoryContainer = document.querySelector('.select-category-container')
     if(catg == '' || catg == [{}]){  //if
@@ -804,7 +797,6 @@ function deleteCategoryPickerContainer(catg){
         categoryContainer.classList.remove('hideCategoryBox')
     }
 }
-
 
 //Obtain the category value that user selects from drop-down list
 const categoriesOption = document.getElementById('categories-option')
@@ -956,10 +948,6 @@ initializeMap()
 
 
 
-
-
-
-
 ////////////////// FORM SUBMISSION FOR NEW EVENT OR TASK ////////////////
 const mapID = document.getElementById('map')
 let formDataArr = [];
@@ -1032,7 +1020,7 @@ function openFullViewContainer(){
     clearForm()
 }
 function closeFullViewContainer(){
-    todoListDisplay.classList.remove('screen-size-40')
+    todoListDisplay.classList.remove('screen-size-40')//full screen
     listDetailContainer.classList.remove('display-list-detail-container')
 }
 
@@ -1051,7 +1039,7 @@ function deleteEntry(currentListID){
                 closeFullViewContainer()
                 compareDates()
 
-                //Remove selected checkbox 
+                //Remove selected checkbox by id 
                 localStorage.removeItem(currentListID) 
 
                 //Reset counter
@@ -1101,37 +1089,54 @@ function viewFullDetailsOfTodoItem(title, date, time, type, description, subtask
                                 </div>
                                 <div class="delete-edit-btn-container">
                                     <button type="button" class="delete-btn">Delete</button>
-                                   
+                                
                                 </div>
                             </li>`
+
+    openFullViewContainer() 
 }
 // <button type="button" class="edit-btn">Edit</button> (might add it back to the above function)
 
 
 let fullListView = document.getElementById('full-list-view')
 function getList(){
-    todoList = document.getElementById('todo-List') //list of item(s) displayed for selected date
-    let arrowIcon = document.querySelectorAll('.list-arrow')
+    //todoList = document.getElementById('todo-List') //list of item(s) displayed for selected date
     let list = document.querySelectorAll('.list-item')
-    let arrowIconArr = Array.from(arrowIcon)
+    let listArr = Array.from(document.querySelectorAll('.list-item'))
 
-    arrowIconArr.map((arrow, j)=>{
-        arrow.addEventListener('click', function(){
-           let currentListID = Number(list[j].id) //Turn ID to number
+    
+    listArr.map((item, j)=>{
+        item.addEventListener('click', function(event){
 
-           fullListView.innerHTML= ""
-            formDataArr.filter((dataEntry)=>{
-                if(dataEntry.id == currentListID ){
+     
+            if(!(event.target.classList.contains('main-checkbox') || event.target.classList.contains('secondary-checkbox'))){
+                console.log(event.target)
 
-                    /////FULL VIEW OF TODO LIST/////
-                    viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.time, dataEntry.type, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location ) 
-                    openFullViewContainer() 
-                }  
+                let currentListID = Number(list[j].id) //Turn ID to number
+            
+                fullListView.innerHTML= ""
+                formDataArr.filter((dataEntry)=>{
+                    if(dataEntry.id == currentListID ){
+            
+                        /////FULL VIEW OF TODO LIST/////
+                        viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.time, dataEntry.type, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location ) 
+                                
+                        }  
+                    })
+            
+                    deleteEntry(currentListID) //The delete btn is now able to listen to clicks
+                        //resetEntry(currentListID) //The option to reset entry is now available
+            } 
+                    
+                       
             })
+        }) 
+ 
+ }
+        
+   
+    
+   
+         
 
-            deleteEntry(currentListID) //The delete btn is now able to listen to clicks
-            //resetEntry(currentListID) //The option to reset entry is now available
-        })
-    })    
-}
 
