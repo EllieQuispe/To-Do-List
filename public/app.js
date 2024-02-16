@@ -271,6 +271,29 @@ function trackCheckboxStatus(){
     });
 }
 
+function displayButtonsOnHover(listItems){
+    let listArr = Array.from(listItems)
+   // let deleteBtnsArr = listItems.querySelectorAll('.item-delete-Btn')
+    console.log(listArr)
+    const deleteBtns = Array.from(document.querySelectorAll('.item-delete-Btn'))
+    const editBtns = Array.from(document.querySelectorAll('.editBtn'))
+
+    console.log(deleteBtns)
+    console.log(editBtns)
+    
+    listArr.map((listItem, i)=>{
+        listItem.addEventListener('mouseenter', function(){
+            deleteBtns[i].classList.add('visible')
+            editBtns[i].classList.add('visible')
+        })
+        listItem.addEventListener('mouseleave', function(){
+            deleteBtns[i].classList.remove('visible')
+            editBtns[i].classList.remove('visible')
+        })
+    })
+
+}
+
 
 function displayPreviewOfTodoList(id, title, type, date, time, category, subtasks, color){
     let timeDisplay = ''
@@ -316,19 +339,19 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
                         <li class="list-item" id="${id}">
 
                         <div class="row-list">
-                            <label class="container"> 
-                            <div>
-                             <div><input type="checkbox" id="${id}" class="checkbox main-checkbox"><span class="checkmark main-checkbox"></span></label> ${title}</div>  
-                             <div><button type="button" class="editBtn">Edit</button> <button type="button" class="item-delete-Btn">Delete</button></div> 
+                            <div class="input-container">
+                                <label class="container"><input type="checkbox" id="${id}" class="checkbox main-checkbox"><span class="checkmark main-checkbox"></span></label> ${title}
                             </div>
-                            
+                            <div>
+                                <button type="button" class="editBtn">Edit</button> <button type="button" class="item-delete-Btn">Delete</button> 
+                            </div>
                         </div>
 
                         <p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>
                         ${innerUl}  
                         </li>`
     
-    //To add an eventlistener to class list-item so the user can get a full view of the todo item
+    //Add eventlistener to have access to full view of the todo list item
     getList()
 
     //checkbox
@@ -344,7 +367,12 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
             deleteEntry(currentListID)
         })
     })
+
+    //display btns when hover
+    displayButtonsOnHover(list)
 } 
+
+
 
 let todoList = document.getElementById('todo-List')
 function compareDates(){
@@ -1147,16 +1175,12 @@ function getList(){
                                 
                         }  
                     })
-            
-                  
-
-                    //deleteEntry(currentListID) //The delete btn is now able to listen to clicks
                         //resetEntry(currentListID) //The option to reset entry is now available
-            } 
+                } 
                     
                        
-            })
-        }) 
+        })
+    }) 
  
  }
         
