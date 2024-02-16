@@ -317,18 +317,33 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
 
                         <div class="row-list">
                             <label class="container"> 
-                            <input type="checkbox" id="${id}" class="checkbox main-checkbox"><span class="checkmark main-checkbox"></span></label> ${title} <button type="button" class="editBtn">Edit</button> <button type="button" class="delete-Btn">Delete</button> 
+                            <div>
+                             <div><input type="checkbox" id="${id}" class="checkbox main-checkbox"><span class="checkmark main-checkbox"></span></label> ${title}</div>  
+                             <div><button type="button" class="editBtn">Edit</button> <button type="button" class="item-delete-Btn">Delete</button></div> 
+                            </div>
+                            
                         </div>
 
                         <p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>
                         ${innerUl}  
                         </li>`
     
-    //To add an eventlistener to arrow icons next to list item incase user wants to a full view
+    //To add an eventlistener to class list-item so the user can get a full view of the todo item
     getList()
 
     //checkbox
     trackCheckboxStatus()
+
+    //Delete option
+    let list = todoList.querySelectorAll('li.list-item')
+    let deleteBtns = Array.from(todoList.querySelectorAll('.item-delete-Btn'))
+ 
+    deleteBtns.map((btn, i)=>{
+        btn.addEventListener('click', function(){
+            let currentListID = Number(list[i].id)
+            deleteEntry(currentListID)
+        })
+    })
 } 
 
 let todoList = document.getElementById('todo-List')
@@ -1026,12 +1041,13 @@ function closeFullViewContainer(){
 
 ////// Delete entry /////
 function deleteEntry(currentListID){
-    const deleteBtn = document.querySelector('.delete-btn')
-    deleteBtn.addEventListener('click', function(){
-
-        
+      
         formDataArr.filter((dataEntry, i) =>{
             if(dataEntry.id == currentListID){
+                console.log(formDataArr)
+                console.log(dataEntry, i)
+                
+
                 //delete 
                 formDataArr.splice(i, 1)
                 localStorage.setItem('FormData', JSON.stringify(formDataArr))
@@ -1044,13 +1060,14 @@ function deleteEntry(currentListID){
 
                 //Reset counter
                 eventsTasksCounter()  
+                
             } 
         }) 
-    })
+   
 }
 
 
-function viewFullDetailsOfTodoItem(title, date, time, type, description, subtasks, category, color, location){
+function viewFullDetailsOfTodoItem(title, date, time, type, description, subtasks, category, color, location, currentID){
     let timeDisplay = ''
     if(time === 'NaN: PM' || !time){
         timeDisplay  
@@ -1094,6 +1111,13 @@ function viewFullDetailsOfTodoItem(title, date, time, type, description, subtask
                             </li>`
 
     openFullViewContainer() 
+
+    //delete option
+    let deleteBtn = fullListView.querySelector('.delete-btn')
+    deleteBtn.addEventListener('click', function(){
+        deleteEntry(currentID)
+    })
+  
 }
 // <button type="button" class="edit-btn">Edit</button> (might add it back to the above function)
 
@@ -1109,7 +1133,7 @@ function getList(){
         item.addEventListener('click', function(event){
 
      
-            if(!(event.target.classList.contains('main-checkbox') || event.target.classList.contains('secondary-checkbox'))){
+            if(!(event.target.classList.contains('main-checkbox') || event.target.classList.contains('secondary-checkbox') || event.target.classList.contains('item-delete-Btn'))){
                 console.log(event.target)
 
                 let currentListID = Number(list[j].id) //Turn ID to number
@@ -1119,12 +1143,14 @@ function getList(){
                     if(dataEntry.id == currentListID ){
             
                         /////FULL VIEW OF TODO LIST/////
-                        viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.time, dataEntry.type, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location ) 
+                        viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.time, dataEntry.type, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location, currentListID) 
                                 
                         }  
                     })
             
-                    deleteEntry(currentListID) //The delete btn is now able to listen to clicks
+                  
+
+                    //deleteEntry(currentListID) //The delete btn is now able to listen to clicks
                         //resetEntry(currentListID) //The option to reset entry is now available
             } 
                     
