@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     displayCategoryDeleteBtn()
 
      //Open form for new list entry
-     document.querySelector('.add-new-item').addEventListener('click', openNewForm )
+     document.querySelector('.add-new-item').addEventListener('click', openForm )
      //Close to-do list form
      document.querySelector('.exit-form').addEventListener('click', closeForm)
 
@@ -226,6 +226,38 @@ function deleteCategories(){
 
 
 
+//////////////////////////// EDIT To-do ITEM //////////////////////////////
+let typeOfTodo = '';
+
+function editEntry(currentListID){
+    //console.log(formDataArr)
+
+    function reEnterEntryToForm(id, title, type, date, time, description, subtasks, category, color, location){
+        //Title
+        document.getElementById('title-input').value = title
+
+        //Type
+        if(type == 'Task'){
+            document.getElementById('task-option').classList.add('clicked')
+            typeOfTodo = 'Task'
+        } else if (type == 'Event'){
+            document.getElementById('event-option').classList.add('clicked')
+            typeOfTodo = 'Event'
+        }
+    }
+
+    formDataArr.filter((dataEntry, i) =>{
+        if(dataEntry.id == currentListID){
+            
+            //console.log(dataEntry, i)
+            reEnterEntryToForm(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location)
+
+        }
+    })
+}
+
+
+
 
 /////////////////////////////////// FULL VIEW OF TODO LIST ////////////////////////////////
 const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container
@@ -243,27 +275,29 @@ function closeFullViewContainer(){
 }
 
 ////// Delete entry /////
+let fullViewID;
 function deleteEntry(currentListID){
       
         formDataArr.filter((dataEntry, i) =>{
             if(dataEntry.id == currentListID){
-                console.log(formDataArr)
-                console.log(dataEntry, i)
-                
+
+                //Delete form or fullView container only if it's the current ID being deleted
+                if(currentListID == fullViewID){
+                    closeForm()
+                    closeFullViewContainer()
+                } 
 
                 //delete 
                 formDataArr.splice(i, 1)
                 localStorage.setItem('FormData', JSON.stringify(formDataArr))
 
-                closeFullViewContainer()
                 compareDates()
 
                 //Remove selected checkbox by id 
                 localStorage.removeItem(currentListID) 
 
                 //Reset counter
-                eventsTasksCounter()  
-                
+                eventsTasksCounter() 
             } 
         }) 
    
@@ -343,16 +377,14 @@ function getList(){
                 fullListView.innerHTML= ""
                 formDataArr.filter((dataEntry)=>{
                     if(dataEntry.id == currentListID ){
-            
+                        fullViewID = dataEntry.id
                         /////FULL VIEW OF TODO LIST/////
                         viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.time, dataEntry.type, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location, currentListID) 
                                 
                         }  
                     })
                         //resetEntry(currentListID) //The option to reset entry is now available
-                } 
-                    
-                       
+                }               
         })
     }) 
  
@@ -479,14 +511,21 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
     //display btns when hover
     displayButtonsOnHover(list)
 
+
     //Edit option
     let editBtns = Array.from(todoList.querySelectorAll('.editBtn'))
-    console.log(editBtns)
+   
     editBtns.forEach((btn, i)=>{
         btn.addEventListener('click', function(){
-            console.log(btn) 
+            
             //Open form
-            openNewForm()
+            openForm()
+
+            //Form needs to be filled with current todo item
+            let currentListID = Number(list[i].id)
+            //console.log(formDataArr)
+            //console.log(currentListID)
+            editEntry(currentListID)
         })
     })
 } 
@@ -568,9 +607,11 @@ function savingDataInArr(){
 
 const todoNewEntryForm = document.querySelector('.new-todo-item-container')
 const todoListDisplay = document.querySelector('.middle-container')
-function openNewForm(){
+
+function openForm(){
     todoListDisplay.classList.add('screen-size-40') //middle container change size
     todoNewEntryForm.classList.add('display')
+    clearForm()
 
     //If list detail container is open
     listDetailContainer.classList.remove('display-list-detail-container')
@@ -582,7 +623,6 @@ function reOpenFormForEdit(){ //I might need this for the edit button inside ful
     todoListDisplay.classList.add('screen-size-40')
     todoNewEntryForm.classList.add('display')
 } */
-
 function closeForm(){
     todoListDisplay.classList.remove('screen-size-40')
     todoNewEntryForm.classList.remove('display')
@@ -677,6 +717,9 @@ function clearForm(){
 
 }
 
+
+
+
 ///////////// INFORMATION NEEDED FOR TODO LIST FORM SUBMISSION ////////////////
 function getTitle(){
         const titleInput = document.getElementById("title-input")
@@ -685,7 +728,8 @@ function getTitle(){
 }
 
 
-let typeOfTodo = '';
+
+
 function toggleTaskEventHighlight(){
     const eventOption = document.getElementById('event-option')
     const taskOption = document.getElementById('task-option')
@@ -693,6 +737,7 @@ function toggleTaskEventHighlight(){
 
     parentDiv.addEventListener('click', function(e){
         let target = e.target
+
         
         if(target.id === 'event-option'){
 
@@ -821,7 +866,7 @@ function subtaskInputValue(){
     return finalSubtasks 
 }
 
-
+//Delete input field of subtasks //
 function deleteInputField(subtasks){
 
     function removeSubtaskFromForm(selectedSubtask){
@@ -959,7 +1004,7 @@ function deleteCategoryPickerContainer(catg){
     }
 }
 
-//Obtain the category value that user selects from drop-down list
+//Category value that user selects from drop-down list
 const categoriesOption = document.getElementById('categories-option')
 categoriesOption.addEventListener('change', categorySelected)
 function categorySelected(){
