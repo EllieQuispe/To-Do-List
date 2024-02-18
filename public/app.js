@@ -244,6 +244,52 @@ function editEntry(currentListID){
             document.getElementById('event-option').classList.add('clicked')
             typeOfTodo = 'Event'
         }
+
+        //Date
+        const todoDate = date
+        const dateArr = todoDate.split('/')
+        let newDateFormat = `${dateArr[2]}-${dateArr[0]}-${dateArr[1]}`
+        document.getElementById('form-Due-date').value = newDateFormat
+
+        //Time
+        if(!(time === 'NaN: PM' || time === 'NaN: AM')){
+            //Adding an extra zero if less than 10
+            let hour = parseInt(time.slice(0, 2) )
+            let newHourFormat = hour < 10 ? `0${hour}` : `${hour}`;
+
+            let minute = time.slice(3, 5)
+            let period = time.slice(6, 8)
+            
+            //Changing the hour to military time 
+            if(period == 'AM'){
+        
+                if(newHourFormat == 12){
+                    newHourFormat = '00'
+                } 
+            
+            } else if(period == 'PM') {
+              
+                 if (newHourFormat < 12){
+                    newHourFormat = parseInt(newHourFormat)
+                    newHourFormat += 12
+                    newHourFormat = newHourFormat.toString()
+                }
+            }
+            
+            //console.log(newHourFormat, minute )
+            let militaryTime = `${newHourFormat}:${minute}`
+            document.querySelector('.time-container').value = militaryTime   
+        } else{
+            document.querySelector('.time-container').value = ''
+        }
+
+
+        //Description
+        if(description){
+            //console.log('Something was written')
+            document.getElementById('input-dedscription').value = description
+        }
+
     }
 
     formDataArr.filter((dataEntry, i) =>{
@@ -708,6 +754,9 @@ function clearForm(){
     //reset date
     formCurrentDate() //Date
 
+    //reset time
+    document.querySelector('.time-container').value = ''
+
     //Remove Map - Remove display block for the map once the user clicks the save btn
      mapID.style.display = 'none' 
 
@@ -785,7 +834,7 @@ setInterval(formCurrentDate, 24 * 60 * 60 * 1000);
 
 function getSelectedDate(){
     const formDate = document.getElementById('form-Due-date').value;
-    
+
     //Convert the date to a Date object
     const dateObject = new Date(`${formDate}T00:00:00`);
 
@@ -803,6 +852,8 @@ function getSelectedDate(){
 
 function getTime(){
     const timeEntered = document.querySelector('.time-container').value
+    
+    console.log(timeEntered)
    
     let hour = parseInt(timeEntered.slice(0, 2), 10);
     let minute = timeEntered.slice(3);
@@ -812,7 +863,11 @@ function getTime(){
     if (hour === 0) {
         hour = 12;
     } else if (hour > 12) {
-        hour -= 12;
+        hour -= 12; 
+        hour = hour < 10 ? `0${hour}`: `${hour}` 
+        console.log(hour)
+    } else {
+        hour = hour < 10 ? `0${hour}`: `${hour}` 
     }
 
     let setTime = `${hour}:${minute} ${period}`;
