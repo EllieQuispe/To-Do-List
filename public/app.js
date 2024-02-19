@@ -232,7 +232,7 @@ let typeOfTodo = '';
 function editEntry(currentListID){
     //console.log(formDataArr)
 
-    function reEnterEntryToForm(id, title, type, date, time, description, subtasks, category, color, location){
+    function reEnterEntryToForm(id, title, type, date, time, description, subTasks, category, color, location){
         //Title
         document.getElementById('title-input').value = title
 
@@ -262,13 +262,11 @@ function editEntry(currentListID){
             
             //Changing the hour to military time 
             if(period == 'AM'){
-        
                 if(newHourFormat == 12){
                     newHourFormat = '00'
                 } 
             
             } else if(period == 'PM') {
-              
                  if (newHourFormat < 12){
                     newHourFormat = parseInt(newHourFormat)
                     newHourFormat += 12
@@ -283,12 +281,49 @@ function editEntry(currentListID){
             document.querySelector('.time-container').value = ''
         }
 
-
         //Description
         if(description){
-            //console.log('Something was written')
             document.getElementById('input-dedscription').value = description
         }
+
+        //Subtasks
+        //Open the input boxes and insert the values    
+        const subtasksHTML = document.getElementById('subtasks') //empty <div>
+        subTasks.forEach(()=>{
+            displaySubtasks(subtasksHTML) //created html <div>
+
+            const subtaskInputTag = Array.from(document.querySelectorAll('.input-subtask'))
+            subtaskInputTag.forEach((inputTag,i)=>{
+                inputTag.value = subTasks[i].name
+                //console.log(subtasks[i].name)
+            })
+         })
+
+            //Insert the flags
+            let flagIconContainer = Array.from(document.querySelectorAll('.select-selected'))
+            let flagIconArr = []
+            subTasks.forEach((obj, i)=>{
+                    
+                //Changing flag icons
+                flagIconContainer.forEach((container, j)=>{
+                    container.innerHTML = subTasks[j].priority
+                })
+
+                //Push the div containing the icons to an new array
+                flagIconArr.push(flagIconContainer[i])    
+            })
+
+            //Change color of icons
+            flagIconArr.map((box, i)=>{
+                box.querySelectorAll('i').forEach(iTag =>{
+                    iTag.style.color = 'white';
+                })
+            })
+
+        
+         
+
+       
 
     }
 
@@ -923,7 +958,6 @@ function subtaskInputValue(){
 
 //Delete input field of subtasks //
 function deleteInputField(subtasks){
-
     function removeSubtaskFromForm(selectedSubtask){
         if (subtasks.contains(selectedSubtask)) {
             subtasks.removeChild(selectedSubtask);
@@ -938,13 +972,12 @@ function deleteInputField(subtasks){
             removeSubtaskFromForm(target.parentElement)
         }
     })  
-    
 }
 
 function addSubtaskInputField(){
     const addSubtask = document.querySelector('.subtask-label') //from html
     const subtasks = document.getElementById('subtasks')
-
+   
     //Add input box
     addSubtask.addEventListener('click', ()=>{       
         displaySubtasks(subtasks)
@@ -976,7 +1009,7 @@ function displayPriorityOptions(subtasks){
 }
 //let flagIconsArr = []
 
-function updateMainFlagIconBtn(subtasks){
+function updateMainFlagIconBtn(){
    // Get all flag icons
    const flagIcons = document.querySelectorAll('.priority');
 
