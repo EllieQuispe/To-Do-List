@@ -461,7 +461,15 @@ function viewFullDetailsOfTodoItem(title, date, time, type, description, subtask
     deleteBtn.addEventListener('click', function(){
         deleteEntry(currentID)
     })
-  
+
+    //Edit option
+    let mainEditBtn = fullListView.querySelector('.main-edit-btn')
+
+    mainEditBtn.addEventListener('click', function(){
+        openForm()
+        editEntry(currentID)
+    })
+   
 }
 // <button type="button" class="edit-btn">Edit</button> (might add it back to the above function)
 
@@ -525,7 +533,7 @@ function trackCheckboxStatus(){
 //Edit and Delete btns on hover for the preview section//
 function displayButtonsOnHover(listItems){
     let listArr = Array.from(listItems)
-    const deleteBtns = Array.from(document.querySelectorAll('.item-delete-Btn'))
+    const deleteBtns = Array.from(document.querySelectorAll('.item-delete-Btn')) 
     const editBtns = Array.from(document.querySelectorAll('.edit-Btn'))
     
     listArr.map((listItem, i)=>{
