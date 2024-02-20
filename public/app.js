@@ -450,7 +450,7 @@ function viewFullDetailsOfTodoItem(title, date, time, type, description, subtask
                                 </div>
                                 <div class="delete-edit-btn-container">
                                     <button type="button" class="delete-btn">Delete</button>
-                                
+                                    <button type="button" class="main-edit-btn">Edit</button>
                                 </div>
                             </li>`
 
@@ -477,7 +477,7 @@ function getList(){
         item.addEventListener('click', function(event){
 
      
-            if(!(event.target.classList.contains('main-checkbox') || event.target.classList.contains('secondary-checkbox') || event.target.classList.contains('item-delete-Btn') || event.target.classList.contains('editBtn'))){
+            if(!(event.target.classList.contains('main-checkbox') || event.target.classList.contains('secondary-checkbox') || event.target.classList.contains('item-delete-Btn') || event.target.classList.contains('edit-Btn'))){
 
                 let currentListID = Number(list[j].id) //Turn ID to number
             
@@ -526,7 +526,7 @@ function trackCheckboxStatus(){
 function displayButtonsOnHover(listItems){
     let listArr = Array.from(listItems)
     const deleteBtns = Array.from(document.querySelectorAll('.item-delete-Btn'))
-    const editBtns = Array.from(document.querySelectorAll('.editBtn'))
+    const editBtns = Array.from(document.querySelectorAll('.edit-Btn'))
     
     listArr.map((listItem, i)=>{
         listItem.addEventListener('mouseenter', function(){
@@ -590,7 +590,7 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
                                 <label class="container"><input type="checkbox" id="${id}" class="checkbox main-checkbox"><span class="checkmark main-checkbox"></span></label> ${title}
                             </div>
                             <div>
-                                <button type="button" class="editBtn">Edit</button> <button type="button" class="item-delete-Btn">Delete</button> 
+                                <button type="button" class="edit-Btn">Edit</button> <button type="button" class="item-delete-Btn">Delete</button> 
                             </div>
                         </div>
 
@@ -620,7 +620,7 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
 
 
     //Edit option
-    let editBtns = Array.from(todoList.querySelectorAll('.editBtn'))
+    let editBtns = Array.from(todoList.querySelectorAll('.edit-Btn'))
    
     editBtns.forEach((btn, i)=>{
         btn.addEventListener('click', function(){
