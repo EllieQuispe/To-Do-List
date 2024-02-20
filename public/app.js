@@ -334,7 +334,7 @@ function editEntry(currentListID){
         if (!previouslyAddedCategories.includes(category)){
             let message = `The category "${category}" was previously deleted, you can add it back here.`
             categoryErrorMessage(message)
-            return false;
+            
         } else{
             //Change selected category to the todo list item
             categoriesOption.value = category
@@ -342,9 +342,15 @@ function editEntry(currentListID){
         
 
          //Color
+         const displayColorContainer = document.getElementById('current-color')
+         displayColorContainer.style.backgroundColor = color;
+
 
          //Location
-
+         if(location){
+            document.getElementById('addressInput').value = location
+         }
+         
     }
 
     formDataArr.filter((dataEntry, i) =>{
@@ -907,8 +913,6 @@ function getSelectedDate(){
 
 function getTime(){
     const timeEntered = document.querySelector('.time-container').value
-    
-    console.log(timeEntered)
    
     let hour = parseInt(timeEntered.slice(0, 2), 10);
     let minute = timeEntered.slice(3);
@@ -1156,6 +1160,7 @@ function colorPicker(){
     }
 
     function createColorOptions(color){
+
         const colorOption = document.createElement('p')
         colorOption.className = "color-option";
         colorOption.id = color;
