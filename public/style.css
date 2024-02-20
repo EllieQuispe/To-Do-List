@@ -278,7 +278,7 @@ h3{
  
 }
 .middle-container.screen-size-40{ /*works with JS*/
-    width: 45%
+    width: 50%
 }
 .top-container{
     position: relative;
@@ -521,7 +521,7 @@ span.priority{
 }*/
 
 /*Buttons*/
-.editBtn,
+.edit-Btn,
 .item-delete-Btn{
     background-color: white;
     border: 1px solid transparent;
@@ -535,13 +535,13 @@ span.priority{
 }
 
 
-.editBtn.visible,
+.edit-Btn.visible,
 .item-delete-Btn.visible{
     color: #BA5E32;
     background-color: white;
     border: 1px solid #BA5E32;
 }
-.editBtn.visible:hover,
+.edit-Btn.visible:hover,
 .item-delete-Btn.visible:hover{
     background-color: #BA5E32;
     color: white;
@@ -608,7 +608,7 @@ li.innerList{
     position: relative;
     background-color: #f4f4f4;
     border-radius: 15px;
-    width: 45%;
+    width: 30%;
     height: 97%;
     margin-right: 12px;
     align-self: center;
@@ -735,22 +735,23 @@ span.location{
 
 .delete-edit-btn-container{
     display: flex;
-    justify-content: flex-start;
-    margin-bottom: 20px;
+    justify-content: center;
+    margin-bottom: 15px;
 }
-.delete-btn{
+.delete-btn, .main-edit-btn{
     padding: 10px 20px;
-    width: 35%;
+    width: 45%;
     font-family: 'Inter', sans-serif;
     font-size: 17px;
     margin-right: 7px;
+    margin-left: 6px;
     border: 1px solid #BA5E32;
     background-color:#BA5E32;
     border-radius: 5px;
     color: white;
     cursor: pointer;
 }
-.delete-btn:hover{
+.delete-btn:hover, .main-edit-btn:hover{
     background-color: #F6C15C;
     border: 1px solid #F6C15C;
     color:white;
@@ -763,7 +764,7 @@ span.location{
     position: relative;
     background-color: #f4f4f4;
     border-radius: 15px;
-    width: 35%;
+    width: 30%;
     min-width: 150px;
     height: 97%;
     margin-right: 12px;
@@ -1202,7 +1203,8 @@ i.fa-solid.fa-map-location{
 .delete-save-btn-container{
     display: flex;
     justify-content: center;
-    margin-bottom: 25px; 
+    /*margin-bottom: 25px; */
+    margin: 0px 20px 25px 20px;
 }
 .clear-btn{
     padding: 10px 20px;
