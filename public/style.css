@@ -268,6 +268,8 @@ h3{
 
 /************************** MIDDLE CONTAINER *********************/
 .middle-container{
+    display: flex;
+    flex-direction: column;
     position: relative;
     background-color: white;
     width: 100%;
@@ -281,6 +283,7 @@ h3{
 .top-container{
     position: relative;
     height: 80px;
+    flex-grow: 1;
     border-bottom: 1px solid rgb(227, 224, 224);
     display: flex;
     flex-flow: row nowrap;
@@ -338,11 +341,12 @@ h3{
 /****Preview of to-do list****/
 .mid-container{
     position: relative;
+    flex-direction: 2;
     overflow: scroll;
     overflow-x: hidden;
     scrollbar-color: red;
-    margin-left: 10%;
-    margin-right: 10%;
+    padding-left: 10%;
+    padding-right: 10%;
     height: 82%
 }
 ::-webkit-scrollbar {
@@ -354,12 +358,10 @@ h3{
 ul#todo-List {
     position: relative;
     list-style: none;
-    margin-top: 40px;
-    padding: 0px;
+    margin: 0px;
+    padding: 20px 0px 20px;
 }
-ul#todo-List{
-    padding: 0px;
-}
+
 
 /***Template Literal in JS***/
 ul li{ 
@@ -580,9 +582,8 @@ li.innerList{
 /*********Bottom of main container**********/
 .bottom-container{
     border-top: 1px solid rgb(227, 224, 224);
-    position: absolute;
+    flex-grow: 1;
     width: 100%;
-    bottom: 0;
     height: 80px;
     display: flex;
     justify-content: flex-end;
