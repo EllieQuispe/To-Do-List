@@ -321,9 +321,29 @@ function editEntry(currentListID){
             })
 
         
-         
+        //Category
+        const categoriesOptionsContainer = Array.from(document.querySelectorAll('option'))
+        const categoriesOption = document.getElementById('categories-option')
 
-       
+         //Insert all categories options inside an array
+        let previouslyAddedCategories = categoriesOptionsContainer.map((innerDiv)=>{
+            return innerDiv.value
+        })
+        
+        //Check if category for selected todo list item is not present in the array
+        if (!previouslyAddedCategories.includes(category)){
+            let message = `The category "${category}" was previously deleted, you can add it back here.`
+            categoryErrorMessage(message)
+            return false;
+        } else{
+            //Change selected category to the todo list item
+            categoriesOption.value = category
+        }
+        
+
+         //Color
+
+         //Location
 
     }
 
