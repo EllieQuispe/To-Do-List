@@ -387,8 +387,9 @@ function deleteEntry(currentListID){
       
         formDataArr.filter((dataEntry, i) =>{
             if(dataEntry.id == currentListID){
-
+               
                 //Delete form or fullView container only if it's the current ID being deleted
+                
                 if(currentListID == fullViewID){
                     closeForm()
                     closeFullViewContainer()
@@ -397,16 +398,22 @@ function deleteEntry(currentListID){
                 let editEntryCurrentID;
 
                 //delete 
+                
                 formDataArr.splice(i, 1)
                 localStorage.setItem('FormData', JSON.stringify(formDataArr))
 
                 compareDates()
 
                 //Remove selected checkbox by id 
+                dataEntry.subtasks.forEach((task, i)=>{
+                        localStorage.removeItem(dataEntry.subtasks[i].id)
+                })
+                
                 localStorage.removeItem(currentListID) 
 
                 //Reset counter
                 eventsTasksCounter() 
+                
             } 
         }) 
    
@@ -1332,7 +1339,6 @@ function submitForm(ev){
 
         //Insert object to array
         if(editEntryCurrentID) {
-            console.log('re-save')
             const index = formDataArr.findIndex(dataEntry => dataEntry.id === editEntryCurrentID);
             if (index !== -1) {
               formDataArr.splice(index, 1, formData); // Replace object at the found index
