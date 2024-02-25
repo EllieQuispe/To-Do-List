@@ -1289,17 +1289,7 @@ let formDataArr = [];
 function submitForm(ev){
     ev.preventDefault(); //to stop the form from submitting
 
- 
-    if(editEntryCurrentID){
-       formDataArr.filter((dataEntry, i)=>{
-        if(dataEntry.id == editEntryCurrentID){
 
-            //delete entry so that it can be replace
-            formDataArr.splice(i, 1)
-            localStorage.setItem('FormData', JSON.stringify(formDataArr))
-        }
-       }) 
-    }
 
     //Title 
     let title = getTitle()    
@@ -1320,8 +1310,11 @@ function submitForm(ev){
     const location = clientAddress()
 
     
+
+    
     if(validateForm(title, typeOfTodo, subtasks)){
         title = capitalizeFirstLetter(title)
+
 
         const formData = {
         id: Date.now(),
@@ -1336,11 +1329,23 @@ function submitForm(ev){
         location: location,
         }
 
-        //Reset Values//
-        clearForm() 
 
         //Insert object to array
-        formDataArr.push(formData)
+        if(editEntryCurrentID) {
+            console.log('re-save')
+            const index = formDataArr.findIndex(dataEntry => dataEntry.id === editEntryCurrentID);
+            if (index !== -1) {
+              formDataArr.splice(index, 1, formData); // Replace object at the found index
+              let editEntryCurrentID;
+            } else{
+                formDataArr.push(formData) //New entry
+            }
+          } else{
+            formDataArr.push(formData) //New entry
+          }
+          
+        //Reset Values//
+        clearForm() 
 
         //Saving object to localStorage
         localStorage.setItem('FormData', JSON.stringify(formDataArr))
