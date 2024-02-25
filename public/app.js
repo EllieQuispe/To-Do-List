@@ -228,9 +228,11 @@ function deleteCategories(){
 
 //////////////////////////// EDIT To-do ITEM //////////////////////////////
 let typeOfTodo = '';
+let editEntryCurrentID;
 
 function editEntry(currentListID){
-    //console.log(formDataArr)
+    
+    editEntryCurrentID = currentListID //make the id global
 
     function reEnterEntryToForm(id, title, type, date, time, description, subTasks, category, color, location){
         //Title
@@ -298,7 +300,6 @@ function editEntry(currentListID){
                 //console.log(subtasks[i].name)
             })
          })
-
             //Insert the flags
             let flagIconContainer = Array.from(document.querySelectorAll('.select-selected'))
             let flagIconArr = []
@@ -312,7 +313,6 @@ function editEntry(currentListID){
                 //Push the div containing the icons to an new array
                 flagIconArr.push(flagIconContainer[i])    
             })
-
             //Change color of icons
             flagIconArr.map((box, i)=>{
                 box.querySelectorAll('i').forEach(iTag =>{
@@ -393,6 +393,8 @@ function deleteEntry(currentListID){
                     closeForm()
                     closeFullViewContainer()
                 } 
+                //Remove id# assigned in editEntry function
+                let editEntryCurrentID;
 
                 //delete 
                 formDataArr.splice(i, 1)
@@ -488,7 +490,8 @@ function getList(){
             if(!(event.target.classList.contains('main-checkbox') || event.target.classList.contains('secondary-checkbox') || event.target.classList.contains('item-delete-Btn') || event.target.classList.contains('edit-Btn'))){
 
                 let currentListID = Number(list[j].id) //Turn ID to number
-            
+                let editEntryCurrentID; //Remove saved ID# if it's not being re-saved.
+                
                 fullListView.innerHTML= ""
                 formDataArr.filter((dataEntry)=>{
                     if(dataEntry.id == currentListID ){
@@ -726,6 +729,8 @@ const todoListDisplay = document.querySelector('.middle-container')
 function openForm(){
     todoListDisplay.classList.add('screen-size-40') //middle container change size
     todoNewEntryForm.classList.add('display')
+
+    let editEntryCurrentID;  //Remove id# from edit container
     clearForm()
 
     //If list detail container is open
@@ -738,9 +743,12 @@ function reOpenFormForEdit(){ //I might need this for the edit button inside ful
     todoListDisplay.classList.add('screen-size-40')
     todoNewEntryForm.classList.add('display')
 } */
+
 function closeForm(){
     todoListDisplay.classList.remove('screen-size-40')
     todoNewEntryForm.classList.remove('display')
+    let editEntryCurrentID;  //Remove id# from edit container
+    
     clearForm()
 }
 
@@ -932,7 +940,6 @@ function getTime(){
     } else if (hour > 12) {
         hour -= 12; 
         hour = hour < 10 ? `0${hour}`: `${hour}` 
-        console.log(hour)
     } else {
         hour = hour < 10 ? `0${hour}`: `${hour}` 
     }
@@ -1282,7 +1289,18 @@ let formDataArr = [];
 function submitForm(ev){
     ev.preventDefault(); //to stop the form from submitting
 
-    
+ 
+    if(editEntryCurrentID){
+       formDataArr.filter((dataEntry, i)=>{
+        if(dataEntry.id == editEntryCurrentID){
+
+            //delete entry so that it can be replace
+            formDataArr.splice(i, 1)
+            localStorage.setItem('FormData', JSON.stringify(formDataArr))
+        }
+       }) 
+    }
+
     //Title 
     let title = getTitle()    
     //Due Date
@@ -1301,6 +1319,7 @@ function submitForm(ev){
     //Location
     const location = clientAddress()
 
+    
     if(validateForm(title, typeOfTodo, subtasks)){
         title = capitalizeFirstLetter(title)
 
@@ -1331,6 +1350,7 @@ function submitForm(ev){
         closeForm()
         eventsTasksCounter()
     } 
+    
     
 }
 
