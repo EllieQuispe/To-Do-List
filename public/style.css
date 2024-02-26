@@ -188,7 +188,11 @@ h3{
     border-radius: 45px;
 }
 
+/***** Today ***/
 
+div.today{
+    border: 1px solid black;
+}
 /**** Category inputbox with icon ****/
 .category-list-container{
     max-height: 157px;

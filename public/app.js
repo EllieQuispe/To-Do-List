@@ -28,6 +28,27 @@ document.addEventListener('DOMContentLoaded', () =>{
     
 })
 
+///Current date for Today button///
+let currentDate = new Date()
+document.querySelector('.today').addEventListener('click', function(){
+    let currentDateForTodayButton = new Date()
+
+        const options = {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+        };
+        //Display full day to the UI
+        document.getElementById('currentDate').textContent = currentDateForTodayButton.toLocaleDateString('en-US',options)
+        //Display week day to UI
+        document.getElementById('day-of-the-week').textContent = currentDateForTodayButton.toLocaleDateString('en-US', {weekday: "long"})
+        
+        compareDates(currentDateForTodayButton)//compare localStorage object dates with current date
+        currentDate = currentDateForTodayButton;
+})
+
+
+////Dropdown profile settings////
 const container = document.querySelector('.settings-container');
 const dropDownContainer = document.querySelector('.drop-down-container')
 
@@ -62,8 +83,8 @@ container.addEventListener('click', function(event){
 
 
 ///////////////////CURRENT DATE///////////////////////////////
-let currentDate = new Date()
 function initializeDateFeature(){
+
     function updateDateDisplay(){
         const options = {
             year: 'numeric',
@@ -74,8 +95,8 @@ function initializeDateFeature(){
         document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
         //Display week day to UI
         document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
-        
-        compareDates()//compare localStorage object dates with current date
+       
+        compareDates(currentDate)//compare localStorage object dates with current date
     }
     updateDateDisplay()
 
@@ -235,10 +256,10 @@ function editEntry(currentListID){
     editEntryCurrentID = currentListID //make the id global
 
     function reEnterEntryToForm(id, title, type, date, time, description, subTasks, category, color, location){
-        //Title
+        /////Title/////
         document.getElementById('title-input').value = title
 
-        //Type
+        /////Type/////
         if(type == 'Task'){
             document.getElementById('task-option').classList.add('clicked')
             typeOfTodo = 'Task'
@@ -247,13 +268,13 @@ function editEntry(currentListID){
             typeOfTodo = 'Event'
         }
 
-        //Date
+        /////Date/////
         const todoDate = date
         const dateArr = todoDate.split('/')
         let newDateFormat = `${dateArr[2]}-${dateArr[0]}-${dateArr[1]}`
         document.getElementById('form-Due-date').value = newDateFormat
 
-        //Time
+        /////Time/////
         if(!(time === 'NaN: PM' || time === 'NaN: AM')){
             //Adding an extra zero if less than 10
             let hour = parseInt(time.slice(0, 2) )
@@ -283,12 +304,12 @@ function editEntry(currentListID){
             document.querySelector('.time-container').value = ''
         }
 
-        //Description
+        /////Description////
         if(description){
             document.getElementById('input-dedscription').value = description
         }
 
-        //Subtasks
+        //////Subtasks/////
         //Open the input boxes and insert the values    
         const subtasksHTML = document.getElementById('subtasks') //empty <div>
         subTasks.forEach(()=>{
@@ -321,7 +342,7 @@ function editEntry(currentListID){
             })
 
         
-        //Category
+        /////Category/////
         const categoriesOptionsContainer = Array.from(document.querySelectorAll('option'))
         const categoriesOption = document.getElementById('categories-option')
 
@@ -341,12 +362,12 @@ function editEntry(currentListID){
         }
         
 
-         //Color
+         /////Color/////
          const displayColorContainer = document.getElementById('current-color')
          displayColorContainer.style.backgroundColor = color;
 
 
-         //Location
+         /////Location/////
          if(location){
             document.getElementById('addressInput').value = location
          }
@@ -358,7 +379,6 @@ function editEntry(currentListID){
             
             //console.log(dataEntry, i)
             reEnterEntryToForm(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location)
-
         }
     })
 }
@@ -402,7 +422,7 @@ function deleteEntry(currentListID){
                 formDataArr.splice(i, 1)
                 localStorage.setItem('FormData', JSON.stringify(formDataArr))
 
-                compareDates()
+                compareDates(currentDate)
 
                 //Remove selected checkbox by id 
                 dataEntry.subtasks.forEach((task, i)=>{
@@ -419,7 +439,7 @@ function deleteEntry(currentListID){
    
 }
 
-
+/////View All Details of Todo Item//////
 function viewFullDetailsOfTodoItem(title, date, time, type, description, subtasks, category, color, location, currentID){
     let timeDisplay = ''
     if(time === 'NaN: PM' || !time){
@@ -429,7 +449,7 @@ function viewFullDetailsOfTodoItem(title, date, time, type, description, subtask
     }
     
 
-    //Add Subtask
+    ///Add Subtask///
     let subtaskDisplay;
     if (subtasks.length > 0){
         let ilTag = ''
@@ -442,7 +462,7 @@ function viewFullDetailsOfTodoItem(title, date, time, type, description, subtask
         subtaskDisplay = `<p class="no-subtasks"></p>`
     }
     
-    
+    ///UI interface///
     fullListView.innerHTML = `<li id='todo-entry'>
                                 <div>
                                 <p id="type-of-List">${type}</p>
@@ -625,7 +645,6 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
     //Delete option
     let list = todoList.querySelectorAll('li.list-item')
     let deleteBtns = Array.from(todoList.querySelectorAll('.item-delete-Btn'))
- 
     deleteBtns.forEach((btn, i)=>{
         btn.addEventListener('click', function(){
             let currentListID = Number(list[i].id)
@@ -639,7 +658,6 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
 
     //Edit option
     let editBtns = Array.from(todoList.querySelectorAll('.edit-Btn'))
-   
     editBtns.forEach((btn, i)=>{
         btn.addEventListener('click', function(){
             
@@ -658,21 +676,21 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
 
 //Only displaying tasks or events that match the current date///
 let todoList = document.getElementById('todo-List')
-function compareDates(){
+function compareDates(dateToCompare){
+  
     const options={
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
     }
    //Changed date format to ##/##/####
-   let dateFormat = currentDate.toLocaleDateString('en-US', options) 
+   let dateFormat = dateToCompare.toLocaleDateString('en-US', options) 
    
    todoList.innerHTML =""
 
    formDataArr.filter((dataEntry, i)=>{
     
         if(dataEntry.date == dateFormat){    
-      
             displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color)
         } 
     })
@@ -1357,7 +1375,7 @@ function submitForm(ev){
         localStorage.setItem('FormData', JSON.stringify(formDataArr))
  
         //Call the function that will display the categories
-        compareDates()
+        compareDates(currentDate)
         closeForm()
         eventsTasksCounter()
     } 
