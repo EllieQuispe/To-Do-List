@@ -146,21 +146,14 @@ i.fa-envelope:hover, i.fa-square-twitter:hover, i.fa-facebook:hover{
 
 
 /****** Type of To-do List Item ******/
-.menu-section{
-    margin-left: 20px;
-    margin-top: 20px;
-    margin-right: 20px;
-}
 p.taskCount, p.eventCount{
     color:#1c1c1c;
     margin-bottom: 6px;
 }
 .task{
-    margin-top: 45px;
+    margin-top: 35px;
 }
-.events{
-    margin-top: 20px;
-}
+
 .categories{
     margin-top: 50px;
 }
@@ -189,11 +182,32 @@ h3{
 }
 
 /***** Today ***/
-
-div.today{
-    border: 1px solid black;
+.task.menu-section, 
+.events.menu-section, 
+.today.menu-section, 
+.upcoming.menu-section{
+    margin-left: 20px;
+    margin-right: 20px;
 }
+p.sideMenu-label{
+    margin: 0px;
+    padding: 9px 4px;
+    cursor: pointer;
+}
+p.sideMenu-label:hover{
+    margin: 0px;
+    padding: 9px 4px;
+    background-color: rgb(236,222,215);
+    border-radius: 5px;
+}
+
 /**** Category inputbox with icon ****/
+.categories.menu-section{
+    margin-left: 20px;
+    margin-top: 30px;
+    margin-right: 20px;
+}
+
 .category-list-container{
     max-height: 157px;
     width: 100%;
@@ -245,11 +259,10 @@ div.today{
     font-weight: 300;
     color:#1c1c1c;
     font-size: 14px;
-    margin-top: 2px;
-    margin-bottom: 10px;
-    padding: 4px 4px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 9px 4px;
     position: relative;
-
 }
 .categories i.fa-solid.fa-xmark{ 
     position: absolute;
