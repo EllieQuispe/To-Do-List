@@ -612,10 +612,7 @@ li.innerList{
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
 }
-#add-item{
-    color:#BA5E32;
-    margin-right: 25px;
-}
+
 
 
 
@@ -954,7 +951,7 @@ input[type=text]{
 #subtask-container{
     display: flex; 
     flex-direction: column;
-    padding-left: 15px;
+    padding-left: 25px;
 }
 p.subtask-label{
     padding-left: 10px;
@@ -971,7 +968,7 @@ p.subtask-label:hover{
 i.add-subtask-icon{
    color: #666666;
    align-self: center;
-   font-size: 17px;
+   font-size: 19px;
    padding: 0px;
 }
 i.add-subtask-icon:hover{
@@ -993,7 +990,7 @@ i.add-subtask-icon:hover{
 .input-container{
     display: flex;
     align-items: center;
-    padding-left: 9px;
+    /*padding-left: 9px;*/
 }
 /*Input container of subtask*/
 input.input-subtask{
@@ -1256,17 +1253,47 @@ i.fa-solid.fa-map-location{
 }
 
 /****Open Form****/
-.fa-plus{
+.fa-plus.add-new-item{
     margin-left: 10px;
-    padding: 5px;
-}
-.fa-plus:hover{
-    padding: 4px;
+    padding: 6px;
+    color: white;
+    background-color: #BA5E32;
+    border: 1px solid #BA5E32;
+    box-shadow: 0px 0px 3px 1px rgb(215, 215, 215);
     border-radius: 50%;
+    cursor: pointer;
+}
+.fa-plus.add-new-item:hover{
     border: 1px solid #F6C15C;
     background-color:#F6C15C;
     color: white; 
 }
+
+#add-item{
+    color:#BA5E32;
+    margin-right: 25px;
+}
+/*
+.add-new-item{
+    color: white;
+    background-color: #BA5E32;
+    box-shadow: 0px 0px 3px 1px rgb(215, 215, 215);
+    border-radius: 50%;
+}
+/*
+.fa-circle-plus{
+    font-size: 25px;
+    display: flex;
+    align-self: center;
+    color: #BA5E32;
+    box-shadow: 0px 0px 3px 1px rgb(215, 215, 215);
+    border-radius: 50%;
+}
+#category-input-container i.fa-solid.fa-circle-plus:hover{
+    color: #F6C15C;
+    cursor: pointer;
+}
+*/
 
 /***close form button***/
 .fa-xmark{
