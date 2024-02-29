@@ -21,11 +21,8 @@ I chose to develop this web application due to its versatile functionality, offe
 * Maintaining accurate tracking of the status of each checkbox.
 
 ## Future Enhancements
-* Enable users to edit their tasks or events.
 * Incorporate a time entry option to make the "Upcoming" tab functional.
-* Introduce sub-task or sub-event capabilities for more detailed planning.
 * Implement weekly and monthly calendar views to enhance overall planning.
-* Integrate sound notifications for a more interactive user experience upon task or event completion.
 * Develop a responsive mobile version to ensure accessibility across different devices.
 
 
