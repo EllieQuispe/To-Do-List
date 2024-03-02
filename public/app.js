@@ -246,6 +246,24 @@ function deleteCategories(){
 }
 
 
+////////////////////////// UPCOMING ///////////////////////
+const upcomingBtn = document.querySelector('.upcoming-btn')
+const upcomingContainer = document.querySelector('.upcoming-container')
+const upcomingXmark = document.querySelector('.exit-upcoming-container')
+
+
+upcomingBtn.addEventListener('click', function(){
+    upcomingContainer.classList.add('active')
+
+})
+upcomingXmark.addEventListener('click', function(){
+    upcomingContainer.classList.remove('active')
+
+})
+
+
+
+
 
 //////////////////////////// EDIT To-do ITEM //////////////////////////////
 let typeOfTodo = '';
@@ -762,12 +780,6 @@ function openForm(){
     listDetailContainer.classList.remove('display-list-detail-container')
 }
 
-/* Move it to fullview section
-function reOpenFormForEdit(){ //I might need this for the edit button inside fullview container
-    listDetailContainer.classList.remove('display-list-detail-container')
-    todoListDisplay.classList.add('screen-size-40')
-    todoNewEntryForm.classList.add('display')
-} */
 
 function closeForm(){
     todoListDisplay.classList.remove('screen-size-40')

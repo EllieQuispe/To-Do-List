@@ -609,6 +609,10 @@ li.innerList{
     left: 50%;
     transform: translate(-50%, -50%);
     box-shadow:0px 0px 7px 1px rgb(174 174 174);
+    display: none;
+}
+.upcoming-container.active{
+    display: inline-block;
 }
 .upcoming-heading{
     position: relative;
