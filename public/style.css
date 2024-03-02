@@ -600,6 +600,7 @@ li.innerList{
 /*********Upcoming container*************/
 .upcoming-container{
     position: absolute;
+    font-family: 'Roboto';
     width: 400px;
     height: 300px;
     background-color: #f4f4f4;
@@ -607,13 +608,26 @@ li.innerList{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    box-shadow: 0px 0px 11px -4px rgb(174 174 174);
+    box-shadow:0px 0px 7px 1px rgb(174 174 174);
+}
+.upcoming-heading{
+    position: relative;
+}
+i.fa-solid.fa-xmark.exit-upcoming-container{
+    position: absolute;
+    left: 370px;
+    font-size: 19px;
+    cursor: pointer;
+}
+i.fa-solid.fa-xmark.exit-upcoming-container:hover{
+    color:#F6C15C;
 }
 
 .upcoming-container .upcoming-title{
     border-bottom: 1px solid white;
     margin: 0px;
-    padding: 20px 0px 20px 20px;
+    padding: 20px 0px 20px 0px;
+    text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.3px;
     word-spacing: 4px;
