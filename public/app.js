@@ -250,16 +250,116 @@ function deleteCategories(){
 const upcomingBtn = document.querySelector('.upcoming-btn')
 const upcomingContainer = document.querySelector('.upcoming-container')
 const upcomingXmark = document.querySelector('.exit-upcoming-container')
+const upcomingUlTag = document.getElementById('upcoming-items')
 
 
-upcomingBtn.addEventListener('click', function(){
+upcomingBtn.addEventListener('click', function(){ 
+    upcomingTodoItems()
+})
+
+function upcomingTodoItems(){
     upcomingContainer.classList.add('active')
 
-})
-upcomingXmark.addEventListener('click', function(){
-    upcomingContainer.classList.remove('active')
+    upcomingXmark.addEventListener('click', function(){
+        upcomingContainer.classList.remove('active')
+    })
 
-})
+
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero for month
+        const day = String(date.getDate()).padStart(2, '0'); // Add leading zero for day
+      
+        return `${month}/${day}/${year}`;
+      }
+      //Today's date
+      let date = new Date();
+      let upcomingCurrentDate = formatDate(date)
+
+      //Tomorrow's date
+      const tomorrow = new Date(date.getTime() + 24 * 60 * 60 * 1000); // Add 1 day
+      let upcomingTomorrow = formatDate(tomorrow)
+
+      //Day after tomorrow
+      let nextDay = new Date(tomorrow.getTime() + 24 * 60 * 60 * 1000);
+       nextDay = formatDate(nextDay)
+
+     
+      
+    upcomingUlTag.innerHTML = ""
+      formDataArr.filter((dataEntry, i) =>{
+        if(dataEntry.date == upcomingCurrentDate || dataEntry.date == upcomingTomorrow || dataEntry.date == nextDay){
+           //grab two futures dates
+           
+
+            function displayUpcomingTodoItems(id, title, type, date, time, category, subtasks, color){
+                let timeDisplay = ''
+                if(time === 'NaN: PM' || !time){
+                    timeDisplay  
+                } else {
+                    timeDisplay = `| ${time}`
+                }
+            
+                //Add subtasks if required
+                let subtasksPresent = subtasks.filter(subtask => subtask.name); //true or false
+               
+                let innerUl = ''
+                let innerli = ''
+                let subName = ''
+                let subId = ''
+                let subPriority = ''
+            
+               
+                if(subtasksPresent.length === 0){
+                    innerUl =  `<ul class="innerUl hidden"></ul>`;
+                } else{
+                    subtasks.forEach((subtask)=>{
+                        if (subtask.name !== ''){
+                            subName = subtask.name
+                            subPriority = subtask.priority
+                            subId = subtask.id
+                         
+                            innerli += `<li class="innerList"> 
+                                        <p class="subtask-name">${subName} <span class="priority-selected">${subPriority}</span> </p>
+                                      </li>`
+                        }
+                    });
+                    innerUl = `<ul class="innerUl">${innerli}</ul>`;
+                }
+               
+                
+                upcomingUlTag.innerHTML += ` 
+                                    <li class="list-item" id="${id}">
+            
+                                    <div class="row-list">
+                                        <div class="input-container">
+                                            ${title}
+                                        </div>
+                                        <div>
+                                            <button type="button" class="edit-Btn">Edit</button> <button type="button" class="item-delete-Btn">Delete</button> 
+                                        </div>
+                                    </div>
+            
+                                    <p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>
+                                    ${innerUl}  
+                                    </li>`
+            }
+        
+            //Display
+            displayUpcomingTodoItems(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color )
+            
+        
+        } 
+    })
+     
+    
+   
+
+
+}
+
+
+
 
 
 
