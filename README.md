@@ -3,7 +3,8 @@ A front-end development project that I started last year and decided to improve 
 <br>
 
 ## Purpose
-I chose to develop this web application due to its versatile functionality, offering a platform where I could implement and reinforce my programming skills. Also, I am a firm believer in the effectiveness of daily to-do lists for staying organized. Therefore, creating a to-do list application not only allowed me to put theoretical knowledge into practical use but also served as a valuable and relatable project that aligns with my own productivity preferences.
+I'm developing a to-do list application because of its flexibility. It allows me to freely add or remove features, providing an ideal way to practice a wide range of essential programming skills. Moreover, I'm a firm believer in the organizational power of to-do lists. Therefore, this project is a perfect opportunity to apply theory directly and create a tool that aligns with my own productivity methods.
+
 
 ## Built using
 * HTML
@@ -21,11 +22,8 @@ I chose to develop this web application due to its versatile functionality, offe
 * Maintaining accurate tracking of the status of each checkbox.
 
 ## Future Enhancements
-* Enable users to edit their tasks or events.
 * Incorporate a time entry option to make the "Upcoming" tab functional.
-* Introduce sub-task or sub-event capabilities for more detailed planning.
 * Implement weekly and monthly calendar views to enhance overall planning.
-* Integrate sound notifications for a more interactive user experience upon task or event completion.
 * Develop a responsive mobile version to ensure accessibility across different devices.
 
 
