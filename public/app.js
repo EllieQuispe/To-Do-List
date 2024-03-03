@@ -148,7 +148,8 @@ function addNewCategory() {
     } 
 }
 
-////Validating the category input box////
+
+//// Validating the category input box ////
 function validateInput(name){
     //Check if the input is blank
     if (name === "" || name === "Add a Category"){
@@ -173,7 +174,7 @@ function capitalizeFirstLetter(str){
 }
 
 
-/////Display category/////
+///// Display category /////
 let paragraphContainer = document.querySelector('.category-list-container') //<div>
 
 function displayCreatedCategories(){
@@ -354,7 +355,7 @@ function upComingTodoItems(){
                                             ${title}
                                         </div>
                                         <div>
-                                            <button type="button" class="edit-Btn">Edit</button> <button type="button" class="item-delete-Btn">Delete</button> 
+                                            <button type="button" class="view-Btn">View</button> <button type="button" class="edit-upcoming-Btn">Edit</button> 
                                         </div>
                                     </div>
             
@@ -365,6 +366,46 @@ function upComingTodoItems(){
         
             //Display
             displayUpcomingTodoItems(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color )
+
+
+            //Edit eventlistener
+            const editBtns = document.querySelectorAll('.edit-upcoming-Btn')
+            editBtns.forEach((btn, i)=>{
+                btn.addEventListener('click', function(){
+                
+                //Open form
+                openForm()
+    
+                //Form needs to be filled with current todo item
+                //console.log(dataEntryArr[i].id)
+                let currentID = Number(dataEntryArr[i].id)
+                //console.log(formDataArr)
+                //console.log(currentListID)
+                editEntry(currentID)
+                })
+            })
+
+            
+            //Fullview eventListener
+            const viewBtns = document.querySelectorAll('.view-Btn')
+         
+            viewBtns.forEach((btn, i)=>{
+                btn.addEventListener('click', function(){
+                    
+                    let currentID = Number(dataEntryArr[i].id)
+                 
+                    dataEntryArr.filter((entry)=>{
+                        if(entry.id == currentID){
+                        
+                        /////FULL VIEW OF TODO LIST/////
+                        viewFullDetailsOfTodoItem(entry.title, entry.date, entry.time, entry.type, entry.description, entry.subtasks, entry.category, entry.color, entry.location, currentListID) 
+                        }
+                    })
+
+
+                })
+            })
+
         })
    }
 }
@@ -560,7 +601,7 @@ function deleteEntry(currentListID){
                 eventsTasksCounter() 
 
                 //Update upcoming items
-                upComingTodoItems()
+                upComingTodoItems
                 
             } 
         }) 
@@ -658,7 +699,7 @@ function getList(){
                     })
                         //resetEntry(currentListID) //The option to reset entry is now available
                 }               
-        })
+            })
     }) 
  
  }
@@ -887,7 +928,7 @@ function openForm(){
     clearForm()
 
     //Close upcoming container if opened
-    removeUpcomingContainer()
+    //removeUpcomingContainer()
 
     //If list detail container is open
     listDetailContainer.classList.remove('display-list-detail-container')
@@ -1482,6 +1523,7 @@ function submitForm(ev){
 
         //Insert object to array
         if(editEntryCurrentID) {
+            console.log('delete')
             const index = formDataArr.findIndex(dataEntry => dataEntry.id === editEntryCurrentID);
             if (index !== -1) {
               formDataArr.splice(index, 1, formData); // Replace object at the found index

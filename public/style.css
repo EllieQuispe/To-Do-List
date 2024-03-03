@@ -654,14 +654,19 @@ ul#upcoming-items{
     padding: 0px;
 }
 
-#upcoming-items button.edit-Btn,
-#upcoming-items button.item-delete-Btn
+#upcoming-items button.view-Btn,
+#upcoming-items button.edit-upcoming-Btn
  {
     color: #BA5E32;
     background-color: white;
     border: 1px solid #BA5E32;
+    border-radius: 5px;
 }
 
+#upcoming-items button.view-Btn:hover,
+#upcoming-items button.edit-upcoming-Btn:hover{
+    cursor: pointer;
+}
 
 /*********Bottom of main container**********/
 .bottom-container{
