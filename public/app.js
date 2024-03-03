@@ -252,67 +252,85 @@ const upcomingContainer = document.querySelector('.upcoming-container')
 const upcomingXmark = document.querySelector('.exit-upcoming-container')
 const upcomingUlTag = document.getElementById('upcoming-items')
 
-
+upcomingXmark.addEventListener('click', function(){
+    removeUpcomingContainer()
+})
 upcomingBtn.addEventListener('click', function(){ 
-    upcomingTodoItems()
+    upComingTodoItems()
 })
 
-function upcomingTodoItems(){
+//Remove container
+function removeUpcomingContainer(){
+    upcomingContainer.classList.remove('active')
+}
+
+//Display container
+function upComingTodoItems(){
     upcomingContainer.classList.add('active')
 
-    upcomingXmark.addEventListener('click', function(){
-        upcomingContainer.classList.remove('active')
-    })
-
-
+    //Obtaining the current date
     function formatDate(date) {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero for month
         const day = String(date.getDate()).padStart(2, '0'); // Add leading zero for day
       
         return `${month}/${day}/${year}`;
-      }
-      //Today's date
-      let date = new Date();
-      let upcomingCurrentDate = formatDate(date)
+    }
+    //Today's date
+    let date = new Date();
+    let upcomingCurrentDate = formatDate(date)
 
-      //Tomorrow's date
-      const tomorrow = new Date(date.getTime() + 24 * 60 * 60 * 1000); // Add 1 day
-      let upcomingTomorrow = formatDate(tomorrow)
+    //Tomorrow's date
+    const tomorrow = new Date(date.getTime() + 24 * 60 * 60 * 1000); // Add 1 day
+    let upcomingTomorrow = formatDate(tomorrow)
 
-      //Day after tomorrow
-      let nextDay = new Date(tomorrow.getTime() + 24 * 60 * 60 * 1000);
-       nextDay = formatDate(nextDay)
+    //Day after tomorrow
+    let nextDay = new Date(tomorrow.getTime() + 24 * 60 * 60 * 1000);
+    nextDay = formatDate(nextDay)
 
-     
-      
+    
+    //Array used for display to-do items and html tag
+    let dataEntryArr = []; 
     upcomingUlTag.innerHTML = ""
-      formDataArr.filter((dataEntry, i) =>{
+
+    //Push only the necessary objects into the dataEntryArr
+    formDataArr.filter((dataEntry) =>{
         if(dataEntry.date == upcomingCurrentDate || dataEntry.date == upcomingTomorrow || dataEntry.date == nextDay){
            //grab two futures dates
-           
+           dataEntryArr.push(dataEntry)
+        }
+    })
 
-            function displayUpcomingTodoItems(id, title, type, date, time, category, subtasks, color){
-                let timeDisplay = ''
-                if(time === 'NaN: PM' || !time){
-                    timeDisplay  
-                } else {
-                    timeDisplay = `| ${time}`
-                }
+   //Display To-do items - if array is empty, it will display another message
+   if(dataEntryArr.length === 0){
+        //No upcoming events or tasks present at this time
+        const message = "No upcoming events or tasks present at this time"
+        upcomingUlTag.innerHTML = `<li class="upcoming-message">${message}</li>`
+        
+   } else{
+    dataEntryArr.forEach((dataEntry)=>{
+      
+        function displayUpcomingTodoItems(id, title, type, date, time, category, subtasks, color){
+            let timeDisplay = ''
+            if(time === 'NaN: PM' || !time){
+                timeDisplay  
+            } else {
+                timeDisplay = `| ${time}`
+            }
             
-                //Add subtasks if required
-                let subtasksPresent = subtasks.filter(subtask => subtask.name); //true or false
+            //Add subtasks if required
+            let subtasksPresent = subtasks.filter(subtask => subtask.name); //true or false
                
-                let innerUl = ''
-                let innerli = ''
-                let subName = ''
-                let subId = ''
-                let subPriority = ''
+            let innerUl = ''
+            let innerli = ''
+            let subName = ''
+            let subId = ''
+            let subPriority = ''
             
                
-                if(subtasksPresent.length === 0){
-                    innerUl =  `<ul class="innerUl hidden"></ul>`;
-                } else{
+            if(subtasksPresent.length === 0){
+                innerUl =  `<ul class="innerUl hidden"></ul>`;
+            } else{
                     subtasks.forEach((subtask)=>{
                         if (subtask.name !== ''){
                             subName = subtask.name
@@ -325,10 +343,10 @@ function upcomingTodoItems(){
                         }
                     });
                     innerUl = `<ul class="innerUl">${innerli}</ul>`;
-                }
+            }
                
                 
-                upcomingUlTag.innerHTML += ` 
+            upcomingUlTag.innerHTML += ` 
                                     <li class="list-item" id="${id}">
             
                                     <div class="row-list">
@@ -347,20 +365,9 @@ function upcomingTodoItems(){
         
             //Display
             displayUpcomingTodoItems(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color )
-            
-        
-        } 
-    })
-     
-    
-   
-
-
+        })
+   }
 }
-
-
-
-
 
 
 
@@ -875,6 +882,9 @@ function openForm(){
 
     let editEntryCurrentID;  //Remove id# from edit container
     clearForm()
+
+    //Close upcoming container if opened
+    removeUpcomingContainer()
 
     //If list detail container is open
     listDetailContainer.classList.remove('display-list-detail-container')
