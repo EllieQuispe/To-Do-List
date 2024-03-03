@@ -256,6 +256,7 @@ upcomingXmark.addEventListener('click', function(){
     removeUpcomingContainer()
 })
 upcomingBtn.addEventListener('click', function(){ 
+    upcomingContainer.classList.add('active')
     upComingTodoItems()
 })
 
@@ -266,8 +267,7 @@ function removeUpcomingContainer(){
 
 //Display container
 function upComingTodoItems(){
-    upcomingContainer.classList.add('active')
-
+  
     //Obtaining the current date
     function formatDate(date) {
         const year = date.getFullYear();
@@ -543,10 +543,10 @@ function deleteEntry(currentListID){
                 let editEntryCurrentID;
 
                 //delete 
-                
                 formDataArr.splice(i, 1)
                 localStorage.setItem('FormData', JSON.stringify(formDataArr))
 
+                //Update the UI
                 compareDates(currentDate)
 
                 //Remove selected checkbox by id 
@@ -558,6 +558,9 @@ function deleteEntry(currentListID){
 
                 //Reset counter
                 eventsTasksCounter() 
+
+                //Update upcoming items
+                upComingTodoItems()
                 
             } 
         }) 
@@ -1490,6 +1493,9 @@ function submitForm(ev){
             formDataArr.push(formData) //New entry
           }
           
+        //Update upcoming items
+        upComingTodoItems()
+
         //Reset Values//
         clearForm() 
 
