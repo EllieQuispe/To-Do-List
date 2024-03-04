@@ -649,9 +649,13 @@ ul#upcoming-items{
 #upcoming-items p.list-details{
     padding-left: 0px;
 }
-#upcoming-items li.list-item:hover{
+#upcoming-items li.upcoming-list-item{
     background-color: transparent;
     cursor:auto;
+    margin-bottom: 20px;
+    flex-direction: column;
+    padding-top: 12px;
+    padding-bottom: 3px;
 }
 
 /*Upcoming button*/
