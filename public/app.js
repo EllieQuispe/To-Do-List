@@ -253,11 +253,10 @@ function deleteCategories(){
 let typeOfTodo = '';
 let editEntryCurrentID;
 
-function editEntry(currentListID){
+function editEntry(itemID){
     
-    editEntryCurrentID = currentListID //make the id global
+    editEntryCurrentID = itemID //EditEntryCurrentID is global - currentListID comes from edit button
 
-    console.log(editEntryCurrentID)
 
     function reEnterEntryToForm(id, title, type, date, time, description, subTasks, category, color, location){
         /////Title/////
@@ -379,9 +378,8 @@ function editEntry(currentListID){
     }
 
     formDataArr.filter((dataEntry, i) =>{
-        if(dataEntry.id == currentListID){
+        if(dataEntry.id == itemID){
             
-            //console.log(dataEntry, i)
             reEnterEntryToForm(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location)
         }
     })
@@ -399,9 +397,7 @@ upcomingXmark.addEventListener('click', function(){
 })
 upcomingBtn.addEventListener('click', function(){ 
     upcomingContainer.classList.add('active')
-
     editEntryCurrentID = '';
-    console.log(editEntryCurrentID)
     
     upComingTodoItems()
 })
@@ -410,7 +406,6 @@ upcomingBtn.addEventListener('click', function(){
 function removeUpcomingContainer(){
     upcomingContainer.classList.remove('active')
     editEntryCurrentID = '';
-    console.log(editEntryCurrentID)
 }
 
 //Display container
@@ -445,9 +440,30 @@ function upComingTodoItems(){
     formDataArr.filter((dataEntry) =>{
         if(dataEntry.date == upcomingCurrentDate || dataEntry.date == upcomingTomorrow || dataEntry.date == nextDay){
            //grab two futures dates
+
            dataEntryArr.push(dataEntry)
         }
     })
+
+    //Sort dataEntryArr by date and time
+    dataEntryArr.sort((a, b) => {
+        // Parse dates
+        const dateA = new Date(Date.parse(a.date.replace(/\//g, "-")));
+        const dateB = new Date(Date.parse(b.date.replace(/\//g, "-")));
+    
+        // Compare dates by timestamp (earlier date comes first)
+        const dateComparison = dateA.getTime() - dateB.getTime();
+    
+        // If dates are different, return the comparison result
+        if (dateComparison !== 0) {
+            return dateComparison;
+        }
+    
+        // **Both dates are equal, handle times (if any):**
+        // Invert logic to prioritize entries with time
+        return b.time ? -1 : (a.time ? 1 : 0); // Time before no time, same time order preserved
+    });
+
 
    //Display To-do items - if array is empty, it will display another message
    if(dataEntryArr.length === 0){
@@ -477,7 +493,7 @@ function upComingTodoItems(){
             
                
             if(subtasksPresent.length === 0){
-                innerUl =  `<ul class="innerUl hidden"></ul>`;
+                innerUl =  `<ul class="innerUl hidden"></ul>`; //No subtask will display
             } else{
                     subtasks.forEach((subtask)=>{
                         if (subtask.name !== ''){
@@ -495,7 +511,7 @@ function upComingTodoItems(){
                
                 
             upcomingUlTag.innerHTML += ` 
-                                    <li class="list-item" id="${id}">
+                                    <li class="upcoming-list-item" id="${id}">
             
                                     <div class="row-list">
                                         <div class="input-container">
@@ -523,20 +539,14 @@ function upComingTodoItems(){
                 //Open form
                 openForm()
                 
-    
-                //Form needs to be filled with current todo item
-                //console.log(dataEntryArr[i].id)
                 let currentID = Number(dataEntryArr[i].id)
-                //console.log(formDataArr)
-                //console.log(currentListID)
-                editEntry(currentID)
+                editEntry(currentID) //Calling the edit function
                 })
             })
 
 
             //Fullview eventListener
             const viewBtns = document.querySelectorAll('.view-Btn')
-         
             viewBtns.forEach((btn, i)=>{
                 btn.addEventListener('click', function(){
                     
@@ -546,10 +556,9 @@ function upComingTodoItems(){
                         if(entry.id == currentID){
                         
                         /////FULL VIEW OF TODO LIST/////
-                        viewFullDetailsOfTodoItem(entry.title, entry.date, entry.time, entry.type, entry.description, entry.subtasks, entry.category, entry.color, entry.location, currentListID) 
+                        viewFullDetailsOfTodoItem(entry.title, entry.date, entry.time, entry.type, entry.description, entry.subtasks, entry.category, entry.color, entry.location, entry.id) 
                         }
                     })
-
 
                 })
             })
@@ -557,6 +566,7 @@ function upComingTodoItems(){
         })
    }
 }
+
 
 /////////////////////////////////// FULL VIEW OF TODO LIST ////////////////////////////////
 const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container
@@ -588,7 +598,6 @@ function deleteEntry(currentListID){
                 } 
                 //Remove id# assigned in editEntry function
                 editEntryCurrentID = '';
-                console.log(editEntryCurrentID)
 
                 //delete 
                 formDataArr.splice(i, 1)
@@ -608,8 +617,8 @@ function deleteEntry(currentListID){
                 eventsTasksCounter() 
 
                 //Update upcoming items
-                upComingTodoItems
-                
+                upComingTodoItems()
+             
             } 
         }) 
    
@@ -691,21 +700,21 @@ function getList(){
 
      
             if(!(event.target.classList.contains('main-checkbox') || event.target.classList.contains('secondary-checkbox') || event.target.classList.contains('item-delete-Btn') || event.target.classList.contains('edit-Btn'))){
+                
 
                 let currentListID = Number(list[j].id) //Turn ID to number
                 editEntryCurrentID = ''; //Remove saved ID# if it's not being re-saved.
-                console.log(editEntryCurrentID)
-
+                
                 fullListView.innerHTML= ""
                 formDataArr.filter((dataEntry)=>{
                     if(dataEntry.id == currentListID ){
-                        fullViewID = dataEntry.id
+                        fullViewID = dataEntry.id //Used when deleting the todo-item
+
                         /////FULL VIEW OF TODO LIST/////
-                        viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.time, dataEntry.type, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location, currentListID) 
+                        viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.time, dataEntry.type, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location, dataEntry.id) 
                                 
                         }  
                     })
-                        //resetEntry(currentListID) //The option to reset entry is now available
                 }               
             })
     }) 
@@ -843,12 +852,12 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
 
             //Form needs to be filled with current todo item
             let currentListID = Number(list[i].id)
-            //console.log(formDataArr)
-            //console.log(currentListID)
+        
             editEntry(currentListID)
         })
     })
 } 
+
 
 
 //Only displaying tasks or events that match the current date///
@@ -865,7 +874,7 @@ function compareDates(dateToCompare){
    
    todoList.innerHTML =""
 
-   formDataArr.filter((dataEntry, i)=>{
+   formDataArr.filter((dataEntry)=>{
     
         if(dataEntry.date == dateFormat){    
             displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color)
@@ -933,7 +942,7 @@ function openForm(){
     todoNewEntryForm.classList.add('display')
 
     editEntryCurrentID = '';  //Remove id# from edit container
-    console.log(editEntryCurrentID)
+   
     clearForm()
 
     //Close upcoming container if opened
@@ -948,7 +957,6 @@ function closeForm(){
     todoListDisplay.classList.remove('screen-size-40')
     todoNewEntryForm.classList.remove('display')
     editEntryCurrentID = '';  //Remove id# from edit container
-    console.log(editEntryCurrentID)
     
     clearForm()
 }
@@ -1532,9 +1540,8 @@ function submitForm(ev){
 
 
         //Insert object to array
-        console.log(editEntryCurrentID)
         if(editEntryCurrentID) {
-            console.log('delete')
+            
             const index = formDataArr.findIndex(dataEntry => dataEntry.id === editEntryCurrentID);
             if (index !== -1) {
               formDataArr.splice(index, 1, formData); // Replace object at the found index
