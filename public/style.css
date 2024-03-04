@@ -614,6 +614,11 @@ li.innerList{
 .upcoming-container.active{
     display: inline-block;
 }
+.upcoming-list-container{
+    overflow: scroll;
+    max-height: 500px;
+
+}
 .upcoming-heading{
     position: relative;
 }
