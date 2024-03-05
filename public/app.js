@@ -468,8 +468,15 @@ function upComingTodoItems(){
    //Display To-do items - if array is empty, it will display another message
    if(dataEntryArr.length === 0){
         //No upcoming events or tasks present at this time
-        const message = "No upcoming events or tasks present at this time"
-        upcomingUlTag.innerHTML = `<li class="upcoming-message">${message}</li>`
+        let imageUrl = "public/images/Empty-bro.svg";  
+        const message = "No upcoming events or tasks present at this time."
+        upcomingUlTag.innerHTML = `<li class="upcoming-message">
+                                        <div class="upcoming-inner-container">
+                                        <p class="message">${message}</p>
+                                        <img src="${imageUrl}" alt="Lady finding nothing in box" class="upcoming-empty-message">
+                                        <a href="https://storyset.com/work" class="image-link">Work illustrations by Storyset</a>
+                                        </div>
+                                    </li>`
         
    } else{
     dataEntryArr.forEach((dataEntry)=>{
