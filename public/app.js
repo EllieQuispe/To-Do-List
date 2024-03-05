@@ -464,20 +464,17 @@ function upComingTodoItems(){
         return b.time ? -1 : (a.time ? 1 : 0); // Time before no time, same time order preserved
     });
 
-    //Gray out to-do already finished
+    //Gray out to-do items already finished
     console.log(dataEntryArr)
-    dataEntryArr.forEach((data, i)=>{
+    dataEntryArr.forEach((data)=>{
         
         
         let checked = localStorage.getItem(data.id) === 'true'
-        console.log(checked) //It will give me true or false (true if checked)
         if(checked){
-            console.log('gray out the to-do item')
             data['checkStatus'] = checked
         } else{
             data['checkStatus'] = checked
         }
-        console.log(dataEntryArr)
     })
 
 
