@@ -501,12 +501,12 @@ function upComingTodoItems(){
                             subPriority = subtask.priority
                             subId = subtask.id
                          
-                            innerli += `<li class="innerList"> 
+                            innerli += `<li class="upcoming-innerList"> 
                                         <p class="subtask-name">${subName} <span class="priority-selected">${subPriority}</span> </p>
                                       </li>`
                         }
                     });
-                    innerUl = `<ul class="innerUl">${innerli}</ul>`;
+                    innerUl = `<ul class="upcoming-innerUl">${innerli}</ul>`;
             }
                
                 
