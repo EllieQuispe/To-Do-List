@@ -464,6 +464,22 @@ function upComingTodoItems(){
         return b.time ? -1 : (a.time ? 1 : 0); // Time before no time, same time order preserved
     });
 
+    //Gray out to-do already finished
+    console.log(dataEntryArr)
+    dataEntryArr.forEach((data, i)=>{
+        
+        
+        let checked = localStorage.getItem(data.id) === 'true'
+        console.log(checked) //It will give me true or false (true if checked)
+        if(checked){
+            console.log('gray out the to-do item')
+            data['checkStatus'] = checked
+        } else{
+            data['checkStatus'] = checked
+        }
+        console.log(dataEntryArr)
+    })
+
 
    //Display To-do items - if array is empty, it will display another message
    if(dataEntryArr.length === 0){
@@ -481,7 +497,7 @@ function upComingTodoItems(){
    } else{
     dataEntryArr.forEach((dataEntry)=>{
       
-        function displayUpcomingTodoItems(id, title, type, date, time, category, subtasks, color){
+        function displayUpcomingTodoItems(id, title, type, date, time, category, subtasks, color, checkStatus){
             let timeDisplay = ''
             if(time === 'NaN: PM' || !time){
                 timeDisplay  
@@ -493,35 +509,21 @@ function upComingTodoItems(){
             let subtasksPresent = subtasks.filter(subtask => subtask.name); //true or false
                
             let innerUl = ''
-            let innerli = ''
-            let subName = ''
-            let subId = ''
-            let subPriority = ''
-            
+            let innerli = 'Subtasks present'
                
             if(subtasksPresent.length === 0){
                 innerUl =  `<ul class="innerUl hidden"></ul>`; //No subtask will display
             } else{
-                    subtasks.forEach((subtask)=>{
-                        if (subtask.name !== ''){
-                            subName = subtask.name
-                            subPriority = subtask.priority
-                            subId = subtask.id
-                         
-                            innerli += `<li class="upcoming-innerList"> 
-                                        <p class="subtask-name">${subName} <span class="priority-selected">${subPriority}</span> </p>
-                                      </li>`
-                        }
-                    });
-                    innerUl = `<ul class="upcoming-innerUl">${innerli}</ul>`;
+
+                    innerUl = `<ul class="upcoming-innerUl">${innerli}<i class="fa-solid fa-diagram-successor"></i></ul>`;
             }
                
                 
             upcomingUlTag.innerHTML += ` 
                                     <li class="upcoming-list-item" id="${id}">
-            
+                                    <div class="layer ${checkStatus}"></div> 
                                     <div class="row-list">
-                                        <div class="input-container">
+                                        <div class="upcoming-input-container">
                                             ${title}
                                         </div>
                                         <div>
@@ -530,12 +532,12 @@ function upComingTodoItems(){
                                     </div>
             
                                     <p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>
-                                    ${innerUl}  
+                                     ${innerUl} 
                                     </li>`
             }
         
             //Display
-            displayUpcomingTodoItems(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color )
+            displayUpcomingTodoItems(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color, dataEntry.checkStatus)
 
 
             //Edit eventlistener
@@ -745,6 +747,8 @@ function trackCheckboxStatus(){
             localStorage.setItem(this.id, this.checked);
             let mySound = new Audio('public/sound/clickSound.mp3')
             mySound.play()
+            upComingTodoItems()
+
         });
 
     // Retrieve the checked state from local storage on page load
