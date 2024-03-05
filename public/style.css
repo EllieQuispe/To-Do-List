@@ -658,6 +658,14 @@ ul#upcoming-items{
     padding-bottom: 3px;
 }
 
+/*subtask button*/
+ul.upcoming-innerUl{
+    padding-left: 15px;
+   /* list-style: circle; */
+}
+
+
+
 /*Upcoming button*/
 #upcoming-items div.row-list{
     padding: 0px;
@@ -667,14 +675,17 @@ ul#upcoming-items{
 #upcoming-items button.edit-upcoming-Btn
  {
     color: #BA5E32;
-    background-color: white;
+    background-color: transparent;
     border: 1px solid #BA5E32;
     border-radius: 5px;
+    font-size: 13px;
 }
 
 #upcoming-items button.view-Btn:hover,
 #upcoming-items button.edit-upcoming-Btn:hover{
     cursor: pointer;
+    background-color: #BA5E32;
+    color: white;
 }
 
 /*********Bottom of main container**********/
