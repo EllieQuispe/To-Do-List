@@ -465,10 +465,8 @@ function upComingTodoItems(){
     });
 
     //Gray out to-do items already finished
-    console.log(dataEntryArr)
     dataEntryArr.forEach((data)=>{
-        
-        
+
         let checked = localStorage.getItem(data.id) === 'true'
         if(checked){
             data['checkStatus'] = checked
@@ -492,7 +490,7 @@ function upComingTodoItems(){
                                     </li>`
         
    } else{
-    dataEntryArr.forEach((dataEntry)=>{
+        dataEntryArr.forEach((dataEntry)=>{
       
         function displayUpcomingTodoItems(id, title, type, date, time, category, subtasks, color, checkStatus){
             let timeDisplay = ''
@@ -572,6 +570,115 @@ function upComingTodoItems(){
         })
    }
 }
+//////////////// Outstanding tasks & events ///////////////////
+
+//when button is clicked, it will open the window
+const pastDueBtn = document.querySelector('.pastDue-btn')
+const pastDueContainer = document.querySelector('.pastDue-container')
+const exitBtn = document.querySelector('.exit-pastDue-container')
+const pastDueUlTag = document.getElementById('pastDue-items')
+
+//Close container
+exitBtn.addEventListener('click', function(){
+    removePastDueContainer()
+})
+function removePastDueContainer(){
+    pastDueContainer.classList.remove('active')
+    editEntryCurrentID = '';
+}
+
+//Open container
+pastDueBtn.addEventListener('click', function(){ 
+    pastDueContainer.classList.add('active')
+    editEntryCurrentID = '';
+
+   pastDueTodoItems()
+})
+
+
+function pastDueTodoItems(){
+    //Obtaining the current date
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero for month
+        const day = String(date.getDate()).padStart(2, '0'); // Add leading zero for day
+    
+        return `${month}/${day}/${year}`;
+    }
+    //Today's date
+    let date = new Date();
+    let currentDate = formatDate(date)
+
+    pastDueUlTag.innerHTML = "";
+    
+    const pastDateObjects = formDataArr.filter(obj => {
+        const objDate = new Date(obj.date);
+        const objDateWithoutTime = new Date(objDate.getFullYear(), objDate.getMonth(), objDate.getDate());
+        return objDateWithoutTime < new Date(currentDate);
+    });
+    console.log(pastDateObjects)
+
+           
+    function displayPastDueTodoItems(id, title, type, date, time, category, subtasks, color, checkStatus){
+        let timeDisplay = ''
+            if(time === 'NaN: PM' || !time){
+                    timeDisplay  
+            } else {
+                    timeDisplay = `| ${time}`
+            }
+                
+        //Add subtasks if required
+        let subtasksPresent = subtasks.filter(subtask => subtask.name); //true or false        
+        let innerUl = ''
+            let innerli = 'Subtasks present'
+                   
+            if(subtasksPresent.length === 0){
+                innerUl =  `<ul class="innerUl hidden"></ul>`; //No subtask will display
+            } else{
+    
+                innerUl = `<ul class="pastDue-innerUl">${innerli}<i class="fa-solid fa-diagram-successor"></i></ul>`;
+            }
+                   
+        
+            pastDueUlTag.innerHTML += ` 
+                            <li class="pastDue-list-item" id="${id}">
+                            <div class="layer ${checkStatus}"></div> 
+                            <div class="row-list">
+                                <div class="pastDue-input-container">
+                                    ${title}
+                                </div>
+                                <div>
+                                    <button type="button" class="view-Btn">View</button> <button type="button" class="edit-upcoming-Btn">Edit</button> 
+                                </div>
+                            </div>
+                            <p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>
+                                ${innerUl} 
+                            </li>`
+                }
+            
+            
+            
+    pastDateObjects.forEach((data)=>{
+
+        let checked = localStorage.getItem(data.id) === 'true'
+            if(checked){
+                data['checkStatus'] = checked //creating a new object
+
+                //don't display
+
+            } else{
+                data['checkStatus'] = checked //creating a new object
+
+                //Display
+                displayPastDueTodoItems(data.id, data.title, data.type, data.date, data.time, data.category, data.subtasks, data.color, data.checkStatus)
+            }
+    }) 
+
+        
+          
+}
+
+
 
 
 /////////////////////////////////// FULL VIEW OF TODO LIST ////////////////////////////////
@@ -952,9 +1059,6 @@ function openForm(){
     editEntryCurrentID = '';  //Remove id# from edit container
    
     clearForm()
-
-    //Close upcoming container if opened
-    //removeUpcomingContainer()
 
     //If list detail container is open
     listDetailContainer.classList.remove('display-list-detail-container')
