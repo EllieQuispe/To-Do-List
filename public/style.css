@@ -146,13 +146,23 @@ i.fa-envelope:hover, i.fa-square-twitter:hover, i.fa-facebook:hover{
 
 
 /****** Type of To-do List Item ******/
+.taskEventContainer{
+    display: flex;
+    margin-top: 22px;
+    margin-bottom: 32px;
+}
 p.taskCount, p.eventCount{
     color:#1c1c1c;
     margin-bottom: 6px;
 }
-.task{
-    margin-top: 35px;
+p.task{
+    padding-left: 0px;
+    padding-right: 6px;
 }
+p.events{
+    padding-left: 5px;
+}
+
 
 .categories{
     margin-top: 50px;
@@ -165,12 +175,13 @@ h3{
 
 /********** Counter ***********/
 .taskCount{
-    margin-left: 3px;
+    margin-left: 4px;
     padding: 2px 6px;
     color: #1c1c1c;
     font-size: 12px;
     border: 1px solid #BA5E32;
     border-radius: 45px;
+    margin-right: 7px;
 }
 .eventCount{
     margin-left: 3px;
@@ -189,6 +200,13 @@ h3{
     margin-left: 20px;
     margin-right: 20px;
 }
+
+.events.menu-section{
+    margin-left: 0px;
+} 
+.task.menu-section{
+    margin-right: 0px;
+} 
 p.sideMenu-label{
     margin: 0px;
     padding: 9px 4px;
@@ -204,7 +222,7 @@ p.sideMenu-label:hover{
 /**** Category inputbox with icon ****/
 .categories.menu-section{
     margin-left: 20px;
-    margin-top: 30px;
+    margin-top: 45px;
     margin-right: 20px;
 }
 

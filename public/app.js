@@ -515,7 +515,7 @@ function upComingTodoItems(){
                     innerUl = `<ul class="upcoming-innerUl">${innerli}<i class="fa-solid fa-diagram-successor"></i></ul>`;
             }
                
-                
+    
             upcomingUlTag.innerHTML += ` 
                                     <li class="upcoming-list-item" id="${id}">
                                     <div class="layer ${checkStatus}"></div> 
