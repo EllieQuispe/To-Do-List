@@ -196,7 +196,8 @@ h3{
 .task.menu-section, 
 .events.menu-section, 
 .today.menu-section, 
-.upcoming.menu-section{
+.upcoming.menu-section,
+.pastDue.menu-section{
     margin-left: 20px;
     margin-right: 20px;
 }
@@ -617,7 +618,8 @@ li.innerList{
 
 
 /*********Upcoming container*************/
-.upcoming-container{
+.upcoming-container,
+.pastDue-container{
     position: absolute;
     font-family: 'Roboto', sans-serif;
     width: 400px;
@@ -629,28 +631,34 @@ li.innerList{
     box-shadow:0px 0px 14px -3px rgb(174 174 174);
     display: none;
 }
-.upcoming-container.active{
+.upcoming-container.active,
+.pastDue-container.active{
     display: inline-block;
 }
-.upcoming-list-container{
+.upcoming-list-container,
+.pastDue-list-container{
     overflow: scroll;
     max-height: 500px;
 
 }
-.upcoming-heading{
+.upcoming-heading,
+.pastDue-heading{
     position: relative;
 }
-i.fa-solid.fa-xmark.exit-upcoming-container{
+i.fa-solid.fa-xmark.exit-upcoming-container,
+i.fa-solid.fa-xmark.exit-pastDue-container{
     position: absolute;
     left: 370px;
     font-size: 19px;
     cursor: pointer;
 }
-i.fa-solid.fa-xmark.exit-upcoming-container:hover{
+i.fa-solid.fa-xmark.exit-upcoming-container:hover,
+i.fa-solid.fa-xmark.exit-pastDue-container:hover{
     color:#F6C15C;
 }
 
-.upcoming-container .upcoming-title{
+.upcoming-container .upcoming-title,
+.pastDue-container .pastDue-title{
     border-bottom: 1px solid white;
     margin: 0px;
     padding: 20px 0px 20px 0px;
@@ -682,6 +690,44 @@ div.layer.true{
     height: 100%;
     background-color: #f4f4f4a1;
 }
+
+
+/*Past due Container*/
+ul#pastDue-items{
+    margin: 0px;
+    padding: 11px 30px;
+}
+#pastDue-items li.pastDue-list-item{
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0px;
+}
+.pastDue-list-item div.row-list{
+    padding-right: 0px;
+}
+#pastDue-items p.list-details{
+    padding-left: 0px;
+}
+/*Buttons*/
+#pastDue-items button.view-Btn,
+#pastDue-items button.edit-upcoming-Btn{
+    color: #BA5E32;
+    background-color: transparent;
+    border: 1px solid #BA5E32;
+    border-radius: 5px;
+    font-size: 13px;
+}
+#pastDue-items button.edit-upcoming-Btn{
+    margin-left: 3px;
+    padding: 1px 9px;
+}
+#pastDue-items button.view-Btn:hover,
+#pastDue-items button.edit-upcoming-Btn:hover{
+    color: white;
+    background-color: #BA5E32;
+    cursor: pointer;
+}
+
 
 
 
