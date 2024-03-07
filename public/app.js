@@ -400,6 +400,9 @@ upcomingBtn.addEventListener('click', function(){
     editEntryCurrentID = '';
     
     upComingTodoItems()
+
+    //Close Past Due Container
+    removePastDueContainer()
 })
 
 //Remove container
@@ -504,7 +507,7 @@ function upComingTodoItems(){
             let subtasksPresent = subtasks.filter(subtask => subtask.name); //true or false
                
             let innerUl = ''
-            let innerli = 'Subtasks present'
+            let innerli = '- Subtasks present'
                
             if(subtasksPresent.length === 0){
                 innerUl =  `<ul class="innerUl hidden"></ul>`; //No subtask will display
@@ -529,10 +532,10 @@ function upComingTodoItems(){
                                     <p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>
                                      ${innerUl} 
                                     </li>`
-            }
+        }
         
-            //Display
-            displayUpcomingTodoItems(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color, dataEntry.checkStatus)
+        //Display
+        displayUpcomingTodoItems(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color, dataEntry.checkStatus)
 
 
             //Edit eventlistener
@@ -563,7 +566,6 @@ function upComingTodoItems(){
                         viewFullDetailsOfTodoItem(entry.title, entry.date, entry.time, entry.type, entry.description, entry.subtasks, entry.category, entry.color, entry.location, entry.id) 
                         }
                     })
-
                 })
             })
 
@@ -592,9 +594,11 @@ pastDueBtn.addEventListener('click', function(){
     pastDueContainer.classList.add('active')
     editEntryCurrentID = '';
 
+    //Close Upcoming
+    removeUpcomingContainer()
+
    pastDueTodoItems()
 })
-
 
 function pastDueTodoItems(){
     //Obtaining the current date
@@ -609,6 +613,7 @@ function pastDueTodoItems(){
     let date = new Date();
     let currentDate = formatDate(date)
 
+    let pastDueArr = []
     pastDueUlTag.innerHTML = "";
     
     const pastDateObjects = formDataArr.filter(obj => {
@@ -616,7 +621,7 @@ function pastDueTodoItems(){
         const objDateWithoutTime = new Date(objDate.getFullYear(), objDate.getMonth(), objDate.getDate());
         return objDateWithoutTime < new Date(currentDate);
     });
-    console.log(pastDateObjects)
+    //console.log(pastDateObjects)
 
            
     function displayPastDueTodoItems(id, title, type, date, time, category, subtasks, color, checkStatus){
@@ -630,7 +635,7 @@ function pastDueTodoItems(){
         //Add subtasks if required
         let subtasksPresent = subtasks.filter(subtask => subtask.name); //true or false        
         let innerUl = ''
-            let innerli = 'Subtasks present'
+            let innerli = '- Subtasks present'
                    
             if(subtasksPresent.length === 0){
                 innerUl =  `<ul class="innerUl hidden"></ul>`; //No subtask will display
@@ -648,29 +653,84 @@ function pastDueTodoItems(){
                                     ${title}
                                 </div>
                                 <div>
-                                    <button type="button" class="view-Btn">View</button> <button type="button" class="edit-upcoming-Btn">Edit</button> 
+                                    <button type="button" class="view-pastDue-Btn">View</button> <button type="button" class="edit-pastDue-Btn" >Edit</button> 
                                 </div>
                             </div>
                             <p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>
                                 ${innerUl} 
                             </li>`
-                }
+
+
+
+        //Edit eventlistener
+        const editBtns = document.querySelectorAll('.edit-pastDue-Btn')
+        editBtns.forEach((btn, i)=>{
+       
+            btn.addEventListener('click', function(){
+         
+            //Open form
+            openForm()
             
-            
-            
+            let currentID = Number(pastDueArr[i].id)
+            editEntry(currentID) //Calling the edit function
+            })
+        })
+
+        //Fullview eventListener
+        const viewBtns = document.querySelectorAll('.view-pastDue-Btn')
+        viewBtns.forEach((btn, i)=>{
+            btn.addEventListener('click', function(){
+                
+                let currentID = Number(pastDueArr[i].id)
+             
+                pastDueArr.filter((entry)=>{
+                    if(entry.id == currentID){
+                    
+                    /////FULL VIEW OF TODO LIST/////
+                    viewFullDetailsOfTodoItem(entry.title, entry.date, entry.time, entry.type, entry.description, entry.subtasks, entry.category, entry.color, entry.location, entry.id) 
+                    }
+                })
+            })
+        })
+
+
+
+
+    }
+
+                
     pastDateObjects.forEach((data)=>{
-
         let checked = localStorage.getItem(data.id) === 'true'
+        console.log(data)
             if(checked){
-                data['checkStatus'] = checked //creating a new object
 
-                //don't display
+                /*
+                data['checkStatus'] = checked //creating a new object (true = completed)
+
+                //No upcoming events or tasks present at this time
+                let imageUrl = "public/images/Done-rafiki.svg";  
+                const message = "Great job! You've accomplished everything on your list."
+                pastDueUlTag.innerHTML = `<li class="upcoming-message">
+                                    <div class="upcoming-inner-container">
+                                    <p class="message">${message}</p>
+                                    <img src="${imageUrl}" alt="Lady finding nothing in box" class="upcoming-empty-message">
+                                    <a href="https://storyset.com/work" class="image-link">Work illustrations by Storyset</a>
+                                    </div>
+                                </li>`
+                
+                */
+                
 
             } else{
-                data['checkStatus'] = checked //creating a new object
+                data['checkStatus'] = checked //creating a new object (false)
+                pastDueArr.push(data)
 
+                
                 //Display
                 displayPastDueTodoItems(data.id, data.title, data.type, data.date, data.time, data.category, data.subtasks, data.color, data.checkStatus)
+               
+                
+
             }
     }) 
 
@@ -852,6 +912,7 @@ function trackCheckboxStatus(){
             let mySound = new Audio('public/sound/clickSound.mp3')
             mySound.play()
             upComingTodoItems()
+            pastDueTodoItems()
 
         });
 
@@ -1667,6 +1728,8 @@ function submitForm(ev){
           
         //Update upcoming items
         upComingTodoItems()
+        //Update past due items
+        pastDueTodoItems()
 
         //Reset Values//
         clearForm() 
