@@ -81,6 +81,47 @@ container.addEventListener('click', function(event){
     })
 })
 
+////////// VIEW OPTIONS ///////////////
+
+
+const viewMainContainer = document.querySelector('.view-options-container')
+
+viewMainContainer.addEventListener('click', function(event){
+    const viewBtn = document.querySelector('.view-options-innerDiv')
+    const viewDropdownContainer = document.querySelector('.dropdown-options')
+
+    if(event.target.classList.contains('partag-view') || event.target.classList.contains('view-option-image')){
+        console.log('inside', event.target)
+        viewDropdownContainer.classList.add('active')
+    } 
+
+    document.addEventListener('click', function(event){
+        if(!viewDropdownContainer.contains(event.target) && !viewBtn.contains(event.target)){
+           
+            viewDropdownContainer.classList.remove('active')
+        }
+    })
+})
+
+///Buttons///
+function viewBtns(){
+    const boardBtn = document.querySelector('.board-btn')
+    const listBtn = document.querySelector('.list-btn')
+
+    boardBtn.addEventListener('click', function(){
+        listBtn.classList.remove('active')
+        boardBtn.classList.add('active')
+    })
+
+    listBtn.addEventListener('click', function(){
+        listBtn.classList.add('active')
+        boardBtn.classList.remove('active')
+    })
+}
+viewBtns()
+
+
+
 
 ///////////////////CURRENT DATE///////////////////////////////
 function initializeDateFeature(){
