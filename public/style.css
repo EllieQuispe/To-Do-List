@@ -28,7 +28,7 @@ body{
     align-self: center;
     font-family: 'Inter', sans-serif;
     font-weight: 300;
-    font-size: 14px;
+    font-size: 15px;
     color: #1c1c1c;
 }
 
@@ -57,7 +57,7 @@ div#user-img img{
 }
 .username{
     font-family: 'Inter', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     color:#202020;
     font-weight: 500;
     align-self: center;
@@ -337,7 +337,7 @@ p.sideMenu-label:hover{
     cursor: pointer;
 }
 .date-arrow{
-    color: #202020;
+    color: #BA5E32;
     position: absolute;
     top: 53%; /*I can change the vertical alignment later*/
     transform: translateY(-53%);
@@ -404,7 +404,7 @@ ul#todo-List {
 ul li{ 
     display: flex;
     color: #1c1c1c;
-    font-size: 15px;
+    font-size: 16px;
     font-family: 'Inter', sans-serif;
     font-weight: 300;
     width: 100%;   
@@ -692,46 +692,32 @@ div.layer.true{
 }
 
 
-/*Past due Container*/
-ul#pastDue-items{
-    margin: 0px;
-    padding: 11px 30px;
+
+/*Upcoming button*/
+#upcoming-items div.row-list{
+    padding: 0px;
 }
-#pastDue-items li.pastDue-list-item{
-    display: flex;
-    flex-direction: column;
-    padding: 12px 0px;
-}
-.pastDue-list-item div.row-list{
-    padding-right: 0px;
-}
-#pastDue-items p.list-details{
-    padding-left: 0px;
-}
-/*Buttons*/
-#pastDue-items button.view-Btn,
-#pastDue-items button.edit-upcoming-Btn{
+
+#upcoming-items button.view-Btn,
+#upcoming-items button.edit-upcoming-Btn
+ {
     color: #BA5E32;
     background-color: transparent;
     border: 1px solid #BA5E32;
     border-radius: 5px;
     font-size: 13px;
 }
-#pastDue-items button.edit-upcoming-Btn{
+#upcoming-items button.edit-upcoming-Btn{
     margin-left: 3px;
     padding: 1px 9px;
 }
-#pastDue-items button.view-Btn:hover,
-#pastDue-items button.edit-upcoming-Btn:hover{
-    color: white;
-    background-color: #BA5E32;
+
+#upcoming-items button.view-Btn:hover,
+#upcoming-items button.edit-upcoming-Btn:hover{
     cursor: pointer;
+    background-color: #BA5E32;
+    color: white;
 }
-
-
-
-
-
 
 /*subtask button*/
 ul.upcoming-innerUl{
@@ -768,31 +754,46 @@ a.image-link{
     color: gray;
 }
 
-
-/*Upcoming button*/
-#upcoming-items div.row-list{
-    padding: 0px;
+/****** Past due Container *******/
+ul#pastDue-items{
+    margin: 0px;
+    padding: 11px 30px;
 }
-
-#upcoming-items button.view-Btn,
-#upcoming-items button.edit-upcoming-Btn
- {
+#pastDue-items li.pastDue-list-item{
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0px;
+}
+.pastDue-list-item div.row-list{
+    padding-right: 0px;
+}
+#pastDue-items p.list-details{
+    padding-left: 0px;
+    font-size: 13px;
+}
+/*Buttons*/
+#pastDue-items button.view-pastDue-Btn,
+#pastDue-items button.edit-pastDue-Btn{
     color: #BA5E32;
     background-color: transparent;
     border: 1px solid #BA5E32;
     border-radius: 5px;
     font-size: 13px;
 }
-#upcoming-items button.edit-upcoming-Btn{
+#pastDue-items button.edit-pastDue-Btn{
     margin-left: 3px;
     padding: 1px 9px;
 }
-
-#upcoming-items button.view-Btn:hover,
-#upcoming-items button.edit-upcoming-Btn:hover{
-    cursor: pointer;
-    background-color: #BA5E32;
+#pastDue-items button.view-pastDue-Btn:hover,
+#pastDue-items button.edit-pastDue-Btn:hover{
     color: white;
+    background-color: #BA5E32;
+    cursor: pointer;
+}
+
+ul.pastDue-innerUl{
+    padding-left: 15px;
+    font-size: 12px;
 }
 
 /*********Bottom of main container**********/
