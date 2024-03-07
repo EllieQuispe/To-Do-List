@@ -616,6 +616,7 @@ function pastDueTodoItems(){
     let pastDueArr = []
     pastDueUlTag.innerHTML = "";
     
+    //Push only past dates to array
     const pastDateObjects = formDataArr.filter(obj => {
         const objDate = new Date(obj.date);
         const objDateWithoutTime = new Date(objDate.getFullYear(), objDate.getMonth(), objDate.getDate());
@@ -698,41 +699,52 @@ function pastDueTodoItems(){
 
     }
 
-                
+    //Add property and value (checkbox) /Some will be true and other false            
     pastDateObjects.forEach((data)=>{
         let checked = localStorage.getItem(data.id) === 'true'
-        console.log(data)
-            if(checked){
+       
+            if(checked){ //true means done!
 
-                /*
                 data['checkStatus'] = checked //creating a new object (true = completed)
-
-                //No upcoming events or tasks present at this time
-                let imageUrl = "public/images/Done-rafiki.svg";  
-                const message = "Great job! You've accomplished everything on your list."
-                pastDueUlTag.innerHTML = `<li class="upcoming-message">
-                                    <div class="upcoming-inner-container">
-                                    <p class="message">${message}</p>
-                                    <img src="${imageUrl}" alt="Lady finding nothing in box" class="upcoming-empty-message">
-                                    <a href="https://storyset.com/work" class="image-link">Work illustrations by Storyset</a>
-                                    </div>
-                                </li>`
-                
-                */
-                
-
+              
             } else{
                 data['checkStatus'] = checked //creating a new object (false)
-                pastDueArr.push(data)
-
-                
-                //Display
-                displayPastDueTodoItems(data.id, data.title, data.type, data.date, data.time, data.category, data.subtasks, data.color, data.checkStatus)
-               
-                
-
+                pastDueArr.push(data) //Add all false todo items in another way to be displayed
             }
+            
     }) 
+
+    
+    //Display Message to UI depending on array status
+    if(pastDateObjects.length === 0){
+        let imageUrl = "public/images/Empty-bro.svg";  
+        const message = "Looks like you don't have any past due tasks or events. Why not add some new ones to your to-do list?"
+        pastDueUlTag.innerHTML = `<li class="upcoming-message">
+                            <div class="upcoming-inner-container">
+                            <p class="message">${message}</p>
+                            <img src="${imageUrl}" alt="Lady finding nothing in box" class="upcoming-empty-message">
+                            <a href="https://storyset.com/work" class="image-link">Work illustrations by Storyset</a>
+                            </div>
+                        </li>`
+
+
+    } else if(pastDueArr.length === 0){
+          //No upcoming events or tasks present at this time
+          let imageUrl = "public/images/Done-rafiki.svg";  
+          const message = "Great job! You've accomplished everything on your list."
+          pastDueUlTag.innerHTML = `<li class="upcoming-message">
+                              <div class="upcoming-inner-container">
+                              <p class="message">${message}</p>
+                              <img src="${imageUrl}" alt="Lady finding nothing in box" class="upcoming-empty-message">
+                              <a href="https://storyset.com/work" class="image-link">Work illustrations by Storyset</a>
+                              </div>
+                          </li>`
+    } else {
+        pastDueArr.forEach((data)=>{
+
+            displayPastDueTodoItems(data.id, data.title, data.type, data.date, data.time, data.category, data.subtasks, data.color, data.checkStatus)
+        })
+    }
 
         
           
