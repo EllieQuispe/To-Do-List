@@ -327,6 +327,30 @@ p.sideMenu-label:hover{
     justify-content: space-evenly;
     align-items: center;
 }
+.view-options-container{
+    display: flex;
+    align-items: center;
+    margin-right: 18px;
+    height: 20px;
+    padding: 4px 3px;
+    cursor: pointer;
+}
+.view-options-container:hover{
+    background-color: #f4f4f4;
+    border-radius: 5px;
+}
+
+.view-option-image{
+    width: 30px;
+    height: 24px;
+}
+p.partag-view{
+ padding-right: 5px;
+ color: #1c1c1c;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+}
 
 /*****Arrow***/
 .arrow-icon{
