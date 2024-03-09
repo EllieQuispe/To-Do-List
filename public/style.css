@@ -286,7 +286,7 @@ p.sideMenu-label:hover{
 .categories i.fa-solid.fa-xmark{ 
     position: absolute;
     left: 158px;
-    top: 4px;
+    top: 8px;
     font-size: 17px;
 }
 .categories i.fa-solid.fa-xmark:hover{
