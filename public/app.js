@@ -7,65 +7,68 @@ document.addEventListener('DOMContentLoaded', () =>{
     //Delete categories
     displayCategoryDeleteBtn()
 
-     //Open form for new list entry
+     //Open form 
      document.querySelector('.add-new-item').addEventListener('click', openForm )
      //Close to-do list form
      document.querySelector('.exit-form').addEventListener('click', closeForm)
 
     //Form submission when adding a new event or task
-    document.getElementById('todo-form').setAttribute('novalidate', '')
+    document.getElementById('todo-form').setAttribute('novalidate', 'true')
     document.getElementById('todo-form').addEventListener('submit', submitForm )
+
     //Clear form
     document.querySelector('.clear-btn').addEventListener('click', clearForm)
-    //Call the function to display the data from the form when the page loads
-    savingDataInArr()
 
-    //Close full view container
+    //Initializing formDataArr as an "empty array" if nothing saved to localStorage
+    initializeFormDataArray() //initializeFormDataArray()
+
+    //Close fullview container
     document.querySelector('.exit-full-view').addEventListener('click', closeFullViewContainer)
 
     //Date feature initilization
     initializeDateFeature();
+
+    //View options (list & board)
+    //document.querySelector('.view-options-container').addEventListener('click', )
+
+    //User Profile settings button
+    document.querySelector('.settings-container').addEventListener('click', function(event){
+        UserProfileMenuBtn(event)
+    })
+
+    //Today button
+    document.querySelector('.today').addEventListener('click', todayBtn)
+
+    //Opens dropdown for view options
+    document.querySelector('.view-options-container').addEventListener('click',function(event){
+        viewOptions(event)
+        viewBtns() //Change color of list and board button
+    } )
+    
     
 })
 
-///Current date for Today button///
-let currentDate = new Date()
-document.querySelector('.today').addEventListener('click', function(){
-    let currentDateForTodayButton = new Date()
-
-        const options = {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-        };
-        //Display full day to the UI
-        document.getElementById('currentDate').textContent = currentDateForTodayButton.toLocaleDateString('en-US',options)
-        //Display week day to UI
-        document.getElementById('day-of-the-week').textContent = currentDateForTodayButton.toLocaleDateString('en-US', {weekday: "long"})
-        
-        compareDates(currentDateForTodayButton)//compare localStorage object dates with current date
-        currentDate = currentDateForTodayButton;
-})
 
 
-////Dropdown profile settings////
-const container = document.querySelector('.settings-container');
-const dropDownContainer = document.querySelector('.drop-down-container')
-
-function openSettings(downArrow, upArrow){
-    dropDownContainer.classList.add('display') //displaying the dropdown container
-    downArrow.classList.remove('active')
-    upArrow.classList.add('active')
-}
-function closeSettings(upArrow, downArrow){
-    dropDownContainer.classList.remove('display')
-    downArrow.classList.add('active') 
-    upArrow.classList.remove('active')   
-}
-
-container.addEventListener('click', function(event){
+////////// Dropdown User Profile settings ////////
+function UserProfileMenuBtn(event){
+    const container = document.querySelector('.settings-container');
     const downArrow = container.querySelector('.drop-down-menu-icon')
     const upArrow = container.querySelector('.up-arrow-icon')
+
+    function openSettings(downArrow, upArrow){
+        dropDownContainer.classList.add('display') //displaying the dropdown container
+        downArrow.classList.remove('active')
+        upArrow.classList.add('active')
+    }
+    function closeSettings(upArrow, downArrow){
+        dropDownContainer.classList.remove('display')
+        downArrow.classList.add('active') 
+        upArrow.classList.remove('active')   
+    }
+
+
+    const dropDownContainer = document.querySelector('.drop-down-container')
 
     if(event.target.classList.contains('drop-down-menu-icon')){
         openSettings(downArrow, upArrow)
@@ -79,14 +82,18 @@ container.addEventListener('click', function(event){
            closeSettings(upArrow, downArrow)
         }
     })
-})
-
-////////// VIEW OPTIONS ///////////////
+}
 
 
-const viewMainContainer = document.querySelector('.view-options-container')
 
-viewMainContainer.addEventListener('click', function(event){
+///////////////BOARD VIEW///////////////
+
+function displayBoardView(){
+    //
+}
+
+/////////////// VIEW OPTIONS (List or board) ///////////////
+function viewOptions(event){
     const viewBtn = document.querySelector('.view-options-innerDiv')
     const viewDropdownContainer = document.querySelector('.dropdown-options')
 
@@ -101,9 +108,9 @@ viewMainContainer.addEventListener('click', function(event){
             viewDropdownContainer.classList.remove('active')
         }
     })
-})
 
-///Buttons///
+}
+///Buttons color change///
 function viewBtns(){
     const boardBtn = document.querySelector('.board-btn')
     const listBtn = document.querySelector('.list-btn')
@@ -111,55 +118,20 @@ function viewBtns(){
     boardBtn.addEventListener('click', function(){
         listBtn.classList.remove('active')
         boardBtn.classList.add('active')
+
+        displayBoardView()
     })
 
     listBtn.addEventListener('click', function(){
         listBtn.classList.add('active')
         boardBtn.classList.remove('active')
+
+        //displayListView()
     })
 }
-viewBtns()
 
 
-
-
-///////////////////CURRENT DATE///////////////////////////////
-function initializeDateFeature(){
-
-    function updateDateDisplay(){
-        const options = {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-        };
-        //Display full day to the UI
-        document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
-        //Display week day to UI
-        document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
-       
-        compareDates(currentDate)//compare localStorage object dates with current date
-    }
-    updateDateDisplay()
-
-
-    //Arrow buttons to change dates
-    function previousDate(){
-        currentDate.setDate(currentDate.getDate() - 1)
-        updateDateDisplay()
-    }
-
-    function nextDate(){
-        currentDate.setDate(currentDate.getDate() + 1)
-        updateDateDisplay()
-    }
-
-    //Listenting for a click on the arrow buttons
-    document.getElementById('previousBtn').addEventListener('click', previousDate)
-    document.getElementById('nextBtn').addEventListener('click', nextDate)
-}
-
-
-////////////////////////ADDING A CATEGORY/////////////////////////////Might move it to the form sections
+////////////////////////ADDING A CATEGORY/////////////////////////////
 let categories = [];
 function addNewCategory() {
     
@@ -287,6 +259,61 @@ function deleteCategories(){
     })
 }
 
+
+//////// Back to CURRENT DATE when "Today button" is clicked ///////
+let currentDate = new Date()
+function todayBtn(){
+    let currentDateForTodayButton = new Date()
+
+    const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+    };
+    //Display full day to the UI
+    document.getElementById('currentDate').textContent = currentDateForTodayButton.toLocaleDateString('en-US',options)
+    //Display week day to UI
+    document.getElementById('day-of-the-week').textContent = currentDateForTodayButton.toLocaleDateString('en-US', {weekday: "long"})
+    
+    compareDates(currentDateForTodayButton)//compare localStorage object dates with current date
+    currentDate = currentDateForTodayButton;
+}
+
+
+///////////////////CURRENT DATE///////////////////////////////
+function initializeDateFeature(){
+
+    function updateDateDisplay(){
+        const options = {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+        };
+        //Display full day to the UI
+        document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
+        //Display week day to UI
+        document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
+       
+        compareDates(currentDate)//compare localStorage object dates with current date
+    }
+    updateDateDisplay()
+
+
+    //Arrow buttons to change dates
+    function previousDate(){
+        currentDate.setDate(currentDate.getDate() - 1)
+        updateDateDisplay()
+    }
+
+    function nextDate(){
+        currentDate.setDate(currentDate.getDate() + 1)
+        updateDateDisplay()
+    }
+
+    //Listenting for a click on the arrow buttons
+    document.getElementById('previousBtn').addEventListener('click', previousDate)
+    document.getElementById('nextBtn').addEventListener('click', nextDate)
+}
 
 
 
@@ -1147,7 +1174,7 @@ function eventsTasksCounter(){
 
 
 ////Used when localStorage key is deleted manually////
-function savingDataInArr(){
+function initializeFormDataArray(){
     const savedFormItems = localStorage.getItem('FormData')
     formDataArr = JSON.parse(savedFormItems)
 
