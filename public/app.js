@@ -130,15 +130,137 @@ function viewBtns(){
     })
 }
 
+////////////////////////// CATEGORY SECTION /////////////////////////
 
-////////////////////////ADDING A CATEGORY/////////////////////////////
+//Hovering over the category x-icon
+function displayCategoryDeleteBtn(){
+    let paragraphEnclosingIcons = document.querySelectorAll('.new-category')
+    let xIcons = document.querySelectorAll('.categories-xmark-icon')
+
+    let paragraphEnclosingIconArr = Array.from(paragraphEnclosingIcons)
+    let xIconsArr = Array.from(xIcons)
+
+    paragraphEnclosingIconArr.map((category,i)=>{
+        category.addEventListener("mouseenter", function(){
+            xIconsArr[i].classList.add('visible')
+        })
+        category.addEventListener("mouseleave", function() {
+            // Remove the class from the xMarkCategory when the mouse leaves the newCategory
+            xIconsArr[i].classList.remove('visible')
+        })
+    }) 
+}
+
+//Display category options in form
+function displayCategoryOptions(catArr){
+    const categoryOption = document.getElementById('categories-option')
+    categoryOption.innerHTML = ""
+    
+    catArr.map((category)=>{
+        categoryOption.innerHTML += `<option class="category-option" value=${category}>${category}</option>`
+    }) 
+}
+
+//The category picker gets removed if no categories were created
+function deleteCategoryPickerContainer(catg){
+    const categoryContainer = document.querySelector('.select-category-container')
+    if(catg == '' || catg == [{}]){  //if
+       categoryContainer.classList.add('hideCategoryBox')
+    } else{
+        categoryContainer.classList.remove('hideCategoryBox')
+    }
+}
+
+////////////////Deleting a category///////////////
+function deleteCategories(){
+    const savedCategories = localStorage.getItem('MyCategoryList')
+    categories = JSON.parse(savedCategories)
+
+    const xIcons = document.querySelectorAll('.categories-xmark-icon');
+    let iconArr = Array.from(xIcons)
+    
+    //Use the index of iconArr array to find the index of the categories array 
+    iconArr.map((icon, i)=>{ 
+        icon.addEventListener('click', function(){
+          
+            //Remove selected i from the categories array when x-mark icon clicked, update localStorage, and update the UI
+            categories.splice(i, 1)
+            localStorage.setItem('MyCategoryList', JSON.stringify(categories))
+            
+            displayCreatedCategories()
+        })
+    })
+}
+///////////////// Display category ///////////////
+function displayCreatedCategories(){
+     const savedCategories = localStorage.getItem('MyCategoryList') //Array of objects
+     document.querySelector('.category-list-container').innerHTML = ""  
+     let categoryNamesArr = [];
+    
+   if(!savedCategories || savedCategories === '[]'){  //true false('[]')  
+        categories = JSON.parse(savedCategories) 
+       
+        if(!categories){ //null is falsy 
+            categories = []
+        }
+
+   } else{ //false false
+         categories = JSON.parse(savedCategories) //An array of objects
+
+         categories.map((category)=>{
+            document.querySelector('.category-list-container').innerHTML +=  `<p class="top-margin-menu new-category">${category.name}<i class="fa-solid fa-xmark categories-xmark-icon"></i></p>`
+            categoryNamesArr.push(category.name)
+         })           
+           
+        //Option to delete created category is now available
+        deleteCategories()
+   }
+
+   displayCategoryOptions(categoryNamesArr) //synching the category names with the category options available in the new entry form
+   deleteCategoryPickerContainer(categories) //Remove the categories option when no category created
+   displayCategoryDeleteBtn() //Display X icon
+}
+
+
+////////////// ADDING A CATEGORY /////////////////
+// Displaying Error Message 
+function categoryErrorMessage(message){
+    const errorMessage = document.getElementById('errorMessage');
+    errorMessage.innerHTML = message; 
+}
+//Remove error message when user starts typing
+document.getElementById('input-category').addEventListener('input', function(){
+    categoryErrorMessage("")
+})
+
+//Validate entry
+function validateInput(name){
+    //Check if the input is blank
+    if (name === "" || name === "Add a Category"){
+        categoryErrorMessage("Enter a category name")
+        return false;
+    } 
+        categoryErrorMessage("")//No error message
+        return true;
+}
+
+///Capitalize the first letter of a string
+function capitalizeFirstLetter(str){
+    return str.charAt(0).toUpperCase() + str.slice(1);
+        //charAt(0) = Extracts the character at index 0 of the string str
+        //.toUpperCase() = Converts the extracted character to uppercase
+        //str.slice(1) = Retrieves the entire word starting from index 1
+        // +  = Acts as a string concatenation operator to put it all back together
+}
+
+//Starting point
 let categories = [];
 function addNewCategory() {
     
     let inputCategory = document.getElementById('input-category')
     let categoryName = inputCategory.value.trim();
 
-    if(validateInput(categoryName)){
+    if(validateInput(categoryName)){ //true or false
         categoryName = capitalizeFirstLetter(categoryName);
 
         let category = {
@@ -162,102 +284,7 @@ function addNewCategory() {
 }
 
 
-//// Validating the category input box ////
-function validateInput(name){
-    //Check if the input is blank
-    if (name === "" || name === "Add a Category"){
-        categoryErrorMessage("Enter a category name")
-        return false;
-    } 
-        categoryErrorMessage("")
-        return true;
-}
-function categoryErrorMessage(message){
-    const errorMessage = document.getElementById('errorMessage');
-    errorMessage.innerHTML = message;
-}
 
-document.getElementById('input-category').addEventListener('input', function(){
-    categoryErrorMessage("")
-})
-
-function capitalizeFirstLetter(str){
-    //Capitalize the first letter of a string
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-
-///// Display category /////
-let paragraphContainer = document.querySelector('.category-list-container') //<div>
-
-function displayCreatedCategories(){
-     const savedCategories = localStorage.getItem('MyCategoryList') //Array of objects
-     paragraphContainer.innerHTML = ""  
-     let categoryNamesArr = [];
-    
-   if(!savedCategories || savedCategories === '[]'){  //true false('[]')  
-        categories = JSON.parse(savedCategories) 
-       
-        if(!categories){ //null is falsy 
-            categories = []
-        }
-
-   } else{ //false false
-         categories = JSON.parse(savedCategories) //An array of objects
-
-         categories.map((category)=>{
-            paragraphContainer.innerHTML +=  `<p class="top-margin-menu new-category">${category.name}<i class="fa-solid fa-xmark categories-xmark-icon"></i></p>`
-            categoryNamesArr.push(category.name)
-         })           
-           
-        //Option to delete created category is now available
-        deleteCategories()
-   }
-
-   displayCategoryOptions(categoryNamesArr) //synching the category names with the category options available in the new entry form
-   deleteCategoryPickerContainer(categories) //Remove the categories option when no category created
-   displayCategoryDeleteBtn()
-}
-
-///Hovering over the category x-icon////
-function displayCategoryDeleteBtn(){
-    let paragraphEnclosingIcons = document.querySelectorAll('.new-category')
-    let xIcons = document.querySelectorAll('.categories-xmark-icon')
-
-    let paragraphEnclosingIconArr = Array.from(paragraphEnclosingIcons)
-    let xIconsArr = Array.from(xIcons)
-
-    paragraphEnclosingIconArr.map((category,i)=>{
-        category.addEventListener("mouseenter", function(){
-            xIconsArr[i].classList.add('visible')
-        })
-        category.addEventListener("mouseleave", function() {
-            // Remove the class from the xMarkCategory when the mouse leaves the newCategory
-            xIconsArr[i].classList.remove('visible')
-        })
-    }) 
-}
-
-///Deleting a category////
-function deleteCategories(){
-    const savedCategories = localStorage.getItem('MyCategoryList')
-    categories = JSON.parse(savedCategories)
-
-    const xIcons = document.querySelectorAll('.categories-xmark-icon');
-    let iconArr = Array.from(xIcons)
-    
-    //Use the index of iconArr array to find the index of the categories array 
-    iconArr.map((icon, i)=>{ 
-        icon.addEventListener('click', function(){
-          
-            //Remove selected i from the categories array when x-mark icon clicked, update localStorage, and update the UI
-            categories.splice(i, 1)
-            localStorage.setItem('MyCategoryList', JSON.stringify(categories))
-            
-            displayCreatedCategories()
-        })
-    })
-}
 
 
 //////// Back to CURRENT DATE when "Today button" is clicked ///////
@@ -1572,26 +1599,6 @@ function displaySubtasks(subtasks){
 }
 
 
-
-/////////////Display category options///////////
-function displayCategoryOptions(catArr){
-    const categoryOption = document.getElementById('categories-option')
-    categoryOption.innerHTML = ""
-    
-    catArr.map((category)=>{
-        categoryOption.innerHTML += `<option class="category-option" value=${category}>${category}</option>`
-    }) 
-
-}
-
-function deleteCategoryPickerContainer(catg){
-    const categoryContainer = document.querySelector('.select-category-container')
-    if(catg == '' || catg == [{}]){  //if
-       categoryContainer.classList.add('hideCategoryBox')
-    } else{
-        categoryContainer.classList.remove('hideCategoryBox')
-    }
-}
 
 //Category value that user selects from drop-down list
 const categoriesOption = document.getElementById('categories-option')
