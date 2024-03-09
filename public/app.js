@@ -39,6 +39,12 @@ document.addEventListener('DOMContentLoaded', () =>{
     //Today button
     document.querySelector('.today').addEventListener('click', todayBtn)
 
+    //Upcoming button
+    document.querySelector('.upcoming-btn').addEventListener('click', openUpcomingContainer)
+
+    //Past Due button
+    document.querySelector('.pastDue-btn').addEventListener('click', openPastDueContainer)
+
     //Opens dropdown for view options
     document.querySelector('.view-options-container').addEventListener('click',function(event){
         viewOptions(event)
@@ -91,7 +97,6 @@ function UserProfileMenuBtn(event){
 function displayBoardView(){
     //
 }
-
 /////////////// VIEW OPTIONS (List or board) ///////////////
 function viewOptions(event){
     const viewBtn = document.querySelector('.view-options-innerDiv')
@@ -130,8 +135,9 @@ function viewBtns(){
     })
 }
 
-////////////////////////// CATEGORY SECTION /////////////////////////
 
+
+///////////////////////////////////////////// CATEGORY SECTION /////////////////////////////////////////
 //Hovering over the category x-icon
 function displayCategoryDeleteBtn(){
     let paragraphEnclosingIcons = document.querySelectorAll('.new-category')
@@ -287,7 +293,7 @@ function addNewCategory() {
 
 
 
-//////// Back to CURRENT DATE when "Today button" is clicked ///////
+//////// TODAY BUTTON ///////
 let currentDate = new Date()
 function todayBtn(){
     let currentDateForTodayButton = new Date()
@@ -303,11 +309,11 @@ function todayBtn(){
     document.getElementById('day-of-the-week').textContent = currentDateForTodayButton.toLocaleDateString('en-US', {weekday: "long"})
     
     compareDates(currentDateForTodayButton)//compare localStorage object dates with current date
-    currentDate = currentDateForTodayButton;
+    currentDate = currentDateForTodayButton; //update currenDate back to the actual current date if user clicked previousDate() or nextDate()
 }
 
 
-///////////////////CURRENT DATE///////////////////////////////
+///////////////////CURRENT DATE/////////////////////////
 function initializeDateFeature(){
 
     function updateDateDisplay(){
@@ -328,12 +334,12 @@ function initializeDateFeature(){
 
     //Arrow buttons to change dates
     function previousDate(){
-        currentDate.setDate(currentDate.getDate() - 1)
+        currentDate.setDate(currentDate.getDate() - 1) //changes currenDate to past date
         updateDateDisplay()
     }
 
     function nextDate(){
-        currentDate.setDate(currentDate.getDate() + 1)
+        currentDate.setDate(currentDate.getDate() + 1) //changes currenDate to future date
         updateDateDisplay()
     }
 
@@ -472,7 +478,7 @@ function editEntry(itemID){
          
     }
 
-    formDataArr.filter((dataEntry, i) =>{
+    formDataArr.filter((dataEntry) =>{
         if(dataEntry.id == itemID){
             
             reEnterEntryToForm(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location)
@@ -482,29 +488,19 @@ function editEntry(itemID){
 
 
 ////////////////////////// UPCOMING ///////////////////////
-const upcomingBtn = document.querySelector('.upcoming-btn')
 const upcomingContainer = document.querySelector('.upcoming-container')
 const upcomingXmark = document.querySelector('.exit-upcoming-container')
 const upcomingUlTag = document.getElementById('upcoming-items')
 
-upcomingXmark.addEventListener('click', function(){
-    removeUpcomingContainer()
-})
-upcomingBtn.addEventListener('click', function(){ 
-    upcomingContainer.classList.add('active')
-    editEntryCurrentID = '';
-    
-    upComingTodoItems()
-
-    //Close Past Due Container
-    removePastDueContainer()
-})
-
-//Remove container
+//Remove upcoming popup box
 function removeUpcomingContainer(){
     upcomingContainer.classList.remove('active')
     editEntryCurrentID = '';
 }
+upcomingXmark.addEventListener('click', function(){
+    removeUpcomingContainer()
+})
+
 
 //Display container
 function upComingTodoItems(){
@@ -526,22 +522,25 @@ function upComingTodoItems(){
     let upcomingTomorrow = formatDate(tomorrow)
 
     //Day after tomorrow
-    let nextDay = new Date(tomorrow.getTime() + 24 * 60 * 60 * 1000);
-    nextDay = formatDate(nextDay)
+    let nextDay = formatDate(new Date(tomorrow.getTime() + 24 * 60 * 60 * 1000));
 
-    
-    //Array used for display to-do items and html tag
+    //Array used to display to-do items and html tag
     let dataEntryArr = []; 
     upcomingUlTag.innerHTML = ""
 
     //Push only the necessary objects into the dataEntryArr
     formDataArr.filter((dataEntry) =>{
         if(dataEntry.date == upcomingCurrentDate || dataEntry.date == upcomingTomorrow || dataEntry.date == nextDay){
-           //grab two futures dates
-
-           dataEntryArr.push(dataEntry)
+           dataEntryArr.push(dataEntry) //push only present and future dates to array
         }
     })
+
+    // Before sorting, ensure consistent time representation:
+    dataEntryArr.forEach(entry => {
+        if (entry.time === "NaN: PM" || !entry.time || entry.time.trim() === "") {
+            entry.time = ""; // Replace NaN:PM with an empty string (or your desired value)
+        } 
+    });
 
     //Sort dataEntryArr by date and time
     dataEntryArr.sort((a, b) => {
@@ -551,28 +550,26 @@ function upComingTodoItems(){
     
         // Compare dates by timestamp (earlier date comes first)
         const dateComparison = dateA.getTime() - dateB.getTime();
-    
+
         // If dates are different, return the comparison result
         if (dateComparison !== 0) {
             return dateComparison;
         }
     
-        // **Both dates are equal, handle times (if any):**
-        // Invert logic to prioritize entries with time
-        return b.time ? -1 : (a.time ? 1 : 0); // Time before no time, same time order preserved
+        // Prioritize entries with time first
+        return (a.time || b.time) ? (a.time ? -1 : 1) : 0; // Time before no time, same time order preserved
+    
     });
-
-    //Gray out to-do items already finished
+   
+    //Loop through dataEntryArr to gray out to-do items already completed
     dataEntryArr.forEach((data)=>{
-
         let checked = localStorage.getItem(data.id) === 'true'
         if(checked){
-            data['checkStatus'] = checked
+            data['checkStatus'] = checked //Add property 'checkStatus' and value 'true'
         } else{
-            data['checkStatus'] = checked
+            data['checkStatus'] = checked //Add property 'checkStatus' and value 'false'
         }
     })
-
 
    //Display To-do items - if array is empty, it will display another message
    if(dataEntryArr.length === 0){
@@ -589,7 +586,7 @@ function upComingTodoItems(){
         
    } else{
         dataEntryArr.forEach((dataEntry)=>{
-      
+
         function displayUpcomingTodoItems(id, title, type, date, time, category, subtasks, color, checkStatus){
             let timeDisplay = ''
             if(time === 'NaN: PM' || !time){
@@ -600,18 +597,15 @@ function upComingTodoItems(){
             
             //Add subtasks if required
             let subtasksPresent = subtasks.filter(subtask => subtask.name); //true or false
-               
             let innerUl = ''
             let innerli = '- Subtasks present'
                
             if(subtasksPresent.length === 0){
                 innerUl =  `<ul class="innerUl hidden"></ul>`; //No subtask will display
             } else{
-
-                    innerUl = `<ul class="upcoming-innerUl">${innerli}<i class="fa-solid fa-diagram-successor"></i></ul>`;
+                innerUl = `<ul class="upcoming-innerUl">${innerli}<i class="fa-solid fa-diagram-successor"></i></ul>`; //Message will display
             }
                
-    
             upcomingUlTag.innerHTML += ` 
                                     <li class="upcoming-list-item" id="${id}">
                                     <div class="layer ${checkStatus}"></div> 
@@ -629,70 +623,66 @@ function upComingTodoItems(){
                                     </li>`
         }
         
-        //Display
+        //Display Upcoming items
         displayUpcomingTodoItems(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color, dataEntry.checkStatus)
 
 
-            //Edit eventlistener
-            const editBtns = document.querySelectorAll('.edit-upcoming-Btn')
-            editBtns.forEach((btn, i)=>{
-                btn.addEventListener('click', function(){
-                
-                //Open form
+        //Edit Eventlistener
+        const editBtns = document.querySelectorAll('.edit-upcoming-Btn')
+        editBtns.forEach((btn, i)=>{
+            btn.addEventListener('click', function(){
                 openForm()
                 
                 let currentID = Number(dataEntryArr[i].id)
                 editEntry(currentID) //Calling the edit function
-                })
             })
+        })
 
-
-            //Fullview eventListener
-            const viewBtns = document.querySelectorAll('.view-Btn')
-            viewBtns.forEach((btn, i)=>{
-                btn.addEventListener('click', function(){
-                    
-                    let currentID = Number(dataEntryArr[i].id)
+        //Fullview eventListener
+        const viewBtns = document.querySelectorAll('.view-Btn')
+        viewBtns.forEach((btn, i)=>{
+            btn.addEventListener('click', function(){     
+                let currentID = Number(dataEntryArr[i].id)
                  
-                    dataEntryArr.filter((entry)=>{
-                        if(entry.id == currentID){
-                        
+                dataEntryArr.filter((entry)=>{
+                    if(entry.id == currentID){       
                         /////FULL VIEW OF TODO LIST/////
                         viewFullDetailsOfTodoItem(entry.title, entry.date, entry.time, entry.type, entry.description, entry.subtasks, entry.category, entry.color, entry.location, entry.id) 
                         }
                     })
                 })
-            })
-
         })
-   }
+    })
+  }
 }
-//////////////// Outstanding tasks & events ///////////////////
+
+///Obtain upcoming items and display it
+function openUpcomingContainer(){
+    upcomingContainer.classList.add('active')
+    editEntryCurrentID = '';
+    upComingTodoItems()
+
+    //Close Past Due Container
+    removePastDueContainer()
+}
+
+
+
+//////////////////////// OUTSTANDING tasks & events ///////////////////////////
 
 //when button is clicked, it will open the window
-const pastDueBtn = document.querySelector('.pastDue-btn')
 const pastDueContainer = document.querySelector('.pastDue-container')
 const exitBtn = document.querySelector('.exit-pastDue-container')
 const pastDueUlTag = document.getElementById('pastDue-items')
 
 //Close container
-exitBtn.addEventListener('click', function(){
-    removePastDueContainer()
-})
 function removePastDueContainer(){
     pastDueContainer.classList.remove('active')
     editEntryCurrentID = '';
 }
 
-//Open container
-pastDueBtn.addEventListener('click', function(){ 
-    pastDueContainer.classList.add('active')
-    editEntryCurrentID = '';
-
-    //Close Upcoming
-    removeUpcomingContainer()
-
-   pastDueTodoItems()
+exitBtn.addEventListener('click', function(){
+    removePastDueContainer()
 })
 
 function pastDueTodoItems(){
@@ -719,7 +709,44 @@ function pastDueTodoItems(){
     });
     //console.log(pastDateObjects)
 
-           
+    //Add property and value (checkbox) /Some will be true and other false            
+    pastDateObjects.forEach((data)=>{
+        let checked = localStorage.getItem(data.id) === 'true'
+            if(checked){ //true means done!
+                data['checkStatus'] = checked //creating a new object (true = completed)
+            } else{
+                data['checkStatus'] = checked //creating a new object (false)
+                pastDueArr.push(data) //Add all false todo items in another way to be displayed
+            }
+            
+    }) 
+ 
+    // Before sorting, ensure consistent time representation:
+    pastDueArr.forEach(entry => {
+        if (entry.time === "NaN: PM" || !entry.time || entry.time.trim() === "") {
+            entry.time = ""; // Replace NaN:PM with an empty string (or your desired value)
+        } 
+    });
+
+    //Sort dataEntryArr by date and time
+    pastDueArr.sort((a, b) => {
+        // Parse dates
+        const dateA = new Date(Date.parse(a.date.replace(/\//g, "-")));
+        const dateB = new Date(Date.parse(b.date.replace(/\//g, "-")));
+    
+        // Compare dates by timestamp (earlier date comes first)
+        const dateComparison = dateA.getTime() - dateB.getTime();
+
+        // If dates are different, return the comparison result
+        if (dateComparison !== 0) {
+            return dateComparison;
+        }
+    
+        // Prioritize entries with time first
+        return (a.time || b.time) ? (a.time ? -1 : 1) : 0; // Time before no time, same time order preserved
+    
+    });
+    
     function displayPastDueTodoItems(id, title, type, date, time, category, subtasks, color, checkStatus){
         let timeDisplay = ''
             if(time === 'NaN: PM' || !time){
@@ -731,16 +758,14 @@ function pastDueTodoItems(){
         //Add subtasks if required
         let subtasksPresent = subtasks.filter(subtask => subtask.name); //true or false        
         let innerUl = ''
-            let innerli = '- Subtasks present'
+        let innerli = '- Subtasks present'
                    
             if(subtasksPresent.length === 0){
                 innerUl =  `<ul class="innerUl hidden"></ul>`; //No subtask will display
             } else{
-    
                 innerUl = `<ul class="pastDue-innerUl">${innerli}<i class="fa-solid fa-diagram-successor"></i></ul>`;
             }
                    
-        
             pastDueUlTag.innerHTML += ` 
                             <li class="pastDue-list-item" id="${id}">
                             <div class="layer ${checkStatus}"></div> 
@@ -756,14 +781,10 @@ function pastDueTodoItems(){
                                 ${innerUl} 
                             </li>`
 
-
-
         //Edit eventlistener
         const editBtns = document.querySelectorAll('.edit-pastDue-Btn')
         editBtns.forEach((btn, i)=>{
-       
             btn.addEventListener('click', function(){
-         
             //Open form
             openForm()
             
@@ -776,9 +797,7 @@ function pastDueTodoItems(){
         const viewBtns = document.querySelectorAll('.view-pastDue-Btn')
         viewBtns.forEach((btn, i)=>{
             btn.addEventListener('click', function(){
-                
                 let currentID = Number(pastDueArr[i].id)
-             
                 pastDueArr.filter((entry)=>{
                     if(entry.id == currentID){
                     
@@ -789,27 +808,8 @@ function pastDueTodoItems(){
             })
         })
 
-
-
-
     }
 
-    //Add property and value (checkbox) /Some will be true and other false            
-    pastDateObjects.forEach((data)=>{
-        let checked = localStorage.getItem(data.id) === 'true'
-       
-            if(checked){ //true means done!
-
-                data['checkStatus'] = checked //creating a new object (true = completed)
-              
-            } else{
-                data['checkStatus'] = checked //creating a new object (false)
-                pastDueArr.push(data) //Add all false todo items in another way to be displayed
-            }
-            
-    }) 
-
-    
     //Display Message to UI depending on array status
     if(pastDateObjects.length === 0){
         let imageUrl = "public/images/Empty-bro.svg";  
@@ -839,13 +839,19 @@ function pastDueTodoItems(){
 
             displayPastDueTodoItems(data.id, data.title, data.type, data.date, data.time, data.category, data.subtasks, data.color, data.checkStatus)
         })
-    }
-
-        
-          
+    }        
 }
 
+//Open container
+function openPastDueContainer(){
+    pastDueContainer.classList.add('active')
+    editEntryCurrentID = '';
 
+    //Close Upcoming
+    removeUpcomingContainer()
+
+    pastDueTodoItems()
+} 
 
 
 /////////////////////////////////// FULL VIEW OF TODO LIST ////////////////////////////////
