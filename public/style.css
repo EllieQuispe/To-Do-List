@@ -333,7 +333,6 @@ p.sideMenu-label:hover{
     flex-direction: column;
     align-items: center;
     margin-right: 14px;
-    height: 20px;
     cursor: pointer;
 }
 .view-options-innerDiv{
@@ -384,7 +383,7 @@ button.view-btns{
     cursor: pointer;
 }
 button.view-btns:hover{
-    background-color: #99999943;
+    background-color: #99999928;
 }
 
 button.list-btn{
@@ -463,7 +462,7 @@ button.board-btn.active{
     overflow-x: hidden;
     scrollbar-color: red;
     padding-left: 10%;
-    padding-right: 10%;
+    padding-right: 20%;
     height: 82%
 }
 ::-webkit-scrollbar {
@@ -507,7 +506,7 @@ li.list-item:hover{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-right: 24px;
+    padding-right: 14px;
 }
 .input-container{
     display: flex;
