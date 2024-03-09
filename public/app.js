@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     document.querySelector('.clear-btn').addEventListener('click', clearForm)
 
     //Initializing formDataArr as an "empty array" if nothing saved to localStorage
-    initializeFormDataArray() //initializeFormDataArray()
+    initializeFormDataArray()
 
     //Close fullview container
     document.querySelector('.exit-full-view').addEventListener('click', closeFullViewContainer)
@@ -55,6 +55,53 @@ document.addEventListener('DOMContentLoaded', () =>{
 })
 
 
+//// Open and Close new To-do item entry //////
+const todoNewEntryForm = document.querySelector('.new-todo-item-container')
+const todoListDisplay = document.querySelector('.middle-container')
+
+function openForm(){
+    todoListDisplay.classList.add('screen-size-40') //middle container change size
+    todoNewEntryForm.classList.add('display')
+
+    editEntryCurrentID = '';  //Remove id# from edit container
+   
+    clearForm()
+
+    //If list detail container is open
+    listDetailContainer.classList.remove('display-list-detail-container')
+}
+
+function closeForm(){
+    todoListDisplay.classList.remove('screen-size-40')
+    todoNewEntryForm.classList.remove('display')
+    editEntryCurrentID = '';  //Remove id# from edit container
+    
+    clearForm()
+}
+
+//Only displaying tasks or events that match the current date///
+// This will be List View
+
+let todoList = document.getElementById('todo-List')
+function compareDates(dateToCompare){
+  
+    const options={
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    }
+   //Changed date format to ##/##/####
+   let dateFormat = dateToCompare.toLocaleDateString('en-US', options) 
+   
+   todoList.innerHTML =""
+
+   formDataArr.filter((dataEntry)=>{
+    
+        if(dataEntry.date == dateFormat){    
+            displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color)
+        } 
+    })
+}
 
 ////////// Dropdown User Profile settings ////////
 function UserProfileMenuBtn(event){
@@ -91,6 +138,95 @@ function UserProfileMenuBtn(event){
 }
 
 
+/// Event & Task Counter ///
+const taskCountContainer=document.querySelector('.taskCount')
+const eventCountContainer=document.querySelector('.eventCount')
+
+function setTaskEventToZero(tasknum, eventnum){
+    taskCountContainer.innerHTML = tasknum
+    eventCountContainer.innerHTML = eventnum
+}
+function eventsTasksCounter(){
+    let taskCount = 0;
+    let eventCount = 0;
+
+    if(formDataArr == [] || formDataArr == null){
+        setTaskEventToZero(taskCount, eventCount)
+        return;
+    } 
+
+    //Both values should start at zero
+    setTaskEventToZero(taskCount, eventCount)
+    
+    formDataArr.map((dataEntry)=>{
+        if(dataEntry.type == "Task"){
+            taskCount++
+            taskCountContainer.innerHTML = taskCount
+
+        } else if (dataEntry.type == "Event"){
+            eventCount++
+            eventCountContainer.innerHTML = eventCount
+        }
+    })
+}
+
+
+//////// TODAY BUTTON ///////
+let currentDate = new Date()
+function todayBtn(){
+    let currentDateForTodayButton = new Date()
+
+    const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+    };
+    //Display full day to the UI
+    document.getElementById('currentDate').textContent = currentDateForTodayButton.toLocaleDateString('en-US',options)
+    //Display week day to UI
+    document.getElementById('day-of-the-week').textContent = currentDateForTodayButton.toLocaleDateString('en-US', {weekday: "long"})
+    
+    compareDates(currentDateForTodayButton)//compare localStorage object dates with current date
+    currentDate = currentDateForTodayButton; //update currenDate back to the actual current date if user clicked previousDate() or nextDate()
+}
+
+
+///////////////////CURRENT DATE/////////////////////////
+function initializeDateFeature(){
+
+    function updateDateDisplay(){
+        const options = {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+        };
+        //Display full day to the UI
+        document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
+        //Display week day to UI
+        document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
+       
+        compareDates(currentDate)//compare localStorage object dates with current date
+    }
+    updateDateDisplay()
+
+
+    //Arrow buttons to change dates
+    function previousDate(){
+        currentDate.setDate(currentDate.getDate() - 1) //changes currenDate to past date
+        updateDateDisplay()
+    }
+
+    function nextDate(){
+        currentDate.setDate(currentDate.getDate() + 1) //changes currenDate to future date
+        updateDateDisplay()
+    }
+
+    //Listenting for a click on the arrow buttons
+    document.getElementById('previousBtn').addEventListener('click', previousDate)
+    document.getElementById('nextBtn').addEventListener('click', nextDate)
+}
+
+
 
 ///////////////BOARD VIEW///////////////
 
@@ -98,12 +234,13 @@ function displayBoardView(){
     //
 }
 /////////////// VIEW OPTIONS (List or board) ///////////////
+//Open drop-down
 function viewOptions(event){
     const viewBtn = document.querySelector('.view-options-innerDiv')
     const viewDropdownContainer = document.querySelector('.dropdown-options')
 
     if(event.target.classList.contains('partag-view') || event.target.classList.contains('view-option-image')){
-        console.log('inside', event.target)
+        //console.log('inside', event.target)
         viewDropdownContainer.classList.add('active')
     } 
 
@@ -113,9 +250,8 @@ function viewOptions(event){
             viewDropdownContainer.classList.remove('active')
         }
     })
-
 }
-///Buttons color change///
+///List and Board colors when clicked///
 function viewBtns(){
     const boardBtn = document.querySelector('.board-btn')
     const listBtn = document.querySelector('.list-btn')
@@ -125,6 +261,7 @@ function viewBtns(){
         boardBtn.classList.add('active')
 
         displayBoardView()
+        console.log('board')
     })
 
     listBtn.addEventListener('click', function(){
@@ -132,10 +269,11 @@ function viewBtns(){
         boardBtn.classList.remove('active')
 
         //displayListView()
+        compareDates(currentDate)
+        console.log('clicked list button')
+
     })
 }
-
-
 
 ///////////////////////////////////////////// CATEGORY SECTION /////////////////////////////////////////
 //Hovering over the category x-icon
@@ -290,66 +428,6 @@ function addNewCategory() {
 }
 
 
-
-
-
-//////// TODAY BUTTON ///////
-let currentDate = new Date()
-function todayBtn(){
-    let currentDateForTodayButton = new Date()
-
-    const options = {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-    };
-    //Display full day to the UI
-    document.getElementById('currentDate').textContent = currentDateForTodayButton.toLocaleDateString('en-US',options)
-    //Display week day to UI
-    document.getElementById('day-of-the-week').textContent = currentDateForTodayButton.toLocaleDateString('en-US', {weekday: "long"})
-    
-    compareDates(currentDateForTodayButton)//compare localStorage object dates with current date
-    currentDate = currentDateForTodayButton; //update currenDate back to the actual current date if user clicked previousDate() or nextDate()
-}
-
-
-///////////////////CURRENT DATE/////////////////////////
-function initializeDateFeature(){
-
-    function updateDateDisplay(){
-        const options = {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-        };
-        //Display full day to the UI
-        document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
-        //Display week day to UI
-        document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
-       
-        compareDates(currentDate)//compare localStorage object dates with current date
-    }
-    updateDateDisplay()
-
-
-    //Arrow buttons to change dates
-    function previousDate(){
-        currentDate.setDate(currentDate.getDate() - 1) //changes currenDate to past date
-        updateDateDisplay()
-    }
-
-    function nextDate(){
-        currentDate.setDate(currentDate.getDate() + 1) //changes currenDate to future date
-        updateDateDisplay()
-    }
-
-    //Listenting for a click on the arrow buttons
-    document.getElementById('previousBtn').addEventListener('click', previousDate)
-    document.getElementById('nextBtn').addEventListener('click', nextDate)
-}
-
-
-
 //////////////////////////// EDIT To-do ITEM //////////////////////////////
 let typeOfTodo = '';
 let editEntryCurrentID;
@@ -485,6 +563,160 @@ function editEntry(itemID){
         }
     })
 }
+
+
+/////////////////////////////////// FULL VIEW OF TODO LIST ////////////////////////////////
+const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container
+function openFullViewContainer(){
+    listDetailContainer.classList.add('display-list-detail-container')
+    todoListDisplay.classList.add('screen-size-40') //not remove a window, just making it smaller
+
+    //If form is open, we do the below code
+    todoNewEntryForm.classList.remove('display')
+    clearForm()
+}
+function closeFullViewContainer(){
+    todoListDisplay.classList.remove('screen-size-40')//full screen
+    listDetailContainer.classList.remove('display-list-detail-container')
+}
+
+////// Delete entry 
+let fullViewID;
+function deleteEntry(currentListID){
+      
+        formDataArr.filter((dataEntry, i) =>{
+            if(dataEntry.id == currentListID){
+               
+                //Delete form or fullView container only if it's the current ID being deleted
+                
+                if(currentListID == fullViewID){
+                    closeForm()
+                    closeFullViewContainer()
+                } 
+                //Remove id# assigned in editEntry function
+                editEntryCurrentID = '';
+
+                //delete 
+                formDataArr.splice(i, 1)
+                localStorage.setItem('FormData', JSON.stringify(formDataArr))
+
+                //Update the UI
+                compareDates(currentDate)
+
+                //Remove selected checkbox by id 
+                dataEntry.subtasks.forEach((task, i)=>{
+                        localStorage.removeItem(dataEntry.subtasks[i].id)
+                })
+                
+                localStorage.removeItem(currentListID) 
+
+                //Reset counter
+                eventsTasksCounter() 
+
+                //Update upcoming items
+                upComingTodoItems()
+             
+            } 
+        }) 
+   
+}
+
+/////View All Details of Todo Item//////
+function viewFullDetailsOfTodoItem(title, date, time, type, description, subtasks, category, color, location, currentID){
+    let timeDisplay = ''
+    if(time === 'NaN: PM' || !time){
+        timeDisplay  
+    } else {
+        timeDisplay = `| ${time}`
+    }
+    
+
+    ///Add Subtask///
+    let subtaskDisplay;
+    if (subtasks.length > 0){
+        let ilTag = ''
+        subtasks.forEach((subtask)=>{
+            ilTag += `<li class="todo-subtask">${subtask.name}<span class="todo-pritority">${subtask.priority}</span></li>`
+        })
+        subtaskDisplay  = `<ul class="ulSubtask">${ilTag}</ul>`
+        
+    } else{
+        subtaskDisplay = `<p class="no-subtasks"></p>`
+    }
+    
+    ///UI interface///
+    fullListView.innerHTML = `<li id='todo-entry'>
+                                <div>
+                                <p id="type-of-List">${type}</p>
+                                <p class="entry-date-category-color">${date} ${timeDisplay} | ${category} <span class="color-box" style="background-color:${color};"></span></p>
+                                <h2 id="entry-title">${title}</h2>
+                                <p id="entry-description">${description}</p>
+                                <div class="subtask-container">
+                                    <p id="entry-subtasks">Subtask</p>
+                                    ${subtaskDisplay}
+                                </div>
+
+                                <p id="entry-location">Location<span class="location">${location}</span></p>
+                                
+                                </div>
+                                <div class="delete-edit-btn-container">
+                                    <button type="button" class="delete-btn">Delete</button>
+                                    <button type="button" class="main-edit-btn">Edit</button>
+                                </div>
+                            </li>`
+
+    openFullViewContainer() 
+
+    //delete option
+    let deleteBtn = fullListView.querySelector('.delete-btn')
+    deleteBtn.addEventListener('click', function(){
+        deleteEntry(currentID)
+    })
+
+    //Edit option
+    let mainEditBtn = fullListView.querySelector('.main-edit-btn')
+
+    mainEditBtn.addEventListener('click', function(){
+        openForm()
+        editEntry(currentID)
+    })
+   
+}
+// <button type="button" class="edit-btn">Edit</button> (might add it back to the above function)
+
+
+let fullListView = document.getElementById('full-list-view')
+function getList(){
+    //todoList = document.getElementById('todo-List') //list of item(s) displayed for selected date
+    let list = document.querySelectorAll('.list-item')
+    let listArr = Array.from(document.querySelectorAll('.list-item'))
+
+    
+    listArr.map((item, j)=>{
+        item.addEventListener('click', function(event){
+
+     
+            if(!(event.target.classList.contains('main-checkbox') || event.target.classList.contains('secondary-checkbox') || event.target.classList.contains('item-delete-Btn') || event.target.classList.contains('edit-Btn'))){
+                
+
+                let currentListID = Number(list[j].id) //Turn ID to number
+                editEntryCurrentID = ''; //Remove saved ID# if it's not being re-saved.
+                
+                fullListView.innerHTML= ""
+                formDataArr.filter((dataEntry)=>{
+                    if(dataEntry.id == currentListID ){
+                        fullViewID = dataEntry.id //Used when deleting the todo-item
+
+                        /////FULL VIEW OF TODO LIST/////
+                        viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.time, dataEntry.type, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location, dataEntry.id) 
+                                
+                        }  
+                    })
+                }               
+            })
+    }) 
+ 
+ }
 
 
 ////////////////////////// UPCOMING ///////////////////////
@@ -854,166 +1086,8 @@ function openPastDueContainer(){
 } 
 
 
-/////////////////////////////////// FULL VIEW OF TODO LIST ////////////////////////////////
-const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container
-function openFullViewContainer(){
-    listDetailContainer.classList.add('display-list-detail-container')
-    todoListDisplay.classList.add('screen-size-40') //not remove a window, just making it smaller
-
-    //If form is open, we do the below code
-    todoNewEntryForm.classList.remove('display')
-    clearForm()
-}
-function closeFullViewContainer(){
-    todoListDisplay.classList.remove('screen-size-40')//full screen
-    listDetailContainer.classList.remove('display-list-detail-container')
-}
-
-////// Delete entry /////
-let fullViewID;
-function deleteEntry(currentListID){
-      
-        formDataArr.filter((dataEntry, i) =>{
-            if(dataEntry.id == currentListID){
-               
-                //Delete form or fullView container only if it's the current ID being deleted
-                
-                if(currentListID == fullViewID){
-                    closeForm()
-                    closeFullViewContainer()
-                } 
-                //Remove id# assigned in editEntry function
-                editEntryCurrentID = '';
-
-                //delete 
-                formDataArr.splice(i, 1)
-                localStorage.setItem('FormData', JSON.stringify(formDataArr))
-
-                //Update the UI
-                compareDates(currentDate)
-
-                //Remove selected checkbox by id 
-                dataEntry.subtasks.forEach((task, i)=>{
-                        localStorage.removeItem(dataEntry.subtasks[i].id)
-                })
-                
-                localStorage.removeItem(currentListID) 
-
-                //Reset counter
-                eventsTasksCounter() 
-
-                //Update upcoming items
-                upComingTodoItems()
-             
-            } 
-        }) 
-   
-}
-
-/////View All Details of Todo Item//////
-function viewFullDetailsOfTodoItem(title, date, time, type, description, subtasks, category, color, location, currentID){
-    let timeDisplay = ''
-    if(time === 'NaN: PM' || !time){
-        timeDisplay  
-    } else {
-        timeDisplay = `| ${time}`
-    }
-    
-
-    ///Add Subtask///
-    let subtaskDisplay;
-    if (subtasks.length > 0){
-        let ilTag = ''
-        subtasks.forEach((subtask)=>{
-            ilTag += `<li class="todo-subtask">${subtask.name}<span class="todo-pritority">${subtask.priority}</span></li>`
-        })
-        subtaskDisplay  = `<ul class="ulSubtask">${ilTag}</ul>`
-        
-    } else{
-        subtaskDisplay = `<p class="no-subtasks"></p>`
-    }
-    
-    ///UI interface///
-    fullListView.innerHTML = `<li id='todo-entry'>
-                                <div>
-                                <p id="type-of-List">${type}</p>
-                                <p class="entry-date-category-color">${date} ${timeDisplay} | ${category} <span class="color-box" style="background-color:${color};"></span></p>
-                                <h2 id="entry-title">${title}</h2>
-                                <p id="entry-description">${description}</p>
-                                <div class="subtask-container">
-                                    <p id="entry-subtasks">Subtask</p>
-                                    ${subtaskDisplay}
-                                </div>
-
-                                <p id="entry-location">Location<span class="location">${location}</span></p>
-                                
-                                </div>
-                                <div class="delete-edit-btn-container">
-                                    <button type="button" class="delete-btn">Delete</button>
-                                    <button type="button" class="main-edit-btn">Edit</button>
-                                </div>
-                            </li>`
-
-    openFullViewContainer() 
-
-    //delete option
-    let deleteBtn = fullListView.querySelector('.delete-btn')
-    deleteBtn.addEventListener('click', function(){
-        deleteEntry(currentID)
-    })
-
-    //Edit option
-    let mainEditBtn = fullListView.querySelector('.main-edit-btn')
-
-    mainEditBtn.addEventListener('click', function(){
-        openForm()
-        editEntry(currentID)
-    })
-   
-}
-// <button type="button" class="edit-btn">Edit</button> (might add it back to the above function)
-
-
-let fullListView = document.getElementById('full-list-view')
-function getList(){
-    //todoList = document.getElementById('todo-List') //list of item(s) displayed for selected date
-    let list = document.querySelectorAll('.list-item')
-    let listArr = Array.from(document.querySelectorAll('.list-item'))
-
-    
-    listArr.map((item, j)=>{
-        item.addEventListener('click', function(event){
-
-     
-            if(!(event.target.classList.contains('main-checkbox') || event.target.classList.contains('secondary-checkbox') || event.target.classList.contains('item-delete-Btn') || event.target.classList.contains('edit-Btn'))){
-                
-
-                let currentListID = Number(list[j].id) //Turn ID to number
-                editEntryCurrentID = ''; //Remove saved ID# if it's not being re-saved.
-                
-                fullListView.innerHTML= ""
-                formDataArr.filter((dataEntry)=>{
-                    if(dataEntry.id == currentListID ){
-                        fullViewID = dataEntry.id //Used when deleting the todo-item
-
-                        /////FULL VIEW OF TODO LIST/////
-                        viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.time, dataEntry.type, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location, dataEntry.id) 
-                                
-                        }  
-                    })
-                }               
-            })
-    }) 
- 
- }
-
-
-
-
-
 ////////////////////// PREVIEW of To-do List, based on Selected Date //////////////////////
-
-///Tracking if checkboxes were clicked and saving it to localStorage for preview section///
+///Tracking if checkboxes were clicked
 function trackCheckboxStatus(){
     todoList = document.getElementById('todo-List') //updated UL element
 
@@ -1026,7 +1100,6 @@ function trackCheckboxStatus(){
             mySound.play()
             upComingTodoItems()
             pastDueTodoItems()
-
         });
 
     // Retrieve the checked state from local storage on page load
@@ -1149,61 +1222,6 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
 
 
 
-//Only displaying tasks or events that match the current date///
-let todoList = document.getElementById('todo-List')
-function compareDates(dateToCompare){
-  
-    const options={
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-    }
-   //Changed date format to ##/##/####
-   let dateFormat = dateToCompare.toLocaleDateString('en-US', options) 
-   
-   todoList.innerHTML =""
-
-   formDataArr.filter((dataEntry)=>{
-    
-        if(dataEntry.date == dateFormat){    
-            displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color)
-        } 
-    })
-}
-
-
-/// Event & Task Counter ///
-const taskCountContainer=document.querySelector('.taskCount')
-const eventCountContainer=document.querySelector('.eventCount')
-
-function setTaskEventToZero(tasknum, eventnum){
-    taskCountContainer.innerHTML = tasknum
-    eventCountContainer.innerHTML = eventnum
-}
-function eventsTasksCounter(){
-    let taskCount = 0;
-    let eventCount = 0;
-
-    if(formDataArr == [] || formDataArr == null){
-        setTaskEventToZero(taskCount, eventCount)
-        return;
-    } 
-
-
-    //Both values should start at zero
-    setTaskEventToZero(taskCount, eventCount)
-    
-    formDataArr.map((dataEntry)=>{
-        if(dataEntry.type == "Task"){
-            taskCount++
-            taskCountContainer.innerHTML = taskCount
-
-        } else if (dataEntry.type == "Event"){
-            eventCount++
-            eventCountContainer.innerHTML = eventCount
-        }
-    })
-}
 
 
 ////Used when localStorage key is deleted manually////
@@ -1222,30 +1240,6 @@ function initializeFormDataArray(){
 
 ////////////////////////////////// NEW ENTRY FORM //////////////////////////////////
 /*const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container */
-
-const todoNewEntryForm = document.querySelector('.new-todo-item-container')
-const todoListDisplay = document.querySelector('.middle-container')
-
-function openForm(){
-    todoListDisplay.classList.add('screen-size-40') //middle container change size
-    todoNewEntryForm.classList.add('display')
-
-    editEntryCurrentID = '';  //Remove id# from edit container
-   
-    clearForm()
-
-    //If list detail container is open
-    listDetailContainer.classList.remove('display-list-detail-container')
-}
-
-
-function closeForm(){
-    todoListDisplay.classList.remove('screen-size-40')
-    todoNewEntryForm.classList.remove('display')
-    editEntryCurrentID = '';  //Remove id# from edit container
-    
-    clearForm()
-}
 
 
 //// Validate Form ////
@@ -1347,9 +1341,6 @@ function getTitle(){
         const titleValue = titleInput.value.trim()  
         return titleValue
 }
-
-
-
 
 function toggleTaskEventHighlight(){
     const eventOption = document.getElementById('event-option')
