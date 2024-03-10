@@ -1,5 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', () =>{
+    
     //New category submission
     document.querySelector('.fa-circle-plus').addEventListener('click', addNewCategory)    
     //Call the function to display categories when the page loads
@@ -47,13 +48,15 @@ document.addEventListener('DOMContentLoaded', () =>{
 
     //Opens dropdown for view options
     document.querySelector('.view-options-container').addEventListener('click',function(event){
-        viewOptions(event)
-        viewBtns() //Change color of list and board button
+        viewOptions(event) //opens drop-down
     } )
-    
+
     
 })
 
+
+let listOption = true;
+let boardOption = false;
 
 //// Open and Close new To-do item entry //////
 const todoNewEntryForm = document.querySelector('.new-todo-item-container')
@@ -79,29 +82,7 @@ function closeForm(){
     clearForm()
 }
 
-//Only displaying tasks or events that match the current date///
-// This will be List View
 
-let todoList = document.getElementById('todo-List')
-function compareDates(dateToCompare){
-  
-    const options={
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-    }
-   //Changed date format to ##/##/####
-   let dateFormat = dateToCompare.toLocaleDateString('en-US', options) 
-   
-   todoList.innerHTML =""
-
-   formDataArr.filter((dataEntry)=>{
-    
-        if(dataEntry.date == dateFormat){    
-            displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color)
-        } 
-    })
-}
 
 ////////// Dropdown User Profile settings ////////
 function UserProfileMenuBtn(event){
@@ -174,65 +155,131 @@ function eventsTasksCounter(){
 //////// TODAY BUTTON ///////
 let currentDate = new Date()
 function todayBtn(){
-    let currentDateForTodayButton = new Date()
 
-    const options = {
+        let currentDateForTodayButton = new Date() //to bring user to the current day
+
+        const options = {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
-    };
-    //Display full day to the UI
-    document.getElementById('currentDate').textContent = currentDateForTodayButton.toLocaleDateString('en-US',options)
-    //Display week day to UI
-    document.getElementById('day-of-the-week').textContent = currentDateForTodayButton.toLocaleDateString('en-US', {weekday: "long"})
+        };
+
+        compareDates(currentDateForTodayButton)//compare localStorage object dates with current date and display it
+        currentDate = currentDateForTodayButton; //update currenDate back to the actual current date if user clicked previousDate() or nextDate()
+
+    if(listOption){
+        //Display full day to the UI
+        document.getElementById('currentDate').textContent = currentDateForTodayButton.toLocaleDateString('en-US',options)
+        //Display week day to UI
+        document.getElementById('day-of-the-week').textContent = currentDateForTodayButton.toLocaleDateString('en-US', {weekday: "long"})
+
+    } else{
+        console.log('TodayBtn (boardView) = Montn and year will be displayed')
+    }    
     
-    compareDates(currentDateForTodayButton)//compare localStorage object dates with current date
-    currentDate = currentDateForTodayButton; //update currenDate back to the actual current date if user clicked previousDate() or nextDate()
 }
 
+//Removes the current to-do items to replace it with board view.
+function boardViewDates(){
+
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero for month
+        const day = String(date.getDate()).padStart(2, '0'); // Add leading zero for day
+      
+        return `${month}/${day}/${year}`;
+    }
+    //Today's date
+    //let date = new Date();
+    //let today = formatDate(date)
+
+    //Tomorrow's date
+   // const tomorrow = new Date(date.getTime() + 24 * 60 * 60 * 1000); // Add 1 day
+   // let boardTomorrow = formatDate(tomorrow)
+
+    //Day after tomorrow
+   // let nextDay = formatDate(new Date(tomorrow.getTime() + 24 * 60 * 60 * 1000));
+
+    console.log('three dates')
+
+    //Display the dates;
+    todoList.innerHTML =""
+}
+
+
+let currentView = 'list'
+function changeView(newView){
+    if(newView !== currentView){
+        currentView = newView; 
+        listOption = newView === 'list';
+        currentDate = new Date() 
+    }
+    initializeDateFeature() //will be called for list and board 
+}
+
+document.querySelector('.list-btn').addEventListener('click', () => {
+    viewOptionsBtn() //change color
+    changeView('list')
+});
+
+document.querySelector('.board-btn').addEventListener('click', () => {
+    viewOptionsBtn() //change color
+    changeView('board')
+});
+
+//Arrow buttons to change dates
+function previousDate(){
+    if(listOption){
+        currentDate.setDate(currentDate.getDate() - 1) //changes currenDate to past date
+        initializeDateFeature()
+    } else{
+        console.log('BoardView - display the past three dates', currentDate)
+    }
+}
+
+function nextDate(){
+    if(listOption){
+        currentDate.setDate(currentDate.getDate() + 1) //changes currenDate to future date
+        initializeDateFeature()
+    } else{
+        console.log('BoardView - display the next three days', currentDate)
+    } 
+}
+
+//Listenting for a click on the arrow buttons
+document.getElementById('previousBtn').addEventListener('click', previousDate)
+document.getElementById('nextBtn').addEventListener('click', nextDate)
 
 ///////////////////CURRENT DATE/////////////////////////
 function initializeDateFeature(){
 
-    function updateDateDisplay(){
-        const options = {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-        };
-        //Display full day to the UI
-        document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
-        //Display week day to UI
-        document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
-       
-        compareDates(currentDate)//compare localStorage object dates with current date
-    }
-    updateDateDisplay()
+        function updateDateDisplay(){
+            const options = {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+            };
+            //Display full day to the UI
+            document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
+            //Display week day to UI
+            document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
+           
+            compareDates(currentDate)//compare localStorage object dates with current date    
+        }
 
-
-    //Arrow buttons to change dates
-    function previousDate(){
-        currentDate.setDate(currentDate.getDate() - 1) //changes currenDate to past date
-        updateDateDisplay()
-    }
-
-    function nextDate(){
-        currentDate.setDate(currentDate.getDate() + 1) //changes currenDate to future date
-        updateDateDisplay()
-    }
-
-    //Listenting for a click on the arrow buttons
-    document.getElementById('previousBtn').addEventListener('click', previousDate)
-    document.getElementById('nextBtn').addEventListener('click', nextDate)
+        if(listOption){
+            updateDateDisplay()
+           
+        } else{
+            document.getElementById('currentDate').textContent = ''
+            document.getElementById('day-of-the-week').textContent= ''
+            compareDates(currentDate) //Display currentDate in Board view mode
+        }
+    
 }
 
 
 
-///////////////BOARD VIEW///////////////
-
-function displayBoardView(){
-    //
-}
 /////////////// VIEW OPTIONS (List or board) ///////////////
 //Open drop-down
 function viewOptions(event){
@@ -240,40 +287,32 @@ function viewOptions(event){
     const viewDropdownContainer = document.querySelector('.dropdown-options')
 
     if(event.target.classList.contains('partag-view') || event.target.classList.contains('view-option-image')){
-        //console.log('inside', event.target)
         viewDropdownContainer.classList.add('active')
     } 
 
     document.addEventListener('click', function(event){
         if(!viewDropdownContainer.contains(event.target) && !viewBtn.contains(event.target)){
-           
             viewDropdownContainer.classList.remove('active')
         }
     })
 }
+
 ///List and Board colors when clicked///
-function viewBtns(){
+function viewOptionsBtn(){
     const boardBtn = document.querySelector('.board-btn')
     const listBtn = document.querySelector('.list-btn')
 
-    boardBtn.addEventListener('click', function(){
+    //Change background color on click
+    if(currentView == 'list'){
         listBtn.classList.remove('active')
         boardBtn.classList.add('active')
-
-        displayBoardView()
-        console.log('board')
-    })
-
-    listBtn.addEventListener('click', function(){
+    } else{
         listBtn.classList.add('active')
         boardBtn.classList.remove('active')
+    }
 
-        //displayListView()
-        compareDates(currentDate)
-        console.log('clicked list button')
-
-    })
 }
+
 
 ///////////////////////////////////////////// CATEGORY SECTION /////////////////////////////////////////
 //Hovering over the category x-icon
@@ -1221,8 +1260,37 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
 } 
 
 
+//Only displaying tasks or events that match the current date///
+// This will be List View
 
+let todoList = document.getElementById('todo-List')
+function compareDates(dateToCompare){
+  
+   if(listOption){
 
+        const options={
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        }
+        //Changed date format to ##/##/####
+        let dateFormat = dateToCompare.toLocaleDateString('en-US', options) 
+        todoList.innerHTML =""
+
+        formDataArr.filter((dataEntry)=>{
+            if(dataEntry.date == dateFormat){    
+
+                displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color)
+                } 
+        })
+
+   } else{
+
+    console.log('CompareDates: It will display boardview with three dates', dateToCompare) 
+    boardViewDates()
+   }
+   
+}
 
 ////Used when localStorage key is deleted manually////
 function initializeFormDataArray(){
