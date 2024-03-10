@@ -182,6 +182,10 @@ function todayBtn(){
 //Removes the current to-do items to replace it with board view.
 function boardViewDates(){
 
+     //Display the dates;
+     todoList.innerHTML =""
+
+    /*
     function formatDate(date) {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero for month
@@ -190,23 +194,108 @@ function boardViewDates(){
         return `${month}/${day}/${year}`;
     }
     //Today's date
-    //let date = new Date();
-    //let today = formatDate(date)
+    let date = new Date();
+    let today = formatDate(date)
 
     //Tomorrow's date
-   // const tomorrow = new Date(date.getTime() + 24 * 60 * 60 * 1000); // Add 1 day
-   // let boardTomorrow = formatDate(tomorrow)
+    const tomorrow = new Date(date.getTime() + 24 * 60 * 60 * 1000); // Add 1 day
+    let boardViewTomorrow = formatDate(tomorrow)
 
     //Day after tomorrow
-   // let nextDay = formatDate(new Date(tomorrow.getTime() + 24 * 60 * 60 * 1000));
+    let nextDay = formatDate(new Date(tomorrow.getTime() + 24 * 60 * 60 * 1000));
 
-    console.log('three dates')
+    console.log(today, boardViewTomorrow, nextDay) //I got this format because it will need to look like this for the comparison part
+    */
+   
+    let datesArr = [];
+    const options = {
+        day: 'numeric',
+    };
+    
+    //Today
+    let today = currentDate.toLocaleDateString('en-US',options)
 
-    //Display the dates;
-    todoList.innerHTML =""
+    //tomorrow
+    let currentDay = new Date(currentDate);
+    let tomorrowDay = new Date(currentDay.getTime() + 24 * 60 * 60 * 1000)
+    let tomorrow = tomorrowDay.toLocaleDateString('en-US',options)
+        
+    //Day after tomorrow
+    let nextDay = new Date(tomorrowDay.getTime() + 24 * 60 * 60 * 1000).toLocaleDateString('en-US',options)
+    datesArr.push(today, tomorrow, nextDay) //push dates to array -- console.log(datesArr) [10, 11, 12] as a string
+
+    //Add suffixes to dates in datesArr array
+    function getOrdinalSuffix (number){
+            const ones = number % 10;
+            const tens = Math.floor(number / 10) % 10;
+        
+            if (tens !== 1) {
+                switch (ones) {
+                case 1:
+                    return 'st';
+                case 2:
+                    return 'nd';
+                case 3:
+                    return 'rd';
+                default:
+                    return 'th';
+                }
+            } else{
+                // Special case for numbers between 11 and 13
+                return 'th';
+            }
+    }
+
+    //Update datesArr with ordinal suffixes
+    datesArr.map((date, i)=>{
+        let number = Number(date)
+        let ordinal = date + getOrdinalSuffix(number)
+        datesArr[i] = ordinal
+    })
+    console.log(datesArr) //[ '10th', '11th', '12th']
+
+       //datesArr[i] = week + datesArr[i] 
+        
+
+        //Display full day to the UI
+        //document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options) //day
+        //Display week day to UI
+        //document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
+           
+    
+//Get weeks (just 3)
+    let weekDay = []
+    const weekOptions = {weekday: 'long'}
+    
+    //Today
+    let todayWeekDay = currentDate.toLocaleDateString('en-US', weekOptions)
+  
+    //Tomorrow weekday
+    let dt = new Date(currentDate);
+        dt.setDate(dt.getDate() + 1);
+    let tomorrowWeekday = dt.toLocaleDateString('en-US', weekOptions);
+  
+    //Day after tomorrow's weekday
+    let dayAfterTomorrow = new Date(currentDate);
+        dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+    let dayAfterTomorrowWeekday = dayAfterTomorrow.toLocaleDateString('en-US', weekOptions);
+  
+    weekDay.push(todayWeekDay,tomorrowWeekday, dayAfterTomorrowWeekday)
+    console.log(weekDay)
+
+    //Now I have to unite it
+    let weekDayAndDateArray = weekDay.map((week, i)=>{
+        return week + " " + datesArr[i]
+    })
+    console.log(weekDayAndDateArray)//['Sunday, 10th', ....]
+
+    //Display the dates
+
+   
 }
 
 
+////////// ChangeView ///////////////
 let currentView = 'list'
 function changeView(newView){
     if(newView !== currentView){
@@ -227,7 +316,7 @@ document.querySelector('.board-btn').addEventListener('click', () => {
     changeView('board')
 });
 
-//Arrow buttons to change dates
+////Arrow buttons to change dates//
 function previousDate(){
     if(listOption){
         currentDate.setDate(currentDate.getDate() - 1) //changes currenDate to past date
@@ -236,7 +325,6 @@ function previousDate(){
         console.log('BoardView - display the past three dates', currentDate)
     }
 }
-
 function nextDate(){
     if(listOption){
         currentDate.setDate(currentDate.getDate() + 1) //changes currenDate to future date
@@ -273,7 +361,10 @@ function initializeDateFeature(){
         } else{
             document.getElementById('currentDate').textContent = ''
             document.getElementById('day-of-the-week').textContent= ''
-            compareDates(currentDate) //Display currentDate in Board view mode
+            compareDates(currentDate) //Display Board
+
+            //display Month and Year based on the three dates (left one)
+            //call the weekDayandDay Array
         }
     
 }
