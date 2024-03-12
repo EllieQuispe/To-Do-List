@@ -154,7 +154,69 @@ function eventsTasksCounter(){
 
 //////// TODAY BUTTON ///////
 let currentDate = new Date()
+
+let datesForBoardView;//dates arr with week
+function boardViewDates(){
+
+    console.log(currentDate)
+
+    //Display the dates;
+    todoList.innerHTML =""
+
+    //Get three dates
+    const today = currentDate;
+    let ThreeDatesHeading = [];
+
+    function getOrdinalSuffix (number){
+        const ones = number % 10;
+        const tens = Math.floor(number / 10) % 10;
+
+        if (tens !== 1) {
+            switch (ones) {
+            case 1:
+                return 'st';
+            case 2:
+                return 'nd';
+            case 3:
+                return 'rd';
+            default:
+                return 'th';
+            }
+        } else{
+            // Special case for numbers between 11 and 13
+            return 'th';
+        }
+    }
+
+    // Function to format the date with weekday, month, and ordinal indicator (st, nd, rd, th)
+    function formatDateWithDetails(date) {
+        const day = date.getDate();
+        const ordinal = getOrdinalSuffix(day)
+        const weekday = date.toLocaleDateString('en-US', { weekday: 'long' }); // Get full weekday name (e.g., Monday)
+        //const month = date.toLocaleDateString('en-US', { month: 'long' }); // Get full month name (e.g., March)
+        return `${weekday}, ${day}${ordinal}`;
+    }
+
+    // Get formatted date for today
+    const formattedToday = formatDateWithDetails(today);
+
+    // Get next two dates
+    const tomorrow = new Date(today.getTime() + (1000 * 60 * 60 * 24)); // Add one day
+    const nextDayAfterTomorrow = new Date(tomorrow.getTime() + (1000 * 60 * 60 * 24)); // Add another day
+
+    // Format the next two dates with weekday, month, and ordinal indicators
+    const formattedTomorrow = formatDateWithDetails(tomorrow);
+    const formattedNextDayAfterTomorrow = formatDateWithDetails(nextDayAfterTomorrow);
+    
+    ThreeDatesHeading.push(formattedToday,formattedTomorrow, formattedNextDayAfterTomorrow)
+
+    //console.log(ThreeDatesArr) ['March, Tuesday 12th', ....., .....]
+    return ThreeDatesHeading
+  
+}
 function todayBtn(){
+
+    if(listOption){
 
         let currentDateForTodayButton = new Date() //to bring user to the current day
 
@@ -167,132 +229,37 @@ function todayBtn(){
         compareDates(currentDateForTodayButton)//compare localStorage object dates with current date and display it
         currentDate = currentDateForTodayButton; //update currenDate back to the actual current date if user clicked previousDate() or nextDate()
 
-    if(listOption){
         //Display full day to the UI
         document.getElementById('currentDate').textContent = currentDateForTodayButton.toLocaleDateString('en-US',options)
         //Display week day to UI
         document.getElementById('day-of-the-week').textContent = currentDateForTodayButton.toLocaleDateString('en-US', {weekday: "long"})
 
     } else{
-        console.log('TodayBtn (boardView) = Montn and year will be displayed')
-    }    
-    
-}
 
-//Removes the current to-do items to replace it with board view.
-function boardViewDates(){
+        //Update Date
+        let currentDateForTodayButton = new Date() //March 12th
 
-     //Display the dates;
-     todoList.innerHTML =""
-
-    /*
-    function formatDate(date) {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero for month
-        const day = String(date.getDate()).padStart(2, '0'); // Add leading zero for day
-      
-        return `${month}/${day}/${year}`;
-    }
-    //Today's date
-    let date = new Date();
-    let today = formatDate(date)
-
-    //Tomorrow's date
-    const tomorrow = new Date(date.getTime() + 24 * 60 * 60 * 1000); // Add 1 day
-    let boardViewTomorrow = formatDate(tomorrow)
-
-    //Day after tomorrow
-    let nextDay = formatDate(new Date(tomorrow.getTime() + 24 * 60 * 60 * 1000));
-
-    console.log(today, boardViewTomorrow, nextDay) //I got this format because it will need to look like this for the comparison part
-    */
-   
-    let datesArr = [];
-    const options = {
-        day: 'numeric',
-    };
-    
-    //Today
-    let today = currentDate.toLocaleDateString('en-US',options)
-
-    //tomorrow
-    let currentDay = new Date(currentDate);
-    let tomorrowDay = new Date(currentDay.getTime() + 24 * 60 * 60 * 1000)
-    let tomorrow = tomorrowDay.toLocaleDateString('en-US',options)
-        
-    //Day after tomorrow
-    let nextDay = new Date(tomorrowDay.getTime() + 24 * 60 * 60 * 1000).toLocaleDateString('en-US',options)
-    datesArr.push(today, tomorrow, nextDay) //push dates to array -- console.log(datesArr) [10, 11, 12] as a string
-
-    //Add suffixes to dates in datesArr array
-    function getOrdinalSuffix (number){
-            const ones = number % 10;
-            const tens = Math.floor(number / 10) % 10;
-        
-            if (tens !== 1) {
-                switch (ones) {
-                case 1:
-                    return 'st';
-                case 2:
-                    return 'nd';
-                case 3:
-                    return 'rd';
-                default:
-                    return 'th';
-                }
-            } else{
-                // Special case for numbers between 11 and 13
-                return 'th';
-            }
-    }
-
-    //Update datesArr with ordinal suffixes
-    datesArr.map((date, i)=>{
-        let number = Number(date)
-        let ordinal = date + getOrdinalSuffix(number)
-        datesArr[i] = ordinal
-    })
-    console.log(datesArr) //[ '10th', '11th', '12th']
-
-       //datesArr[i] = week + datesArr[i] 
-        
+        const options = {
+                year: 'numeric',
+                month: 'long',
+        };
 
         //Display full day to the UI
-        //document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options) //day
-        //Display week day to UI
-        //document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
-           
-    
-//Get weeks (just 3)
-    let weekDay = []
-    const weekOptions = {weekday: 'long'}
-    
-    //Today
-    let todayWeekDay = currentDate.toLocaleDateString('en-US', weekOptions)
-  
-    //Tomorrow weekday
-    let dt = new Date(currentDate);
-        dt.setDate(dt.getDate() + 1);
-    let tomorrowWeekday = dt.toLocaleDateString('en-US', weekOptions);
-  
-    //Day after tomorrow's weekday
-    let dayAfterTomorrow = new Date(currentDate);
-        dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
-    let dayAfterTomorrowWeekday = dayAfterTomorrow.toLocaleDateString('en-US', weekOptions);
-  
-    weekDay.push(todayWeekDay,tomorrowWeekday, dayAfterTomorrowWeekday)
-    console.log(weekDay)
+        currentDate = currentDateForTodayButton; //update currentDate
 
-    //Now I have to unite it
-    let weekDayAndDateArray = weekDay.map((week, i)=>{
-        return week + " " + datesArr[i]
-    })
-    console.log(weekDayAndDateArray)//['Sunday, 10th', ....]
+        document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
+        datesForBoardView = boardViewDates() 
 
-    //Display the dates
-
-   
+        console.log(datesForBoardView)
+         
+        compareDates(currentDateForTodayButton)//back to current date 
+          
+         
+    }      
 }
+
+
+
 
 
 ////////// ChangeView ///////////////
@@ -301,7 +268,6 @@ function changeView(newView){
     if(newView !== currentView){
         currentView = newView; 
         listOption = newView === 'list';
-        currentDate = new Date() 
     }
     initializeDateFeature() //will be called for list and board 
 }
@@ -316,13 +282,16 @@ document.querySelector('.board-btn').addEventListener('click', () => {
     changeView('board')
 });
 
-////Arrow buttons to change dates//
+
+
+////Arrow buttons to change dates////
 function previousDate(){
     if(listOption){
         currentDate.setDate(currentDate.getDate() - 1) //changes currenDate to past date
         initializeDateFeature()
     } else{
-        console.log('BoardView - display the past three dates', currentDate)
+        currentDate.setDate(currentDate.getDate() - 3)
+        initializeDateFeature()
     }
 }
 function nextDate(){
@@ -330,7 +299,8 @@ function nextDate(){
         currentDate.setDate(currentDate.getDate() + 1) //changes currenDate to future date
         initializeDateFeature()
     } else{
-        console.log('BoardView - display the next three days', currentDate)
+        currentDate.setDate(currentDate.getDate() + 3)
+        initializeDateFeature()
     } 
 }
 
@@ -355,19 +325,134 @@ function initializeDateFeature(){
             compareDates(currentDate)//compare localStorage object dates with current date    
         }
 
+        function boardViewDateDisplay(){
+            const options = {
+                year: 'numeric',
+                month: 'long',
+            };
+            //Display full day to the UI
+            document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
+                //currentDate depends on arrow buttons +3 or -3 and its working
+        } 
+
+
+
         if(listOption){
             updateDateDisplay()
            
         } else{
             document.getElementById('currentDate').textContent = ''
-            document.getElementById('day-of-the-week').textContent= ''
-            compareDates(currentDate) //Display Board
+            document.getElementById('day-of-the-week').textContent= '' 
 
-            //display Month and Year based on the three dates (left one)
-            //call the weekDayandDay Array
+            datesForBoardView = boardViewDates() // ['Tuesday 12th', ....., .....] 
+            //console.log(datesForBoardView) 
+            
+
+            //Update main Date heading
+            boardViewDateDisplay()
+
+            //Display to preview
+            compareDates(currentDate) //Display Board
         }
-    
 }
+
+/*
+function displayBoardPreviewTodoList()*/ //it used to be the array to display it
+
+let dateContainer = document.querySelector('.date-container')
+
+function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
+    const columns = []; // Array to store the formatted columns
+    let innerUl = ''
+    let innerli = ''
+    let timeDisplay = ''
+    
+    function todoListTime(time){
+        if(time === 'NaN: PM' || !time){
+            timeDisplay  
+        } else {
+            timeDisplay = `| ${time}`
+        }
+    }
+
+    function subTask(subtasks){
+        if(subtasks.length === 0){
+            innerUl =  `<ul class="innerUl hidden"></ul>`
+        } else{
+            subtasks.forEach((subtask)=>{
+                if (subtask.name !== ''){
+                    subName = subtask.name
+                    subPriority = subtask.priority
+                    subId = subtask.id
+                 
+                    innerli += `<li class="innerList">
+                                <label class="container">
+                                <input type="checkbox" id="${subId}" class="checkbox secondary-checkbox">
+                                <span class="subtask-checkmark secondary-checkbox"></span>
+                                </label>
+                                <p class="subtask-name">${subName} <span class="priority-selected">${subPriority}</span> </p>
+                              </li>`
+                }
+            });
+            innerUl = `<ul class="innerUl">${innerli}</ul>`;
+        }
+    }
+ 
+    // Loop through each date and corresponding entry (if any)
+    for (let i = 0; i < 3; i++) {
+      let columnContent = `
+        <div class="date-heading">
+          <p class="date-week">${dateToCompare[i]}</p>
+        </div>
+      `;
+  
+      const matchingEntry = selectedEntries.find(
+        (data) => data.date === currentThreeDates[i]
+      );
+  
+      if (matchingEntry) {
+            subTask(matchingEntry.subtasks)
+            todoListTime(matchingEntry.time)
+
+            columnContent += `
+                        <li class="list-item-board" id="${matchingEntry.id}">
+                                <div class="row-list">
+                                    <div class="input-container">
+                                        <label class="container"><input type="checkbox" id="${matchingEntry.id}" class="checkbox main-checkbox"><span class="checkmark main-checkbox"></span></label> ${matchingEntry.title}
+                                    </div>
+                                </div>
+
+                                <p class="list-details">${matchingEntry.date} ${timeDisplay} | ${matchingEntry.type} | ${matchingEntry.category}<span class="color-box" style="background-color:${matchingEntry.color};"></span></p>
+                                    ${innerUl} 
+                            </li>`;
+                        
+  
+            }
+  
+        columns.push(columnContent);
+
+    }
+
+   //console.log(columns)
+   columns.forEach((item, i)=>{
+    dateContainer.innerHTML += `<div class="date-innerContainer">
+        ${item}
+    </div>
+    `
+   })
+
+   /*
+    // Update the container with all formatted columns
+    dateContainer.innerHTML += `
+    <div class="date-innerContainer">
+    ${columns.join('')}
+    </div>
+    `;
+    */
+       
+  
+    
+  }
 
 
 
@@ -388,18 +473,26 @@ function viewOptions(event){
     })
 }
 
+
 ///List and Board colors when clicked///
 function viewOptionsBtn(){
     const boardBtn = document.querySelector('.board-btn')
     const listBtn = document.querySelector('.list-btn')
+    const viewOption = document.querySelector('.todo-List')
+    const dateContainer = document.querySelector('.date-container')
 
     //Change background color on click
     if(currentView == 'list'){
         listBtn.classList.remove('active')
         boardBtn.classList.add('active')
+        viewOption.classList.add('todo-board') //preview todo list
+        dateContainer.classList.add('active')
+
     } else{
         listBtn.classList.add('active')
         boardBtn.classList.remove('active')
+        viewOption.classList.remove('todo-board') //preview todo list
+        dateContainer.classList.remove('active')
     }
 
 }
@@ -817,7 +910,6 @@ function viewFullDetailsOfTodoItem(title, date, time, type, description, subtask
 
 let fullListView = document.getElementById('full-list-view')
 function getList(){
-    //todoList = document.getElementById('todo-List') //list of item(s) displayed for selected date
     let list = document.querySelectorAll('.list-item')
     let listArr = Array.from(document.querySelectorAll('.list-item'))
 
@@ -1219,7 +1311,8 @@ function openPastDueContainer(){
 ////////////////////// PREVIEW of To-do List, based on Selected Date //////////////////////
 ///Tracking if checkboxes were clicked
 function trackCheckboxStatus(){
-    todoList = document.getElementById('todo-List') //updated UL element
+   // todoList = document.getElementById('todo-List') //updated UL element
+    todoList = document.querySelector('.todo-List')
 
     //Add an event listener to the checkboxes
     document.querySelectorAll('.container input').forEach(checkbox => {
@@ -1352,9 +1445,8 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
 
 
 //Only displaying tasks or events that match the current date///
-// This will be List View
-
-let todoList = document.getElementById('todo-List')
+//let todoList = document.getElementById('todo-List')
+let todoList = document.querySelector('.todo-List')
 function compareDates(dateToCompare){
   
    if(listOption){
@@ -1377,8 +1469,40 @@ function compareDates(dateToCompare){
 
    } else{
 
-    console.log('CompareDates: It will display boardview with three dates', dateToCompare) 
-    boardViewDates()
+        let currentThreeDates = []
+        dateContainer.innerHTML = " " 
+
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero for month
+            const day = String(date.getDate()).padStart(2, '0'); // Add leading zero for day
+        
+            return `${month}/${day}/${year}`;
+        }
+        //Today's date
+        let date = dateToCompare;
+        let today = formatDate(date)
+        
+
+        //Tomorrow's date
+        const tomorrow = new Date(date.getTime() + 24 * 60 * 60 * 1000); // Add 1 day
+        let boardViewTomorrow = formatDate(tomorrow)
+
+        //Day after tomorrow
+        let nextDay = formatDate(new Date(tomorrow.getTime() + 24 * 60 * 60 * 1000));
+        //Push to array
+        currentThreeDates.push(today, boardViewTomorrow, nextDay)
+
+
+
+        let selectedEntries = formDataArr.filter((dataEntry, i)=>{
+            if(dataEntry.date == currentThreeDates[0] || dataEntry.date == currentThreeDates[1] || dataEntry.date == currentThreeDates[2]){
+                return dataEntry         
+            } 
+        })
+
+        displayWeek(datesForBoardView, selectedEntries, currentThreeDates)
+      
    }
    
 }
