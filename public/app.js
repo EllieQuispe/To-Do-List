@@ -158,8 +158,6 @@ let currentDate = new Date()
 let datesForBoardView;//dates arr with week
 function boardViewDates(){
 
-    console.log(currentDate)
-
     //Display the dates;
     todoList.innerHTML =""
 
@@ -249,8 +247,6 @@ function todayBtn(){
 
         document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
         datesForBoardView = boardViewDates() 
-
-        console.log(datesForBoardView)
          
         compareDates(currentDateForTodayButton)//back to current date 
           
@@ -265,21 +261,26 @@ function todayBtn(){
 ////////// ChangeView ///////////////
 let currentView = 'list'
 function changeView(newView){
-    if(newView !== currentView){
-        currentView = newView; 
-        listOption = newView === 'list';
+    if(newView !== 'list'){
+        currentView = newView; //currentView is now board
+        listOption = newView === 'list'; //listOption is false
+    }else{
+        listOption = newView === 'list'
     }
     initializeDateFeature() //will be called for list and board 
 }
 
 document.querySelector('.list-btn').addEventListener('click', () => {
+    currentView = 'list'
     viewOptionsBtn() //change color
     changeView('list')
 });
 
 document.querySelector('.board-btn').addEventListener('click', () => {
+    currentView = 'board'
     viewOptionsBtn() //change color
     changeView('board')
+
 });
 
 
@@ -341,6 +342,7 @@ function initializeDateFeature(){
             updateDateDisplay()
            
         } else{
+            console.log(listOption)
             document.getElementById('currentDate').textContent = ''
             document.getElementById('day-of-the-week').textContent= '' 
 
@@ -478,21 +480,29 @@ function viewOptions(event){
 function viewOptionsBtn(){
     const boardBtn = document.querySelector('.board-btn')
     const listBtn = document.querySelector('.list-btn')
-    const viewOption = document.querySelector('.todo-List')
+    const listView = document.querySelector('.todo-List')
     const dateContainer = document.querySelector('.date-container')
+    
+    
 
     //Change background color on click
-    if(currentView == 'list'){
+    if(currentView == 'board'){
+        
+        //all these things are actually for board
         listBtn.classList.remove('active')
-        boardBtn.classList.add('active')
-        viewOption.classList.add('todo-board') //preview todo list
-        dateContainer.classList.add('active')
+        boardBtn.classList.add('active') //background color orange 
+
+        //Add or remove boardview or listview
+        listView.classList.add('active') //remove listview
+        dateContainer.classList.add('active') //add boardview
 
     } else{
         listBtn.classList.add('active')
         boardBtn.classList.remove('active')
-        viewOption.classList.remove('todo-board') //preview todo list
-        dateContainer.classList.remove('active')
+
+         //Add or remove boardview or listview
+        listView.classList.remove('active') //add back listview
+        dateContainer.classList.remove('active')//remove boardview
     }
 
 }
@@ -2105,6 +2115,7 @@ function submitForm(ev){
         localStorage.setItem('FormData', JSON.stringify(formDataArr))
  
         //Call the function that will display the categories
+        console.log(currentDate)
         compareDates(currentDate)
         closeForm()
         eventsTasksCounter()
