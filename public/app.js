@@ -425,6 +425,13 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
                                     <div class="input-container">
                                         <label class="container"><input type="checkbox" id="${entry.id}" class="checkbox main-checkbox"><span class="checkmark main-checkbox"></span></label> ${entry.title}
                                     </div>
+                                    <div class="menu-container">
+                                      <i class="fa-solid fa-ellipsis-vertical"></i>
+                                      <div class="btn-board-container">
+                                      <button type="button" class="edit-Btn">Edit</button> <button type="button" class="item-delete-Btn">Delete</button> 
+                                      </div>
+                                    </div>
+
                                 </div>
 
                                 <p class="list-details">${entry.date} ${timeDisplay} | ${entry.type} | ${entry.category}<span class="color-box" style="background-color:${entry.color};"></span></p>
@@ -435,8 +442,16 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
         }
   
         columns.push(columnContent);
-
+       
     }
+    /*
+                            <div>
+                                <button type="button" class="edit-Btn">Edit</button> <button type="button" class="item-delete-Btn">Delete</button> 
+                            </div>
+
+                            edit-boardview-btn
+                            delete-boardview-btn
+    */
 
    //console.log(columns)
    columns.forEach((item, i)=>{
@@ -445,42 +460,11 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
     </div>
     `
    })
+
+   getList() //display fullview
     
   }
 
-/*
-
-      //Add subtasks if required
-    let subtasksPresent = subtasks.filter(subtask => subtask.name); //true or false
-   
-    let innerUl = ''
-    let innerli = ''
-    let subName = ''
-    let subId = ''
-    let subPriority = ''
-
-   
-    if(subtasksPresent.length === 0){
-        innerUl =  `<ul class="innerUl hidden"></ul>`;
-    } else{
-        subtasks.forEach((subtask)=>{
-            if (subtask.name !== ''){
-                subName = subtask.name
-                subPriority = subtask.priority
-                subId = subtask.id
-             
-                innerli += `<li class="innerList">
-                            <label class="container">
-                            <input type="checkbox" id="${subId}" class="checkbox secondary-checkbox">
-                            <span class="subtask-checkmark secondary-checkbox"></span>
-                            </label>
-                            <p class="subtask-name">${subName} <span class="priority-selected">${subPriority}</span> </p>
-                          </li>`
-            }
-        });
-        innerUl = `<ul class="innerUl">${innerli}</ul>`;
-    }
-*/
 
 /////////////// VIEW OPTIONS (List or board) ///////////////
 //Open drop-down
@@ -957,7 +941,7 @@ function getList(){
      
             if(!(event.target.classList.contains('main-checkbox') || event.target.classList.contains('secondary-checkbox') || event.target.classList.contains('item-delete-Btn') || event.target.classList.contains('edit-Btn'))){
                 
-
+                console.log(list)
                 let currentListID = Number(list[j].id) //Turn ID to number
                 editEntryCurrentID = ''; //Remove saved ID# if it's not being re-saved.
                 
@@ -973,8 +957,35 @@ function getList(){
                     })
                 }               
             })
-    }) 
- 
+    })
+
+    //Board-View to open fullview
+    let boardTodoItems = document.querySelectorAll('li.list-item-board')
+    let boardListArr = Array.from(document.querySelectorAll('li.list-item-board'))
+
+    boardListArr.map((item, i)=>{
+        item.addEventListener('click', function(event){
+
+          
+            if(!(event.target.classList.contains('main-checkbox') || event.target.classList.contains('secondary-checkbox') || event.target.classList.contains('item-delete-Btn') || event.target.classList.contains('edit-Btn') || event.target.classList.contains('fa-ellipsis-vertical'))){
+
+                console.log(boardTodoItems)
+                let currentListID = Number(boardTodoItems[i].id) //Turn ID to number
+                editEntryCurrentID = ''; //Remove saved ID# if it's not being re-saved.
+
+                fullListView.innerHTML= ""
+                formDataArr.filter((dataEntry)=>{
+                    if(dataEntry.id == currentListID ){
+                        fullViewID = dataEntry.id //Used when deleting the todo-item
+
+                        /////FULL VIEW OF TODO LIST/////
+                        viewFullDetailsOfTodoItem(dataEntry.title,dataEntry.date, dataEntry.time, dataEntry.type, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location, dataEntry.id) 
+                                
+                        }  
+                    })
+            }
+        })
+    })
  }
 
 
@@ -1495,7 +1506,7 @@ function compareDates(dateToCompare){
         }
         //Changed date format to ##/##/####
         let dateFormat = dateToCompare.toLocaleDateString('en-US', options) 
-        todoList.innerHTML =""
+        todoList.innerHTML = " "
 
         formDataArr.filter((dataEntry)=>{
             if(dataEntry.date == dateFormat){    
