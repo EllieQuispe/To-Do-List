@@ -342,7 +342,6 @@ function initializeDateFeature(){
             updateDateDisplay()
            
         } else{
-            console.log(listOption)
             document.getElementById('currentDate').textContent = ''
             document.getElementById('day-of-the-week').textContent= '' 
 
@@ -408,28 +407,32 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
         </div>
       `;
   
-      const matchingEntry = selectedEntries.find(
-        (data) => data.date === currentThreeDates[i]
+      const matchingEntry = selectedEntries.filter(
+        (data) => data.date === currentThreeDates[i] //three match 03/12/24 [{},{},{}]
       );
-  
-      if (matchingEntry) {
-            subTask(matchingEntry.subtasks)
-            todoListTime(matchingEntry.time)
+        
+     
+      if(matchingEntry.length > 0){
+            for(const entry of matchingEntry){
+                subTask(entry.subtasks) //this works for one but not more than one [ ]
+                todoListTime(entry.time)
+            
+            
 
-            columnContent += `
-                        <li class="list-item-board" id="${matchingEntry.id}">
+                columnContent += `
+                        <li class="list-item-board" id="${entry.id}">
                                 <div class="row-list">
                                     <div class="input-container">
-                                        <label class="container"><input type="checkbox" id="${matchingEntry.id}" class="checkbox main-checkbox"><span class="checkmark main-checkbox"></span></label> ${matchingEntry.title}
+                                        <label class="container"><input type="checkbox" id="${entry.id}" class="checkbox main-checkbox"><span class="checkmark main-checkbox"></span></label> ${entry.title}
                                     </div>
                                 </div>
 
-                                <p class="list-details">${matchingEntry.date} ${timeDisplay} | ${matchingEntry.type} | ${matchingEntry.category}<span class="color-box" style="background-color:${matchingEntry.color};"></span></p>
+                                <p class="list-details">${entry.date} ${timeDisplay} | ${entry.type} | ${entry.category}<span class="color-box" style="background-color:${entry.color};"></span></p>
                                     ${innerUl} 
                             </li>`;
                         
-  
             }
+        }
   
         columns.push(columnContent);
 
@@ -442,21 +445,42 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
     </div>
     `
    })
-
-   /*
-    // Update the container with all formatted columns
-    dateContainer.innerHTML += `
-    <div class="date-innerContainer">
-    ${columns.join('')}
-    </div>
-    `;
-    */
-       
-  
     
   }
 
+/*
 
+      //Add subtasks if required
+    let subtasksPresent = subtasks.filter(subtask => subtask.name); //true or false
+   
+    let innerUl = ''
+    let innerli = ''
+    let subName = ''
+    let subId = ''
+    let subPriority = ''
+
+   
+    if(subtasksPresent.length === 0){
+        innerUl =  `<ul class="innerUl hidden"></ul>`;
+    } else{
+        subtasks.forEach((subtask)=>{
+            if (subtask.name !== ''){
+                subName = subtask.name
+                subPriority = subtask.priority
+                subId = subtask.id
+             
+                innerli += `<li class="innerList">
+                            <label class="container">
+                            <input type="checkbox" id="${subId}" class="checkbox secondary-checkbox">
+                            <span class="subtask-checkmark secondary-checkbox"></span>
+                            </label>
+                            <p class="subtask-name">${subName} <span class="priority-selected">${subPriority}</span> </p>
+                          </li>`
+            }
+        });
+        innerUl = `<ul class="innerUl">${innerli}</ul>`;
+    }
+*/
 
 /////////////// VIEW OPTIONS (List or board) ///////////////
 //Open drop-down
@@ -482,6 +506,7 @@ function viewOptionsBtn(){
     const listBtn = document.querySelector('.list-btn')
     const listView = document.querySelector('.todo-List')
     const dateContainer = document.querySelector('.date-container')
+    const midContainer = document.querySelector('.mid-container')
     
     
 
@@ -495,6 +520,7 @@ function viewOptionsBtn(){
         //Add or remove boardview or listview
         listView.classList.add('active') //remove listview
         dateContainer.classList.add('active') //add boardview
+        midContainer.classList.add('boardView')
 
     } else{
         listBtn.classList.add('active')
@@ -503,6 +529,7 @@ function viewOptionsBtn(){
          //Add or remove boardview or listview
         listView.classList.remove('active') //add back listview
         dateContainer.classList.remove('active')//remove boardview
+        midContainer.classList.remove('boardView')
     }
 
 }
@@ -1510,6 +1537,7 @@ function compareDates(dateToCompare){
                 return dataEntry         
             } 
         })
+        //console.log(selectedEntries)
 
         displayWeek(datesForBoardView, selectedEntries, currentThreeDates)
       
