@@ -461,8 +461,8 @@ button.board-btn.active{
     overflow: scroll;
     overflow-x: hidden;
     scrollbar-color: red;
-    padding-left: 10%;
-    padding-right: 20%;
+    padding-left: 10%; /*7*/
+    padding-right: 20%; /*15*/
     height: 82%
 }
 ::-webkit-scrollbar {
@@ -719,7 +719,7 @@ ul.todo-board {
     display: flex;
     /*justify-content: space-evenly;*/
     width: 100%;
-    padding: 15px 0px;
+    padding: 15px 0px; /*22px 0px*/
 }
 .date-innerContainer{
     width:100%;
@@ -736,7 +736,10 @@ ul.todo-board {
 div.date-heading{
     display: flex;
     justify-content: space-around;
+    height: 40px;
+    align-items: center;
 }
+
 p.date-week{
     display: inline-block;
     color: #1c1c1c;
@@ -747,9 +750,17 @@ p.date-week{
 
 li.list-item-board{
     list-style-type: none;
-    padding-top: 6px;
+    padding-top: 20px; /*20px*/
 }
 
+li.list-item-board p.list-details{
+    padding-left: 36px;
+}
+
+.mid-container.boardView{
+    padding-left: 7%; /*7*/
+    padding-right: 15%;
+}
 
 /*********Upcoming container*************/
 .upcoming-container,
