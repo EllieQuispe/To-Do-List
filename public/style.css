@@ -697,85 +697,7 @@ ul.innerUl.hidden{
 li.innerList{
     flex-direction: row;
 }
-/********************** Board Preview *****************/
 
-/*Date heading*/
-.date-container{
-    display: none; /* close when on list view */
-}
-.date-container.active{ /* open when on board view */
-    display: flex;
-    /*justify-content: space-evenly;*/
-    width: 100%;
-    padding: 50px 0px; /*22px 0px*/
-}
-.date-innerContainer{
-    width:100%;
-    max-height: 640px;
-    min-height: 350px;
-    border:1px solid #ba5e32ad;
-    border-radius: 15px;
-    padding: 5px 10px 10px 10px;
-    overflow: scroll;
-}
-.date-innerContainer:nth-child(2){
-    margin-right: 10px;
-    margin-left: 10px
-}
-
-div.date-heading{
-    display: flex;
-    justify-content: space-around;
-    height: 50px;
-    align-items: center;
-}
-
-p.date-week{
-    display: inline-block;
-    color: #1c1c1c;
-    font-size: 16px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-}
-
-li.list-item-board{
-    list-style-type: none;
-    padding:16px 0px 12px 0px;
-    cursor: pointer;
-}
-li.list-item-board:hover{
-    background-color: rgba(229, 229, 229, 0.397);
-    border-radius: 15px;
-}
-
-li.list-item-board p.list-details{
-    padding-left: 36px;
-}
-
-/** menu dropdown*/
-div.menu-container{
-    cursor: pointer;
-}
-.fa-ellipsis-vertical:hover{
-    color:#F6C15C;
-}
-.menu-dropdown{
-    display: none;
-}
-.edit-boardview-btn{
-
-}
-.delete-boardview-btn{
-
-}
-
-
-
-
-.mid-container.boardView{
-    padding-left: 7%; /*7*/
-    padding-right: 15%;
-}
 
 /*********Upcoming container*************/
 .upcoming-container,
@@ -1664,49 +1586,116 @@ i.fa-solid.fa-map-location{
     padding: 2px 4px;
     color:#999999;
 }
-/*
-.fa-xmark:hover{
-    padding: 2px 4px;
-    border-radius: 50%;
-    background-color:rgb(102, 90, 145);
-    color: white;
-    
+
+
+/*** Board view ***/
+/********************** Board Preview *****************/
+
+/*Date heading*/
+.date-container{
+    display: none; /* close when on list view */
 }
-*/
-
-
-/********* EDIT TASK/EVENT CONTAINER 
-.todo-edit-container{
-    position: relative;
-    background-color: #f4f4f4;
+.date-container.active{ /* open when on board view */
+    display: flex;
+    /*justify-content: space-evenly;*/
+    width: 100%;
+    padding: 50px 0px; /*22px 0px*/
+}
+.date-innerContainer{
+    width:100%;
+    max-height: 500px;
+    min-height: 350px;
+    border:1px solid #ba5e32ad;
     border-radius: 15px;
-    width: 40%;
-    height: 95%;
-    margin-right: 20px;
-    align-self: center;
-    display: none;
+    padding: 5px 10px 10px 10px;
+    overflow: scroll;
 }
-*/
-
-
-
-/****Send button****/
-
-/*
-.fa-angles-right{
-    color:rgb(102, 90, 145);
-    padding: 4px 6px;
-    text-align:end;
-    position: inherit;
-    left: 295px;
-    bottom: 16px;
+.date-innerContainer:nth-child(2){
+    margin-right: 10px;
+    margin-left: 10px
 }
 
-.fa-angles-right:hover{
+div.date-heading{
+    display: flex;
+    justify-content: space-around;
+    height: 50px;
+    align-items: center;
+}
+
+p.date-week{
+    display: inline-block;
+    color: #1c1c1c;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+}
+
+li.list-item-board{
+    list-style-type: none;
+    padding:16px 0px 12px 0px;
+    cursor: pointer;
+}
+li.list-item-board:hover{
+    background-color: rgba(229, 229, 229, 0.397);
+    border-radius: 15px;
+}
+
+li.list-item-board p.list-details{
+    padding-left: 36px;
+}
+
+/** menu dropdown*/
+div.menu-container{
+    position: relative;
+    cursor: pointer;
+}
+.fa-ellipsis-vertical:hover{
+    color:#F6C15C;
+}
+
+.btn-board-container{
+    display:none;
+}
+.btn-board-container.visible{
+    display:flex;
+    flex-direction: column;
+    position: absolute;
+    right: 9px;
+    top: 2px;
+    box-shadow: 0 0 8px rgba(0,0,0,.12);
+    border-radius: 5px;
+    background-color: white;
+    padding: 7px 7px;
+    z-index: 1;
+
+}
+
+.edit-boardview-btn, .delete-boardview-btn{
+    background-color: white;
     padding: 4px 6px;
-    border-radius: 6px;
-    background-color:rgb(102, 90, 145);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    margin:0px;
+    border-radius: 5px;
+    color: #1c1c1c;
+    cursor: pointer;
+}
+.edit-boardview-btn{
+    margin-bottom: 5px;
+}
+.edit-boardview-btn:hover, .delete-boardview-btn:hover{
+    background-color: rgba(229, 229, 229, 0.397);
+    color: #1c1c1c;
+}
+.edit-boardview-btn:active, .delete-boardview-btn:active{
+    background-color: #BA5E32;
     color: white;
+}
 
-} */
 
+
+
+.mid-container.boardView{
+    padding-left: 7%; /*7*/
+    padding-right: 15%;
+}
