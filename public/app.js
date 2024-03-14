@@ -281,6 +281,8 @@ document.querySelector('.board-btn').addEventListener('click', () => {
     viewOptionsBtn() //change color
     changeView('board')
 
+   
+
 });
 
 
@@ -357,8 +359,7 @@ function initializeDateFeature(){
         }
 }
 
-/*
-function displayBoardPreviewTodoList()*/ //it used to be the array to display it
+
 
 let dateContainer = document.querySelector('.date-container')
 
@@ -428,7 +429,7 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
                                     <div class="menu-container">
                                       <i class="fa-solid fa-ellipsis-vertical"></i>
                                       <div class="btn-board-container">
-                                      <button type="button" class="edit-Btn">Edit</button> <button type="button" class="item-delete-Btn">Delete</button> 
+                                        <button type="button" class="edit-Btn edit-boardview-btn">Edit</button> <button type="button" class="item-delete-Btn delete-boardview-btn">Delete</button> 
                                       </div>
                                     </div>
 
@@ -444,14 +445,6 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
         columns.push(columnContent);
        
     }
-    /*
-                            <div>
-                                <button type="button" class="edit-Btn">Edit</button> <button type="button" class="item-delete-Btn">Delete</button> 
-                            </div>
-
-                            edit-boardview-btn
-                            delete-boardview-btn
-    */
 
    //console.log(columns)
    columns.forEach((item, i)=>{
@@ -461,9 +454,30 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
     `
    })
 
+   let list = document.querySelectorAll('.date-innerContainer')
+   console.log(list)
+   let buttonContainers = document.querySelectorAll('.btn-board-container')
+   let menuIcons = document.querySelectorAll('.fa-ellipsis-vertical')
+
+   menuIcons.forEach((icon, i)=>{
+        icon.addEventListener('click', function(){
+            console.log('clicked')
+            buttonContainers[i].classList.add('visible')
+
+        })
+        
+   })
+   buttonContainers.forEach((container, i)=>{
+     container.addEventListener('mouseleave', function(){
+        buttonContainers[i].classList.remove('visible')
+     })
+   })
+
    getList() //display fullview
-    
+
+   
   }
+
 
 
 /////////////// VIEW OPTIONS (List or board) ///////////////
@@ -476,11 +490,11 @@ function viewOptions(event){
         viewDropdownContainer.classList.add('active')
     } 
 
-    document.addEventListener('click', function(event){
-        if(!viewDropdownContainer.contains(event.target) && !viewBtn.contains(event.target)){
-            viewDropdownContainer.classList.remove('active')
-        }
+    viewDropdownContainer.addEventListener('mouseleave', function(event){
+      
+            viewDropdownContainer.classList.remove('active')        
     })
+  
 }
 
 
@@ -941,7 +955,7 @@ function getList(){
      
             if(!(event.target.classList.contains('main-checkbox') || event.target.classList.contains('secondary-checkbox') || event.target.classList.contains('item-delete-Btn') || event.target.classList.contains('edit-Btn'))){
                 
-                console.log(list)
+                
                 let currentListID = Number(list[j].id) //Turn ID to number
                 editEntryCurrentID = ''; //Remove saved ID# if it's not being re-saved.
                 
@@ -969,7 +983,7 @@ function getList(){
           
             if(!(event.target.classList.contains('main-checkbox') || event.target.classList.contains('secondary-checkbox') || event.target.classList.contains('item-delete-Btn') || event.target.classList.contains('edit-Btn') || event.target.classList.contains('fa-ellipsis-vertical'))){
 
-                console.log(boardTodoItems)
+              
                 let currentListID = Number(boardTodoItems[i].id) //Turn ID to number
                 editEntryCurrentID = ''; //Remove saved ID# if it's not being re-saved.
 
@@ -1380,13 +1394,22 @@ function trackCheckboxStatus(){
 }
 
 //Edit and Delete btns on hover for the preview section//
+/*
+
 function displayButtonsOnHover(listItems){
+    console.log(listItems);
+ 
+
     let listArr = Array.from(listItems)
-    const deleteBtns = Array.from(document.querySelectorAll('.item-delete-Btn')) 
-    const editBtns = Array.from(document.querySelectorAll('.edit-Btn'))
-    
+    const deleteBtns = Array.from(listItems.querySelectorAll('.item-delete-Btn')) 
+    const editBtns = Array.from(listItems.querySelectorAll('.edit-Btn'))
+    console.log(deleteBtns)
+    console.log(editBtns)
+
     listArr.map((listItem, i)=>{
         listItem.addEventListener('mouseenter', function(){
+            console.log('visible')
+
             deleteBtns[i].classList.add('visible')
             editBtns[i].classList.add('visible')
         })
@@ -1397,6 +1420,7 @@ function displayButtonsOnHover(listItems){
     })
 
 }
+*/
 
 
 function displayPreviewOfTodoList(id, title, type, date, time, category, subtasks, color){
@@ -1438,8 +1462,8 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
         innerUl = `<ul class="innerUl">${innerli}</ul>`;
     }
    
-    
-    todoList.innerHTML += ` 
+    const listItem = document.createElement('li');
+    listItem.innerHTML = ` 
                         <li class="list-item" id="${id}">
 
                         <div class="row-list">
@@ -1454,6 +1478,8 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
                         <p class="list-details">${date} ${timeDisplay} | ${type} | ${category}<span class="color-box" style="background-color:${color};"></span></p>
                         ${innerUl}  
                         </li>`
+    //todoList.innerHTML += 
+    todoList.appendChild(listItem)
     
     //Add eventlistener to have access to full view of the todo list item
     getList()
@@ -1472,7 +1498,7 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
     })
 
     //display btns when hover
-    displayButtonsOnHover(list)
+   // displayButtonsOnHover(listItem)
 
 
     //Edit option
@@ -1489,7 +1515,33 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
             editEntry(currentListID)
         })
     })
+
+
+    //Hover over the delete and edit buttons
+   todoList = document.querySelector('.todo-List')
+   const listItems = document.querySelectorAll('li.list-item')
+
+   const viewDeleteBtns = todoList.querySelectorAll('.item-delete-Btn');
+   const viewEditBtns = todoList.querySelectorAll('.edit-Btn');
+
+   let listArr = Array.from(listItems)//turn to array
+
+   listArr.forEach((list, i)=>{
+    list.addEventListener('mouseenter', function(){
+
+        viewDeleteBtns[i].classList.add('visible')
+        viewEditBtns[i].classList.add('visible')
+    })
+    list.addEventListener('mouseleave', function(){
+        viewDeleteBtns[i].classList.remove('visible')
+        viewEditBtns[i].classList.remove('visible')
+    })
+
+   })
+
+ 
 } 
+
 
 
 //Only displaying tasks or events that match the current date///
@@ -2154,7 +2206,7 @@ function submitForm(ev){
         localStorage.setItem('FormData', JSON.stringify(formDataArr))
  
         //Call the function that will display the categories
-        console.log(currentDate)
+     
         compareDates(currentDate)
         closeForm()
         eventsTasksCounter()
