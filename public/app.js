@@ -333,9 +333,11 @@ function initializeDateFeature(){
                 year: 'numeric',
                 month: 'long',
             };
+        
             //Display full day to the UI
-            document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
-                //currentDate depends on arrow buttons +3 or -3 and its working
+            document.getElementById('currentDate').innerHTML = `<div class="board-view-date"><p class="heading-month">${currentDate.toLocaleDateString('en-US',{month: "long"})}</p>
+                                                                    <p class="heading-year">${currentDate.toLocaleDateString('en-US',{year: "numeric"})}</p>
+                                                                    </div>`
         } 
 
 
