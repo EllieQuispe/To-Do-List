@@ -433,6 +433,8 @@ button.board-btn.active{
 
 /****Current date above to-do list****/
 #date-container{
+    display: flex;
+    justify-content: center;
     width: 300px;
     text-align: center;
 }
@@ -441,17 +443,16 @@ button.board-btn.active{
     font-size: 24px;
     font-family: 'Inter', sans-serif;
     text-transform: uppercase;
-    font-weight: 900;
     font-weight: bold;
     letter-spacing: 1px;
-    margin-right: 5px;
+    padding-right: 7px;
 }
 #currentDate{
     color:#666666;
     font-size: 17px;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-    margin-top: 4px;
+    margin-top: 8px;
 }
 
 /****Preview of to-do list****/
@@ -1591,10 +1592,36 @@ i.fa-solid.fa-map-location{
 /*** Board view ***/
 /********************** Board Preview *****************/
 
-/*Date heading*/
+/*Main heading date*/
+div.board-view-date{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+p.heading-month{
+    padding-right: 7px;
+    color: #202020;
+    font-size: 24px;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    font-weight: bold;
+}
+p.heading-year{
+    color: #666666;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    margin-top: 23px;
+    letter-spacing: 0.5px;
+}
+
+/*Date heading for middle container*/
 .date-container{
     display: none; /* close when on list view */
 }
+
 .date-container.active{ /* open when on board view */
     display: flex;
     /*justify-content: space-evenly;*/
@@ -1691,9 +1718,6 @@ div.menu-container{
     background-color: #BA5E32;
     color: white;
 }
-
-
-
 
 .mid-container.boardView{
     padding-left: 7%; /*7*/
