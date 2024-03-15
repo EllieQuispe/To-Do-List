@@ -63,6 +63,8 @@ const todoNewEntryForm = document.querySelector('.new-todo-item-container')
 const todoListDisplay = document.querySelector('.middle-container')
 
 function openForm(){
+    let midContainer = document.querySelector('.mid-container')
+
     todoListDisplay.classList.add('screen-size-40') //middle container change size
     todoNewEntryForm.classList.add('display')
 
@@ -72,12 +74,16 @@ function openForm(){
 
     //If list detail container is open
     listDetailContainer.classList.remove('display-list-detail-container')
+    midContainer.classList.add('formOpen') //Change padding for boardview
 }
 
 function closeForm(){
+    let midContainer = document.querySelector('.mid-container')
+
     todoListDisplay.classList.remove('screen-size-40')
     todoNewEntryForm.classList.remove('display')
     editEntryCurrentID = '';  //Remove id# from edit container
+    midContainer.classList.remove('formOpen') //Change padding for boardview
     
     clearForm()
 }
@@ -461,15 +467,16 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
    })
   
 
+   getList() //display fullview
 
-   //Edit and Delete button 
+
+   //Edit and Delete button hover affect
    let list = document.querySelectorAll('.date-innerContainer')
    let buttonContainers = document.querySelectorAll('.btn-board-container')
    let menuIcons = document.querySelectorAll('.fa-ellipsis-vertical')
 
    menuIcons.forEach((icon, i)=>{
         icon.addEventListener('click', function(){
-            console.log('clicked')
             buttonContainers[i].classList.add('visible')
 
         })
@@ -481,9 +488,33 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
      })
    })
 
-   getList() //display fullview
 
-   
+   //Delete to-do items
+   let boardViewItems = dateContainer.querySelectorAll('li.list-item-board')
+   let deleteBtns = dateContainer.querySelectorAll('.item-delete-Btn')
+
+   deleteBtns.forEach((btn, i)=>{
+        btn.addEventListener('click', function(){
+            let currentListId = Number(boardViewItems[i].id)
+            
+            deleteEntry(currentListId)
+        })
+   })
+
+   //Edit to-do items
+   let midContainer = document.querySelector('.mid-container')
+   let editBtns = dateContainer.querySelectorAll('.edit-Btn')
+   editBtns.forEach((btn, i)=>{
+    btn.addEventListener('click', function(){
+        openForm()
+        //margin is too much
+        midContainer.classList.add('formOpen')
+
+        let currentListId = Number(boardViewItems[i].id)
+        editEntry(currentListId)
+    })
+   })
+
   }
 
 
