@@ -1723,3 +1723,8 @@ div.menu-container{
     padding-left: 7%; /*7*/
     padding-right: 15%;
 }
+
+.mid-container.boardView.formOpen{
+    padding: 2px;
+    padding-right: 5px;
+}
