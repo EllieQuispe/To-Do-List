@@ -158,6 +158,52 @@ function eventsTasksCounter(){
 }
 
 
+///Tracking if checkboxes were clicked
+function trackCheckboxStatus(){
+
+    if(listOption){
+        //todoList = document.getElementById('todo-List') //updated UL element
+        todoList = document.querySelector('.todo-List')
+ 
+        //Add an event listener to the checkboxes
+        document.querySelectorAll('.container input').forEach(checkbox => {
+
+        checkbox.addEventListener('change', function () {
+            localStorage.setItem(this.id, this.checked);
+            let mySound = new Audio('public/sound/clickSound.mp3')
+            mySound.play()
+            upComingTodoItems()
+            pastDueTodoItems()
+        });
+
+        // Retrieve the checked state from local storage on page load
+        const isChecked = localStorage.getItem(checkbox.id) === 'true';
+        checkbox.checked = isChecked;
+    });
+
+    } else{
+        dateContainer = document.querySelector('.date-container')
+        //console.log(dateContainer)
+
+        dateContainer.querySelectorAll('.container input').forEach(checkbox =>{
+            checkbox.addEventListener('change', function(){
+                localStorage.setItem(this.id, this.checked);
+                let mySound = new Audio('public/sound/clickSound.mp3')
+                mySound.play()
+                upComingTodoItems()
+                pastDueTodoItems()
+            })
+             // Retrieve the checked state from local storage on page load
+            const isChecked = localStorage.getItem(checkbox.id) === 'true';
+            checkbox.checked = isChecked;
+
+        })
+    }
+   
+ }
+
+
+
 //////// TODAY BUTTON ///////
 let currentDate = new Date()
 
@@ -469,6 +515,7 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
 
    getList() //display fullview
 
+   trackCheckboxStatus()//Track checkboxes
 
    //Edit and Delete button hover affect
    let list = document.querySelectorAll('.date-innerContainer')
@@ -1410,31 +1457,9 @@ function openPastDueContainer(){
 
 
 ////////////////////// PREVIEW of To-do List, based on Selected Date //////////////////////
-///Tracking if checkboxes were clicked
-function trackCheckboxStatus(){
-   // todoList = document.getElementById('todo-List') //updated UL element
-    todoList = document.querySelector('.todo-List')
-
-    //Add an event listener to the checkboxes
-    document.querySelectorAll('.container input').forEach(checkbox => {
-
-        checkbox.addEventListener('change', function () {
-            localStorage.setItem(this.id, this.checked);
-            let mySound = new Audio('public/sound/clickSound.mp3')
-            mySound.play()
-            upComingTodoItems()
-            pastDueTodoItems()
-        });
-
-    // Retrieve the checked state from local storage on page load
-    const isChecked = localStorage.getItem(checkbox.id) === 'true';
-    checkbox.checked = isChecked;
-    });
-}
 
 //Edit and Delete btns on hover for the preview section//
 /*
-
 function displayButtonsOnHover(listItems){
     console.log(listItems);
  
