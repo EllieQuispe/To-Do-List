@@ -368,6 +368,7 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
     let innerUl = ''
     let innerli = ''
     let timeDisplay = ''
+
     
     function todoListTime(time){
         if(time === 'NaN: PM' || !time){
@@ -398,6 +399,7 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
             });
             innerUl = `<ul class="innerUl">${innerli}</ul>`;
         }
+        innerli = " "
     }
  
     // Loop through each date and corresponding entry (if any)
@@ -412,7 +414,7 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
         (data) => data.date === currentThreeDates[i] //three match 03/12/24 [{},{},{}]
       );
         
-     
+     // let subtasksPresent = subtasks.filter(subtask => subtask.name); 
       if(matchingEntry.length > 0){
             for(const entry of matchingEntry){
                 subTask(entry.subtasks) //this works for one but not more than one [ ]
@@ -440,6 +442,8 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
                             </li>`;
                         
             }
+
+            
         }
   
         columns.push(columnContent);
@@ -453,9 +457,11 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
     </div>
     `
    })
+  
 
+
+   //Edit and Delete button 
    let list = document.querySelectorAll('.date-innerContainer')
-   console.log(list)
    let buttonContainers = document.querySelectorAll('.btn-board-container')
    let menuIcons = document.querySelectorAll('.fa-ellipsis-vertical')
 
