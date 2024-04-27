@@ -320,7 +320,7 @@ p.sideMenu-label:hover{
 .middle-container.screen-size-40{ /*works with JS*/
     width: 50%
 }
-.top-container{
+.main-top-container{
     position: relative;
     height: 80px;
     flex-grow: 1;
@@ -361,7 +361,7 @@ p.partag-view{
     font-weight: 300;
 }
 /**Drop down of view option**/
-.dropdown-options{
+.view-dropdown{
     position: absolute;
     top: 40px;
     right: 4px;
@@ -373,7 +373,7 @@ p.partag-view{
     box-shadow: 0 0 8px rgba(0,0,0,.12);
     display: none;
 }
-.dropdown-options.active{
+.view-dropdown.active{
     display: flex;
 }
 .two-view-options{
@@ -883,7 +883,7 @@ ul.pastDue-innerUl{
 }
 
 /*********Bottom of main container**********/
-.bottom-container{
+.main-bottom-container{
     border-top: 1px solid rgb(227, 224, 224);
     flex-grow: 1;
     width: 100%;
