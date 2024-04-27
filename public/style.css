@@ -163,7 +163,6 @@ p.events{
     padding-left: 5px;
 }
 
-
 .categories{
     margin-top: 50px;
 }
@@ -201,7 +200,11 @@ h3{
     margin-left: 20px;
 } 
 
-/***** Today ***/
+
+
+
+/***** My Schedule section ***/
+.schedule-heading,
 .today.menu-section, 
 .upcoming.menu-section,
 .pastDue.menu-section{
@@ -209,15 +212,12 @@ h3{
     margin-right: 20px;
 }
 
-
 p.sideMenu-label{
     margin: 0px;
     padding: 9px 4px;
     cursor: pointer;
 }
 p.sideMenu-label:hover{
-    margin: 0px;
-    padding: 9px 4px;
     background-color: rgb(236,222,215);
     border-radius: 5px;
 }
@@ -253,6 +253,7 @@ p.sideMenu-label:hover{
 #category-input-container input[type=text]{
     border-bottom: none;
     margin-left: 8px;
+    padding-left: 7px;
 }
 
 #errorMessage{
