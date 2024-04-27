@@ -192,9 +192,16 @@ h3{
     border-radius: 45px;
 }
 
+.events.menu-section{
+    margin-left: 0px;
+    margin-right: 20px;
+} 
+.task.menu-section{
+    margin-right: 0px;
+    margin-left: 20px;
+} 
+
 /***** Today ***/
-.task.menu-section, 
-.events.menu-section, 
 .today.menu-section, 
 .upcoming.menu-section,
 .pastDue.menu-section{
@@ -202,12 +209,7 @@ h3{
     margin-right: 20px;
 }
 
-.events.menu-section{
-    margin-left: 0px;
-} 
-.task.menu-section{
-    margin-right: 0px;
-} 
+
 p.sideMenu-label{
     margin: 0px;
     padding: 9px 4px;
