@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     })
 
     //Today button
-    document.querySelector('.today').addEventListener('click', todayBtn)
+    document.querySelector('.today-btn').addEventListener('click', todayBtn)
 
     //Upcoming button
     document.querySelector('.upcoming-btn').addEventListener('click', openUpcomingContainer)
@@ -264,6 +264,7 @@ function boardViewDates(){
     return ThreeDatesHeading
   
 }
+
 function todayBtn(){
 
     if(listOption){
@@ -286,8 +287,8 @@ function todayBtn(){
 
     } else{
 
-        //Update Date
-        let currentDateForTodayButton = new Date() //March 12th
+        //Update Date (THIS IS WRONG!!!)
+        let currentDateForTodayButton = new Date()
 
         const options = {
                 year: 'numeric',
@@ -297,12 +298,15 @@ function todayBtn(){
         //Display full day to the UI
         currentDate = currentDateForTodayButton; //update currentDate
 
-        document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
+        document.getElementById('currentDate').innerHTML = `<div class="board-view-date">
+                                                                    <p class="heading-month">${currentDate.toLocaleDateString('en-US',{month: "long"})}</p>
+                                                                    <p class="heading-year">${currentDate.toLocaleDateString('en-US',{year: "numeric"})}</p>
+                                                            </div>`
         datesForBoardView = boardViewDates() 
          
         compareDates(currentDateForTodayButton)//back to current date 
-          
-         
+
+
     }      
 }
 
@@ -387,9 +391,10 @@ function initializeDateFeature(){
             };
         
             //Display full day to the UI
-            document.getElementById('currentDate').innerHTML = `<div class="board-view-date"><p class="heading-month">${currentDate.toLocaleDateString('en-US',{month: "long"})}</p>
+            document.getElementById('currentDate').innerHTML = `<div class="board-view-date">
+                                                                    <p class="heading-month">${currentDate.toLocaleDateString('en-US',{month: "long"})}</p>
                                                                     <p class="heading-year">${currentDate.toLocaleDateString('en-US',{year: "numeric"})}</p>
-                                                                    </div>`
+                                                                </div>`
         } 
 
 
@@ -570,7 +575,7 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
 //Open drop-down
 function viewOptions(event){
     const viewBtn = document.querySelector('.view-options-innerDiv')
-    const viewDropdownContainer = document.querySelector('.dropdown-options')
+    const viewDropdownContainer = document.querySelector('.view-dropdown')
 
     if(event.target.classList.contains('partag-view') || event.target.classList.contains('view-option-image')){
         viewDropdownContainer.classList.add('active')
@@ -2120,6 +2125,7 @@ colorPicker()
 function clientAddress(){
     const addressInput = document.getElementById('addressInput')
     const address = addressInput.value.trim()
+    
 
     return address
 }
