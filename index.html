@@ -73,7 +73,7 @@
                     <p class="pastDue-btn sideMenu-label">Past Due</p>
                 </div>
                 
-
+                <!--Categories Section (left-column)-->
                 <div class="categories menu-section">
                     <h3>My Categories</h3>
                     <div class="category-list-container">
@@ -82,7 +82,7 @@
                     <div id="category-input-container">
                         <i class="fa-solid fa-circle-plus add-category-icon"></i>
                         <input type="text" id="input-category" placeholder="Add a Category">
-                        <div id="errorMessage"> </div>
+                        <div id="errorMessage"> </div> <!--works with JS-->
                     </div>
                 </div>
             </div>
@@ -90,58 +90,52 @@
 
 
 
-            <!-- Main Section - Displays a preview To-do List -->
+            <!-- Main Section - Daily To-do List -->
             <div class="middle-container">
                 <!--Update Date-->
-                <div class="top-container">
+                <div class="main-top-container">
+                    
                     <div class="arrow-icon" id="previousBtn"><i class="fa-solid fa-chevron-left date-arrow"></i></div>
-
                     <div id="date-container">
                         <div id="day-of-the-week"></div>
                         <div id="currentDate"></div>
                     </div>
-
-                    <!--Add div for Board view option
-                    <div class="board-view-dates">
-                       // <p class="date"></p>
-                       // <p class="date"></p>
-                       // <p class="date"></p>
-                    </div>
-                    -->
-
                     <div class="arrow-icon" id="nextBtn"><i class="fa-solid fa-chevron-right date-arrow"></i></div>
 
                     <div class="view-options-container">
+
+                        <!--Change view of date-->
                         <div class="view-options-innerDiv">
                             <p class="partag-view">View</p>
                             <img src="public/images/iconmonstr-dashboard-lined-240.png" class="view-option-image">
                         </div>
                         
-                        <!--Drop down menu-->
-                        <div class="dropdown-options">
+                        <!--Drop down for view options-->
+                        <div class="view-dropdown">
                             <div class="two-view-options">
                                 <button class="view-btns list-btn active"><span><i class="fa-solid fa-list-ul"></i></span>List</button>
                                 <button class="view-btns board-btn"><span><i class="fa-solid fa-table-columns"></i></span>Board</button>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
-                <!--Displays List-->
+                <!--Displays To-do List-->
                 <div class="mid-container">
-                    <div>
-                        <div class="date-container">
-                            <!--
-                            Add div with li here for board view
-                        -->
-                        </div>
 
+                    <!--Two view options (works with JS)-->
+                    <div>
+                        <!--board view-->
+                        <div class="date-container"></div>
+
+                        <!--list view-->
                         <ul class="todo-List"></ul>
                     </div>
-                   
+
                 </div>
 
-                <!--Upcoming button-->
+                <!-- Pop-up card when user clicks the upcoming button -->
                 <div class="upcoming-container">
                     <div class="upcoming-heading">
                         <h4 class="upcoming-title">Upcoming Tasks/Events</h4>  
@@ -152,7 +146,7 @@
                     </div> 
                 </div>
                 
-                <!-- Past Due button-->
+                <!-- Pop-up card when user clicks the past-due button -->
                 <div class="pastDue-container">
                     <div class="pastDue-heading">
                         <h4 class="pastDue-title">Past Due Tasks/Events</h4>  
@@ -163,7 +157,8 @@
                     </div> 
                 </div>
 
-                <div class="bottom-container">  
+                <!--Main button to add a new task or event to the To-do list-->
+                <div class="main-bottom-container">  
                     <div id="add-item">Add New<i class="fa-solid fa-plus add-new-item"></i></div>
                 </div>
             </div>
@@ -171,7 +166,7 @@
 
 
 
-            <!--Right Section -Full View of selected item from list-->
+            <!--Detailed view of todo items container (displays with JS)-->
             <div class="list-detail-container">
                 <div id="exit-detail-page">
                     <i class="fa-solid fa-xmark exit-full-view"></i>
@@ -184,7 +179,7 @@
             </div>
 
 
-            <!--Right Section - Add New Task or Event-->
+            <!--Form for adding new task/events or editing-->
             <div class="new-todo-item-container">
                 <div id="exit-new-entry-form">
                     <i class="fa-solid fa-xmark exit-form" id="exit-icon"></i>
