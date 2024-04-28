@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () =>{
     //Delete categories
     displayCategoryDeleteBtn()
 
+
+
      //Open form 
      document.querySelector('.add-new-item').addEventListener('click', openForm )
      //Close to-do list form
@@ -15,10 +17,11 @@ document.addEventListener('DOMContentLoaded', () =>{
 
     //Form submission when adding a new event or task
     document.getElementById('todo-form').setAttribute('novalidate', 'true')
-    document.getElementById('todo-form').addEventListener('submit', submitForm )
-
+    document.getElementById('todo-form').addEventListener('submit', submitForm)
     //Clear form
     document.querySelector('.clear-btn').addEventListener('click', clearForm)
+
+
 
     //Initializing formDataArr as an "empty array" if nothing saved to localStorage
     initializeFormDataArray()
@@ -28,9 +31,6 @@ document.addEventListener('DOMContentLoaded', () =>{
 
     //Date feature initilization
     initializeDateFeature();
-
-    //View options (list & board)
-    //document.querySelector('.view-options-container').addEventListener('click', )
 
     //User Profile settings button
     document.querySelector('.settings-container').addEventListener('click', function(event){
@@ -49,43 +49,40 @@ document.addEventListener('DOMContentLoaded', () =>{
     //Opens dropdown for view options
     document.querySelector('.view-options-container').addEventListener('click',function(event){
         viewOptions(event) //opens drop-down
-    } )
-
-    
+    } )  
 })
 
 
-let listOption = true;
-let boardOption = false;
+let listViewOption = true; /*It starts as a list view */
+let boardViewOption = false;
 
-//// Open and Close new To-do item entry //////
-const todoNewEntryForm = document.querySelector('.new-todo-item-container')
-const todoListDisplay = document.querySelector('.middle-container')
+
+////////// Open/Close form to add To-do item or edit ///////////
+const todoNewEntryForm = document.querySelector('.new-todo-item-container') //Form outer container
+const todoListDisplay = document.querySelector('.middle-container')         //Where the to-do items will display
 
 function openForm(){
-    let midContainer = document.querySelector('.mid-container')
-
-    todoListDisplay.classList.add('screen-size-40') //middle container change size
-    todoNewEntryForm.classList.add('display')
-
-    editEntryCurrentID = '';  //Remove id# from edit container
+    let midContainer = document.querySelector('.view-container')    //Contains the board and list view option divs
+    todoNewEntryForm.classList.add('display')                       //Form opens
+    todoListDisplay.classList.add('screen-size-40')                 //Display width changes (gets narrower to make room for the form)
+    editEntryCurrentID = '';                                        //Remove id# from edit container (when edits take place)
    
-    clearForm()
+    clearForm()                                                     //Remove any entries from form
 
     //If list detail container is open
-    listDetailContainer.classList.remove('display-list-detail-container')
-    midContainer.classList.add('formOpen') //Change padding for boardview
+        listDetailContainer.classList.remove('display-list-detail-container') //Remove Detailed view of To-do items (not sure how this is working if it wasn't declare first)
+        // midContainer.classList.add('formOpen') //Change padding for boardview (I need to fix it)
 }
 
 function closeForm(){
-    let midContainer = document.querySelector('.mid-container')
-
-    todoListDisplay.classList.remove('screen-size-40')
-    todoNewEntryForm.classList.remove('display')
-    editEntryCurrentID = '';  //Remove id# from edit container
-    midContainer.classList.remove('formOpen') //Change padding for boardview
+    let midContainer = document.querySelector('.view-container')    //Contains the board and list view option divs
+    todoNewEntryForm.classList.remove('display')                    //Close form
+    todoListDisplay.classList.remove('screen-size-40')              //Display width changes (gets wider)
+    editEntryCurrentID = '';                                        //Remove id# from edit container (when edits take place)
     
-    clearForm()
+    clearForm()                                                     //Remove any entries from fom
+     
+    //midContainer.classList.remove('formOpen') //Change padding for boardview (I need to fix it)
 }
 
 
@@ -93,11 +90,12 @@ function closeForm(){
 ////////// Dropdown User Profile settings ////////
 function UserProfileMenuBtn(event){
     const container = document.querySelector('.settings-container');
-    const downArrow = container.querySelector('.drop-down-menu-icon')
-    const upArrow = container.querySelector('.up-arrow-icon')
+    const downArrow = container.querySelector('.drop-down-menu-icon')//arrow icons
+    const upArrow = container.querySelector('.up-arrow-icon')//arrow icon
+    const dropDownContainer = document.querySelector('.drop-down-container')
 
     function openSettings(downArrow, upArrow){
-        dropDownContainer.classList.add('display') //displaying the dropdown container
+        dropDownContainer.classList.add('display')//displaying the dropdown container
         downArrow.classList.remove('active')
         upArrow.classList.add('active')
     }
@@ -108,14 +106,13 @@ function UserProfileMenuBtn(event){
     }
 
 
-    const dropDownContainer = document.querySelector('.drop-down-container')
-
     if(event.target.classList.contains('drop-down-menu-icon')){
         openSettings(downArrow, upArrow)
 
     } else if(event.target.classList.contains('up-arrow-icon')){
         closeSettings(upArrow, downArrow)
     } 
+
     //Close menu if user clicks outside of menu container
     document.addEventListener('click', function(event){
         if(!dropDownContainer.contains(event.target) && !downArrow.contains(event.target)){
@@ -125,93 +122,101 @@ function UserProfileMenuBtn(event){
 }
 
 
-/// Event & Task Counter ///
+
+///////// Event & Task Counter //////////
 const taskCountContainer=document.querySelector('.taskCount')
 const eventCountContainer=document.querySelector('.eventCount')
 
+//Set values to zero
 function setTaskEventToZero(tasknum, eventnum){
-    taskCountContainer.innerHTML = tasknum
-    eventCountContainer.innerHTML = eventnum
+    taskCountContainer.innerHTML = tasknum //zero
+    eventCountContainer.innerHTML = eventnum //zero
 }
+
+//It is called when initializing the app and during updates
 function eventsTasksCounter(){
     let taskCount = 0;
     let eventCount = 0;
 
+    //If there are no todo items, set both to zero
     if(formDataArr == [] || formDataArr == null){
-        setTaskEventToZero(taskCount, eventCount)
+        setTaskEventToZero(taskCount, eventCount) 
         return;
     } 
 
     //Both values should start at zero
     setTaskEventToZero(taskCount, eventCount)
     
-    formDataArr.map((dataEntry)=>{
-        if(dataEntry.type == "Task"){
-            taskCount++
-            taskCountContainer.innerHTML = taskCount
+        //Updating the count based on what's in the formDataArr
+        formDataArr.map((dataEntry)=>{
+            if(dataEntry.type == "Task"){
+                taskCount++ //0 + 1 = 1...
+                taskCountContainer.innerHTML = taskCount
 
-        } else if (dataEntry.type == "Event"){
-            eventCount++
-            eventCountContainer.innerHTML = eventCount
-        }
-    })
+            } else if (dataEntry.type == "Event"){
+                eventCount++ //0 + 1 = 1...
+                eventCountContainer.innerHTML = eventCount
+            }
+        })
 }
 
 
-///Tracking if checkboxes were clicked
+
+///// Tracking if checkboxes were clicked /////
 function trackCheckboxStatus(){
 
-    if(listOption){
-        //todoList = document.getElementById('todo-List') //updated UL element
-        todoList = document.querySelector('.todo-List')
- 
-        //Add an event listener to the checkboxes
+    if(listViewOption){ 
+        //todoList = document.querySelector('.todo-List')
+        //List view option
         document.querySelectorAll('.container input').forEach(checkbox => {
+          
+            checkbox.addEventListener('change', function (){
+                localStorage.setItem(this.id, this.checked);
+                let mySound = new Audio('public/sound/clickSound.mp3')
 
-        checkbox.addEventListener('change', function () {
-            localStorage.setItem(this.id, this.checked);
-            let mySound = new Audio('public/sound/clickSound.mp3')
-            mySound.play()
-            upComingTodoItems()
-            pastDueTodoItems()
+                mySound.play()
+                upComingTodoItems() //Update
+                pastDueTodoItems()  //Upddate
+            });
+
+            //If nothing clicked, retrieve the checked state from local storage on page load
+            const isChecked = localStorage.getItem(checkbox.id) === 'true';
+            checkbox.checked = isChecked;
         });
 
-        // Retrieve the checked state from local storage on page load
-        const isChecked = localStorage.getItem(checkbox.id) === 'true';
-        checkbox.checked = isChecked;
-    });
-
     } else{
+        //Broad view option
         dateContainer = document.querySelector('.date-container')
-        //console.log(dateContainer)
 
         dateContainer.querySelectorAll('.container input').forEach(checkbox =>{
             checkbox.addEventListener('change', function(){
                 localStorage.setItem(this.id, this.checked);
                 let mySound = new Audio('public/sound/clickSound.mp3')
+
                 mySound.play()
-                upComingTodoItems()
-                pastDueTodoItems()
+                upComingTodoItems() //Update
+                pastDueTodoItems()  //Update
             })
-             // Retrieve the checked state from local storage on page load
+
+            // Retrieve the checked state from local storage on page load
             const isChecked = localStorage.getItem(checkbox.id) === 'true';
             checkbox.checked = isChecked;
 
         })
     }
-   
  }
 
 
 
-//////// TODAY BUTTON ///////
-let currentDate = new Date()
+//////// Board-View Dates ////////
+let currentDate = new Date()  //Gives me the current date
+let datesForBoardView;        //dates arr with week
 
-let datesForBoardView;//dates arr with week
+//Creating Week day and numeric date (Saturday, 27th)
 function boardViewDates(){
-
     //Display the dates;
     todoList.innerHTML =""
+    console.log(todoList)
 
     //Get three dates
     const today = currentDate;
@@ -265,9 +270,11 @@ function boardViewDates(){
   
 }
 
+
+/////////// TODAY BUTTON /////////
 function todayBtn(){
 
-    if(listOption){
+    if(listViewOption){
 
         let currentDateForTodayButton = new Date() //to bring user to the current day
 
@@ -319,9 +326,9 @@ let currentView = 'list'
 function changeView(newView){
     if(newView !== 'list'){
         currentView = newView; //currentView is now board
-        listOption = newView === 'list'; //listOption is false
+        listViewOption = newView === 'list'; //listViewOption is false
     }else{
-        listOption = newView === 'list'
+        listViewOption = newView === 'list'
     }
     initializeDateFeature() //will be called for list and board 
 }
@@ -345,7 +352,7 @@ document.querySelector('.board-btn').addEventListener('click', () => {
 
 ////Arrow buttons to change dates////
 function previousDate(){
-    if(listOption){
+    if(listViewOption){
         currentDate.setDate(currentDate.getDate() - 1) //changes currenDate to past date
         initializeDateFeature()
     } else{
@@ -354,7 +361,7 @@ function previousDate(){
     }
 }
 function nextDate(){
-    if(listOption){
+    if(listViewOption){
         currentDate.setDate(currentDate.getDate() + 1) //changes currenDate to future date
         initializeDateFeature()
     } else{
@@ -399,7 +406,7 @@ function initializeDateFeature(){
 
 
 
-        if(listOption){
+        if(listViewOption){
             updateDateDisplay()
            
         } else{
@@ -554,13 +561,13 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
    })
 
    //Edit to-do items
-   let midContainer = document.querySelector('.mid-container')
+   let midContainer = document.querySelector('.view-container')
    let editBtns = dateContainer.querySelectorAll('.edit-Btn')
    editBtns.forEach((btn, i)=>{
     btn.addEventListener('click', function(){
         openForm()
         //margin is too much
-        midContainer.classList.add('formOpen')
+       // midContainer.classList.add('formOpen')
 
         let currentListId = Number(boardViewItems[i].id)
         editEntry(currentListId)
@@ -595,7 +602,7 @@ function viewOptionsBtn(){
     const listBtn = document.querySelector('.list-btn')
     const listView = document.querySelector('.todo-List')
     const dateContainer = document.querySelector('.date-container')
-    const midContainer = document.querySelector('.mid-container')
+    const midContainer = document.querySelector('.view-container')
     
     
 
@@ -1618,7 +1625,7 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
 let todoList = document.querySelector('.todo-List')
 function compareDates(dateToCompare){
   
-   if(listOption){
+   if(listViewOption){
 
         const options={
             year: 'numeric',
@@ -1692,7 +1699,6 @@ function initializeFormDataArray(){
 
 
 ////////////////////////////////// NEW ENTRY FORM //////////////////////////////////
-/*const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container */
 
 
 //// Validate Form ////
@@ -1749,7 +1755,7 @@ function clearForm(){
     titleErrorMessage("")
        
 
-    //clear type
+    //clear type (event or task)
     const eventOption = document.getElementById('event-option')
     const taskOption = document.getElementById('task-option')
     typeErrorMessage("")
