@@ -459,7 +459,7 @@ button.board-btn.active{
 }
 
 /****Preview of to-do list****/
-.mid-container{
+.view-container{
     position: relative;
     flex-direction: 2;
     overflow: scroll;
@@ -1723,12 +1723,13 @@ div.menu-container{
     color: white;
 }
 
-.mid-container.boardView{
+.view-container.boardView{
     padding-left: 7%; /*7*/
     padding-right: 15%;
 }
 
-.mid-container.boardView.formOpen{
+/*
+.view-container.boardView.formOpen{ 
     padding: 2px;
     padding-right: 5px;
 }
