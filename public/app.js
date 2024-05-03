@@ -164,7 +164,6 @@ function eventsTasksCounter(){
 
 ///// Tracking if checkboxes were clicked /////
 function trackCheckboxStatus(){
-
     if(listViewOption){ 
         //todoList = document.querySelector('.todo-List')
         //List view option
@@ -208,24 +207,24 @@ function trackCheckboxStatus(){
 
 
 
-//////// Board-View Dates ////////
-let currentDate = new Date()  //Gives me the current date
-let datesForBoardView;        //dates arr with week
+let currentDate = new Date()  //Gives me the current date (where does this go?)
+let datesForBoardView;        //date+week array (where does this go?)
 
-//Creating Week day and numeric date (Saturday, 27th)
+
+
+//////////// Board-View: Generates Three Dates //////////
 function boardViewDates(){
     //Display the dates;
-    todoList.innerHTML =""
-    console.log(todoList)
+    todoList.innerHTML = "" //This is the list view option
+  
 
     //Get three dates
-    const today = currentDate;
-    let ThreeDatesHeading = [];
+    let ThreeDatesHeading = []; //This array starts blank
 
     function getOrdinalSuffix (number){
         const ones = number % 10;
         const tens = Math.floor(number / 10) % 10;
-
+        
         if (tens !== 1) {
             switch (ones) {
             case 1:
@@ -252,26 +251,26 @@ function boardViewDates(){
         return `${weekday}, ${day}${ordinal}`;
     }
 
-    // Get formatted date for today
-    const formattedToday = formatDateWithDetails(today);
 
-    // Get next two dates
-    const tomorrow = new Date(today.getTime() + (1000 * 60 * 60 * 24)); // Add one day
-    const nextDayAfterTomorrow = new Date(tomorrow.getTime() + (1000 * 60 * 60 * 24)); // Add another day
+    //Start HERE!!!
+    const date = currentDate; //It is referencing the date outside this function
+    const tomorrow = new Date(date.getTime() + (1000 * 60 * 60 * 24)); // Add one day
+    const dateAfterTomorrow = new Date(tomorrow.getTime() + (1000 * 60 * 60 * 24)); // Add another day
 
     // Format the next two dates with weekday, month, and ordinal indicators
-    const formattedTomorrow = formatDateWithDetails(tomorrow);
-    const formattedNextDayAfterTomorrow = formatDateWithDetails(nextDayAfterTomorrow);
+    const formattedDate1 = formatDateWithDetails(date);
+    const formattedDate2 = formatDateWithDetails(tomorrow);
+    const formattedDate3 = formatDateWithDetails(dateAfterTomorrow);
     
-    ThreeDatesHeading.push(formattedToday,formattedTomorrow, formattedNextDayAfterTomorrow)
-
-    //console.log(ThreeDatesArr) ['March, Tuesday 12th', ....., .....]
+    ThreeDatesHeading.push(formattedDate1,formattedDate2,formattedDate3)
+    
     return ThreeDatesHeading
   
 }
 
 
-/////////// TODAY BUTTON /////////
+
+/////////// TODAY BUTTON ////////////
 function todayBtn(){
 
     if(listViewOption){
@@ -312,7 +311,6 @@ function todayBtn(){
         datesForBoardView = boardViewDates() 
          
         compareDates(currentDateForTodayButton)//back to current date 
-
 
     }      
 }
@@ -1594,7 +1592,7 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
 
 
     //Hover over the delete and edit buttons
-   todoList = document.querySelector('.todo-List')
+   todoList = document.querySelector('.todo-List') //This is the list view option
    const listItems = document.querySelectorAll('li.list-item')
 
    const viewDeleteBtns = todoList.querySelectorAll('.item-delete-Btn');
@@ -1604,7 +1602,6 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
 
    listArr.forEach((list, i)=>{
     list.addEventListener('mouseenter', function(){
-
         viewDeleteBtns[i].classList.add('visible')
         viewEditBtns[i].classList.add('visible')
     })
@@ -1614,8 +1611,6 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
     })
 
    })
-
- 
 } 
 
 
