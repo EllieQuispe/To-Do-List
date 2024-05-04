@@ -207,8 +207,8 @@ function trackCheckboxStatus(){
 
 
 
-let currentDate = new Date()  //Gives me the current date (where does this go?)
-let datesForBoardView;        //date+week array (where does this go?)
+let currentDate = new Date()  //Gives me the current date (Used for boardViewDates function, todayBtn function)
+let datesForBoardView;        //date+week array (used in the todayBtn function - makes the array a global variable)
 
 
 
@@ -253,7 +253,7 @@ function boardViewDates(){
 
 
     //Start HERE!!!
-    const date = currentDate; //It is referencing the date outside this function
+    const date = currentDate; //It is referencing the date outside this function, but not always
     const tomorrow = new Date(date.getTime() + (1000 * 60 * 60 * 24)); // Add one day
     const dateAfterTomorrow = new Date(tomorrow.getTime() + (1000 * 60 * 60 * 24)); // Add another day
 
@@ -265,7 +265,6 @@ function boardViewDates(){
     ThreeDatesHeading.push(formattedDate1,formattedDate2,formattedDate3)
     
     return ThreeDatesHeading
-  
 }
 
 
@@ -275,9 +274,9 @@ function todayBtn(){
 
     if(listViewOption){
 
-        let currentDateForTodayButton = new Date() //to bring user to the current day
+        let currentDateForTodayButton = new Date() //Brings user back to the current date
 
-        const options = {
+        const options = { //Format of date
         year: 'numeric',
         month: 'short',
         day: 'numeric',
@@ -293,25 +292,23 @@ function todayBtn(){
 
     } else{
 
-        //Update Date (THIS IS WRONG!!!)
+        //For board view option
         let currentDateForTodayButton = new Date()
 
-        const options = {
+        const options = { //Format of date
                 year: 'numeric',
                 month: 'long',
         };
 
-        //Display full day to the UI
         currentDate = currentDateForTodayButton; //update currentDate
 
         document.getElementById('currentDate').innerHTML = `<div class="board-view-date">
                                                                     <p class="heading-month">${currentDate.toLocaleDateString('en-US',{month: "long"})}</p>
                                                                     <p class="heading-year">${currentDate.toLocaleDateString('en-US',{year: "numeric"})}</p>
                                                             </div>`
-        datesForBoardView = boardViewDates() 
+        datesForBoardView = boardViewDates()//Call function and store value in variable 
          
         compareDates(currentDateForTodayButton)//back to current date 
-
     }      
 }
 
