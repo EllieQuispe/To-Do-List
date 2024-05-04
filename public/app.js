@@ -316,19 +316,70 @@ function todayBtn(){
 
 
 
-////////// ChangeView ///////////////
+
+
+/////////////// VIEW OPTIONS (List or board) ///////////////
+///Open drop-down of View button
+function viewOptions(event){
+    const viewBtn = document.querySelector('.view-options-innerDiv')
+    const viewDropdownContainer = document.querySelector('.view-dropdown')
+
+    if(event.target.classList.contains('partag-view') || event.target.classList.contains('view-option-image')){
+        viewDropdownContainer.classList.add('active')
+    } 
+
+    viewDropdownContainer.addEventListener('mouseleave', function(event){
+      
+            viewDropdownContainer.classList.remove('active')        
+    })
+}
+
+////// Change Value of CurrentView and listViewOption /////
 let currentView = 'list'
 function changeView(newView){
+
     if(newView !== 'list'){
         currentView = newView; //currentView is now board
         listViewOption = newView === 'list'; //listViewOption is false
     }else{
         listViewOption = newView === 'list' //listViewOption is true
     }
-    initializeDateHeader() //will be called for list and board 
+    initializeDateHeader() 
 }
 
+///List and Board colors when clicked///
+function viewOptionsBtn(){
+    const boardBtn = document.querySelector('.board-btn')
+    const listBtn = document.querySelector('.list-btn')
+    const listView = document.querySelector('.todo-List')
+    const dateContainer = document.querySelector('.date-container')
+    const midContainer = document.querySelector('.view-container')
+    
+    
 
+    //Change background color on click
+    if(currentView == 'board'){
+        
+        //all these things are actually for board
+        listBtn.classList.remove('active')
+        boardBtn.classList.add('active') //background color orange 
+
+        //Add or remove boardview or listview
+        listView.classList.add('active') //remove listview
+        dateContainer.classList.add('active') //add boardview
+        midContainer.classList.add('boardView')
+
+    } else{
+        listBtn.classList.add('active')
+        boardBtn.classList.remove('active')
+
+         //Add or remove boardview or listview
+        listView.classList.remove('active') //add back listview
+        dateContainer.classList.remove('active')//remove boardview
+        midContainer.classList.remove('boardView')
+    }
+
+}
 //EventListeners for List and Board view buttons//
 document.querySelector('.list-btn').addEventListener('click', () => {
     currentView = 'list'
@@ -373,23 +424,23 @@ document.getElementById('nextBtn').addEventListener('click', nextDate)
 ///////////////////CURRENT DATE/////////////////////////
 function initializeDateHeader(){
 
-        function listViewDateDisplay(){
-            //currentDate is a global variable
-
+        //Display main date in list view
+        function displayListViewDate(){
             const options = {
                 year: 'numeric',
                 month: 'short',
                 day: 'numeric',
             };
 
-            //Display full day to the UI
-            document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
+            //Display full day to the UI (currentDate is a global variable)
+            document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options) 
             //Display week day to UI
             document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
            
             compareDates(currentDate)//compare localStorage object dates with current date to display listview  
         }
 
+        //Display main date in board view 
         function boardViewDateDisplay(){
             const options = {
                 year: 'numeric',
@@ -403,24 +454,25 @@ function initializeDateHeader(){
                                                                 </div>`
         } 
 
-
-
+        //Start Here!
         if(listViewOption){
-            listViewDateDisplay()
+            displayListViewDate()
            
         } else{
+            //Display board view date
             document.getElementById('currentDate').textContent = ''
             document.getElementById('day-of-the-week').textContent= '' 
 
-            datesForBoardView = boardViewDates() // ['Tuesday 12th', ....., .....] - datesForBoardView is a global variable
-            
             //Update main Date heading
             boardViewDateDisplay()
 
+            //Array with three dates based on the variable currenDate
+            //currentDate could be today's date or another date if the arrow icon was clicked
+            datesForBoardView = boardViewDates() 
+            
             //Display boardview dates
             compareDates(currentDate) //Display Board
         }
-
 }
 
 
@@ -524,6 +576,7 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
 
         trackCheckboxStatus()//Track checkboxes
 
+
         //Edit and Delete button hover affect
         let list = document.querySelectorAll('.date-innerContainer')
         let buttonContainers = document.querySelectorAll('.btn-board-container')
@@ -573,57 +626,8 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
 
 
 
-/////////////// VIEW OPTIONS (List or board) ///////////////
-//Open drop-down
-function viewOptions(event){
-    const viewBtn = document.querySelector('.view-options-innerDiv')
-    const viewDropdownContainer = document.querySelector('.view-dropdown')
-
-    if(event.target.classList.contains('partag-view') || event.target.classList.contains('view-option-image')){
-        viewDropdownContainer.classList.add('active')
-    } 
-
-    viewDropdownContainer.addEventListener('mouseleave', function(event){
-      
-            viewDropdownContainer.classList.remove('active')        
-    })
-  
-}
 
 
-///List and Board colors when clicked///
-function viewOptionsBtn(){
-    const boardBtn = document.querySelector('.board-btn')
-    const listBtn = document.querySelector('.list-btn')
-    const listView = document.querySelector('.todo-List')
-    const dateContainer = document.querySelector('.date-container')
-    const midContainer = document.querySelector('.view-container')
-    
-    
-
-    //Change background color on click
-    if(currentView == 'board'){
-        
-        //all these things are actually for board
-        listBtn.classList.remove('active')
-        boardBtn.classList.add('active') //background color orange 
-
-        //Add or remove boardview or listview
-        listView.classList.add('active') //remove listview
-        dateContainer.classList.add('active') //add boardview
-        midContainer.classList.add('boardView')
-
-    } else{
-        listBtn.classList.add('active')
-        boardBtn.classList.remove('active')
-
-         //Add or remove boardview or listview
-        listView.classList.remove('active') //add back listview
-        dateContainer.classList.remove('active')//remove boardview
-        midContainer.classList.remove('boardView')
-    }
-
-}
 
 
 ///////////////////////////////////////////// CATEGORY SECTION /////////////////////////////////////////
