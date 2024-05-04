@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     document.querySelector('.exit-full-view').addEventListener('click', closeFullViewContainer)
 
     //Date feature initilization
-    initializeDateFeature();
+    initializeDateHeader();
 
     //User Profile settings button
     document.querySelector('.settings-container').addEventListener('click', function(event){
@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', () =>{
 
 let listViewOption = true; /*It starts as a list view */
 let boardViewOption = false;
+
+let currentDate = new Date()  //Gives me the current date (Used for boardViewDates function, todayBtn function)
+let datesForBoardView;        //date+week array (used in the todayBtn function - makes the array a global variable)
 
 
 ////////// Open/Close form to add To-do item or edit ///////////
@@ -207,8 +210,6 @@ function trackCheckboxStatus(){
 
 
 
-let currentDate = new Date()  //Gives me the current date (Used for boardViewDates function, todayBtn function)
-let datesForBoardView;        //date+week array (used in the todayBtn function - makes the array a global variable)
 
 
 
@@ -302,16 +303,15 @@ function todayBtn(){
 
         currentDate = currentDateForTodayButton; //update currentDate
 
+        //Display current Month and Year
         document.getElementById('currentDate').innerHTML = `<div class="board-view-date">
                                                                     <p class="heading-month">${currentDate.toLocaleDateString('en-US',{month: "long"})}</p>
                                                                     <p class="heading-year">${currentDate.toLocaleDateString('en-US',{year: "numeric"})}</p>
                                                             </div>`
-        datesForBoardView = boardViewDates()//Call function and store value in variable 
-         
+        datesForBoardView = boardViewDates()//Call function and store value in global variable 
         compareDates(currentDateForTodayButton)//back to current date 
     }      
 }
-
 
 
 
@@ -323,11 +323,13 @@ function changeView(newView){
         currentView = newView; //currentView is now board
         listViewOption = newView === 'list'; //listViewOption is false
     }else{
-        listViewOption = newView === 'list'
+        listViewOption = newView === 'list' //listViewOption is true
     }
-    initializeDateFeature() //will be called for list and board 
+    initializeDateHeader() //will be called for list and board 
 }
 
+
+//EventListeners for List and Board view buttons//
 document.querySelector('.list-btn').addEventListener('click', () => {
     currentView = 'list'
     viewOptionsBtn() //change color
@@ -338,52 +340,54 @@ document.querySelector('.board-btn').addEventListener('click', () => {
     currentView = 'board'
     viewOptionsBtn() //change color
     changeView('board')
-
-   
-
 });
 
 
 
-////Arrow buttons to change dates////
+////Arrow buttons to change dates (List and Board View)////
 function previousDate(){
     if(listViewOption){
         currentDate.setDate(currentDate.getDate() - 1) //changes currenDate to past date
-        initializeDateFeature()
+        initializeDateHeader()
     } else{
         currentDate.setDate(currentDate.getDate() - 3)
-        initializeDateFeature()
+        initializeDateHeader()
     }
 }
 function nextDate(){
     if(listViewOption){
         currentDate.setDate(currentDate.getDate() + 1) //changes currenDate to future date
-        initializeDateFeature()
+        initializeDateHeader()
     } else{
         currentDate.setDate(currentDate.getDate() + 3)
-        initializeDateFeature()
+        initializeDateHeader()
     } 
 }
-
 //Listenting for a click on the arrow buttons
 document.getElementById('previousBtn').addEventListener('click', previousDate)
 document.getElementById('nextBtn').addEventListener('click', nextDate)
 
-///////////////////CURRENT DATE/////////////////////////
-function initializeDateFeature(){
 
-        function updateDateDisplay(){
+
+
+///////////////////CURRENT DATE/////////////////////////
+function initializeDateHeader(){
+
+        function listViewDateDisplay(){
+            //currentDate is a global variable
+
             const options = {
                 year: 'numeric',
                 month: 'short',
                 day: 'numeric',
             };
+
             //Display full day to the UI
             document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('en-US',options)
             //Display week day to UI
             document.getElementById('day-of-the-week').textContent = currentDate.toLocaleDateString('en-US', {weekday: "long"})
            
-            compareDates(currentDate)//compare localStorage object dates with current date    
+            compareDates(currentDate)//compare localStorage object dates with current date to display listview  
         }
 
         function boardViewDateDisplay(){
@@ -392,7 +396,7 @@ function initializeDateFeature(){
                 month: 'long',
             };
         
-            //Display full day to the UI
+            //Display month and date 
             document.getElementById('currentDate').innerHTML = `<div class="board-view-date">
                                                                     <p class="heading-month">${currentDate.toLocaleDateString('en-US',{month: "long"})}</p>
                                                                     <p class="heading-year">${currentDate.toLocaleDateString('en-US',{year: "numeric"})}</p>
@@ -402,22 +406,21 @@ function initializeDateFeature(){
 
 
         if(listViewOption){
-            updateDateDisplay()
+            listViewDateDisplay()
            
         } else{
             document.getElementById('currentDate').textContent = ''
             document.getElementById('day-of-the-week').textContent= '' 
 
-            datesForBoardView = boardViewDates() // ['Tuesday 12th', ....., .....] 
-            //console.log(datesForBoardView) 
+            datesForBoardView = boardViewDates() // ['Tuesday 12th', ....., .....] - datesForBoardView is a global variable
             
-
             //Update main Date heading
             boardViewDateDisplay()
 
-            //Display to preview
+            //Display boardview dates
             compareDates(currentDate) //Display Board
         }
+
 }
 
 
@@ -463,6 +466,7 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
         innerli = " "
     }
  
+
     // Loop through each date and corresponding entry (if any)
     for (let i = 0; i < 3; i++) {
       let columnContent = `
@@ -500,74 +504,70 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
 
                                 <p class="list-details">${entry.date} ${timeDisplay} | ${entry.type} | ${entry.category}<span class="color-box" style="background-color:${entry.color};"></span></p>
                                     ${innerUl} 
-                            </li>`;
-                        
+                            </li>`;           
             }
-
-            
         }
-  
         columns.push(columnContent);
-       
     }
 
-   //console.log(columns)
-   columns.forEach((item, i)=>{
-    dateContainer.innerHTML += `<div class="date-innerContainer">
-        ${item}
-    </div>
-    `
-   })
-  
+   
 
-   getList() //display fullview
-
-   trackCheckboxStatus()//Track checkboxes
-
-   //Edit and Delete button hover affect
-   let list = document.querySelectorAll('.date-innerContainer')
-   let buttonContainers = document.querySelectorAll('.btn-board-container')
-   let menuIcons = document.querySelectorAll('.fa-ellipsis-vertical')
-
-   menuIcons.forEach((icon, i)=>{
-        icon.addEventListener('click', function(){
-            buttonContainers[i].classList.add('visible')
-
+        columns.forEach((item, i)=>{
+            dateContainer.innerHTML += `<div class="date-innerContainer">
+                ${item}
+            </div>
+            `
         })
         
-   })
-   buttonContainers.forEach((container, i)=>{
-     container.addEventListener('mouseleave', function(){
-        buttonContainers[i].classList.remove('visible')
-     })
-   })
 
+        getList() //display fullview
 
-   //Delete to-do items
-   let boardViewItems = dateContainer.querySelectorAll('li.list-item-board')
-   let deleteBtns = dateContainer.querySelectorAll('.item-delete-Btn')
+        trackCheckboxStatus()//Track checkboxes
 
-   deleteBtns.forEach((btn, i)=>{
-        btn.addEventListener('click', function(){
-            let currentListId = Number(boardViewItems[i].id)
-            
-            deleteEntry(currentListId)
+        //Edit and Delete button hover affect
+        let list = document.querySelectorAll('.date-innerContainer')
+        let buttonContainers = document.querySelectorAll('.btn-board-container')
+        let menuIcons = document.querySelectorAll('.fa-ellipsis-vertical')
+
+        menuIcons.forEach((icon, i)=>{
+                icon.addEventListener('click', function(){
+                    buttonContainers[i].classList.add('visible')
+
+                })
+                
         })
-   })
+        buttonContainers.forEach((container, i)=>{
+            container.addEventListener('mouseleave', function(){
+                buttonContainers[i].classList.remove('visible')
+            })
+        })
 
-   //Edit to-do items
-   let midContainer = document.querySelector('.view-container')
-   let editBtns = dateContainer.querySelectorAll('.edit-Btn')
-   editBtns.forEach((btn, i)=>{
-    btn.addEventListener('click', function(){
-        openForm()
-        //margin is too much
-       // midContainer.classList.add('formOpen')
 
-        let currentListId = Number(boardViewItems[i].id)
-        editEntry(currentListId)
-    })
-   })
+        //Delete to-do items
+        let boardViewItems = dateContainer.querySelectorAll('li.list-item-board')
+        let deleteBtns = dateContainer.querySelectorAll('.item-delete-Btn')
+
+        deleteBtns.forEach((btn, i)=>{
+                btn.addEventListener('click', function(){
+                    let currentListId = Number(boardViewItems[i].id)
+                    
+                    deleteEntry(currentListId)
+                })
+        })
+
+        //Edit to-do items
+        let midContainer = document.querySelector('.view-container')
+        let editBtns = dateContainer.querySelectorAll('.edit-Btn')
+        editBtns.forEach((btn, i)=>{
+            btn.addEventListener('click', function(){
+                openForm()
+                //margin is too much
+            // midContainer.classList.add('formOpen')
+
+                let currentListId = Number(boardViewItems[i].id)
+                editEntry(currentListId)
+            })
+        })
 
   }
 
@@ -1626,6 +1626,7 @@ function compareDates(dateToCompare){
         }
         //Changed date format to ##/##/####
         let dateFormat = dateToCompare.toLocaleDateString('en-US', options) 
+        //Clear the list view UI
         todoList.innerHTML = " "
 
         formDataArr.filter((dataEntry)=>{
@@ -1637,7 +1638,7 @@ function compareDates(dateToCompare){
 
    } else{
 
-        let currentThreeDates = []
+        let currentThreeDates = [] //Created here
         dateContainer.innerHTML = " " 
 
         function formatDate(date) {
