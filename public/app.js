@@ -631,14 +631,15 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
 
 
 ///////////////////////////////////////////// CATEGORY SECTION /////////////////////////////////////////
-//Hovering over the category x-icon
+//Hovering over the category x-icon (Animation)
 function displayCategoryDeleteBtn(){
-    let paragraphEnclosingIcons = document.querySelectorAll('.new-category')
+    let paragraphEnclosingIcons = document.querySelectorAll('.new-category') //Created in here
     let xIcons = document.querySelectorAll('.categories-xmark-icon')
 
     let paragraphEnclosingIconArr = Array.from(paragraphEnclosingIcons)
     let xIconsArr = Array.from(xIcons)
 
+    //Animation when user hovers over categories
     paragraphEnclosingIconArr.map((category,i)=>{
         category.addEventListener("mouseenter", function(){
             xIconsArr[i].classList.add('visible')
@@ -650,7 +651,7 @@ function displayCategoryDeleteBtn(){
     }) 
 }
 
-//Display category options in form
+//Display category options for New Entry Form
 function displayCategoryOptions(catArr){
     const categoryOption = document.getElementById('categories-option')
     categoryOption.innerHTML = ""
@@ -663,7 +664,7 @@ function displayCategoryOptions(catArr){
 //The category picker gets removed if no categories were created
 function deleteCategoryPickerContainer(catg){
     const categoryContainer = document.querySelector('.select-category-container')
-    if(catg == '' || catg == [{}]){  //if
+    if(catg == '' || catg == [{}]){ 
        categoryContainer.classList.add('hideCategoryBox')
     } else{
         categoryContainer.classList.remove('hideCategoryBox')
@@ -699,7 +700,7 @@ function displayCreatedCategories(){
    if(!savedCategories || savedCategories === '[]'){  //true false('[]')  
         categories = JSON.parse(savedCategories) 
        
-        if(!categories){ //null is falsy 
+        if(categories){ //[] equals true
             categories = []
         }
 
@@ -719,6 +720,8 @@ function displayCreatedCategories(){
    deleteCategoryPickerContainer(categories) //Remove the categories option when no category created
    displayCategoryDeleteBtn() //Display X icon
 }
+
+
 
 
 ////////////// ADDING A CATEGORY /////////////////
@@ -752,7 +755,7 @@ function capitalizeFirstLetter(str){
         // +  = Acts as a string concatenation operator to put it all back together
 }
 
-//Starting point
+/////////// Starting Point //////////
 let categories = [];
 function addNewCategory() {
     
@@ -783,7 +786,8 @@ function addNewCategory() {
 }
 
 
-//////////////////////////// EDIT To-do ITEM //////////////////////////////
+
+/////////////////////////////////////// EDIT To-do ITEMS ///////////////////////////////////
 let typeOfTodo = '';
 let editEntryCurrentID;
 
@@ -814,7 +818,7 @@ function editEntry(itemID){
         /////Time/////
         if(!(time === 'NaN: PM' || time === 'NaN: AM')){
             //Adding an extra zero if less than 10
-            let hour = parseInt(time.slice(0, 2) )
+            let hour = parseInt(time.slice(0, 2))
             let newHourFormat = hour < 10 ? `0${hour}` : `${hour}`;
 
             let minute = time.slice(3, 5)
@@ -825,7 +829,6 @@ function editEntry(itemID){
                 if(newHourFormat == 12){
                     newHourFormat = '00'
                 } 
-            
             } else if(period == 'PM') {
                  if (newHourFormat < 12){
                     newHourFormat = parseInt(newHourFormat)
@@ -834,17 +837,20 @@ function editEntry(itemID){
                 }
             }
             
-            //console.log(newHourFormat, minute )
+            
             let militaryTime = `${newHourFormat}:${minute}`
-            document.querySelector('.time-container').value = militaryTime   
+            document.querySelector('.time-container').value = militaryTime 
+
         } else{
             document.querySelector('.time-container').value = ''
         }
 
+
         /////Description////
         if(description){
-            document.getElementById('input-dedscription').value = description
+            document.getElementById('input-description').value = description
         }
+
 
         //////Subtasks/////
         //Open the input boxes and insert the values    
@@ -855,7 +861,7 @@ function editEntry(itemID){
             const subtaskInputTag = Array.from(document.querySelectorAll('.input-subtask'))
             subtaskInputTag.forEach((inputTag,i)=>{
                 inputTag.value = subTasks[i].name
-                //console.log(subtasks[i].name)
+                
             })
          })
             //Insert the flags
@@ -913,7 +919,6 @@ function editEntry(itemID){
 
     formDataArr.filter((dataEntry) =>{
         if(dataEntry.id == itemID){
-            
             reEnterEntryToForm(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time, dataEntry.description, dataEntry.subtasks, dataEntry.category, dataEntry.color, dataEntry.location)
         }
     })
@@ -934,6 +939,7 @@ function closeFullViewContainer(){
     todoListDisplay.classList.remove('screen-size-40')//full screen
     listDetailContainer.classList.remove('display-list-detail-container')
 }
+
 
 ////// Delete entry 
 let fullViewID;
@@ -976,7 +982,7 @@ function deleteEntry(currentListID){
    
 }
 
-/////View All Details of Todo Item//////
+//////// View All Details of Todo Item ////////
 function viewFullDetailsOfTodoItem(title, date, time, type, description, subtasks, category, color, location, currentID){
     let timeDisplay = ''
     if(time === 'NaN: PM' || !time){
@@ -1030,18 +1036,19 @@ function viewFullDetailsOfTodoItem(title, date, time, type, description, subtask
 
     //Edit option
     let mainEditBtn = fullListView.querySelector('.main-edit-btn')
-
     mainEditBtn.addEventListener('click', function(){
         openForm()
         editEntry(currentID)
     })
    
 }
-// <button type="button" class="edit-btn">Edit</button> (might add it back to the above function)
 
 
+//// View details of todo items
 let fullListView = document.getElementById('full-list-view')
 function getList(){
+
+    //List-view: Opening full view of todo-items
     let list = document.querySelectorAll('.list-item')
     let listArr = Array.from(document.querySelectorAll('.list-item'))
 
@@ -1070,7 +1077,7 @@ function getList(){
             })
     })
 
-    //Board-View to open fullview
+    //Board-View: Opening full view of todo-items
     let boardTodoItems = document.querySelectorAll('li.list-item-board')
     let boardListArr = Array.from(document.querySelectorAll('li.list-item-board'))
 
@@ -1100,6 +1107,7 @@ function getList(){
  }
 
 
+
 ////////////////////////// UPCOMING ///////////////////////
 const upcomingContainer = document.querySelector('.upcoming-container')
 const upcomingXmark = document.querySelector('.exit-upcoming-container')
@@ -1115,7 +1123,7 @@ upcomingXmark.addEventListener('click', function(){
 })
 
 
-//Display container
+//Display Upcoming Items
 function upComingTodoItems(){
   
     //Obtaining the current date
@@ -1467,35 +1475,6 @@ function openPastDueContainer(){
 } 
 
 
-////////////////////// PREVIEW of To-do List, based on Selected Date //////////////////////
-
-//Edit and Delete btns on hover for the preview section//
-/*
-function displayButtonsOnHover(listItems){
-    console.log(listItems);
- 
-
-    let listArr = Array.from(listItems)
-    const deleteBtns = Array.from(listItems.querySelectorAll('.item-delete-Btn')) 
-    const editBtns = Array.from(listItems.querySelectorAll('.edit-Btn'))
-    console.log(deleteBtns)
-    console.log(editBtns)
-
-    listArr.map((listItem, i)=>{
-        listItem.addEventListener('mouseenter', function(){
-            console.log('visible')
-
-            deleteBtns[i].classList.add('visible')
-            editBtns[i].classList.add('visible')
-        })
-        listItem.addEventListener('mouseleave', function(){
-            deleteBtns[i].classList.remove('visible')
-            editBtns[i].classList.remove('visible')
-        })
-    })
-
-}
-*/
 
 
 function displayPreviewOfTodoList(id, title, type, date, time, category, subtasks, color){
@@ -1694,7 +1673,6 @@ function initializeFormDataArray(){
 }
 
 
-
 ////////////////////////////////// NEW ENTRY FORM //////////////////////////////////
 
 
@@ -1763,8 +1741,8 @@ function clearForm(){
 
 
     //clear description
-    document.getElementById('input-dedscription').value = ""
-    document.getElementById('input-dedscription').placeholder = "Add Description"
+    document.getElementById('input-description').value = ""
+    document.getElementById('input-description').placeholder = "Add Description"
 
     //Clear subtasks
     finalSubtasks = []; 
@@ -1893,7 +1871,7 @@ function getTime(){
 
 //Obtain the value entered in the textarea element
 function textareaValue(){
-    const textareaId = document.getElementById('input-dedscription')
+    const textareaId = document.getElementById('input-description')
     const description = textareaId.value.trim()
     return description
 }
