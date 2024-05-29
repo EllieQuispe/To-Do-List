@@ -477,159 +477,6 @@ function initializeDateHeader(){
 
 
 
-let dateContainer = document.querySelector('.date-container')
-
-function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
-    const columns = []; // Array to store the formatted columns
-    let innerUl = ''
-    let innerli = ''
-    let timeDisplay = ''
-
-    
-    function todoListTime(time){
-        if(time === 'NaN: PM' || !time){
-            timeDisplay  
-        } else {
-            timeDisplay = `| ${time}`
-        }
-    }
-
-    function subTask(subtasks){
-        if(subtasks.length === 0){
-            innerUl =  `<ul class="innerUl hidden"></ul>`
-        } else{
-            subtasks.forEach((subtask)=>{
-                if (subtask.name !== ''){
-                    subName = subtask.name
-                    subPriority = subtask.priority
-                    subId = subtask.id
-                 
-                    innerli += `<li class="innerList">
-                                <label class="container">
-                                <input type="checkbox" id="${subId}" class="checkbox secondary-checkbox">
-                                <span class="subtask-checkmark secondary-checkbox"></span>
-                                </label>
-                                <p class="subtask-name">${subName} <span class="priority-selected">${subPriority}</span> </p>
-                              </li>`
-                }
-            });
-            innerUl = `<ul class="innerUl">${innerli}</ul>`;
-        }
-        innerli = " "
-    }
- 
-
-    // Loop through each date and corresponding entry (if any)
-    for (let i = 0; i < 3; i++) {
-      let columnContent = `
-        <div class="date-heading">
-          <p class="date-week">${dateToCompare[i]}</p>
-        </div>
-      `;
-  
-      const matchingEntry = selectedEntries.filter(
-        (data) => data.date === currentThreeDates[i] //three match 03/12/24 [{},{},{}]
-      );
-        
-     // let subtasksPresent = subtasks.filter(subtask => subtask.name); 
-      if(matchingEntry.length > 0){
-            for(const entry of matchingEntry){
-                subTask(entry.subtasks) //this works for one but not more than one [ ]
-                todoListTime(entry.time)
-            
-            
-
-                columnContent += `
-                        <li class="list-item-board" id="${entry.id}">
-                                <div class="row-list">
-                                    <div class="input-container">
-                                        <label class="container"><input type="checkbox" id="${entry.id}" class="checkbox main-checkbox"><span class="checkmark main-checkbox"></span></label> ${entry.title}
-                                    </div>
-                                    <div class="menu-container">
-                                      <i class="fa-solid fa-ellipsis-vertical"></i>
-                                      <div class="btn-board-container">
-                                        <button type="button" class="edit-Btn edit-boardview-btn">Edit</button> <button type="button" class="item-delete-Btn delete-boardview-btn">Delete</button> 
-                                      </div>
-                                    </div>
-
-                                </div>
-
-                                <p class="list-details">${entry.date} ${timeDisplay} | ${entry.type} | ${entry.category}<span class="color-box" style="background-color:${entry.color};"></span></p>
-                                    ${innerUl} 
-                            </li>`;           
-            }
-        }
-        columns.push(columnContent);
-    }
-
-   
-
-        columns.forEach((item, i)=>{
-            dateContainer.innerHTML += `<div class="date-innerContainer">
-                ${item}
-            </div>
-            `
-        })
-        
-
-        getList() //display fullview
-
-        trackCheckboxStatus()//Track checkboxes
-
-
-        //Edit and Delete button hover affect
-        let list = document.querySelectorAll('.date-innerContainer')
-        let buttonContainers = document.querySelectorAll('.btn-board-container')
-        let menuIcons = document.querySelectorAll('.fa-ellipsis-vertical')
-
-        menuIcons.forEach((icon, i)=>{
-                icon.addEventListener('click', function(){
-                    buttonContainers[i].classList.add('visible')
-
-                })
-                
-        })
-        buttonContainers.forEach((container, i)=>{
-            container.addEventListener('mouseleave', function(){
-                buttonContainers[i].classList.remove('visible')
-            })
-        })
-
-
-        //Delete to-do items
-        let boardViewItems = dateContainer.querySelectorAll('li.list-item-board')
-        let deleteBtns = dateContainer.querySelectorAll('.item-delete-Btn')
-
-        deleteBtns.forEach((btn, i)=>{
-                btn.addEventListener('click', function(){
-                    let currentListId = Number(boardViewItems[i].id)
-                    
-                    deleteEntry(currentListId)
-                })
-        })
-
-        //Edit to-do items
-        let midContainer = document.querySelector('.view-container')
-        let editBtns = dateContainer.querySelectorAll('.edit-Btn')
-        editBtns.forEach((btn, i)=>{
-            btn.addEventListener('click', function(){
-                openForm()
-                //margin is too much
-            // midContainer.classList.add('formOpen')
-
-                let currentListId = Number(boardViewItems[i].id)
-                editEntry(currentListId)
-            })
-        })
-
-  }
-
-
-
-
-
-
-
 ///////////////////////////////////////////// CATEGORY SECTION /////////////////////////////////////////
 //Hovering over the category x-icon (Animation)
 function displayCategoryDeleteBtn(){
@@ -700,9 +547,9 @@ function displayCreatedCategories(){
    if(!savedCategories || savedCategories === '[]'){  //true false('[]')  
         categories = JSON.parse(savedCategories) 
        
-        if(categories){ //[] equals true
+       if(!categories){ //[] equals true
             categories = []
-        }
+         }
 
    } else{ //false false
          categories = JSON.parse(savedCategories) //An array of objects
@@ -770,8 +617,10 @@ function addNewCategory() {
             name: categoryName
         };
 
+        
         //push object to the categories array
         categories.push(category); 
+      
 
          //reset the value box to blank   
         inputCategory.value = ""                                       
@@ -1477,6 +1326,157 @@ function openPastDueContainer(){
 
 
 
+/////////////////////////// Display Board-view ////////////////////////
+let dateContainer = document.querySelector('.date-container')
+
+function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
+    const columns = []; // Array to store the formatted columns
+    let innerUl = ''
+    let innerli = ''
+    let timeDisplay = ''
+
+    
+    function todoListTime(time){
+        if(time === 'NaN: PM' || !time){
+            timeDisplay  
+        } else {
+            timeDisplay = `${time} |`
+        }
+    }
+
+    function subTask(subtasks){
+        if(subtasks.length === 0){
+            innerUl =  `<ul class="innerUl hidden"></ul>`
+        } else{
+            subtasks.forEach((subtask)=>{
+                if (subtask.name !== ''){
+                    subName = subtask.name
+                    subPriority = subtask.priority
+                    subId = subtask.id
+                 
+                    innerli += `<li class="innerList">
+                                <label class="container">
+                                <input type="checkbox" id="${subId}" class="checkbox secondary-checkbox">
+                                <span class="subtask-checkmark secondary-checkbox"></span>
+                                </label>
+                                <p class="subtask-name">${subName} <span class="priority-selected">${subPriority}</span> </p>
+                              </li>`
+                }
+            });
+            innerUl = `<ul class="innerUl">${innerli}</ul>`;
+        }
+        innerli = " "
+    }
+ 
+
+    // Loop through each date and corresponding entry (if any)
+    for (let i = 0; i < 3; i++) {
+      let columnContent = `
+        <div class="date-heading">
+          <p class="date-week">${dateToCompare[i]}</p>
+        </div>
+      `;
+  
+      const matchingEntry = selectedEntries.filter(
+        (data) => data.date === currentThreeDates[i] //three match 03/12/24 [{},{},{}]
+      );
+        
+     // let subtasksPresent = subtasks.filter(subtask => subtask.name); 
+      if(matchingEntry.length > 0){
+            for(const entry of matchingEntry){
+                subTask(entry.subtasks) //this works for one but not more than one [ ]
+                todoListTime(entry.time)
+            
+            
+
+                columnContent += `
+                        <li class="list-item-board" id="${entry.id}">
+                                <div class="row-list">
+                                    <div class="input-container">
+                                        <label class="container"><input type="checkbox" id="${entry.id}" class="checkbox main-checkbox"><span class="checkmark main-checkbox"></span></label> ${entry.title}
+                                    </div>
+                                    <div class="menu-container">
+                                      <i class="fa-solid fa-ellipsis-vertical"></i>
+                                      <div class="btn-board-container">
+                                        <button type="button" class="edit-Btn edit-boardview-btn">Edit</button> <button type="button" class="item-delete-Btn delete-boardview-btn">Delete</button> 
+                                      </div>
+                                    </div>
+
+                                </div>
+
+                                <p class="list-details">${timeDisplay} ${entry.type} | ${entry.category}<span class="color-box" style="background-color:${entry.color};"></span></p>
+                                    ${innerUl} 
+                            </li>`;           
+            }
+        }
+        columns.push(columnContent);
+    }
+
+   
+
+        columns.forEach((item, i)=>{
+            dateContainer.innerHTML += `<div class="date-innerContainer">
+                ${item}
+            </div>
+            `
+        })
+        
+
+        getList() //display fullview
+
+        trackCheckboxStatus()//Track checkboxes
+
+
+        //Edit and Delete button hover affect
+        let list = document.querySelectorAll('.date-innerContainer')
+        let buttonContainers = document.querySelectorAll('.btn-board-container')
+        let menuIcons = document.querySelectorAll('.fa-ellipsis-vertical')
+
+        menuIcons.forEach((icon, i)=>{
+                icon.addEventListener('click', function(){
+                    buttonContainers[i].classList.add('visible')
+
+                })
+                
+        })
+        buttonContainers.forEach((container, i)=>{
+            container.addEventListener('mouseleave', function(){
+                buttonContainers[i].classList.remove('visible')
+            })
+        })
+
+
+        //Delete to-do items
+        let boardViewItems = dateContainer.querySelectorAll('li.list-item-board')
+        let deleteBtns = dateContainer.querySelectorAll('.item-delete-Btn')
+
+        deleteBtns.forEach((btn, i)=>{
+                btn.addEventListener('click', function(){
+                    let currentListId = Number(boardViewItems[i].id)
+                    
+                    deleteEntry(currentListId)
+                })
+        })
+
+        //Edit to-do items
+        let midContainer = document.querySelector('.view-container')
+        let editBtns = dateContainer.querySelectorAll('.edit-Btn')
+        editBtns.forEach((btn, i)=>{
+            btn.addEventListener('click', function(){
+                openForm()
+                //margin is too much
+            // midContainer.classList.add('formOpen')
+
+                let currentListId = Number(boardViewItems[i].id)
+                editEntry(currentListId)
+            })
+        })
+
+  }
+
+
+
+///////////////////// Display List-view //////////////////
 function displayPreviewOfTodoList(id, title, type, date, time, category, subtasks, color){
     let timeDisplay = ''
     if(time === 'NaN: PM' || !time){
@@ -1551,10 +1551,6 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
         })
     })
 
-    //display btns when hover
-   // displayButtonsOnHover(listItem)
-
-
     //Edit option
     let editBtns = Array.from(todoList.querySelectorAll('.edit-Btn'))
     editBtns.forEach((btn, i)=>{
@@ -1572,25 +1568,25 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
 
 
     //Hover over the delete and edit buttons
-   todoList = document.querySelector('.todo-List') //This is the list view option
-   const listItems = document.querySelectorAll('li.list-item')
+    todoList = document.querySelector('.todo-List') //This is the list view option
+    const listItems = document.querySelectorAll('li.list-item')
 
-   const viewDeleteBtns = todoList.querySelectorAll('.item-delete-Btn');
-   const viewEditBtns = todoList.querySelectorAll('.edit-Btn');
+    const viewDeleteBtns = todoList.querySelectorAll('.item-delete-Btn');
+    const viewEditBtns = todoList.querySelectorAll('.edit-Btn');
 
-   let listArr = Array.from(listItems)//turn to array
+    let listArr = Array.from(listItems)//turn to array
 
-   listArr.forEach((list, i)=>{
-    list.addEventListener('mouseenter', function(){
-        viewDeleteBtns[i].classList.add('visible')
-        viewEditBtns[i].classList.add('visible')
+    listArr.forEach((list, i)=>{
+        list.addEventListener('mouseenter', function(){
+            viewDeleteBtns[i].classList.add('visible')
+            viewEditBtns[i].classList.add('visible')
+        })
+        list.addEventListener('mouseleave', function(){
+            viewDeleteBtns[i].classList.remove('visible')
+            viewEditBtns[i].classList.remove('visible')
+        })
+
     })
-    list.addEventListener('mouseleave', function(){
-        viewDeleteBtns[i].classList.remove('visible')
-        viewEditBtns[i].classList.remove('visible')
-    })
-
-   })
 } 
 
 
@@ -1621,6 +1617,7 @@ function compareDates(dateToCompare){
 
    } else{
 
+        ////Board-view///
         let currentThreeDates = [] //Created here
         dateContainer.innerHTML = " " 
 
@@ -1642,6 +1639,7 @@ function compareDates(dateToCompare){
 
         //Day after tomorrow
         let nextDay = formatDate(new Date(tomorrow.getTime() + 24 * 60 * 60 * 1000));
+
         //Push to array
         currentThreeDates.push(today, boardViewTomorrow, nextDay)
 
@@ -1652,7 +1650,7 @@ function compareDates(dateToCompare){
                 return dataEntry         
             } 
         })
-        //console.log(selectedEntries)
+        
 
         displayWeek(datesForBoardView, selectedEntries, currentThreeDates)
       
@@ -1673,10 +1671,8 @@ function initializeFormDataArray(){
 }
 
 
-////////////////////////////////// NEW ENTRY FORM //////////////////////////////////
 
-
-//// Validate Form ////
+/////////////////// Validate Form ///////////////////
 function titleErrorMessage(message){
     const titleErrorMessage = document.querySelector('.titleErrorMessage')
     titleErrorMessage.innerHTML = message
@@ -1721,8 +1717,7 @@ function validateForm(title, typeOfTodo){
 }
 
 
-
-//// Reset/Clear form ////
+/////// Reset/Clear form //////
 function clearForm(){
     //clear title
     document.getElementById('title-input').value = ""
@@ -1765,6 +1760,89 @@ function clearForm(){
     document.getElementById('addressInput').placeholder = "Add Location"
 
 }
+
+
+
+////////////////// FORM SUBMISSION FOR NEW EVENT OR TASK ////////////////
+const mapID = document.getElementById('map')
+let formDataArr = [];
+
+function submitForm(ev){
+    ev.preventDefault(); //to stop the form from submitting
+
+
+    //Title 
+    let title = getTitle()    
+    //Due Date
+    const date = getSelectedDate()
+    //Time
+    const time = getTime()
+    //Description
+    const description = textareaValue()
+    //Subtask
+    const subtasks = subtaskInputValue()
+   
+    //Category
+    const category = categorySelected()
+    //Color
+    const color = colorPicked;
+    //Location
+    const location = clientAddress()
+
+    
+    if(validateForm(title, typeOfTodo, subtasks)){
+        title = capitalizeFirstLetter(title)
+
+
+        const formData = {
+        id: Date.now(),
+        title: title,
+        type: typeOfTodo,
+        date: date,
+        time: time,
+        description: description,
+        subtasks: subtasks,
+        category: category,
+        color: color,
+        location: location,
+        }
+
+
+        //Insert object to array
+        if(editEntryCurrentID) {
+            
+            const index = formDataArr.findIndex(dataEntry => dataEntry.id === editEntryCurrentID);
+            if (index !== -1) {
+              formDataArr.splice(index, 1, formData); // Replace object at the found index
+              editEntryCurrentID = '';
+            } else{
+                formDataArr.push(formData) //New entry
+            }
+          } else{
+            formDataArr.push(formData) //New entry
+          }
+          
+        //Update upcoming items
+        upComingTodoItems()
+        //Update past due items
+        pastDueTodoItems()
+
+        //Reset Values//
+        clearForm() 
+
+        //Saving object to localStorage
+        localStorage.setItem('FormData', JSON.stringify(formDataArr))
+ 
+        //Call the function that will display the categories
+     
+        compareDates(currentDate)
+        closeForm()
+        eventsTasksCounter()
+    } 
+    
+    
+}
+
 
 
 
@@ -2183,88 +2261,7 @@ initializeMap()
 
 
 
-////////////////// FORM SUBMISSION FOR NEW EVENT OR TASK ////////////////
-const mapID = document.getElementById('map')
-let formDataArr = [];
 
-function submitForm(ev){
-    ev.preventDefault(); //to stop the form from submitting
-
-
-
-    //Title 
-    let title = getTitle()    
-    //Due Date
-    const date = getSelectedDate()
-    //Time
-    const time = getTime()
-    //Description
-    const description = textareaValue()
-    //Subtask
-    const subtasks = subtaskInputValue()
-   
-    //Category
-    const category = categorySelected()
-    //Color
-    const color = colorPicked;
-    //Location
-    const location = clientAddress()
-
-    
-
-    
-    if(validateForm(title, typeOfTodo, subtasks)){
-        title = capitalizeFirstLetter(title)
-
-
-        const formData = {
-        id: Date.now(),
-        title: title,
-        type: typeOfTodo,
-        date: date,
-        time: time,
-        description: description,
-        subtasks: subtasks,
-        category: category,
-        color: color,
-        location: location,
-        }
-
-
-        //Insert object to array
-        if(editEntryCurrentID) {
-            
-            const index = formDataArr.findIndex(dataEntry => dataEntry.id === editEntryCurrentID);
-            if (index !== -1) {
-              formDataArr.splice(index, 1, formData); // Replace object at the found index
-              editEntryCurrentID = '';
-            } else{
-                formDataArr.push(formData) //New entry
-            }
-          } else{
-            formDataArr.push(formData) //New entry
-          }
-          
-        //Update upcoming items
-        upComingTodoItems()
-        //Update past due items
-        pastDueTodoItems()
-
-        //Reset Values//
-        clearForm() 
-
-        //Saving object to localStorage
-        localStorage.setItem('FormData', JSON.stringify(formDataArr))
- 
-        //Call the function that will display the categories
-     
-        compareDates(currentDate)
-        closeForm()
-        eventsTasksCounter()
-    } 
-    
-    
-}
 
 
 
