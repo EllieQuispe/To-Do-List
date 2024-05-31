@@ -1726,7 +1726,7 @@ div.menu-container{
 }
 
 .view-container.boardView{
-    padding-left: 7%; /*7*/
+    /*padding-left: 7%; /*7*/
     padding-right: 15%;
 }
 
@@ -1738,7 +1738,24 @@ div.menu-container{
 
 
 
-/* Small Screen */
+/* Median to Small Screen */
+
+/*
+
+.view-container.boardView{
+    /*padding-left: 7%;
+    padding-right: 15%;
+
+*/
+@media (max-width: 1888px){
+
+    .view-container.boardView{
+        padding-left: 7%;
+        padding-right: 7%;
+    }
+
+}
+
 @media (max-width: 1111px) { 
     .leftside-container {
       animation: disappearLeft 0.5s ease-in-out forwards;
@@ -1759,4 +1776,24 @@ div.menu-container{
   /* Transition for smooth appearance/disappearance */
   .leftside-container {
     transition: transform 0.3s ease-in-out;
+  }
+
+  @media (max-width:805px){
+  
+    .view-container.boardView{
+        padding-left: 7%;
+        padding-right: 11%;
+    }
+       
+    .date-container.active{
+        flex-direction: column;
+    }
+
+    .date-innerContainer:nth-child(2){
+        margin-right: 0px;
+        margin-left: 0px;
+        margin-bottom: 14px;
+        margin-top: 14px
+    }
+    
   }
