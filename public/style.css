@@ -30,6 +30,8 @@ body{
     font-weight: 300;
     font-size: 15px;
     color: #1c1c1c;
+    opacity: 1;
+    
 }
 
 /*User Profile*/
@@ -1733,3 +1735,28 @@ div.menu-container{
     padding: 2px;
     padding-right: 5px;
 }
+
+
+
+/* Small Screen */
+@media (max-width: 1111px) { 
+    .leftside-container {
+      animation: disappearLeft 0.5s ease-in-out forwards;
+    }
+  }
+  
+  /* Animation for disappearing left */
+  @keyframes disappearLeft {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+      display:none;
+    }
+  }
+  
+  /* Transition for smooth appearance/disappearance */
+  .leftside-container {
+    transition: transform 0.3s ease-in-out;
+  }
