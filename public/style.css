@@ -322,9 +322,21 @@ p.sideMenu-label:hover{
 .middle-container.screen-size-40{ /*works with JS*/
     width: 50%
 }
+
+.nav-container{
+    position: relative;
+    height: 35px;
+    display: flex;
+    justify-content: space-between;
+
+    padding: 14px 14px 0px 14px;
+
+   /* border: 1px solid red; */
+}
+
 .main-top-container{
     position: relative;
-    height: 80px;
+    height: 53px;
     flex-grow: 1;
     border-bottom: 1px solid rgb(227, 224, 224);
     display: flex;
@@ -332,36 +344,54 @@ p.sideMenu-label:hover{
     justify-content: space-evenly;
     align-items: center;
 }
-.view-options-container{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-right: 14px;
+
+/*sidebar icon*/
+.sidebar-icon{
+    width: 30px;
+    height: 24px;
+    padding: 5px;
+    display: none; 
+}
+.sidebar-icon:hover{
+    background-color: #f4f4f4;
+    border-radius: 7px;
     cursor: pointer;
 }
-.view-options-innerDiv{
+
+
+/*view options*/
+.view-options-container{
     display: flex;
-    align-items: center;
-    height: 34px;
-    padding: 0px 10px;
-}
-.view-options-innerDiv:hover{
-    background-color: #f4f4f4;
-    border-radius: 5px;
+    flex-direction: column; 
+    /*align-items: center;
+    /*justify-content: flex-end;*/
+    cursor: pointer;
+
+   /* border: 1px solid black; */
 }
 
 .view-option-image{
     width: 30px;
     height: 24px;
+    padding: 5px 5px 0px 5px; 
 }
+.view-options-innerDiv:hover{
+    background-color: #f4f4f4;
+    border-radius: 5px;
+
+}
+
+
+
+/*
 p.partag-view{
  padding-right: 5px;
  color: #1c1c1c;
     font-size: 14px;
     font-family: 'Inter', sans-serif;
     font-weight: 300;
-}
+} */
+
 /**Drop down of view option**/
 .view-dropdown{
     position: absolute;
@@ -1730,23 +1760,9 @@ div.menu-container{
     padding-right: 15%;
 }
 
-/*
-.view-container.boardView.formOpen{ 
-    padding: 2px;
-    padding-right: 5px;
-}
 
 
-
-/* Median to Small Screen */
-
-/*
-
-.view-container.boardView{
-    /*padding-left: 7%;
-    padding-right: 15%;
-
-*/
+/* Responsive Layout ***/
 @media (max-width: 1888px){
 
     .view-container.boardView{
@@ -1759,6 +1775,9 @@ div.menu-container{
 @media (max-width: 1111px) { 
     .leftside-container {
       animation: disappearLeft 0.5s ease-in-out forwards;
+    }
+    .sidebar-icon{
+        display: inline-block;
     }
   }
   
