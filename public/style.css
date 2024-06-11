@@ -34,6 +34,8 @@ body{
     
 }
 
+
+
 /*User Profile*/
 div#user-img{
     width: 45px;
@@ -1752,6 +1754,7 @@ div.menu-container{
     padding-right: 15%;
 }
 
+ 
 
 
 /* Responsive Layout ***/
@@ -1764,15 +1767,34 @@ div.menu-container{
 
 }
 
+
 @media (max-width: 1111px) { 
+    /*when leftside container disappears*/
     .leftside-container {
       animation: disappearLeft 0.5s ease-in-out forwards;
     }
     .sidebar-icon{
         display: inline-block;
     }
+
+    /*when left sidebar reappears*/
+    .leftside-container-display {
+        animation: appearRight 0.5s ease-in-out forwards;
+    }
   }
-  
+
+   /* Animation for appearing right*/
+   @keyframes appearRight {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0%);
+      display: inline-block;
+    }
+  }
+
+
   /* Animation for disappearing left */
   @keyframes disappearLeft {
     from {
@@ -1783,13 +1805,15 @@ div.menu-container{
       display:none;
     }
   }
-  
+
   /* Transition for smooth appearance/disappearance */
   .leftside-container {
     transition: transform 0.3s ease-in-out;
   }
+  
+  
 
-  @media (max-width:805px){
+@media (max-width:805px){
   
     .view-container.boardView{
         padding-left: 7%;
@@ -1806,5 +1830,27 @@ div.menu-container{
         margin-bottom: 14px;
         margin-top: 14px
     }
+   
     
   }
+
+
+@media (max-width:611px){
+    .leftside-container{
+        position: absolute;
+        z-index: 2;
+    }
+
+   
+    .mobile-background-shadow{
+        background-color:#2C2C2C;
+        height: 100vh;
+        width: 100vh;
+        position: absolute;
+        z-index: 1;
+        opacity: 25%;
+    }
+  
+
+}
+
