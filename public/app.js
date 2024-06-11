@@ -101,7 +101,10 @@ const mobileShadow = document.querySelector('.mobile-background')
         mobileShadow.classList.toggle('mobile-background-shadow')
     })
 
-    
+    mobileShadow.addEventListener('click', function(){
+        leftsideContainer.classList.toggle('leftside-container-display')
+        mobileShadow.classList.toggle('mobile-background-shadow')
+    })
 
 
 ////////// Dropdown User Profile settings ////////
