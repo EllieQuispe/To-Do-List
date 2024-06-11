@@ -1758,8 +1758,9 @@ div.menu-container{
 
 
 /* Responsive Layout ***/
-@media (max-width: 1888px){
 
+/*padding of boardview on smaller screen*/
+@media (max-width: 1888px){
     .view-container.boardView{
         padding-left: 7%;
         padding-right: 7%;
@@ -1768,6 +1769,7 @@ div.menu-container{
 }
 
 
+/*Ipad side screen*/
 @media (max-width: 1111px) { 
     /*when leftside container disappears*/
     .leftside-container {
@@ -1777,23 +1779,8 @@ div.menu-container{
         display: inline-block;
     }
 
-    /*when left sidebar reappears*/
-    .leftside-container-display {
-        animation: appearRight 0.5s ease-in-out forwards;
-    }
+    
   }
-
-   /* Animation for appearing right*/
-   @keyframes appearRight {
-    from {
-      transform: translateX(-100%);
-    }
-    to {
-      transform: translateX(0%);
-      display: inline-block;
-    }
-  }
-
 
   /* Animation for disappearing left */
   @keyframes disappearLeft {
@@ -1805,11 +1792,29 @@ div.menu-container{
       display:none;
     }
   }
-
   /* Transition for smooth appearance/disappearance */
   .leftside-container {
     transition: transform 0.3s ease-in-out;
   }
+
+
+
+  /*Sidebar container reappears - This takes place only when sidebar icon is active and you
+  click it! */
+   .leftside-container-display {
+    animation: appearRight 0.5s ease-in-out forwards;
+    }
+   /* Animation for appearing right*/
+   @keyframes appearRight {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0%);
+      display: inline-block;
+    }
+   }
+
   
   
 
@@ -1835,6 +1840,7 @@ div.menu-container{
   }
 
 
+  /*Mobile size screen*/
 @media (max-width:611px){
     .leftside-container{
         position: absolute;
