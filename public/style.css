@@ -363,11 +363,7 @@ p.sideMenu-label:hover{
 .view-options-container{
     display: flex;
     flex-direction: column; 
-    /*align-items: center;
-    /*justify-content: flex-end;*/
     cursor: pointer;
-
-   /* border: 1px solid black; */
 }
 
 .view-option-image{
@@ -383,20 +379,11 @@ p.sideMenu-label:hover{
 
 
 
-/*
-p.partag-view{
- padding-right: 5px;
- color: #1c1c1c;
-    font-size: 14px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-} */
-
 /**Drop down of view option**/
 .view-dropdown{
     position: absolute;
-    top: 40px;
-    right: 4px;
+    top: 50px;
+    right: 16px;
     border: 1px solid 99999943;
     z-index: 1;
     background-color: white;
@@ -441,6 +428,11 @@ button.board-btn.active{
    
 }
 
+/* icon padding*/
+.fa-list-ul,
+.fa-table-columns{
+    padding-right: 5px;
+}
 
 /*****Arrow***/
 .arrow-icon{
