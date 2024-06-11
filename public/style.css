@@ -1659,6 +1659,7 @@ p.heading-year{
     padding: 50px 0px; /*22px 0px*/
 }
 .date-innerContainer{
+    box-sizing: border-box;
     width:100%;
     max-height: 500px;
     min-height: 350px;
@@ -1762,15 +1763,15 @@ div.menu-container{
 /*padding of boardview on smaller screen*/
 @media (max-width: 1888px){
     .view-container.boardView{
-        padding-left: 7%;
-        padding-right: 7%;
+        padding-left: 4%;
+        padding-right: 4%;
     }
 
 }
 
 
 /*Ipad side screen*/
-@media (max-width: 1111px) { 
+@media (max-width: 1145px) { 
     /*when leftside container disappears*/
     .leftside-container {
       animation: disappearLeft 0.5s ease-in-out forwards;
@@ -1818,11 +1819,11 @@ div.menu-container{
   
   
 
-@media (max-width:805px){
+@media (max-width:875px){
   
     .view-container.boardView{
         padding-left: 7%;
-        padding-right: 11%;
+        padding-right: 7%;
     }
        
     .date-container.active{
@@ -1836,7 +1837,9 @@ div.menu-container{
         margin-top: 14px
     }
    
-    
+    .date-innerContainer{
+        padding: 5px 21px 10px 21px;
+    }
   }
 
 
