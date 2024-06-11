@@ -89,6 +89,20 @@ function closeForm(){
 }
 
 
+//// Open/Display leftside-container ///////
+//For ipad and mobile
+const sidebarIcon = document.querySelector('.sidebar-container')
+const leftsideContainer = document.querySelector('.leftside-container')
+const mobileShadow = document.querySelector('.mobile-background')
+
+    sidebarIcon.addEventListener('click', function(){
+        console.log('clicked')
+        leftsideContainer.classList.toggle('leftside-container-display')
+        mobileShadow.classList.toggle('mobile-background-shadow')
+    })
+
+    
+
 
 ////////// Dropdown User Profile settings ////////
 function UserProfileMenuBtn(event){
