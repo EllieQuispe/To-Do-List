@@ -321,9 +321,11 @@ p.sideMenu-label:hover{
     align-self: center;
  
 }
-.middle-container.screen-size-40{ /*works with JS*/
+
+/*
+.middle-container.screen-size-40{ 
     width: 50%
-}
+}*/
 
 .nav-container{
     position: relative;
@@ -338,7 +340,7 @@ p.sideMenu-label:hover{
 
 .main-top-container{
     position: relative;
-    height: 53px;
+    height: 65px;
     flex-grow: 1;
     border-bottom: 1px solid rgb(227, 224, 224);
     display: flex;
@@ -934,7 +936,7 @@ ul.pastDue-innerUl{
     position: relative;
     background-color: #f4f4f4;
     border-radius: 15px;
-    width: 30%;
+    width: 40%;
     height: 97%;
     margin-right: 12px;
     align-self: center;
@@ -1090,7 +1092,7 @@ span.location{
     position: relative;
     background-color: #f4f4f4;
     border-radius: 15px;
-    width: 30%;
+    width: 40%;
     min-width: 150px;
     height: 97%;
     margin-right: 12px;
@@ -1781,7 +1783,17 @@ div.menu-container{
     }
 
     
-  }
+  }  
+
+@media (max-width:1200px){
+    .new-todo-item-container{
+        width: 50%;
+    }
+
+    .list-detail-container{
+        width: 50%
+    }
+}
 
   /* Animation for disappearing left */
   @keyframes disappearLeft {
@@ -1817,7 +1829,7 @@ div.menu-container{
    }
 
   
-  
+
 
 @media (max-width:875px){
   
@@ -1840,8 +1852,37 @@ div.menu-container{
     .date-innerContainer{
         padding: 5px 21px 10px 21px;
     }
+
+    .new-todo-item-container{
+        width: 80%;
+    }
+
+    .list-detail-container{
+        width: 80%
+    }
   }
 
+@media (max-width:780px){
+    .new-todo-item-container{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        border-radius: 0px;
+       
+    }
+    .top-section{
+        margin: 80px 50px 30px 50px;
+    }
+
+    .list-detail-container{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        border-radius: 0px;
+    }
+}
 
   /*Mobile size screen*/
 @media (max-width:611px){
@@ -1850,7 +1891,6 @@ div.menu-container{
         z-index: 2;
     }
 
-   
     .mobile-background-shadow{
         background-color:#2C2C2C;
         height: 100vh;
@@ -1859,7 +1899,11 @@ div.menu-container{
         z-index: 1;
         opacity: 25%;
     }
-  
+
+    .top-section{
+        margin: 80px 30px 30px 30px;
+    }
+    
 
 }
 
