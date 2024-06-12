@@ -62,12 +62,12 @@ let datesForBoardView;        //date+week array (used in the todayBtn function -
 
 ////////// Open/Close form to add To-do item or edit ///////////
 const todoNewEntryForm = document.querySelector('.new-todo-item-container') //Form outer container
-const todoListDisplay = document.querySelector('.middle-container')         //Where the to-do items will display
+/*const todoListDisplay = document.querySelector('.middle-container')*/         //Where the to-do items will display
 
 function openForm(){
     let midContainer = document.querySelector('.view-container')    //Contains the board and list view option divs
     todoNewEntryForm.classList.add('display')                       //Form opens
-    todoListDisplay.classList.add('screen-size-40')                 //Display width changes (gets narrower to make room for the form)
+   /*todoListDisplay.classList.add('screen-size-40')*/                 //Display width changes (gets narrower to make room for the form)
     editEntryCurrentID = '';                                        //Remove id# from edit container (when edits take place)
    
     clearForm()                                                     //Remove any entries from form
@@ -80,7 +80,7 @@ function openForm(){
 function closeForm(){
     let midContainer = document.querySelector('.view-container')    //Contains the board and list view option divs
     todoNewEntryForm.classList.remove('display')                    //Close form
-    todoListDisplay.classList.remove('screen-size-40')              //Display width changes (gets wider)
+    /*todoListDisplay.classList.remove('screen-size-40')*/           //Display width changes (gets wider)
     editEntryCurrentID = '';                                        //Remove id# from edit container (when edits take place)
     
     clearForm()                                                     //Remove any entries from fom
@@ -795,14 +795,14 @@ function editEntry(itemID){
 const listDetailContainer = document.querySelector('.list-detail-container') //For Full View Container
 function openFullViewContainer(){
     listDetailContainer.classList.add('display-list-detail-container')
-    todoListDisplay.classList.add('screen-size-40') //not remove a window, just making it smaller
+   /* todoListDisplay.classList.add('screen-size-40') //not remove a window, just making it smaller */
 
     //If form is open, we do the below code
     todoNewEntryForm.classList.remove('display')
     clearForm()
 }
 function closeFullViewContainer(){
-    todoListDisplay.classList.remove('screen-size-40')//full screen
+   /* todoListDisplay.classList.remove('screen-size-40')//full screen */
     listDetailContainer.classList.remove('display-list-detail-container')
 }
 
