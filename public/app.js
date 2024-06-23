@@ -64,6 +64,7 @@ let datesForBoardView;        //date+week array (used in the todayBtn function -
 const todoNewEntryForm = document.querySelector('.new-todo-item-container') //Form outer container
 /*const todoListDisplay = document.querySelector('.middle-container')*/         //Where the to-do items will display
 
+
 function openForm(){
     let midContainer = document.querySelector('.view-container')    //Contains the board and list view option divs
     todoNewEntryForm.classList.add('display')                       //Form opens
@@ -75,6 +76,7 @@ function openForm(){
     //If list detail container is open
         listDetailContainer.classList.remove('display-list-detail-container') //Remove Detailed view of To-do items (not sure how this is working if it wasn't declare first)
         // midContainer.classList.add('formOpen') //Change padding for boardview (I need to fix it)
+
 }
 
 function closeForm(){
@@ -89,22 +91,7 @@ function closeForm(){
 }
 
 
-//// Open/Display leftside-container ///////
-//For ipad and mobile
-const sidebarIcon = document.querySelector('.sidebar-container')
-const leftsideContainer = document.querySelector('.leftside-container')
-const mobileShadow = document.querySelector('.mobile-background')
 
-    sidebarIcon.addEventListener('click', function(){
-        console.log('clicked')
-        leftsideContainer.classList.toggle('leftside-container-display')
-        mobileShadow.classList.toggle('mobile-background-shadow')
-    })
-
-    mobileShadow.addEventListener('click', function(){
-        leftsideContainer.classList.toggle('leftside-container-display')
-        mobileShadow.classList.toggle('mobile-background-shadow')
-    })
 
 
 ////////// Dropdown User Profile settings ////////
@@ -1489,6 +1476,7 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
             })
         })
 
+        responsiveDateLayout() //responsive three date box layout
   }
 
 
@@ -1606,6 +1594,37 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
     })
 } 
 
+
+//// Open/Display leftside-container ///////
+//For ipad and mobile
+
+function responsiveDateLayout(){
+    const sidebarIcon = document.querySelector('.sidebar-container')
+    const leftsideContainer = document.querySelector('.leftside-container')
+    const mobileShadow = document.querySelector('.mobile-background')
+    let dateContainerResponsive = document.querySelector('.date-container') 
+    let viewContainer = document.querySelector('.view-container') 
+
+
+    sidebarIcon.addEventListener('click', function(){
+        leftsideContainer.classList.toggle('leftside-container-display')
+        mobileShadow.classList.toggle('mobile-background-shadow') //background-shadow
+        viewContainer.classList.toggle('sidebar-active')
+        dateContainerResponsive.classList.toggle('sidebar-active') //three dates box flex direction changes
+           
+    })
+
+    mobileShadow.addEventListener('click', function(){
+        leftsideContainer.classList.toggle('leftside-container-display')
+        mobileShadow.classList.toggle('mobile-background-shadow')
+    })
+
+
+    //When form is open and sidebar is in auto mode (no clicks)
+    
+
+}
+    
 
 
 //Only displaying tasks or events that match the current date///

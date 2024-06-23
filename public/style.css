@@ -1760,7 +1760,7 @@ div.menu-container{
  
 
 
-/* Responsive Layout ***/
+/************** RESPONSIVE LAYOUT ****************/
 
 /*padding of boardview on smaller screen*/
 @media (max-width: 1888px){
@@ -1771,10 +1771,14 @@ div.menu-container{
 
 }
 
+/*When both form and sidebar are open*/
+@media (max-width: 1474px){
+    
+}
 
 /*Ipad side screen*/
 @media (max-width: 1145px) { 
-    /*when leftside container disappears*/
+    /*Width is too small so leftside container disappears*/
     .leftside-container {
       animation: disappearLeft 0.5s ease-in-out forwards;
     }
@@ -1782,21 +1786,26 @@ div.menu-container{
         display: inline-block;
     }
 
+    /*Adjusting the container that has the three dates when on boardview mode*/
+   .date-container.sidebar-active{
+    flex-direction: column;
+
+    .date-innerContainer:nth-child(2){
+        margin-right: 0px;
+        margin-left: 0px;
+        margin-bottom: 14px;
+        margin-top: 14px
+    }
+   }
+   .view-container.sidebar-active{
+    padding-left: 7%;
+    padding-right: 7%;
+   }
+
     
-  }  
-
-@media (max-width:1200px){
-    .new-todo-item-container{
-        width: 50%;
-    }
-
-    .list-detail-container{
-        width: 50%
-    }
-}
-
-  /* Animation for disappearing left */
-  @keyframes disappearLeft {
+  } 
+ /* Animation for disappearing left */
+@keyframes disappearLeft {
     from {
       transform: translateX(0);
     }
@@ -1808,14 +1817,28 @@ div.menu-container{
   /* Transition for smooth appearance/disappearance */
   .leftside-container {
     transition: transform 0.3s ease-in-out;
-  }
+  } 
 
 
 
-  /*Sidebar container reappears - This takes place only when sidebar icon is active and you
+@media (max-width:1200px){
+    .new-todo-item-container{
+        width: 50%;
+    }
+
+    .list-detail-container{
+        width: 50%
+    }
+}
+
+
+
+
+/*Sidebar container reappears - This takes place only when sidebar icon is active and you
   click it! */
    .leftside-container-display {
     animation: appearRight 0.5s ease-in-out forwards;
+
     }
    /* Animation for appearing right*/
    @keyframes appearRight {
@@ -1828,8 +1851,10 @@ div.menu-container{
     }
    }
 
-  
+   
 
+   
+  
 
 @media (max-width:875px){
   
@@ -1868,8 +1893,7 @@ div.menu-container{
         width: 100%;
         height: 100%;
         z-index: 1;
-        border-radius: 0px;
-       
+        border-radius: 0px; 
     }
     .top-section{
         margin: 80px 50px 30px 50px;
@@ -1884,7 +1908,8 @@ div.menu-container{
     }
 }
 
-  /*Mobile size screen*/
+
+/*Mobile size screen*/
 @media (max-width:611px){
     .leftside-container{
         position: absolute;
