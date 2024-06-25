@@ -502,13 +502,14 @@ function displayCategoryDeleteBtn(){
     }) 
 }
 
-//Display category options for New Entry Form
-function displayCategoryOptions(catArr){
+//Display category options for New Entry Form (this works)
+function displayCategoryOptions(catArr){ //catArr is a list of category names
     const categoryOption = document.getElementById('categories-option')
     categoryOption.innerHTML = ""
+
     
     catArr.map((category)=>{
-        categoryOption.innerHTML += `<option class="category-option" value=${category}>${category}</option>`
+        categoryOption.innerHTML += `<option class="category-option" value="${category}">${category}</option>`
     }) 
 }
 
@@ -542,17 +543,21 @@ function deleteCategories(){
         })
     })
 }
-///////////////// Display category ///////////////
+///////////////// Display category in sidebar ///////////////
 function displayCreatedCategories(){
      const savedCategories = localStorage.getItem('MyCategoryList') //Array of objects
+
      document.querySelector('.category-list-container').innerHTML = ""  
      let categoryNamesArr = [];
     
-   if(!savedCategories || savedCategories === '[]'){  //true false('[]')  
+   if(!savedCategories || savedCategories === '[]'){  //true false('[]') - checks if it's empty
         categories = JSON.parse(savedCategories) 
+
        
        if(!categories){ //[] equals true
-            categories = []
+            categories = [] //original array that hold the object of categories
+
+            console.log('I am here')
          }
 
    } else{ //false false
@@ -560,14 +565,15 @@ function displayCreatedCategories(){
 
          categories.map((category)=>{
             document.querySelector('.category-list-container').innerHTML +=  `<p class="top-margin-menu new-category">${category.name}<i class="fa-solid fa-xmark categories-xmark-icon"></i></p>`
-            categoryNamesArr.push(category.name)
+            categoryNamesArr.push(category.name) //push names here to go to forms
          })           
            
         //Option to delete created category is now available
         deleteCategories()
    }
 
-   displayCategoryOptions(categoryNamesArr) //synching the category names with the category options available in the new entry form
+   
+   displayCategoryOptions(categoryNamesArr) //synching the category names with the category options available in the new entry form (this one)
    deleteCategoryPickerContainer(categories) //Remove the categories option when no category created
    displayCategoryDeleteBtn() //Display X icon
 }
@@ -607,14 +613,14 @@ function capitalizeFirstLetter(str){
 }
 
 /////////// Starting Point //////////
-let categories = [];
+let categories = []; //List of category objects
 function addNewCategory() {
     
     let inputCategory = document.getElementById('input-category')
-    let categoryName = inputCategory.value.trim();
+    let categoryName = inputCategory.value.trim(); //obtain the value in the input tag
 
-    if(validateInput(categoryName)){ //true or false
-        categoryName = capitalizeFirstLetter(categoryName);
+    if(validateInput(categoryName)){ //true or false (this works)
+        categoryName = capitalizeFirstLetter(categoryName);//Make the first letter capital
 
         let category = {
             id: Date.now(),
@@ -738,13 +744,15 @@ function editEntry(itemID){
             })
 
         
-        /////Category/////
+        /////Category /////
         const categoriesOptionsContainer = Array.from(document.querySelectorAll('option'))
         const categoriesOption = document.getElementById('categories-option')
 
+
          //Insert all categories options inside an array
         let previouslyAddedCategories = categoriesOptionsContainer.map((innerDiv)=>{
-            return innerDiv.value
+            //console.log(innerDiv.innerHTML)
+            return innerDiv.innerHTML
         })
         
         //Check if category for selected todo list item is not present in the array
@@ -756,6 +764,7 @@ function editEntry(itemID){
             //Change selected category to the todo list item
             categoriesOption.value = category
         }
+
         
 
          /////Color/////
@@ -1621,7 +1630,7 @@ function responsiveDateLayout(){
 
 
     //When form is open and sidebar is in auto mode (no clicks)
-    
+
 
 }
     
