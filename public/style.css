@@ -1771,13 +1771,24 @@ div.menu-container{
 
 }
 
-/*When both form and sidebar are open*/
-@media (max-width: 1474px){
+/*Boardview when both form and sidebar are open*/
+ @media (max-width: 1474px){
+    .date-container.sidebar-form-active{
+        flex-direction: column;
+
+        .date-innerContainer:nth-child(2){
+            margin-right: 0px;
+            margin-left: 0px;
+            margin-bottom: 14px;
+            margin-top: 14px
+        }
+    }
+
     
-}
+} 
 
 /*Ipad side screen*/
-@media (max-width: 1145px) { 
+@media (max-width: 1165px) { 
     /*Width is too small so leftside container disappears*/
     .leftside-container {
       animation: disappearLeft 0.5s ease-in-out forwards;
@@ -1838,7 +1849,6 @@ div.menu-container{
   click it! */
    .leftside-container-display {
     animation: appearRight 0.5s ease-in-out forwards;
-
     }
    /* Animation for appearing right*/
    @keyframes appearRight {
@@ -1852,11 +1862,27 @@ div.menu-container{
    }
 
    
+@media (max-width:1075px){
+    .leftside-container{
+        position: absolute;
+        z-index: 3;
+    }
 
-   
-  
+    .mobile-background-shadow{
+        background-color:#212020;
+        height: 100vh;
+        width: 100%;
+        position: absolute;
+        z-index: 2;
+        opacity: 25%;
+    }
 
-@media (max-width:875px){
+    .top-section{
+        margin: 80px 30px 30px 30px;
+    }
+}
+
+@media (max-width:885px){
   
     .view-container.boardView{
         padding-left: 7%;
@@ -1887,6 +1913,7 @@ div.menu-container{
     }
   }
 
+
 @media (max-width:780px){
     .new-todo-item-container{
         position: absolute;
@@ -1910,6 +1937,7 @@ div.menu-container{
 
 
 /*Mobile size screen*/
+/*
 @media (max-width:611px){
     .leftside-container{
         position: absolute;
