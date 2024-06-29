@@ -77,6 +77,7 @@ function openForm(){
         listDetailContainer.classList.remove('display-list-detail-container') //Remove Detailed view of To-do items (not sure how this is working if it wasn't declare first)
         // midContainer.classList.add('formOpen') //Change padding for boardview (I need to fix it)
 
+    //If I open the form, I should fix the middle container
 }
 
 function closeForm(){
@@ -1477,15 +1478,16 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
         editBtns.forEach((btn, i)=>{
             btn.addEventListener('click', function(){
                 openForm()
-                //margin is too much
-            // midContainer.classList.add('formOpen')
+             
+                //call function to make todo list layout responsive
+                //responsiveDateLayoutWithFormOpen()   
 
                 let currentListId = Number(boardViewItems[i].id)
                 editEntry(currentListId)
             })
         })
 
-        responsiveDateLayout() //responsive three date box layout
+       // responsiveDateLayout() //responsive three date box layout
   }
 
 
@@ -1555,6 +1557,8 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
     //Checkbox
     trackCheckboxStatus()
 
+    
+
     //Delete option
     let list = todoList.querySelectorAll('li.list-item')
     let deleteBtns = Array.from(todoList.querySelectorAll('.item-delete-Btn'))
@@ -1601,6 +1605,8 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
         })
 
     })
+
+    
 } 
 
 
@@ -1608,18 +1614,20 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
 //For ipad and mobile
 
 function responsiveDateLayout(){
-    const sidebarIcon = document.querySelector('.sidebar-container')
-    const leftsideContainer = document.querySelector('.leftside-container')
-    const mobileShadow = document.querySelector('.mobile-background')
-    let dateContainerResponsive = document.querySelector('.date-container') 
-    let viewContainer = document.querySelector('.view-container') 
+
+    const sidebarIcon = document.querySelector('.sidebar-container')         //Icon
+    const leftsideContainer = document.querySelector('.leftside-container')  //Side-bar menu
+    const mobileShadow = document.querySelector('.mobile-background')        //Background shadow for mobile version
+    let dateContainerResponsive = document.querySelector('.date-container')  //Adjust width of date alignment for boardview
+    let viewContainer = document.querySelector('.view-container')            //Boardview container adjustment
 
 
     sidebarIcon.addEventListener('click', function(){
+
         leftsideContainer.classList.toggle('leftside-container-display')
         mobileShadow.classList.toggle('mobile-background-shadow') //background-shadow
-        viewContainer.classList.toggle('sidebar-active')
-        dateContainerResponsive.classList.toggle('sidebar-active') //three dates box flex direction changes
+        viewContainer.classList.toggle('sidebar-active')          //Adjust boardview container when sidebar present
+        dateContainerResponsive.classList.toggle('sidebar-active') //three dates box flex direction changes when sidebar present
            
     })
 
@@ -1629,10 +1637,9 @@ function responsiveDateLayout(){
     })
 
 
-    //When form is open and sidebar is in auto mode (no clicks)
-
-
 }
+
+responsiveDateLayout()
     
 
 
@@ -1657,7 +1664,7 @@ function compareDates(dateToCompare){
             if(dataEntry.date == dateFormat){    
 
                 displayPreviewOfTodoList(dataEntry.id, dataEntry.title, dataEntry.type, dataEntry.date, dataEntry.time,dataEntry.category, dataEntry.subtasks, dataEntry.color)
-                } 
+            } 
         })
 
    } else{
