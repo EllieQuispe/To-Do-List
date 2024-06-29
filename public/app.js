@@ -49,7 +49,9 @@ document.addEventListener('DOMContentLoaded', () =>{
     //Opens dropdown for view options
     document.querySelector('.view-options-container').addEventListener('click',function(event){
         viewOptions(event) //opens drop-down
-    } )  
+    } ) 
+    
+
 })
 
 
@@ -950,7 +952,11 @@ function getList(){
           
             if(!(event.target.classList.contains('main-checkbox') || event.target.classList.contains('secondary-checkbox') || event.target.classList.contains('item-delete-Btn') || event.target.classList.contains('edit-Btn') || event.target.classList.contains('fa-ellipsis-vertical'))){
 
-              
+                //responsive layout
+                let dt = document.querySelector('.date-container')
+                dt.classList.add('sidebar-form-active')
+
+
                 let currentListID = Number(boardTodoItems[i].id) //Turn ID to number
                 editEntryCurrentID = ''; //Remove saved ID# if it's not being re-saved.
 
@@ -1343,6 +1349,7 @@ function openPastDueContainer(){
 /////////////////////////// Display Board-view ////////////////////////
 let dateContainer = document.querySelector('.date-container')
 
+
 function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
     const columns = []; // Array to store the formatted columns
     let innerUl = ''
@@ -1385,7 +1392,7 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
 
     // Loop through each date and corresponding entry (if any)
     for (let i = 0; i < 3; i++) {
-      let columnContent = `
+       let columnContent = `
         <div class="date-heading">
           <p class="date-week">${dateToCompare[i]}</p>
         </div>
@@ -1434,7 +1441,7 @@ function displayWeek(dateToCompare, selectedEntries, currentThreeDates) {
             </div>
             `
         })
-        
+         
 
         getList() //display fullview
 
@@ -1612,7 +1619,6 @@ function displayPreviewOfTodoList(id, title, type, date, time, category, subtask
 
 //// Open/Display leftside-container ///////
 //For ipad and mobile
-
 function responsiveDateLayout(){
 
     const sidebarIcon = document.querySelector('.sidebar-container')         //Icon
@@ -1620,26 +1626,50 @@ function responsiveDateLayout(){
     const mobileShadow = document.querySelector('.mobile-background')        //Background shadow for mobile version
     let dateContainerResponsive = document.querySelector('.date-container')  //Adjust width of date alignment for boardview
     let viewContainer = document.querySelector('.view-container')            //Boardview container adjustment
+    
+    //If forms are clicked then do this
+    const addNewFormBtn = document.querySelector('.add-new-item')
+    const closeForm = document.querySelector('.exit-form')
+    const closeFullviewForm = document.querySelector('.exit-full-view')
 
 
     sidebarIcon.addEventListener('click', function(){
-
         leftsideContainer.classList.toggle('leftside-container-display')
         mobileShadow.classList.toggle('mobile-background-shadow') //background-shadow
         viewContainer.classList.toggle('sidebar-active')          //Adjust boardview container when sidebar present
         dateContainerResponsive.classList.toggle('sidebar-active') //three dates box flex direction changes when sidebar present
            
     })
-
     mobileShadow.addEventListener('click', function(){
         leftsideContainer.classList.toggle('leftside-container-display')
         mobileShadow.classList.toggle('mobile-background-shadow')
     })
 
 
-}
 
+    //When new and edit forms are open with sidebar also open
+    addNewFormBtn.addEventListener('click', function(){  //new form
+        dateContainerResponsive.classList.add('sidebar-form-active')
+        
+    })
+    document.addEventListener('click', function(event){
+        if(event.target.classList.contains('edit-boardview-btn')){ //edit form
+            dateContainerResponsive.classList.add('sidebar-form-active')
+        }
+    })
+    closeForm.addEventListener('click', function(){  //close new and edit form
+        dateContainerResponsive.classList.remove('sidebar-form-active')
+    })
+    closeFullviewForm.addEventListener('click', function(){ //close fullview form
+        dateContainerResponsive.classList.remove('sidebar-form-active')
+    })
+
+  
+
+}
 responsiveDateLayout()
+
+
     
 
 
